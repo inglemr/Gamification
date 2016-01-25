@@ -15,3 +15,8 @@
  *= require bootstrap.css
  *= require bootstrap.min.css
  */
+
+body{
+	background-color: #73747C;
+}
+
