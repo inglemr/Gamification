@@ -1,4 +1,24 @@
-<% if can? :manage, :all %>
-<h2>TEST</h2>
-<% end %>
+<div>
+	<table summary "User List">
+		<tr>
+			<th>ID</th>
+			<th>Email</th>
+			<th>Created at</th>
+			<th>Updated</th>
+		</tr>
+		<% @users.each do |user| %>
+		<tr>
+			<td><%= user.id %></td>
+			<td><%= user.email %></td>
+			<td><%= user.created_at %></td>
+			<td><%= user.updated_at %></td>
+			<td>
+				<%= link_to("Show", {:action => 'show', :id => user.id}) %>
+				<%= link_to("Edit", '#') %>
+				<%= link_to("Delete", '#') %>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+</div>
 
