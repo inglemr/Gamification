@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "Capstone" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    
+  <% if current_user %>
+  <%= render "shared/menu.html.erb"%>
+  <% end %>
+  <% if  alert %>
+    <div class="flash-container">
+      <%= flash_messages %>
+    </div>
+   <% end %>
+    <%= yield %>
+
+  </body>
+</html>
