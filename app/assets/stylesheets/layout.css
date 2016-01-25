@@ -1,5 +1,5 @@
 
-/* LOGIN HEADER */
+/* LOGIN AND SIGNUP */
 .login_panel{
 	border: 1px solid #ddd;
 	position: relative;
@@ -16,3 +16,16 @@
 .login_header{
 
 }
+
+.flash-container{
+	opacity: .9;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+
+    
+    position: relative;
+    left: 34%;
+    top: 100px;
+    width: 32%;
+    } 
+
