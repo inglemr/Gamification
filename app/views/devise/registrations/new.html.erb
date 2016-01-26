@@ -18,7 +18,7 @@
         <%= f.password_field :password, autocomplete: "off" ,:placeholder => "Password" , :class => "form-control"%>
       </div>
       <div class="col-md-6">
-        <%= f.password_field :password_confirmation, autocomplete: "off" ,:placeholder => "Password Confirmation" , :class => "form-control"%>
+        <%= f.password_field :password_confirmation, autocomplete: "off" ,:placeholder => "Password Confirmation" , :class => "form-control", :id => "user_password_confirm"%>
       </div>
     </div>
     <div class="row form-group">
@@ -26,9 +26,8 @@
         <%= f.password_field :gsw_id, autocomplete: "off" ,:placeholder => "GSW ID" , :class => "form-control"%>
       </div>
       <div class="col-md-6">
-        <%= f.password_field :gsw_pin, autocomplete: "off" ,:placeholder => "GSW PIN" ,rel: "popover", :"data-content"=>"Enter First Name", :class => "form-control popover-input"%>
+        <%= f.password_field :gsw_pin, autocomplete: "off" ,:placeholder => "GSW PIN" ,:class => "form-control popover-input"%>
       </div>
-      
     </div>
       <div class="row form-group">
         <div class="col-md-6 col-md-offset-5">
@@ -47,6 +46,59 @@
 <% content_for :scripts do %>
 <script type="text/javascript">
   <% content_for :inner_scripts do %>
+
+  $(document).ready(function () {
+
+  $(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+  $("#new_user").validate({
+  rules : {
+    "user[email]" : {
+      minlength: 8 ,
+      required: true
+    },
+    "user[password]" : {
+      minlength: 8 ,
+      required: true
+    },
+    "user[password_confirmation]" : {
+      required: true,
+      equalTo: "#user_password"
+    },
+      "user[username]" : {
+      required: true
+    },
+    "user[gsw_id]" : {
+        required: true
+    },
+    "user[gsw_pin]" : {
+        required: true
+    }
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      // Bootstrap 3.x :      
+      _popover.data("bs.popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});
+    });
+
+
+
   <% end %>
   <%= content_for :inner_scripts %>
 </script>
