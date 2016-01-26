@@ -17,12 +17,13 @@ class UsersDatatable
 private
 
   def data
+
     users.map do |user|
       [
         link_to(user.id, user),
         user.email,
-        user.created_at,
-        user.updated_at,
+        user.created_at.to_formatted_s(:short),
+        user.updated_at.to_formatted_s(:short),
         render(:partial=>"user/actions.html.erb", locals: { user: user} , :formats => [:html]) 
 
       ]
