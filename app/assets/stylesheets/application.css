@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require_self
  *= require font-awesome
  *= require bootstrap.css
@@ -39,4 +40,8 @@ body{
 .flash_msg{
 	margin-top: 50px;
 	z-index: 50;
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
 }

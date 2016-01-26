@@ -1,5 +1,5 @@
 class UsersDatatable
-  delegate :params, :h, :link_to, :content_tag, :current_ability, :render, :join, :image_tag, :number_to_currency,:edit_user_appstore_app_path, :current_user, :user_user_profile_path, :user_appstore_app_path, :appstore_app_path, :can?, :current_ability, to: :@view
+  delegate :params, :h, :link_to, :content_tag, :current_ability, :render, :can?, to: :@view
   
   def initialize(view)
     @view = view

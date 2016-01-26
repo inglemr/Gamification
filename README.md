@@ -15,7 +15,7 @@
 * Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 * Install [Rails](http://guides.railsgirls.com/install)
 * Clone this repository locally using <tt>git clone git@github.com:inglemr/capstone.git</tt>
-	* Navigate inside the capstone directory and run the following commands <tt>cd capstone</tt>
+	* Navigate inside the capstone directory <tt>cd capstone</tt>
 	* Install all the gems from the gemfile using <tt>bundle install</tt>
 	* Run database migrations <tt>rake db:migrate</tt>
 	* Run the local development server using <tt>rails server</tt>
