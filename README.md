@@ -7,7 +7,7 @@
 #Application Test Environments
 
 * Staging Endpoint: [Staging](https://gsw-capstone.herokuapp.com/)
-* Development Endpoint: [Development](matthewi.ddns.net)
+* Development Endpoint: [Development](http://matthewi.ddns.net)
 
 # Setup Locally
 * Install [Postgres](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
