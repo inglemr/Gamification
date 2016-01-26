@@ -16,6 +16,7 @@ Database: postgresql
 	* Run the local development server using <tt>rails server</tt>
 	* Navigate to the app at <tt>localhost:3000</tt>
 	* The app has been succesffuly installed
+
 # Manage User Accounts
 
 ## List Of Roles
