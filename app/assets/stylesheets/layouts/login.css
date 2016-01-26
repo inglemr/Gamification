@@ -17,13 +17,5 @@
 
 }
 
-.flash-container{
-	  opacity: .9;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    margin-top: 50px;
-    margin-bottom: -80px;
-    z-index -1;
-    color: white;
-    } 
+
 

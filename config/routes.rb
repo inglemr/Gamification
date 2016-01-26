@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   devise_scope :user do
   authenticated :user do
     root 'home#index', as: :authenticated_root
-    match ':controller(/:action(/:id))', :via => [:get, :post]
 
+    resources :user do
+    end
+    match ':controller(/:action(/:id))', :via => [:get, :post]
   end
 
   unauthenticated do

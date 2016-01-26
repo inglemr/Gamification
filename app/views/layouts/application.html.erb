@@ -10,18 +10,18 @@
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-
   <body>
-    
-  <% if current_user %>
-  <%= render "shared/menu.html.erb"%>
-  <% end %>
-  <% if  alert %>
-    <div class="flash-container col-md-4 col-md-offset-4">
+    <% if  current_user %>
+      <%= render "shared/usermenu.html.erb"%>
+    <% end %>
+    <% if  can? :manage, :all%>
+      <%= render "shared/sidebar.html.erb"%>
+    <% end %>
+    <% if  alert %>
       <%= flash_messages %>
+    <% end %>
+    <div class="main">
+      <%= yield %>
     </div>
-   <% end %>
-    <%= yield %>
-
   </body>
 </html>

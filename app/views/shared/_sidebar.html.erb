@@ -1,0 +1,62 @@
+<aside>
+  <nav class="navbar navbar-inverse sidebar navbar-fixed-top" role="navigation">
+<div class="nav-side-menu">
+    <div class="brand">Capstone Admin Panel</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
+  
+            <ul id="menu-content" class="menu-content collapse out">
+                <li>
+                 <%= link_to '<i class="fa fa-home fa-lg"></i>Home'.html_safe, authenticated_root_path %>
+                </li>
+                <li data-toggle="collapse" data-target="#users" class="collapsed">
+                  <a href="#"><i class="fa fa-globe fa-lg"></i> Users <span class="arrow"></span></a>
+                </li>  
+                <ul class="sub-menu collapse" id="users">
+                  <li><%= link_to '<i class="fa fa-users fa-lg"></i>All Users'.html_safe, user_index_path %></li>
+                </ul>
+                <li data-toggle="collapse" data-target="#customizer" class="collapsed">
+                  <a href="#"><i class="fa fa-cog fa-lg"></i> Customize <span class="arrow"></span></a>
+                </li>  
+                <ul class="sub-menu collapse" id="customizer">
+                  <li><%= link_to '<i class="fa fa-cog fa-lg"></i>Customize Logo'.html_safe, user_index_path %></li>
+                </ul>
+
+                <li><a><i class="fa fa-phone fa-lg"></i>API Call Log</a></li>
+                 <li>
+                  <%= link_to '<i class="fa fa-sign-out fa-lg"></i>Log Out'.html_safe, destroy_user_session_path , :method => :delete%>
+                </li>
+            </ul>
+     </div>
+</div>
+  </nav>
+</aside>
+
+<%= javascript_tag do %>
+    function htmlbodyHeightUpdate(){
+    var height3 = $( window ).height()
+    var height1 = $('.nav').height()+50
+    height2 = $('.main').height()
+    if(height2 > height3){
+      $('html').height(Math.max(height1,height3,height2)+10);
+      $('body').height(Math.max(height1,height3,height2)+10);
+    }
+    else
+    {
+      $('html').height(Math.max(height1,height3,height2));
+      $('body').height(Math.max(height1,height3,height2));
+    }
+    
+  }
+  $(document).ready(function () {
+    htmlbodyHeightUpdate()
+    $( window ).resize(function() {
+      htmlbodyHeightUpdate()
+    });
+    $( window ).scroll(function() {
+      height2 = $('.main').height()
+        htmlbodyHeightUpdate()
+    });
+  });
+
+<% end %>

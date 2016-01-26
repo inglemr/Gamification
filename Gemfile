@@ -11,6 +11,8 @@ gem 'pg'
 gem 'devise'
 gem 'bcrypt'
 
+#For Icons
+gem "font-awesome-rails"
 #use rolify for role validations
 gem 'rolify'
 gem 'cancan'

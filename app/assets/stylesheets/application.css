@@ -12,11 +12,12 @@
  *
  *= require_tree .
  *= require_self
+ *= require font-awesome
  *= require bootstrap.css
  *= require bootstrap.min.css
  */
 
 body{
-	background-color: #73747C;
+	background-color: #E0E0E0;
 }
 
