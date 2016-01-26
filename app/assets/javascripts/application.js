@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.validation.js
 //= require jquery_ujs
 //= require dataTables/jquery.dataTables
 //= require jquery-ui/core

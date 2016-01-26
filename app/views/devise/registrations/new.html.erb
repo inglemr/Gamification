@@ -26,16 +26,28 @@
         <%= f.password_field :gsw_id, autocomplete: "off" ,:placeholder => "GSW ID" , :class => "form-control"%>
       </div>
       <div class="col-md-6">
-        <%= f.password_field :gsw_pin, autocomplete: "off" ,:placeholder => "GSW PIN" , :class => "form-control"%>
+        <%= f.password_field :gsw_pin, autocomplete: "off" ,:placeholder => "GSW PIN" ,rel: "popover", :"data-content"=>"Enter First Name", :class => "form-control popover-input"%>
       </div>
+      
     </div>
       <div class="row form-group">
         <div class="col-md-6 col-md-offset-5">
           <%= render "devise/shared/links" %>
         </div>
       </div>
-      <div class="row form-group col-md-6 col-md-offset-5">
-          <%= f.submit "Sign Up" ,:class => "btn btn-primary" %>
+     <div class="row form-group col-md-6 col-md-offset-5">
+        <%= button_tag(type: 'submit', class: "btn sign_up") do %>
+          <span class="fa fa-check-circle fa-5x"></span>
+        <% end %>
       </div>
     <%end%>
 </div>
+
+
+<% content_for :scripts do %>
+<script type="text/javascript">
+  <% content_for :inner_scripts do %>
+  <% end %>
+  <%= content_for :inner_scripts %>
+</script>
+<% end %>

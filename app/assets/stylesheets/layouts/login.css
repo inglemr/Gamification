@@ -17,5 +17,16 @@
 
 }
 
+.sign_up
+{
+	color: #00e600;
+	opacity: .5;
+	background-color: #f2f2f2;
+}
+.sign_up:hover
+{
+	opacity: 1;
+	color: #00e600;
+}
 
 

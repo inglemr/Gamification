@@ -12,6 +12,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav mainnav">
         <li class="active"><%= link_to '<i class="fa fa-home fa-lg"></i> Home'.html_safe, authenticated_root_path %></li>
+        <li class=""><%= link_to '<i class="fa fa-qrcode fa-lg"></i> Scan QR Code'.html_safe, authenticated_root_path %></li>
+        <li class=""><%= link_to '<i class="fa fa-calendar fa-lg"></i> My Events'.html_safe, authenticated_root_path %></li>
+        <li class=""><%= link_to '<i class="fa fa-star fa-lg"></i> My Points'.html_safe, authenticated_root_path %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right mainnav">
         <li> <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, destroy_user_session_path , :method => :delete%></li>
