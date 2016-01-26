@@ -1,8 +1,13 @@
-== README
 
-Staging Endpoint: [Staging](https://gsw-capstone.herokuapp.com/)
+# Version Data
+  * Ruby: 2.2.3
+  * Rails: 4.2.4
+  * Database: postgresql
 
-Database: postgresql
+#Application Test Environments
+
+* Staging Endpoint: [Staging](https://gsw-capstone.herokuapp.com/)
+* Development Endpoint: [Development](matthewi.ddns.net)
 
 # Setup Locally
 * Install [Postgres](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
@@ -21,7 +26,9 @@ Database: postgresql
 
 ## List Of Roles
 * :admin -> Can access all documents/controllers/views/models
+
 ## Adding user roles
+
 * User roles can be added through the rails console by navigating to the root directory of the app and using the command <tt>rails console</tt>
 * Once the console has started run the follow command to find your user in the database <tt>user = User.find_by(:email => "<email>")</tt>
 * To add a role to this user simply use <tt>user.add_role :admin</tt> to add the admin role
