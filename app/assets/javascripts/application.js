@@ -12,6 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require dataTables/jquery.dataTables
+//= require jquery-ui/core
+//= require jquery-ui/widget
+//= require jquery-ui/mouse
+//= require jquery-ui/position
 //= bootstrap.js
 //= bootstrap.min.js
 //= require turbolinks

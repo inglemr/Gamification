@@ -1,6 +1,13 @@
 class UserController < ApplicationController
+	load_and_authorize_resource
+	rescue_from CanCan::AccessDenied do |exception|
+    	redirect_to , :alert => exception.message
+  	end
 	def index
-		@users = User.sorted
+		respond_to do |format|
+    		format.html
+    		format.json { render json: UsersDatatable.new(view_context) }
+  		end
 	end
 
 	def show
@@ -12,4 +19,5 @@ class UserController < ApplicationController
 
 	def delete
 	end
+
 end

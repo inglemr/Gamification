@@ -15,9 +15,28 @@
  *= require font-awesome
  *= require bootstrap.css
  *= require bootstrap.min.css
+ *= require jquery-ui/core
+ *= require jquery-ui/theme
+  *= require jquery-ui/accordion
+ *= require jquery-ui/autocomplete
+ *= require jquery-ui/button
+ *= require jquery-ui/datepicker
+ *= require jquery-ui/dialog
+ *= require jquery-ui/menu
+ *= require jquery-ui/progressbar
+ *= require jquery-ui/selectmenu
+ *= require jquery-ui/slider
+ *= require jquery-ui/spinner
+ *= require jquery-ui/tabs
+ *= require jquery-ui/tooltip
+ *= require dataTables/src/demo_table_jui
  */
 
 body{
 	background-color: #E0E0E0;
 }
 
+.flash_msg{
+	margin-top: 50px;
+	z-index: 50;
+}

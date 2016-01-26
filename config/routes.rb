@@ -6,12 +6,17 @@ Rails.application.routes.draw do
 
     resources :user do
     end
+
+    namespace :api, :defaults => {:format => :json} do
+      namespace :v1 do
+        resources :user
+      end
+    end
+
     match ':controller(/:action(/:id))', :via => [:get, :post]
   end
 
-  unauthenticated do
-    root 'devise/sessions#new', as: :unauthenticated_root
-  end
+  root 'devise/sessions#new'
 end
   # You c
   # The priority is based upon order of creation: first created -> highest priority.

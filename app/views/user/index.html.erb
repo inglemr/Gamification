@@ -1,25 +1,25 @@
-<div>
-	<table summary "User List">
+<table summary "User List" id="users_table" class="display responsive" data-source="<%= user_index_path(format: "json") %>">
+		<thead>
 		<tr>
 			<th>ID</th>
 			<th>Email</th>
 			<th>Created at</th>
 			<th>Updated</th>
+			<th>Actions</th>
 		</tr>
-		<% @users.each do |user| %>
-		<tr>
-			<td><%= user.id %></td>
-			<td><%= user.email %></td>
-			<td><%= user.created_at %></td>
-			<td><%= user.updated_at %></td>
-			<td>
-				<%= link_to("Show", {:action => 'show', :id => user.id}) %>
-				<%= link_to("Edit", '#') %>
-				<%= link_to("Delete", '#') %>
-			</td>
-		</tr>
-		<% end %>
-	</table>
-</div>
+		</thead>
+		<tbody>
+
+	</tbody>
+</table>
+<%= javascript_tag do %>
 
 
+  $('#users_table').DataTable({
+    sPaginationType: "full_numbers",
+    bJQueryUI: true,
+    bProcessing: true,
+    bServerSide: true,
+    sAjaxSource: $('#users_table').data('source')
+});
+<% end %>
