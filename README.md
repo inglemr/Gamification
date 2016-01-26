@@ -4,7 +4,7 @@ Staging Endpoint: [Staging](https://gsw-capstone.herokuapp.com/)
 
 Database: postgresql
 
-#Setup Locally
+# Setup Locally
 	* Install [Postgres](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 	  *Install [PgAdmin](http://www.pgadmin.org/) (Optional) - Helpful with Database manipulation
 	* Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
@@ -18,7 +18,7 @@ Database: postgresql
 		*The app has been succesffuly installed
 #Manage User Accounts
 
-	##List Of Roles
+	## List Of Roles
 		*:admin -> Can access all documents/controllers/views/models
 	##Adding user roles
 		*User roles can be added through the rails console by navigating to the root directory of the app and using the command <tt>rails console</tt>
