@@ -1,3 +1,9 @@
-<%= link_to("Show", {:action => 'show', :id => user.id}) %>
-<%= link_to("Edit", '#') %>
-<%= link_to("Delete", '#') %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-search-plus fa-lg"></i>'.html_safe, {:action => 'show', :id => user.id}) %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Edit" class="fa fa-pencil fa-lg"></i>'.html_safe, '#') %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, '#') %>
+
+<%= javascript_tag do %>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+<% end %>
