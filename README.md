@@ -20,7 +20,7 @@ Database: postgresql
 
 ## List Of Roles
 * :admin -> Can access all documents/controllers/views/models
-##Adding user roles
+## Adding user roles
 * User roles can be added through the rails console by navigating to the root directory of the app and using the command <tt>rails console</tt>
 * Once the console has started run the follow command to find your user in the database <tt>user = User.find_by(:email => "<email>")</tt>
 * To add a role to this user simply use <tt>user.add_role :admin</tt> to add the admin role
