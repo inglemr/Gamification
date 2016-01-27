@@ -1,5 +1,5 @@
-class RolesDatatable
-  delegate :params, :h, :link_to, :content_tag, :current_ability, :render, :can?, to: :@view
+class Admin::RolesDatatable
+  delegate :params, :h,  :content_tag, :current_ability, :render, :can?, to: :@view
   
   def initialize(view)
     @view = view
@@ -20,10 +20,10 @@ private
 
     roles.map do |role|
       [
-        link_to(role.id, role),
+        role.id,
         role.name.capitalize,
         role.description,
-        render(:partial=>"roles/actions.html.erb", locals: { role: role} , :formats => [:html])
+        render(:partial=>"admin/roles/actions.html.erb", locals: { role: role} , :formats => [:html])
       ]
     end
   end

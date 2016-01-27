@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class Admin::UserController < ApplicationController
 	load_and_authorize_resource
 	rescue_from CanCan::AccessDenied do |exception|
     	redirect_to root_url, :alert => exception.message
@@ -6,7 +6,7 @@ class UserController < ApplicationController
 	def index
 		respond_to do |format|
     		format.html
-    		format.json { render json: UsersDatatable.new(view_context) }
+    		format.json { render json: Admin::UsersDatatable.new(view_context) }
   		end
 	end
 
@@ -30,9 +30,9 @@ class UserController < ApplicationController
 	  	end
 		end
 		if @user.update_attributes(params[:user].permit(:email, :username))
-  		redirect_to user_path, :flash => { :success => 'User was successfully updated.' }
+  		redirect_to admin_user_path, :flash => { :success => 'User was successfully updated.' }
 		else
-  		redirect_to user_path, :flash => { :error => 'User was unsuccesfully updated.' }
+  		redirect_to admin_user_path, :flash => { :error => 'User was unsuccesfully updated.' }
 		end
 	end
 

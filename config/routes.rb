@@ -4,10 +4,11 @@ Rails.application.routes.draw do
   authenticated :user do
     root 'home#index', as: :authenticated_root
 
-    resources :user do
-    end
-
-    resources :roles do
+    namespace :admin do
+      resources :user do
+      end
+      resources :roles do
+      end
     end
 
     namespace :api, :defaults => {:format => :json} do

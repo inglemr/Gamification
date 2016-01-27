@@ -1,5 +1,5 @@
-class UsersDatatable
-  delegate :params, :h, :link_to, :content_tag, :current_ability, :render, :can?, to: :@view
+class Admin::UsersDatatable
+  delegate :params, :content_tag, :current_ability ,:render, :can?, to: :@view
   
   def initialize(view)
     @view = view
@@ -20,11 +20,11 @@ private
 
     users.map do |user|
       [
-        link_to(user.id, user),
+        user.id,
         user.email,
         user.created_at.to_formatted_s(:short),
         user.updated_at.to_formatted_s(:short),
-        render(:partial=>"user/actions.html.erb", locals: { user: user} , :formats => [:html]) 
+        render(:partial=>"admin/user/actions.html.erb", locals: { user: user} , :formats => [:html]) 
 
       ]
     end

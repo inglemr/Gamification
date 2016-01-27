@@ -1,4 +1,4 @@
-class RolesController < ApplicationController
+class Admin::RolesController < ApplicationController
 	load_and_authorize_resource
 	rescue_from CanCan::AccessDenied do |exception|
     	redirect_to root_url, :alert => exception.message
@@ -6,7 +6,7 @@ class RolesController < ApplicationController
 	def index
 		respond_to do |format|
     		format.html
-    		format.json { render json: RolesDatatable.new(view_context) }
+    		format.json { render json: Admin::RolesDatatable.new(view_context) }
   		end
 	end
 
@@ -21,9 +21,9 @@ class RolesController < ApplicationController
 	def update
 		@role = Role.find(params[:id])
 		if @role.update_attributes(params[:role].permit(:name, :description))
-  		redirect_to role_path, :flash => { :success => 'User was successfully updated.' }
+  		redirect_to admin_role_path, :flash => { :success => 'User was successfully updated.' }
 		else
-  		redirect_to role_path, :flash => { :error => 'User was unsuccesfully updated.' }
+  		redirect_to admin_role_path, :flash => { :error => 'User was unsuccesfully updated.' }
 		end
 	end
 
