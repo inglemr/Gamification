@@ -2,10 +2,10 @@
 <div class="page-heading-bar">
 	<ol class="breadcrumb">
 	 	<li >Admin</li>
+	 	<li >Users</li>
 	  <li><%= link_to("All Users", {:action => 'index'}) %></li>
-	  <li class="active"><%= current_user.username %></li>
+	  <li class="active"><%= @user.username %></li>
 	</ol>
-
 </div>
 </div>
 <div class="">

@@ -67,7 +67,7 @@
   }
   .main{
     padding: 10px 10px 0 10px;
-    margin-top: 40px;
+    margin-top: 0px;
   }
 
 
@@ -156,9 +156,9 @@
 /*O quanto o menu irá esconder á esquerda*/
     /*gives sidebar width/height*/
     nav.sidebar{
-      width: 200px;
+      width: 160px;
       height: 100%;
-      margin-left: -270px;
+      margin-left: -145px;
       float: left;
       z-index: 8000;
       margin-bottom: 0px;
@@ -196,7 +196,7 @@
   background-color: #2e353d;
   position: fixed;
   top: 0px;
-  width: 300px;
+  width: 170px;
   height: 100%;
   color: #e1ffff;
 }
