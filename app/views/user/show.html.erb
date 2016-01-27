@@ -1,9 +1,17 @@
-<%= link_to("<< Back to List", {:action => 'index'}) %>
+<div class= "row">
+<div class="page-heading-bar">
+	<ol class="breadcrumb">
+	 	<li >Admin</li>
+	  <li><%= link_to("All Users", {:action => 'index'}) %></li>
+	  <li class="active"><%= current_user.username %></li>
+	</ol>
 
-<div>
-	<h2>Show User</h2>
+</div>
+</div>
+<div class="">
 
-	<table summary="User detail view">
+	
+	<table class=""summary="User detail view">
 		<tr>
 			<th>User ID</th>
 			<td><%= @user.id %></td>
@@ -24,5 +32,7 @@
 			<td><%= @user.updated_at %></td>
 		</tr>
 	</table>
-
 </div>
+</div>
+
+
