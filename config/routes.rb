@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     root 'home#index', as: :authenticated_root
 
     namespace :admin do
+      resources :events do
+      end
       resources :user do
       end
       resources :roles do

@@ -21,9 +21,9 @@ class Admin::RolesController < ApplicationController
 	def update
 		@role = Role.find(params[:id])
 		if @role.update_attributes(params[:role].permit(:name, :description))
-  		redirect_to admin_role_path, :flash => { :success => 'User was successfully updated.' }
+  		redirect_to admin_role_path, :flash => { :success => 'Role was successfully updated.' }
 		else
-  		redirect_to admin_role_path, :flash => { :error => 'User was unsuccesfully updated.' }
+  		redirect_to admin_role_path, :flash => { :error => 'Role was unsuccesfully updated.' }
 		end
 	end
 
