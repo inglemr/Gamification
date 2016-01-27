@@ -36,7 +36,7 @@
           <% Role.defined_roles.each do |role|%>
             <%= f.label :role do %>
               <%= check_box_tag 'user[_roles][]', role, @user.has_role?(role) %>
-              <%= role %>
+              <%= role.capitalize %>
             <% end %>
           <% end %>
         </div>

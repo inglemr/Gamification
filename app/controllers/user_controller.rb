@@ -24,7 +24,6 @@ class UserController < ApplicationController
 		params['user']['_roles'].each do |role|
   		@user.add_role role unless @user.has_role? role
   	end
-  	puts "TEST"
 	  Role.all.each do |role|
 	  	if !params['user']['_roles'].include?(role.name)
 	  		@user.remove_role role.name.to_sym
