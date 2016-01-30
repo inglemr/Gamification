@@ -1,0 +1,82 @@
+<div class= "row">
+  <div class="page-heading-bar">
+    <ol class="breadcrumb">
+      <li >Admin</li>
+      <li><%= link_to("All Events", {:action => 'index'}) %></li>
+      <li ><%= page_type %> Event</li>
+    </ol>
+  </div>
+</div>
+<%= form_for(@event, :class =>"form-horizontal" , :url => path) do |f| %>
+<div class="page-panel panel col-md-12 ">
+    <div class="row"><h2 class="text-center"><%= page_type %> Event</h2></div>
+    <hr>
+    <div class="col-md-6 verticalLineRight">
+      <h3 class="panel">Basic Data</h3>
+      <div class="col-md-12 form-group">
+        <%= f.label :event_name ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :event_name, autofocus: true , :class => "form-control"%>
+        </div>
+      </div>
+
+      <div class="col-md-12 form-group">
+        <%= f.label :department ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :department, autofocus: true , :class => "form-control"%>
+        </div>
+      </div>
+
+
+      <div class="col-md-12 form-group">
+        <%= f.label :location ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :location, autofocus: true , :class => "form-control"%>
+        </div>
+      </div>
+
+      <div class="col-md-12 form-group">
+        <%= f.label "Point Value" ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :point_val, autofocus: true , :class => "form-control"%>
+        </div>
+      </div>
+
+        <div class="col-md-12">
+        <%= f.label "Day/Time" ,:class => "col-md-3 control-label"%>
+            <div class='input-group date' id='datetimepicker1'>
+              <div class="col-md-7">
+              <%= f.text_field :day_time , :class => "form-control"%>
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+              </div>
+            </div>
+          </div>
+
+
+    </div>
+    <div class="col-md-6">
+      <h3 class="panel">Description</h3>
+      <div class="col-md-12 form-group">
+        <div class="col-md-12 form-group">
+            <%= f.text_area :description, autofocus: true  , :class => "form-control", rows: "11"%>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="form-group col-md-12 col-md-offset-5">
+  <%= hidden_field_tag :user_id, current_user.id %>
+  <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
+</div>
+<% end %>
+
+<%= javascript_tag do %>
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                inline: true,
+                sideBySide: true,
+                minDate: 0,
+            });
+            });
+<% end %>

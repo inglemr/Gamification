@@ -6,13 +6,19 @@
 		</ol>
 	</div>
 </div>
-
+<div class="text-right">
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-2x"></i>'.html_safe, {:action => 'new'}) %>
+</div>
 <div class="table-responsive">
 <table summary "Events List" id="events_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_events_path(format: "json") %>">
 		<thead>
 		<tr>
 			<th>ID</th>
 			<th>Name</th>
+			<th>Description</th>
+			<th>Location</th>
+			<th>Point Value</th>
+			<th>Day/Time</th>
 			<th>Actions</th>
 		</tr>
 		</thead>

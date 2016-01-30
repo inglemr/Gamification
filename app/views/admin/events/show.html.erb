@@ -4,7 +4,7 @@
       <li >Admin</li>
       <li><%= link_to("All Events", {:action => 'index'}) %></li>
       <li >Show</li>
-      <li class="active"><%= @event.name.capitalize %></li>
+      <li class="active"><%= @event.event_name.capitalize %></li>
     </ol>
   </div>
 </div>
@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<th>Name</th>
-			<td><%= @event.name %></td>
+			<td><%= @event.event_name %></td>
 		</tr>
 		<tr>
 			<th>Description</th>

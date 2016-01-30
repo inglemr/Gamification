@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Capstone
   class Application < Rails::Application
+    config.assets.paths << Rails.root.join("vendor","assets", "fonts")
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -24,5 +25,6 @@ module Capstone
     config.active_record.raise_in_transactional_callbacks = true
     config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :local
+
   end
 end

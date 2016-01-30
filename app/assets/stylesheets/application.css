@@ -18,7 +18,7 @@
  *= require bootstrap.min.css
  *= require jquery-ui/core
  *= require jquery-ui/theme
-  *= require jquery-ui/accordion
+ *= require jquery-ui/accordion
  *= require jquery-ui/autocomplete
  *= require jquery-ui/button
  *= require jquery-ui/datepicker
@@ -30,6 +30,8 @@
  *= require jquery-ui/spinner
  *= require jquery-ui/tabs
  *= require jquery-ui/tooltip
+
+ *= require bootstrap-datetimepicker
  *= require dataTables/src/demo_table_jui
  */
 .verticalLineLeft {

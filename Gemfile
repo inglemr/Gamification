@@ -14,7 +14,7 @@ gem 'bcrypt'
 gem "font-awesome-rails"
 #use rolify for role validations
 gem 'rolify'
-gem 'cancan'
+gem 'cancancan'
 gem 'cancan_namespace'
 
 #User rqrcode for creating QR Codes
@@ -67,4 +67,5 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'

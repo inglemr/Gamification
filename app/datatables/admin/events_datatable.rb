@@ -21,8 +21,11 @@ private
     events.map do |event|
       [
         event.id,
-        event.name.capitalize,
+        event.event_name.capitalize,
         event.description,
+        event.location,
+        event.point_val,
+        event.day_time.strftime("%m/%d/%Y %I:%M %p"),
         render(:partial=>"admin/events/actions.html.erb", locals: { event: event} , :formats => [:html])
       ]
     end
@@ -36,7 +39,7 @@ private
     events = Event.order("#{sort_column} #{sort_direction}")
     events = events.page(page).per_page(per_page)
     if params[:sSearch].present?
-      events = events.where("name like :search or description like :search", search: "%#{params[:sSearch]}%")
+      events = events.where("event_name like :search or description like :search", search: "%#{params[:sSearch]}%")
     end
     events
   end
@@ -50,7 +53,7 @@ private
   end
 
   def sort_column
-    columns = %w[id name description actions]
+    columns = %w[id event_name description actions]
     if params[:iSortCol_0]== "4"
       params[:iSortCol_0] = 0
     end
