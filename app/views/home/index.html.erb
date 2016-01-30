@@ -1,50 +1,23 @@
 <h1 class="jumbotron text-center panel"><%= current_user.username ? current_user.username+ "'s" : "" %> Dashboard</h1>
 <hr>
-<div class"row">
-<div class="col-md-4">
-	<div class="panel panel-default">
-	  <div class="panel-heading ">Panel heading</div>
-	  <div class="panel-body">
-	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae eleifend diam. Phasellus ut ligula eu justo dapibus pharetra quis eget purus. Nulla non fringilla est. Etiam tellus quam, accumsan vitae sagittis ac, molestie volutpat mauris. Proin at urna fermentum, dictum leo ut, congue turpis. Nullam porttitor pellentesque scelerisque. </p>
-	  </div>
+<% count = 0 %>
+<% @events.each do |event| %>
+<% count += 1 %>
+<% if count % 3 || count == 0 %>
+	<div class"row">
+<% end %>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+		  <div class="panel-heading "><%= event.event_name %> <p class="text-right inline"><%=  event.day_time.strftime("%m/%d/%Y %I:%M %p") %></p></div>
+		  <div class="panel-body">
+		    <p><%= event.description %> </p>
+		  </div>
+		</div>
 	</div>
-	</div>
-<div class="col-md-4">
-	<div class="panel panel-default">
-	  <div class="panel-heading ">Panel heading</div>
-	  <div class="panel-body">
-	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae eleifend diam. Phasellus ut ligula eu justo dapibus pharetra quis eget purus. Nulla non fringilla est. Etiam tellus quam, accumsan vitae sagittis ac, molestie volutpat mauris. Proin at urna fermentum, dictum leo ut, congue turpis. Nullam porttitor pellentesque scelerisque. </p>
-	  </div>
-	</div>
-	</div>
-<div class="col-md-4">
-	<div class="panel panel-default">
-	  <div class="panel-heading ">Panel heading</div>
-	  <div class="panel-body">
-	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae eleifend diam. Phasellus ut ligula eu justo dapibus pharetra quis eget purus. Nulla non fringilla est. Etiam tellus quam, accumsan vitae sagittis ac, molestie volutpat mauris. Proin at urna fermentum, dictum leo ut, congue turpis. Nullam porttitor pellentesque scelerisque. </p>
-	  </div>
-	</div>
-	</div>
-
 </div>
+<% end %>
 
-<div class"row">
-<div class="col-md-6">
-	<div class="panel panel-default">
-	  <div class="panel-heading ">Panel heading</div>
-	  <div class="panel-body">
-	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae eleifend diam. Phasellus ut ligula eu justo dapibus pharetra quis eget purus. Nulla non fringilla est. Etiam tellus quam, accumsan vitae sagittis ac, molestie volutpat mauris. Proin at urna fermentum, dictum leo ut, congue turpis. Nullam porttitor pellentesque scelerisque. </p>
-	  </div>
-	</div>
-	</div>
-<div class="col-md-6">
-	<div class="panel panel-default">
-	  <div class="panel-heading ">Panel heading</div>
-	  <div class="panel-body">
-	    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae eleifend diam. Phasellus ut ligula eu justo dapibus pharetra quis eget purus. Nulla non fringilla est. Etiam tellus quam, accumsan vitae sagittis ac, molestie volutpat mauris. Proin at urna fermentum, dictum leo ut, congue turpis. Nullam porttitor pellentesque scelerisque. </p>
-	  </div>
-	</div>
-	</div>
-
-</div>
+<% if @events.count == 0 %>
+	<h1>No Events To Display</h1>
+<% end %>
 

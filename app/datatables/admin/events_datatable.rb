@@ -53,8 +53,8 @@ private
   end
 
   def sort_column
-    columns = %w[id event_name description actions]
-    if params[:iSortCol_0]== "4"
+    columns = %w[id event_name description location point_val day_time actions]
+    if params[:iSortCol_0]== "6"
       params[:iSortCol_0] = 0
     end
     columns[params[:iSortCol_0].to_i]

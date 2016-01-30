@@ -17,19 +17,26 @@ class Admin::UsersDatatable
 private
 
   def data
-
     users.map do |user|
       [
         user.id,
         user.email,
+        getRoles(user),
+        user.points,
         user.created_at.to_formatted_s(:short),
-        user.updated_at.to_formatted_s(:short),
         render(:partial=>"admin/user/actions.html.erb", locals: { user: user} , :formats => [:html]) 
 
       ]
     end
   end
 
+  def getRoles(user)
+    roles = ""
+    user.roles.each do |role|
+      roles += role.name + " "
+    end
+    return roles
+  end
   def users
     @users ||= fetch_users
   end
@@ -38,7 +45,7 @@ private
     users = User.order("#{sort_column} #{sort_direction}")
     users = users.page(page).per_page(per_page)
     if params[:sSearch].present?
-      users = users.where("email like :search or email like :search", search: "%#{params[:sSearch]}%")
+      users = users.joins(:roles).merge(User.where("email like :search or name like :search", search: "%#{params[:sSearch]}%"))
     end
     users
   end
@@ -52,8 +59,8 @@ private
   end
 
   def sort_column
-    columns = %w[id email created_at updated_at]
-    if params[:iSortCol_0]== "4"
+    columns = %w[id email role points]
+    if params[:iSortCol_0]== "5"
       params[:iSortCol_0] = 0
     end
     columns[params[:iSortCol_0].to_i]
