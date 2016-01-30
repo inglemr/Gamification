@@ -15,6 +15,7 @@
  *= require_self
  *= require font-awesome
  *= require bootstrap.css
+ *= require bootstrap-glyphicons.css
  *= require bootstrap.min.css
  *= require jquery-ui/core
  *= require jquery-ui/theme
@@ -32,7 +33,6 @@
  *= require jquery-ui/tooltip
 
  *= require bootstrap-datetimepicker
- *= require dataTables/src/demo_table_jui
  */
 .verticalLineLeft {
     border: 0;
