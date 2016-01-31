@@ -27,7 +27,7 @@ private
         "users__id" => user.id,
         "users__email" => user.email,
         "users__roles" => getRoles(user),
-        "users_ponts" => user.points,
+        "users__points" => user.points,
         "users__created_at" => user.created_at.to_formatted_s(:short),
         user_actions: actions(user)
       }
