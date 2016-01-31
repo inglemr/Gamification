@@ -7,30 +7,54 @@
 		</ol>
 	</div>
 </div>
-<div class="table-responsive">
-<table summary "User List" id="users_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_user_index_path(format: "json") %>">
-		<thead>
-		<tr>
-			<th>ID</th>
-			<th>Email</th>
-			<th>Roles</th>
-			<th>Points</th>
-			<th>Created</th>
-			<th>Actions</th>
-		</tr>
-		</thead>
-		<tbody>
-	</tbody>
-</table>
+<div class="row">
+	<div class="col-md-6">
+		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New User'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
+	</div>
+	<div class="col-md-6 text-right">
+		  <input id='users_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+	   <span class="btn btn-sm btn-primary text-right" id="userss_table_refresh"><i class="fa fa-refresh"></i></span>
+	</div>
 </div>
-<%= javascript_tag do %>
+<div class="table-responsive">
+<table summary "User List" id="users_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_user_index_path(format: "json") %>"></table>
+</div>
 
 
-  $('#users_table').DataTable({
-    sPaginationType: "full_numbers",
-    bProcessing: true,
-    bServerSide: true,
-    sDom: "<'row'<'col-lg-5 col-md-5'l><'col-lg-6 col-md-6'f><'col-lg-1 col-md-1'>><'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-3 col-md-3 col-md-offset-5'p>>",
-    sAjaxSource: $('#users_table').data('source')
-});
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){  
+      var users_table = $('#users_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#users_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "users__id" },
+          { "title": "Email", "data": "users__email" },
+          { "title": "Roles", "data": "users__roles" },
+          { "title": "Points", "data": "users__points" },
+          { "title": "Created", "data": "users__created_at" },
+          { "title": "Actions", "data": "user_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#users_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#users_table_length").val() }
+          );
+        },
+      });
+      $("#users_table_length").on("change", function() {
+        users_table.dataTable().api().draw(false);
+      });
+      $('#users_table_refresh').click(function(e){
+        users_table.dataTable().api().draw(false);
+      });
+      $('#users_table_search').keyup(function(){
+       	users_table.dataTable().api().draw(false);
+      });
+		});
+  </script>
 <% end %>

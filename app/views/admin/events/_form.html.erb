@@ -9,6 +9,15 @@
 </div>
 <%= form_for(@event, :class =>"form-horizontal" , :url => path) do |f| %>
 <div class="page-panel panel col-md-12 ">
+  <% if @event.errors.any? %>
+    <% @event.errors.full_messages.each do |message| %>
+        <% concat(content_tag(:div, message, class: "row col-md-4 col-md-offset-8 flash_msg alert fade in") do %>
+         <% concat content_tag(:button, 'x', class: "close", data: { dismiss: 'alert' }) %>
+         <% concat message %>
+       <% end) %>
+    <% end %>
+  <% end %>
+
     <div class="row"><h2 class="text-center"><%= page_type %> Event</h2></div>
     <hr>
     <div class="col-md-6 verticalLineRight">
@@ -71,8 +80,18 @@
 </div>
 <% end %>
 
-<%= javascript_tag do %>
-            $(function () {
+
+<% content_for :scripts do %>
+<script type="text/javascript">
+  <% content_for :inner_scripts do %>
+
+  $(document).ready(function () {
+
+  $(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+              $(function () {
                 $('#datetimepicker1').datetimepicker({
                 inline: true,
                 sideBySide: true,
@@ -81,5 +100,52 @@
                 ,defaultDate: '<%= @event.day_time %>'
                 <% end %>
             });
-            });
+            })
+
+  $("#new_event").validate({
+  rules : {
+    "event[event_name]" : {
+      required: true
+    },
+    "event[department]" : {
+      required: true
+    },
+    "event[point_val]" : {
+      required: true
+    },
+      "event[day_time]" : {
+      required: true
+    },
+    "event[description]" : {
+        required: true
+    },
+    "event[location]" : {
+        required: true
+    }
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      // Bootstrap 3.x :      
+      _popover.data("bs.popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});
+    });
+
+
+
+  <% end %>
+  <%= content_for :inner_scripts %>
+</script>
 <% end %>

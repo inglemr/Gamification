@@ -1,15 +1,18 @@
 class Admin::EventsDatatable
-  delegate :params, :h,  :content_tag, :current_ability, :render, :can?, to: :@view
-  
+   delegate :params, :h,  :content_tag, :current_ability, :render, :can?,:truncate, to: :@view
+
   def initialize(view)
     @view = view
+    @events = Event.order("#{sort_column} #{sort_direction}").where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    @events = @events.page(page).per_page(per_page)
+
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Event.count,
-      iTotalDisplayRecords: events.total_entries,
+      iTotalRecords: @events.count,
+      iTotalDisplayRecords: @events.total_entries,
       aaData: data
     }
   end
@@ -18,30 +21,22 @@ private
 
   def data
 
-    events.map do |event|
-      [
-        event.id,
-        event.event_name.capitalize,
-        event.description,
-        event.location,
-        event.point_val,
-        event.day_time.to_formatted_s(:short),
-        render(:partial=>"admin/events/actions.html.erb", locals: { event: event} , :formats => [:html])
-      ]
+    @events.map do |event|
+      {
+        'DT_RowId' => event.id.to_s,
+        "events__id" => event.id,
+        "events__event_name" => event.event_name.capitalize,
+        "events__description" => truncate(event.description, :length => 200, :separator => ' '),
+        "events__location" => event.location,
+        "events__point_val" => event.point_val,
+        "events__day_time" => event.day_time.to_formatted_s(:short),
+        event_actions: actions(event)
+      }
     end
   end
 
-  def events
-    @events ||= fetch_events
-  end
-
-  def fetch_events
-    events = Event.order("#{sort_column} #{sort_direction}")
-    events = events.page(page).per_page(per_page)
-    if params[:sSearch].present?
-      events = events.where("event_name like :search or description like :search", search: "%#{params[:sSearch]}%")
-    end
-    events
+  def actions(event)
+    render(:partial=>"admin/events/actions.html.erb", locals: { event: event} , :formats => [:html])
   end
 
   def page
@@ -49,18 +44,26 @@ private
   end
 
   def per_page
-    params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
+    params[:iDisplayLength].to_i > 0? params[:iDisplayLength].to_i : 10
   end
 
-  def sort_column
-    columns = %w[id event_name description location point_val day_time actions]
-    if params[:iSortCol_0]== "6"
-      params[:iSortCol_0] = 0
-    end
-    columns[params[:iSortCol_0].to_i]
-  end
+
 
   def sort_direction
     params[:sSortDir_0] == "desc" ? "desc" : "asc"
   end
+
+  def search_string
+    "event_name LIKE :search OR description LIKE :search OR location LIKE :search" 
+  end
+
+  def sort_column
+    [*0..params[:iColumns].to_i-1].map{|i| params["mDataProp_#{i}"].gsub("__", ".") if params["bSortable_#{i}"] != 'false' }[params[:iSortCol_0].to_i]
+  end
 end
+
+
+
+
+
+

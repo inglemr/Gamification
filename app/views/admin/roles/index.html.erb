@@ -6,29 +6,51 @@
 		</ol>
 	</div>
 </div>
-
-<div class="table-responsive">
-<table summary "Roles List" id="roles_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_roles_path(format: "json") %>">
-		<thead>
-		<tr>
-			<th>ID</th>
-			<th>Name</th>
-			<th>Description</th>
-			<th>Actions</th>
-		</tr>
-		</thead>
-		<tbody>
-	</tbody>
-</table>
+<div class="row">
+	<div class="col-md-6">
+		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Role'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
+	</div>
+	<div class="col-md-6 text-right">
+		  <input id='roles_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+	   <span class="btn btn-sm btn-primary text-right" id="roles_table_refresh"><i class="fa fa-refresh"></i></span>
+	</div>
 </div>
-<%= javascript_tag do %>
+<div class="table-responsive">
+<table summary "Roles List" id="roles_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_roles_path(format: "json") %>"></table>
+</div>
 
-
-  $('#roles_table').DataTable({
-    sPaginationType: "full_numbers",
-    bProcessing: true,
-    bServerSide: true,
-    sDom: "<'row'<'col-lg-5 col-md-5'l><'col-lg-6 col-md-6'f><'col-lg-1 col-md-1'>><'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-3 col-md-3 col-md-offset-5'p>>",
-    sAjaxSource: $('#roles_table').data('source')
-});
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){  
+      var roles_table = $('#roles_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#roles_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "roles__id" },
+          { "title": "Name", "data": "roles__name" },
+          { "title": "Description", "data": "roles__description" },
+          { "title": "Actions", "data": "role_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#roles_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#roles_table_length").val() }
+          );
+        },
+      });
+      $("#roles_table_length").on("change", function() {
+        roles_table.dataTable().api().draw(false);
+      });
+      $('#roles_table_refresh').click(function(e){
+        roles_table.dataTable().api().draw(false);
+      });
+      $('#roles_table_search').keyup(function(){
+       	roles_table.dataTable().api().draw(false);
+      });
+		});
+  </script>
 <% end %>

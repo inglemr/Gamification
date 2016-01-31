@@ -6,34 +6,59 @@
 		</ol>
 	</div>
 </div>
-<div class="text-right">
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-2x"></i>'.html_safe, {:action => 'new'}) %>
+<div class="row">
+	<div class="col-md-6">
+		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
+	</div>
+	<div class="col-md-6 text-right">
+		  <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+	   <span class="btn btn-sm btn-primary text-right" id="events_table_refresh"><i class="fa fa-refresh"></i></span>
+	</div>
 </div>
+<br>
 <div class="table-responsive">
-<table summary "Events List" id="events_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_events_path(format: "json") %>">
-		<thead>
-		<tr>
-			<th>ID</th>
-			<th>Name</th>
-			<th>Description</th>
-			<th>Location</th>
-			<th>Point Value</th>
-			<th>Day/Time</th>
-			<th>Actions</th>
-		</tr>
-		</thead>
-		<tbody>
-	</tbody>
-</table>
+<table summary "Events List" id="events_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_events_path(format: "json") %>"></table>
 </div>
-<%= javascript_tag do %>
 
 
-  $('#events_table').DataTable({
-    sPaginationType: "full_numbers",
-    bProcessing: true,
-    bServerSide: true,
-    sDom: "<'row'<'col-lg-5 col-md-5'l><'col-lg-6 col-md-6'f><'col-lg-1 col-md-1'>><'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-3 col-md-3 col-md-offset-5'p>>",
-    sAjaxSource: $('#events_table').data('source')
-});
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){  
+      var events_table = $('#events_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#events_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "events__id" },
+          { "title": "Name", "data": "events__event_name" },
+          { "title": "Description", "data": "events__description" },
+          { "title": "Location", "data": "events__location" },
+          { "title": "Point Value", "data": "events__point_val" },
+          { "title": "Day/Time", "data": "events__day_time" },
+          { "title": "Actions", "data": "event_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#events_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+          );
+        },
+      });
+      $("#events_table_length").on("change", function() {
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_refresh').click(function(e){
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_search').keyup(function(){
+       	events_table.dataTable().api().draw(false);
+      });
+		});
+  </script>
 <% end %>
+
+
