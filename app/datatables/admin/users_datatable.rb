@@ -59,7 +59,7 @@ private
   end
 
   def sort_column
-    columns = %w[id email role points]
+    columns = %w[id email roles points created_at action]
     if params[:iSortCol_0]== "5"
       params[:iSortCol_0] = 0
     end

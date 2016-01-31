@@ -31,7 +31,7 @@
  *= require jquery-ui/spinner
  *= require jquery-ui/tabs
  *= require jquery-ui/tooltip
-
+ *= require jquery.gridster.css
  *= require bootstrap-datetimepicker
  */
 .verticalLineLeft {
@@ -82,4 +82,16 @@ text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 	margin-top: 10px;
 	width: 100%;
 	height: 80%;
+}
+
+.gridster{
+
+}
+.tile{
+
+
+
+}
+.gridster > ul{
+	 list-style-type: none
 }

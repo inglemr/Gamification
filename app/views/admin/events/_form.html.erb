@@ -76,7 +76,10 @@
                 $('#datetimepicker1').datetimepicker({
                 inline: true,
                 sideBySide: true,
-                minDate: 0,
+                minDate: 0
+                <% if page_type == "Edit" %>
+                ,defaultDate: '<%= @event.day_time %>'
+                <% end %>
             });
             });
 <% end %>

@@ -25,7 +25,7 @@ private
         event.description,
         event.location,
         event.point_val,
-        event.day_time.strftime("%m/%d/%Y %I:%M %p"),
+        event.day_time.to_formatted_s(:short),
         render(:partial=>"admin/events/actions.html.erb", locals: { event: event} , :formats => [:html])
       ]
     end

@@ -1,23 +1,52 @@
 <h1 class="jumbotron text-center panel"><%= current_user.username ? current_user.username+ "'s" : "" %> Dashboard</h1>
 <hr>
-<% count = 0 %>
-<% @events.each do |event| %>
-<% count += 1 %>
-<% if count % 3 || count == 0 %>
-	<div class"row">
-<% end %>
-	<div class="col-md-4">
-		<div class="panel panel-default">
-		  <div class="panel-heading "><%= event.event_name %> <p class="text-right inline"><%=  event.day_time.strftime("%m/%d/%Y %I:%M %p") %></p></div>
-		  <div class="panel-body">
-		    <p><%= event.description %> </p>
-		  </div>
-		</div>
-	</div>
+<% row = 1 %>
+<% col = 1 %>
+<div class="gridster">
+	<ul>
+		<% @events.each do |event| %>
+    	<% if (col == 4) %>
+    		<% row += 1 %>
+    		<% col = 1 %>
+    	<% end %>
+       <li class= "tile" data-row="<%= row %>" data-col="<%= col %>" data-sizex="2" data-sizey="3">
+				<div class="panel panel-default">
+		  		<div class="panel-heading"><h3 class="text-center"><%= event.event_name %></h3><hr><p class="text-left"><b>Day/Time: </b><%= event.day_time.to_formatted_s(:short) %></p></div>
+		  		<div class="panel-body">
+		    		<p><%= truncate(event.description, :length => 200, :separator => ' ') %></p>
+		    		<hr>
+		    		<p><b>Points:</b><%= event.point_val %></p>
+		  		</div>
+				</div>
+			</li>
+			<% col += 1 %>
+    <% end %>
+	</ul>
 </div>
-<% end %>
 
 <% if @events.count == 0 %>
 	<h1>No Events To Display</h1>
 <% end %>
 
+
+<% content_for :scripts do %>
+<script type="text/javascript">
+  <% content_for :inner_scripts do %>
+
+  $(document).ready(function () {
+	$(function(){
+
+    $(".gridster ul").gridster({
+        widget_margins: [15, 15],
+        widget_base_dimensions: [140, 100]
+    }).data('gridster').disable();
+
+    })
+});
+
+
+
+  <% end %>
+  <%= content_for :inner_scripts %>
+</script>
+<% end %>
