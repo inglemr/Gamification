@@ -1,1 +1,32 @@
-<h2>test</h2>
+<div class= "row">
+  <div class="page-heading-bar">
+    <ol class="breadcrumb">
+      <li><%= link_to("All Events", { :controller => 'dashboard' ,:action => 'index'}) %></li>
+      <li >Show</li>
+      <li class="active"><%= @event.event_name.capitalize %></li>
+    </ol>
+  </div>
+</div>
+<div class="col-md-12">	
+	<div class="jumbotron">
+		<h2 class="text-center"><%= @event.event_name %></h2>
+		<hr>
+		<div class="row col-md-12">
+			<p class="text-left col-md-3">Points: <%= @event.point_val %></p>
+			<p class="col-md-3">Location: <%= @event.location %></p>
+			<p class="col-md-3">Department: <%= @event.department %></p>
+			<p class="text-right col-md-3">Day/Time: <%= @event.day_time.to_formatted_s(:short) %></p>
+		</div>
+	</div>
+
+	<div class="panel">
+		<p>
+			<%= @event.description.html_safe %>
+		</p>
+	</div>
+</div>
+
+
+
+
+
