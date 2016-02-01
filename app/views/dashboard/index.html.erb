@@ -1,10 +1,15 @@
-<h1 class="jumbotron text-center panel"><%= current_user.username ? current_user.username+ "'s" : "" %> Dashboard
-<div class="row">
-	<div class="col-md-12 text-right">
-		  <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
-	</div>
+<div class="dashboard_header jumbotron" style="">
 </div>
-</h1>
+<div class= "row">
+  <div class="page-heading-bar" style="margin-top:0px;">
+    <ol class="breadcrumb text-left">
+      <li >Dashboard</li>
+      <li class="active">All Events</li>
+      <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 10px; margin-left:65%;">
+    </ol>
+  </div>
+</div>
+
 <div id='events_grid' class="row" style='display: block'></div>
 <table summary "Events List" id="events_table" style="display: none"class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= root_path(format: "json") %>"></table>
 

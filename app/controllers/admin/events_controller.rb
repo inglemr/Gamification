@@ -22,7 +22,6 @@ load_and_authorize_resource
 		@event = Event.find(params[:id])
 		@event.image = params[:image]
 		if params[:event][:day_time] != ""
-    	#TODO(matt) This is kind of hacky and assumes est will always be the time zone
     	without_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
 			params[:event][:day_time] = Time.zone.parse(without_zone.strftime('%Y-%m-%d %H:%M:%S'))
     end
@@ -38,6 +37,11 @@ load_and_authorize_resource
 	end
 
 	def create
+		puts "timezonetest"
+		if params[:event][:day_time] != ""
+    	without_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
+			params[:event][:day_time] = Time.zone.parse(without_zone.strftime('%Y-%m-%d %H:%M:%S'))
+    end
 		@event = Event.new(event_params)
 		@event.image = params[:image]
 		if @event.save

@@ -103,3 +103,22 @@ a.new:hover{
 	background-color:  #00cc00;
 	border: none;
 }
+
+.dashboard_header{
+	background-image: url(http://placehold.it/350x150);
+	background-repeat: no-repeat;
+	opacity: 1;
+	background-size: 1440px 180px;
+	margin-bottom: 0px;
+	margin-top:10px;
+	border:none; 
+	margin-left:-30px;
+	margin-right:-30px;
+	height: 150px;
+}
+
+.dashboard_text_header
+{
+	color:white;
+	margin: 0px;
+}
