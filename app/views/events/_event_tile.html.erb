@@ -8,9 +8,9 @@
     <div class='row data'>
       <div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0px;'>
       <% if event.image_url.to_s == "" %>
-        <img src="http://placehold.it/140x100">
+        <img class="event_tile_img" src="http://placehold.it/140x100">
       <% else %>
-        <%= image_tag event.image_url(:resized).to_s %>
+        <%= image_tag event.image_url(:resized).to_s ,:class => "event_tile_img" %>
       <% end %>
       </div>
       <div class='col-lg-8 col-md-8 col-sm-8 short-description'>

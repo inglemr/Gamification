@@ -37,7 +37,6 @@ load_and_authorize_resource
 	end
 
 	def create
-		puts "timezonetest"
 		if params[:event][:day_time] != ""
     	without_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
 			params[:event][:day_time] = Time.zone.parse(without_zone.strftime('%Y-%m-%d %H:%M:%S'))
