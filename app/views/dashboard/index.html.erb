@@ -1,0 +1,50 @@
+<h1 class="jumbotron text-center panel"><%= current_user.username ? current_user.username+ "'s" : "" %> Dashboard
+<div class="row">
+	<div class="col-md-12 text-right">
+		  <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+	</div>
+</div>
+</h1>
+<div id='events_grid' class="row" style='display: block'></div>
+<table summary "Events List" id="events_table" style="display: none"class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= root_path(format: "json") %>"></table>
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+
+    var datatable;
+    $( document ).ready(function() {
+      var events_table = $('#events_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "iDisplayLength": 12,
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#events_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Square Setup", "data": "events_eventTile"}
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#events_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+          );
+        },
+        fnDrawCallback: function( oSettings ) {
+          $('#events_grid').html('');
+          $.each(oSettings.aoData, function( index, result ) {
+            $('#events_grid').append(result._aData.events_eventTile);
+          });
+      }
+    });
+      $("#events_table_length").on("change", function() {
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_search').keyup(function(){
+       	events_table.dataTable().api().draw(false);
+      });
+
+    })
+  </script>
+<% end %>

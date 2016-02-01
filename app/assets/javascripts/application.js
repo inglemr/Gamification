@@ -25,7 +25,6 @@
 //= require turbolinks
 //= require moment
 //= require bootstrap-datetimepicker
-//= require jquery.gridster.js
 //= require_tree .
 
 
