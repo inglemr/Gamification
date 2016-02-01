@@ -1,7 +1,7 @@
 <div class="dashboard_header jumbotron" style="">
 </div>
 <div class= "row">
-  <div class="page-heading-bar" style="margin-top:0px;">
+  <div style="margin-top:0px;" class="page-heading-bar<%= (current_user.has_role? :admin) ? "" : "-user" %>">
     <ol class="breadcrumb text-left">
       <li >Dashboard</li>
       <li class="active">All Events</li>
