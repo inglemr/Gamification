@@ -1,5 +1,5 @@
 <div class="col-lg-4 col-md-4 col-sm-6">
-  <div class="thumbnail userapp">
+  <div class="thumbnail userevent">
     <div class='row'>
       <div class='col-lg-12 col-md-12 col-sm-12' style='padding-bottom:5px;font-weight: 700;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>
         <%= event.event_name %>
@@ -7,7 +7,11 @@
     </div>
     <div class='row data'>
       <div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0px;'>
-      <img src="http://placehold.it/140x100">
+      <% if event.image_url.to_s == "" %>
+        <img src="http://placehold.it/140x100">
+      <% else %>
+        <%= image_tag event.image_url(:resized).to_s %>
+      <% end %>
       </div>
       <div class='col-lg-8 col-md-8 col-sm-8 short-description'>
         <%= ActionView::Base.full_sanitizer.sanitize(event.description.html_safe)[0,180] + '...' %>

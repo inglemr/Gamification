@@ -20,6 +20,7 @@ load_and_authorize_resource
 
 	def update
 		@event = Event.find(params[:id])
+		@event.image = params[:image]
 		if params[:event][:day_time] != ""
     	#TODO(matt) This is kind of hacky and assumes est will always be the time zone
     	without_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
@@ -38,7 +39,7 @@ load_and_authorize_resource
 
 	def create
 		@event = Event.new(event_params)
-
+		@event.image = params[:image]
 		if @event.save
   		redirect_to admin_event_path(@event)
   	else
@@ -55,7 +56,7 @@ end
 
 private
   def event_params
-    params.require(:event).permit(:event_name, :department, :day_time, :location, :point_val, :description, :user_id)
+    params.require(:event).permit(:event_name, :department, :day_time, :location, :point_val, :description, :user_id, :image)
   end
 
 end

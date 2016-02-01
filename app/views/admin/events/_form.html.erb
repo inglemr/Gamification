@@ -71,6 +71,8 @@
         <div class="col-md-12 form-group">
             <%= f.text_area :description, autofocus: true  , :class => "form-control", rows: "11"%>
         </div>
+         <%= f.label "Image:" ,:class => "col-md-3 control-label"%>
+        <%= f.file_field :image %>
       </div>
     </div>
 </div>

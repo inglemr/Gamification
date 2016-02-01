@@ -84,9 +84,6 @@ text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 	height: 80%;
 }
 
-.gridster{
-
-}
 .tile{
 
 
@@ -96,13 +93,13 @@ text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 	 list-style-type: none
 }
 
-.new{
+a.new{
 	background-color:  #009900;
 	border: none;
 	border-radius: 10px;
 }
 
-.new:hover{
+a.new:hover{
 	background-color:  #00cc00;
 	border: none;
 }

@@ -31,6 +31,10 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'turbolinks'
 gem 'gridster-rails'
 
+#File uploads
+gem 'carrierwave'
+gem "mini_magick"
+
 group :production do
 	#Web Server
 	gem "passenger"
