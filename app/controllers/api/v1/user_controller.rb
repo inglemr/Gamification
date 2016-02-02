@@ -1,8 +1,6 @@
-class API::V1::UserController < ApplicationController
+class API::V1::UserController < API::BaseController
 	load_and_authorize_resource
-	rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
-  end
+	before_filter :load_permissions 
 	def index
 			puts params
 	    @user = User.select(:id, :email, :username, :points, :events_attended).all
@@ -10,4 +8,11 @@ class API::V1::UserController < ApplicationController
 	      format.json { render :json => @user }
 	    end
   end
+
+private
+	def self.permission
+	  return "API::User"
+	end
+
+
 end

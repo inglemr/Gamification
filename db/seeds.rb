@@ -5,3 +5,21 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+
+ Permission.create!(:name => "Everything",:description => "Full Access", :subject_class => "all", :action => "manage")
+ Permission.create!(:name => "Admin Events",:description => "Full Access to Events",:subject_class => "Admin::Event", :action => "manage")
+ Permission.create!(:name => "Admin Users",:description => "Full Access to Users",:subject_class => "Admin::User", :action => "manage")
+ Permission.create!(:name => "Admin Roles",:description => "Full Access to Roles",:subject_class => "Admin::Role", :action => "manage") 
+ Permission.create!(:name => "Admin Sidebar",:description => "View Admin Sidebar",:subject_class => "sidebar", :action => "manage") 
+
+ Permission.create!(:name => "View Events",:description => "View Events", :subject_class => "Event", :action => "read")
+ Permission.create!(:name => "View Dashboard",:description => "View Dashboard", :subject_class => "Dashboard", :action => "read")
+
+
+ admin = Role.create!(:name => "Admin")
+ student = Role.create!(:name => "Student") 
+ student.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
+ student.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
+ admin.permissions << Permission.find_by(:subject_class => 'all', :action => "manage")

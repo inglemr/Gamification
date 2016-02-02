@@ -1,8 +1,6 @@
-class Admin::EventsController < ApplicationController
-load_and_authorize_resource
-	rescue_from CanCan::AccessDenied do |exception|
-    	redirect_to root_url, :alert => exception.message
-  	end
+class Admin::EventsController < Admin::BaseController
+	load_and_authorize_resource
+	before_filter :load_permissions 
 	def index
 		respond_to do |format|
     		format.html
@@ -61,5 +59,10 @@ private
   def event_params
     params.require(:event).permit(:event_name, :department, :day_time, :location, :point_val, :description, :user_id, :image)
   end
+
+	def self.permission
+	  return "Admin::Events"
+	end
+
 
 end

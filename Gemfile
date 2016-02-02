@@ -8,7 +8,6 @@ gem 'has-many-with-set'
 #User Authentication
 gem 'devise'
 gem 'bcrypt'
-gem 'rolify'
 gem 'cancancan'
 gem 'cancan_namespace'
 

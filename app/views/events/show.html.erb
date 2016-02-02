@@ -1,8 +1,7 @@
 <div class= "row">
-  <div class="page-heading-bar<%= (current_user.has_role? :admin) ? "" : "-user" %>">
+  <div class="page-heading-bar-user">
     <ol class="breadcrumb">
-      <li><%= link_to("All Events", { :controller => 'dashboard' ,:action => 'index'}) %></li>
-      <li >Show</li>
+      <li><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
       <li class="active"><%= @event.event_name.capitalize %></li>
     </ol>
   </div>
@@ -20,6 +19,7 @@
 	</div>
 
 	<div class="panel">
+		<%= image_tag @event.image_url(:page_size).to_s ,:class => "text-center event_tile_img" %>
 		<p>
 			<%= @event.description.html_safe %>
 		</p>

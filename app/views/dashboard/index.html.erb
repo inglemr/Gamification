@@ -1,10 +1,9 @@
 <div class="dashboard_header jumbotron" style="">
 </div>
 <div class= "row">
-  <div style="margin-top:0px;" class="page-heading-bar<%= (current_user.has_role? :admin) ? "" : "-user" %>">
+  <div style="margin-top:0px;" class="page-heading-bar-user">
     <ol class="breadcrumb text-left">
-      <li >Dashboard</li>
-      <li class="active">All Events</li>
+      <li ><%= current_user.username %>'s Dashboard</li>
       <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 10px; margin-left:65%;">
     </ol>
   </div>

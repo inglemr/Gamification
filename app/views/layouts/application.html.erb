@@ -14,7 +14,7 @@
     <% if  current_user %>
       <%= render "shared/usermenu.html.erb"%>
     <% end %>
-    <% if  can? :manage, :all%>
+    <% if  can? :view, :sidebar%>
       <%= render "shared/sidebar.html.erb"%>
     <% end %>
     <% if  alert %>

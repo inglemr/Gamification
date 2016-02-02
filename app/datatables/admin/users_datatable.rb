@@ -59,7 +59,7 @@ private
   end
 
   def select_statement
-    "DISTINCT users.*, roles.name"
+    "DISTINCT users.*"
   end
 
 end

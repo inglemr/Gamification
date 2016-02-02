@@ -1,14 +1,32 @@
 class Ability
   include CanCan::Ability
-
+ 
   def initialize(user)
+        if user
+            if user.roles
+            user.roles.each do |role|
+                role.permissions.each do |permission|
+                    if permission.subject_class == "all"
+                        can permission.action.to_sym, permission.subject_class.to_sym
+                    elsif permission.subject_class == "Dashboard"
+                        can permission.action.to_sym, permission.subject_class.downcase.to_sym
+                    else
+                        can permission.action.to_sym, permission.subject_class.constantize
+                    end
+                end
+            end
+        end
+        end
+    end
+  end
 
-      user ||= User.new # guest user (not logged in)
-       if user.has_role? :admin
-         can :manage, :all
-       else
-         can :read, :dashboard
-       end
+
+    #  user ||= User.new # guest user (not logged in)
+    #   if user.has_role? :admin
+    #     can :manage, :all
+    #   elsif user.has_role? :student
+    #     can :read, :dashboard
+    #   end
     #
     # The first argument to `can` is the action you are giving the user 
     # permission to do.
@@ -27,5 +45,3 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
-  end
-end

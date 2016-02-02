@@ -11,10 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201051341) do
+ActiveRecord::Schema.define(version: 20160202143314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dashboards", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -30,17 +35,38 @@ ActiveRecord::Schema.define(version: 20160201051341) do
     t.string   "image"
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "subject_class"
+    t.text     "description"
+    t.string   "action"
+    t.integer  "subject_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "permissions_roles", id: false, force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "permission_id"
+  end
+
+  add_index "permissions_roles", ["permission_id"], name: "index_permissions_roles_on_permission_id", using: :btree
+  add_index "permissions_roles", ["role_id"], name: "index_permissions_roles_on_role_id", using: :btree
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
-    t.integer  "resource_id"
-    t.string   "resource_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.text     "description"
   end
 
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
-  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
+  add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
+  add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -79,12 +105,5 @@ ActiveRecord::Schema.define(version: 20160201051341) do
 
   add_index "users_events_sets_events", ["event_id"], name: "ix_events_users_events_sets_events", using: :btree
   add_index "users_events_sets_events", ["users_events_set_id"], name: "ix_items_users_events_sets_events", using: :btree
-
-  create_table "users_roles", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-  end
-
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
 end

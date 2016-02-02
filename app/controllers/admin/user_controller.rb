@@ -1,8 +1,6 @@
-class Admin::UserController < ApplicationController
+class Admin::UserController  < Admin::BaseController
 	load_and_authorize_resource
-	rescue_from CanCan::AccessDenied do |exception|
-    	redirect_to root_url, :alert => exception.message
-  	end
+	before_filter :load_permissions 
 	def index
 		respond_to do |format|
     		format.html
@@ -21,14 +19,17 @@ class Admin::UserController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		params['user']['_roles'] ||= []
-		params['user']['_roles'].each do |role|
-  		@user.add_role role unless @user.has_role? role
+		params['user']['_roles'].each do |id|
+			if(!@user.roles.exists?(id))
+  			@user.roles << Role.find(id)
+  		end
   	end
 	  Role.all.each do |role|
-	  	if !params['user']['_roles'].include?(role.name)
-	  		@user.remove_role role.name.to_sym
+	  	if !(params['user']['_roles'].include?(role.id.to_s))
+	  		@user.roles.delete(role.id)
 	  	end
 		end
+		
 		if @user.update_attributes(params[:user].permit(:email, :username))
   		redirect_to admin_user_path, :flash => { :success => 'User was successfully updated.' }
 		else
@@ -38,5 +39,8 @@ class Admin::UserController < ApplicationController
 
 	def delete
 	end
-
+private
+	def self.permission
+	  return "Admin::User"
+	end
 end
