@@ -14,6 +14,10 @@
  Permission.create!(:name => "Admin Roles",:description => "Full Access to Roles",:subject_class => "Admin::Role", :action => "manage") 
  Permission.create!(:name => "Admin Sidebar",:description => "View Admin Sidebar",:subject_class => "sidebar", :action => "manage") 
 
+ Permission.create!(:name => "API Events",:description => "Full Access to Events API",:subject_class => "API:Event", :action => "manage")
+ Permission.create!(:name => "API Users",:description => "Full Access to Users API",:subject_class => "API::User", :action => "manage")
+ Permission.create!(:name => "API QRCodes",:description => "Full Access to QRCodes API",:subject_class => "API:Qrcode", :action => "manage")
+
  Permission.create!(:name => "View Events",:description => "View Events", :subject_class => "Event", :action => "read")
  Permission.create!(:name => "View Dashboard",:description => "View Dashboard", :subject_class => "Dashboard", :action => "read")
 

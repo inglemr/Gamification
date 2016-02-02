@@ -19,28 +19,60 @@ class Admin::RolesController < Admin::BaseController
 
 	def update
 		@role = Role.find(params[:id])
-		params['role']['_permissions'] ||= []
-		params['role']['_permissions'].each do |id|
+		params['role']['permissions'] ||= []
+		params['role']['permissions'].each do |id|
 			if(!@role.permissions.exists?(id))
   			@role.permissions << Permission.find(id)
   		end
   	end
 	  Permission.all.each do |permission|
-	  	if !(params['role']['_permissions'].include?(permission.id.to_s)) && @role.permissions.exists?(permission.id)
+	  	if !(params['role']['permissions'].include?(permission.id.to_s)) && @role.permissions.exists?(permission.id)
 	  		@role.permissions.delete(permission.id)
 	  	end
 		end
 
-		if @role.update_attributes(params[:role].permit(:name, :description))
+		if @role.update_attributes(role_params)
   		redirect_to admin_role_path, :flash => { :success => 'Role was successfully updated.' }
 		else
   		redirect_to admin_role_path, :flash => { :error => 'Role was unsuccesfully updated.' }
 		end
 	end
 
+	def new
+		@role = Role.new
+	end
+
+	def create
+		@role = Role.new(role_params)
+		params['role']['permissions'] ||= []
+		params['role']['permissions'].each do |id|
+			if(!@role.permissions.exists?(id))
+  			@role.permissions << Permission.find(id)
+  		end
+  	end
+	  Permission.all.each do |permission|
+	  	if !(params['role']['permissions'].include?(permission.id.to_s)) && @role.permissions.exists?(permission.id)
+	  		@role.permissions.delete(permission.id)
+	  	end
+		end
+
+		if @role.save
+  		redirect_to admin_role_path(@role)
+  	else
+  		render 'new'
+  	end
+	end
+
+
+
+
 private
 	def self.permission
 	  return "Admin::Roles"
 	end
+
+  def role_params
+    params.require(:role).permit(:name, :description, :permissions)
+  end
 
 end
