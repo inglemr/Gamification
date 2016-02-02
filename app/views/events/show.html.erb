@@ -1,5 +1,5 @@
 <div class= "row">
-  <div class="page-heading-bar-user">
+  <div class="page-heading-bar<%= (can? :manage, :sidebar) ? "" : "-user" %>">
     <ol class="breadcrumb">
       <li><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
       <li class="active"><%= @event.event_name.capitalize %></li>
@@ -19,7 +19,7 @@
 	</div>
 
 	<div class="panel">
-		<%= image_tag @event.image_url(:page_size).to_s ,:class => "text-center event_tile_img" %>
+		<%= image_tag @event.image_url(:page_size).to_s ,:class => "text-center event_tile_img" ,:style => "float: left; margin-right: 15px;" %>
 		<p>
 			<%= @event.description.html_safe %>
 		</p>

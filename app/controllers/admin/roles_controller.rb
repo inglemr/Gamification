@@ -38,6 +38,12 @@ class Admin::RolesController < Admin::BaseController
 		end
 	end
 
+	def destroy
+	  @role = Role.find(params[:id])
+	  @role.destroy
+	  redirect_to admin_roles_path
+	end
+
 	def new
 		@role = Role.new
 	end

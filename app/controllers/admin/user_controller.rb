@@ -25,7 +25,7 @@ class Admin::UserController  < Admin::BaseController
   		end
   	end
 	  Role.all.each do |role|
-	  	if !(params['user']['_roles'].include?(role.id.to_s))
+	  	if !(params['user']['_roles'].include?(role.id.to_s)) && @user.roles.exists?(role.id)
 	  		@user.roles.delete(role.id)
 	  	end
 		end
