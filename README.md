@@ -17,6 +17,7 @@
 	* Navigate inside the capstone directory <tt>cd capstone</tt>
 	* Install all the gems from the gemfile using <tt>bundle install</tt>
 	* Run database migrations <tt>rake db:migrate</tt>
+	* Run database seed <tt>rake db:seed</tt> (This will add all permissions into the database and the admin role)
 	* Run the local development server using <tt>rails server</tt>
 	* Navigate to the app at <tt>localhost:3000</tt>
 	* The app has been succesffuly installed
@@ -26,6 +27,6 @@
 ## Adding admin to a user
 
 * User roles can be added through the rails console by navigating to the root directory of the app and using the command <tt>rails console</tt>
-* Once the console has started run the follow command to find your user in the database <tt>user = User.find_by(:email => "<email>")</tt>
+* Once the console has started run the follow command to find your user in the database <tt>user = User.find_by(:email => "your_email")</tt>
 * To add a role to this user simply use <tt>user.add_role :Admin</tt>(Case is important) to add the admin role
 * To finish just do <tt>user.save</tt> to save this record to the database
