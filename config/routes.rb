@@ -18,7 +18,12 @@ Rails.application.routes.draw do
 
     namespace :api, :defaults => {:format => :json} do
       namespace :v1 do
-        resources :user
+        resources :user do
+          collection do
+             get :add_event
+             post :add_event
+          end
+        end
       end
     end
 

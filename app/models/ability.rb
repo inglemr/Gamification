@@ -6,7 +6,6 @@ class Ability
         user.roles.each do |role|
           role.permissions.each do |permission|
             if permission.subject_class == "all" || permission.subject_class == "sidebar" 
-              can permission.action.to_sym, permission.subject_class.to_sym
               can permission.action.to_sym, permission.subject_class.to_sym, :context => :admin
             end
             if !permission.subject_class.include?("::")

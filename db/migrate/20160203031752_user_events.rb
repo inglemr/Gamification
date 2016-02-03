@@ -1,8 +1,8 @@
 class UserEvents < ActiveRecord::Migration
   def change
   	create_table :user_events do |t|
-      t.integer :event_id
-      t.integer :attendee_id
+  		t.references :attended_event
+      t.references :attendee
       t.timestamps null: false
     end
   end

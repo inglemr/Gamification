@@ -65,10 +65,10 @@ ActiveRecord::Schema.define(version: 20160203031752) do
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
   create_table "user_events", force: :cascade do |t|
-    t.integer  "event_id"
+    t.integer  "attended_event_id"
     t.integer  "attendee_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -89,9 +89,11 @@ ActiveRecord::Schema.define(version: 20160203031752) do
     t.string   "gsw_id"
     t.integer  "points"
     t.integer  "events_attended"
+    t.integer  "users_events_set_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["users_events_set_id"], name: "index_users_on_users_events_set_id", using: :btree
 
 end

@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
 	after_commit :assign_default_role, on: :create
 	has_and_belongs_to_many :roles
+  has_many :user_events, foreign_key: :attendee_id
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"
-  has_many :attended_events, through: :user_events, source: :event
+  has_many :attended_events, through: :user_events
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
