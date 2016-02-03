@@ -1,5 +1,5 @@
-class API::V1::UserController < API::BaseController
-	load_and_authorize_resource :class => false
+class API::V1::UserController < ApplicationController
+	load_and_authorize_resource :context => :admin, :class => false
 	before_filter :load_permissions 
 	def index
 			puts params

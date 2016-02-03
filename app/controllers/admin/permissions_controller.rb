@@ -1,5 +1,5 @@
-class Admin::PermissionsController < Admin::BaseController
-	load_and_authorize_resource
+class Admin::PermissionsController < ApplicationController
+	load_and_authorize_resource :context => :admin
 	before_filter :load_permissions 
 	def index
 		respond_to do |format|

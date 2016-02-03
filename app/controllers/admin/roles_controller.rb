@@ -1,5 +1,5 @@
-class Admin::RolesController < Admin::BaseController
-	load_and_authorize_resource
+class Admin::RolesController < ApplicationController
+	load_and_authorize_resource :context => :admin
 	before_filter :load_permissions 
 	
 	def index
