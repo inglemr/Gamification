@@ -89,11 +89,9 @@ ActiveRecord::Schema.define(version: 20160203031752) do
     t.string   "gsw_id"
     t.integer  "points"
     t.integer  "events_attended"
-    t.integer  "users_events_set_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["users_events_set_id"], name: "index_users_on_users_events_set_id", using: :btree
 
 end

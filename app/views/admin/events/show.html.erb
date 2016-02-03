@@ -25,6 +25,12 @@
 			<td><%= @event.description.html_safe %> </td>
 		</tr>
 	</table>
+	<table>
+		<tr>
+			<th>QR Code</th>
+			<td><%= raw @qr.as_html %></td>
+		</tr>
+	</table>
 </div>
 </div>
 
