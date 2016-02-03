@@ -13,6 +13,7 @@
   * Install [PgAdmin](http://www.pgadmin.org/) (Optional) - Helpful with Database manipulation
 * Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/)
 * Install [Rails](http://guides.railsgirls.com/install)
+* Install [ImageMagick](http://www.imagemagick.org/script/binary-releases.php) for images
 * Clone this repository locally using <tt>git clone git@github.com:inglemr/capstone.git</tt>
 	* Navigate inside the capstone directory <tt>cd capstone</tt>
 	* Install all the gems from the gemfile using <tt>bundle install</tt>
