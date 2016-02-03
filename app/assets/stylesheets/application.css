@@ -33,6 +33,22 @@
  *= require jquery-ui/tooltip
  *= require bootstrap-datetimepicker
  */
+
+
+.checkbox_container {
+  display: inline-block;
+  vertical-align: -1px;
+  margin: 5px;
+ }
+.checkbox_container input {
+  display: inline;
+ }
+.checkbox_container .collection_check_boxes{
+  display: inline;
+  vertical-align: -5px;
+ }
+
+ 
 .verticalLineLeft {
     border: 0;
     border-left: 1px solid #eee;
@@ -68,7 +84,7 @@ display: inline-block;
 font-size: 14px;
 font-weight: 600;
 color: #555;
-margin-top: 20px;
+margin-top: 40px;
 margin-left: -10px;
 margin-bottom: 10px;
 width:105%;

@@ -19,14 +19,14 @@ class Admin::RolesController < ApplicationController
 
 	def update
 		@role = Role.find(params[:id])
-		params['role']['permissions'] ||= []
-		params['role']['permissions'].each do |id|
-			if(!@role.permissions.exists?(id))
+		params['role']['permission_ids'] ||= []
+		params['role']['permission_ids'].each do |id|
+			if(!@role.permissions.exists?(id) && !id.blank?)
   			@role.permissions << Permission.find(id)
   		end
   	end
 	  Permission.all.each do |permission|
-	  	if !(params['role']['permissions'].include?(permission.id.to_s)) && @role.permissions.exists?(permission.id)
+	  	if !(params['role']['permission_ids'].include?(permission.id.to_s)) && @role.permissions.exists?(permission.id)
 	  		@role.permissions.delete(permission.id)
 	  	end
 		end

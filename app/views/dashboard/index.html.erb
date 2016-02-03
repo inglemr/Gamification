@@ -2,13 +2,16 @@
 </div>
 <div class= "row">
  <div style="margin-top:0px;" class="page-heading-bar<%= (can? :manage, :sidebar) ? "" : "-user" %>">
-    <ol class="breadcrumb text-left">
+    <ol class="breadcrumb">
       <li ><%= current_user.username %>'s Dashboard</li>
-      <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 10px; margin-left:65%;">
+      <% if   (can? :manage, :all) || (can? :create, Event, :context => :admin)%>
+      <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary new text-right" , :style => "margin-left: 20%;") %>
+      <% end %>
+      <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 10px;margin-left: 30%;">
+
     </ol>
   </div>
 </div>
-
 <div id='events_grid' class="row" style='display: block'></div>
 <table summary "Events List" id="events_table" style="display: none"class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= root_path(format: "json") %>"></table>
 

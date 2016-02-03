@@ -17,7 +17,7 @@
     <% if  can? :view, :sidebar%>
       <%= render "shared/sidebar.html.erb"%>
     <% end %>
-    <% if  alert %>
+    <% if !flash.empty? %>
       <%= flash_messages %>
     <% end %>
     <div class="main">

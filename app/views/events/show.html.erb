@@ -19,10 +19,15 @@
 	</div>
 
 	<div class="panel">
-		<%= image_tag @event.image_url(:page_size).to_s ,:class => "text-center event_tile_img" ,:style => "float: left; margin-right: 15px;" %>
 		<p>
 			<%= @event.description.html_safe %>
 		</p>
+	</div>
+	<hr>
+	<div class="col-md-12">
+		<h2>Images</h2>
+		<hr>
+		<%= image_tag @event.image_url(:page_size).to_s ,:class => "text-center event_tile_img" ,:style => "float: left; margin-right: 15px;" %>
 	</div>
 </div>
 

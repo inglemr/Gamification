@@ -44,7 +44,11 @@ class Admin::EventsController < ApplicationController
 		@event = Event.new(event_params)
 		@event.image = params[:image]
 		if @event.save
-  		redirect_to admin_event_path(@event)
+			if can? :show, Event, :context => :admin
+  			redirect_to admin_event_path(@event), :flash => { :success => 'Event created successfully.' }
+  		else
+  			redirect_to root_path , :flash => { 'success' => 'Event created successfully.' }
+  		end
   	else
   		render 'new'
   	end
