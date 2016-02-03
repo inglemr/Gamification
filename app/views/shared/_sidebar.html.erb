@@ -6,35 +6,49 @@
         <div class="menu-list">
   
             <ul id="menu-content" class="menu-content collapse out">
+
                 <li>
                  <%= link_to '<i class="fa fa-home fa-lg"></i>Home'.html_safe, authenticated_root_path %>
                 </li>
-                <!-- Users -->
-                <li data-toggle="collapse" data-target="#users" class="collapsed">
-                  <a href="#"><i class="fa fa-user fa-lg"></i> Users <span class="arrow"></span></a>
-                </li>  
-                <ul class="sub-menu collapse" id="users">
-                  <li><%= link_to '<i class="fa fa-users fa-lg"></i>All Users'.html_safe, admin_user_index_path %></li>
-                  <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Roles'.html_safe, admin_roles_path %></li>
-                </ul>
-                <!--- Customizer -->
-                <li data-toggle="collapse" data-target="#customizer" class="collapsed">
-                  <a href="#"><i class="fa fa-cog fa-lg"></i> Customize <span class="arrow"></span></a>
-                </li>  
-                <ul class="sub-menu collapse" id="customizer">
-                  <li><%= link_to '<i class="fa fa-cog fa-lg"></i>Customize Logo'.html_safe, admin_user_index_path %></li>
-                </ul>
-                <li data-toggle="collapse" data-target="#events" class="collapsed">
-                  <a href="#"><i class="fa fa-calendar-o fa-lg"></i> Events <span class="arrow"></span></a>
-                </li>  
-                <ul class="sub-menu collapse" id="events">
-                  <li><%= link_to '<i class="fa fa-calendar fa-lg"></i>All Events'.html_safe, admin_events_path %></li>
-                </ul>
 
+                <!-- Users -->
+                <% if  (can? :manage, :all) || @current_permissions["Admin::User"] == "manage" || @current_permissions["Admin::Role"] == "manage" %>
+                  <li data-toggle="collapse" data-target="#users" class="collapsed">
+                    <a href="#"><i class="fa fa-user fa-lg"></i> Users <span class="arrow"></span></a>
+                  </li>
+                  <ul class="sub-menu collapse" id="users">
+                    <% if   (can? :manage, :all) || @current_permissions["Admin::User"] == "manage"%>
+                      <li><%= link_to '<i class="fa fa-users fa-lg"></i>All Users'.html_safe, admin_user_index_path %></li>
+                    <% end %>
+                    <% if   (can? :manage, :all) || @current_permissions["Admin::Role"] == "manage"%>
+                      <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Roles'.html_safe, admin_roles_path %></li>
+                    <% end %>
+                  </ul>
+                <% end %>
+                <!--- Customizer -->
+                <% if   (can? :manage, :all) || @current_permissions["Admin::Customize"] == "manage"%>
+                  <li data-toggle="collapse" data-target="#customizer" class="collapsed">
+                    <a href="#"><i class="fa fa-cog fa-lg"></i> Customize <span class="arrow"></span></a>
+                  </li>  
+                  <ul class="sub-menu collapse" id="customizer">
+                    <li><%= link_to '<i class="fa fa-cog fa-lg"></i>Customize Logo'.html_safe, admin_user_index_path %></li>
+                  </ul>
+                <% end %>
+                <!--- Events -->
+                <% if   (can? :manage, :all) || @current_permissions["Admin::Event"] == "manage"%>
+                  <li data-toggle="collapse" data-target="#events" class="collapsed">
+                    <a href="#"><i class="fa fa-calendar-o fa-lg"></i> Events <span class="arrow"></span></a>
+                  </li>  
+                  <ul class="sub-menu collapse" id="events">
+                    <li><%= link_to '<i class="fa fa-calendar fa-lg"></i>All Events'.html_safe, admin_events_path %></li>
+                  </ul>
+                <% end %>
+                <% if  (can? :manage, :all) %>
                 <li><a><i class="fa fa-phone fa-lg"></i>API Call Log</a></li>
                  <li>
                   <%= link_to '<i class="fa fa-sign-out fa-lg"></i>Log Out'.html_safe, destroy_user_session_path , :method => :delete%>
                 </li>
+                <% end %>
             </ul>
      </div>
 </div>
@@ -46,31 +60,32 @@
 <script type="text/javascript">
   <% content_for :inner_scripts do %>
   <%= javascript_tag do %>
-    function htmlbodyHeightUpdate(){
-    var height3 = $( window ).height()
-    var height1 = $('.nav').height()+50
-    height2 = $('.main').height()
-    if(height2 > height3){
-      $('html').height(Math.max(height1,height3,height2)+10);
-      $('body').height(Math.max(height1,height3,height2)+10);
+
+  var win = $(this);      // browser window
+var nav = $('.sidebar'); // your navigation bar
+
+function switchNavbar() {
+    if (win.width() < 768) { // on mobile
+        nav.removeClass('navbar-static-top');
+        nav.addClass('navbar-fixed-bottom');
+    } else { // on desktop
+        nav.removeClass('navbar-fixed-bottom');
+        nav.addClass('navbar-static-top');
     }
-    else
-    {
-      $('html').height(Math.max(height1,height3,height2));
-      $('body').height(Math.max(height1,height3,height2));
-    }
-    
-  }
-  $(document).ready(function () {
-    htmlbodyHeightUpdate()
-    $( window ).resize(function() {
-      htmlbodyHeightUpdate()
-    });
-    $( window ).scroll(function() {
-      height2 = $('.main').height()
-        htmlbodyHeightUpdate()
-    });
-  });
+}
+
+// On first load
+$(function() {
+    switchNavbar();
+});
+
+// When browser resized
+$(window).on('resize', function(){
+    switchNavbar();
+});
+
+
+
 
   <% end %>
   <% end %>

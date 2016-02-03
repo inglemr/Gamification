@@ -1,5 +1,5 @@
 class API::V1::UserController < API::BaseController
-	load_and_authorize_resource
+	load_and_authorize_resource :class => false
 	before_filter :load_permissions 
 	def index
 			puts params
@@ -8,11 +8,4 @@ class API::V1::UserController < API::BaseController
 	      format.json { render :json => @user }
 	    end
   end
-
-private
-	def self.permission
-	  return "API::User"
-	end
-
-
 end

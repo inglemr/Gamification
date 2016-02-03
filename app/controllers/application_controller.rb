@@ -14,16 +14,16 @@ class ApplicationController < ActionController::Base
   end
 
 protected
- 
-  #derive the model name from the controller. egs UsersController will return User
   def self.permission
     return name = self.name.gsub('Controller','').singularize.split('::').last.constantize.name rescue nil
   end
-
-  #load the permissions for the current user so that UI can be manipulated
+  
   def load_permissions
-    @current_permissions = current_user.roles.each do |role|
-    	role.permissions.collect{|i| [i.subject_class, i.action]}
+    @current_permissions = Hash.new
+    current_user.roles.each do |role|
+      role.permissions.each do |perm|
+        @current_permissions[perm.subject_class] = perm.action
+      end
     end
   end
 
