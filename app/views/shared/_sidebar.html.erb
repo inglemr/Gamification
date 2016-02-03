@@ -11,10 +11,10 @@
                  <%= link_to '<i class="fa fa-home fa-lg"></i>Home'.html_safe, authenticated_root_path %>
                 </li>
 
-                <!-- Users -->
+                <!-- Roles  and Users -->
                 <% if  (can? :manage, :all) || @current_permissions["Admin::User"] == "manage" || @current_permissions["Admin::Role"] == "manage" || @current_permissions["Admin::Permission"] == "manage" %>
                   <li data-toggle="collapse" data-target="#users" class="collapsed">
-                    <a href="#"><i class="fa fa-user fa-lg"></i> Users <span class="arrow"></span></a>
+                    <a href="#"><i class="fa fa-user fa-lg"></i> Users & Roles <span class="arrow"></span></a>
                   </li>
                   <ul class="sub-menu collapse" id="users">
                     <% if   (can? :manage, :all) || @current_permissions["Admin::User"] == "manage"%>
@@ -24,7 +24,7 @@
                       <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Roles'.html_safe, admin_roles_path %></li>
                     <% end %>
                     <% if   (can? :manage, :all) || @current_permissions["Admin::Permission"] == "manage"%>
-                      <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Permissions'.html_safe, admin_permissions_path %></li>
+                      <li><%= link_to '<i class="fa fa-list fa-key"></i>All Permissions'.html_safe, admin_permissions_path %></li>
                     <% end %>
                   </ul>
                 <% end %>

@@ -39,6 +39,7 @@ class Admin::EventsController < Admin::BaseController
     	without_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
 			params[:event][:day_time] = Time.zone.parse(without_zone.strftime('%Y-%m-%d %H:%M:%S'))
     end
+    params[:event][:created_by] = current_user.id
 		@event = Event.new(event_params)
 		@event.image = params[:image]
 		if @event.save
@@ -57,7 +58,7 @@ end
 
 private
   def event_params
-    params.require(:event).permit(:event_name, :department, :day_time, :location, :point_val, :description, :user_id, :image)
+    params.require(:event).permit(:event_name, :department, :day_time, :location, :point_val, :description, :created_by, :updated_by, :image)
   end
 
 	def self.permission

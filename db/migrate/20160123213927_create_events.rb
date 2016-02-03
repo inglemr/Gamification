@@ -8,6 +8,9 @@ class CreateEvents < ActiveRecord::Migration
       t.timestamp  :day_time
       t.string :location
       t.integer :point_val
+      t.integer :user_id
+      t.text :description
+      t.string :image
     end
   end
 end

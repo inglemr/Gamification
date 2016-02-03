@@ -77,7 +77,8 @@
     </div>
 </div>
 <div class="form-group col-md-12 col-md-offset-5">
-  <%= hidden_field_tag :user_id, current_user.id %>
+  <%= hidden_field_tag :created_by, :value => @event.created_by %>
+  <%= hidden_field_tag :updated_by, :value => current_user.id %>
   <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
 </div>
 <% end %>

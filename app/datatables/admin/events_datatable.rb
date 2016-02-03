@@ -26,9 +26,11 @@ private
         'DT_RowId' => event.id.to_s,
         "events__id" => event.id,
         "events__event_name" => event.event_name.capitalize,
-        "events__description" => truncate(event.description, :length => 200, :separator => ' '),
+        "events__description" => truncate(event.description, :length => 20, :separator => ' '),
         "events__location" => event.location,
         "events__point_val" => event.point_val,
+        "events__created_by" => User.find(event.created_by).username + " (" + event.created_at.to_formatted_s(:short) +")",
+        "events__updated_by" => User.find(event.updated_by).username + " (" + event.updated_at.to_formatted_s(:short) +")",
         "events__day_time" => event.day_time.to_formatted_s(:short),
         event_actions: actions(event)
       }

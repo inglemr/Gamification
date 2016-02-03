@@ -11,15 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202143314) do
+ActiveRecord::Schema.define(version: 20160203031752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "dashboards", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -30,9 +25,10 @@ ActiveRecord::Schema.define(version: 20160202143314) do
     t.datetime "day_time"
     t.string   "location"
     t.integer  "point_val"
-    t.integer  "user_id"
+    t.integer  "created_by"
     t.text     "description"
     t.string   "image"
+    t.integer  "updated_by"
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -68,6 +64,13 @@ ActiveRecord::Schema.define(version: 20160202143314) do
   add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
+  create_table "user_events", force: :cascade do |t|
+    t.integer  "event_id"
+    t.integer  "attendee_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -92,18 +95,5 @@ ActiveRecord::Schema.define(version: 20160202143314) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["users_events_set_id"], name: "index_users_on_users_events_set_id", using: :btree
-
-  create_table "users_events_sets", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "users_events_sets_events", force: :cascade do |t|
-    t.integer "users_events_set_id", null: false
-    t.integer "event_id",            null: false
-  end
-
-  add_index "users_events_sets_events", ["event_id"], name: "ix_events_users_events_sets_events", using: :btree
-  add_index "users_events_sets_events", ["users_events_set_id"], name: "ix_items_users_events_sets_events", using: :btree
 
 end
