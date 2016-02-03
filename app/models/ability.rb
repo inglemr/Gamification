@@ -7,6 +7,7 @@ class Ability
           role.permissions.each do |permission|
             if permission.subject_class == "all" || permission.subject_class == "sidebar" 
               can permission.action.to_sym, permission.subject_class.to_sym
+              can permission.action.to_sym, permission.subject_class.to_sym, :context => :admin
             end
             if !permission.subject_class.include?("::")
               if permission.subject_class == "all"
@@ -20,7 +21,7 @@ class Ability
               end
             elsif permission.subject_class.include?("::")
               sub_array = permission.subject_class.split('::')
-              if sub_array.first == "API" || sub_array.first == "sidebar"
+              if sub_array.first == "API"
                 can permission.action.to_sym, sub_array.last.to_sym , :context => sub_array.first.downcase.to_sym
               else
                 can permission.action.to_sym, sub_array.last.constantize , :context => sub_array.first.downcase.to_sym
