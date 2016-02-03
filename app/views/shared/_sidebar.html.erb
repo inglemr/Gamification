@@ -12,7 +12,7 @@
                 </li>
 
                 <!-- Users -->
-                <% if  (can? :manage, :all) || @current_permissions["Admin::User"] == "manage" || @current_permissions["Admin::Role"] == "manage" %>
+                <% if  (can? :manage, :all) || @current_permissions["Admin::User"] == "manage" || @current_permissions["Admin::Role"] == "manage" || @current_permissions["Admin::Permission"] == "manage" %>
                   <li data-toggle="collapse" data-target="#users" class="collapsed">
                     <a href="#"><i class="fa fa-user fa-lg"></i> Users <span class="arrow"></span></a>
                   </li>
@@ -22,6 +22,9 @@
                     <% end %>
                     <% if   (can? :manage, :all) || @current_permissions["Admin::Role"] == "manage"%>
                       <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Roles'.html_safe, admin_roles_path %></li>
+                    <% end %>
+                    <% if   (can? :manage, :all) || @current_permissions["Admin::Permission"] == "manage"%>
+                      <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Permissions'.html_safe, admin_permissions_path %></li>
                     <% end %>
                   </ul>
                 <% end %>

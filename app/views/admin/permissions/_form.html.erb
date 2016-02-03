@@ -1,0 +1,51 @@
+<div class= "row">
+  <div class="page-heading-bar">
+    <ol class="breadcrumb">
+      <li >Admin</li>
+      <li><%= link_to("All Permissions", {:action => 'index'}) %></li>
+      <li class="active" ><%= page_type %> Permission</li>
+    </ol>
+  </div>
+</div>
+<%= form_for(@permission, :class =>"form-horizontal" , :url => path) do |f| %>
+<div class="page-panel panel col-md-12 ">
+    <div class="row"><h2 class="text-center">Edit Permission</h2></div>
+    <hr>
+    <div class="col-md-6 verticalLineRight">
+      <h3 class="panel">Basic Data</h3>
+      <div class="col-md-12 form-group">
+        <%= f.label :name ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :name, autofocus: true ,:value => @permission.name , :class => "form-control"%>
+        </div>
+      </div>
+      <div class="col-md-12 form-group">
+        <%= f.label :controller ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :subject_class, autofocus: true ,:value => @permission.subject_class , :class => "form-control"%>
+        </div>
+      </div>
+      <div class="col-md-12 form-group">
+        <%= f.label :action ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :action, autofocus: true ,:value => @permission.action , :class => "form-control"%>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+      <h3 class="panel">Description</h3>
+      <div class="col-md-12 form-group">
+        <div class="col-md-12 form-group">
+            <%= f.text_area :description, autofocus: true ,:value => @permission.description , :class => "form-control"%>
+        </div>
+      </div>
+    </div>
+
+</div>
+<div class="form-group col-md-12 col-md-offset-5">
+  <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
+</div>
+
+<% end %>

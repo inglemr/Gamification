@@ -1,0 +1,59 @@
+<div class= "row">
+	<div class="page-heading-bar">
+		<ol class="breadcrumb">
+			<li >Admin</li>
+	  	<li class="active">All Permissions</li>
+		</ol>
+	</div>
+</div>
+<div class="alert alert-warning" role="alert">WARNING: Only change settings here if you know what you are doing</div>
+<div class="row">
+	<div class="col-md-6">
+		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Permission'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
+	</div>
+	<div class="col-md-6 text-right">
+		  <input id='permissions_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+	   <span class="btn btn-sm btn-primary text-right" id="permissions_table_refresh"><i class="fa fa-refresh"></i></span>
+	</div>
+</div>
+<div class="table-responsive">
+<table summary "Permissions List" id="permissions_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_permissions_path(format: "json") %>"></table>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){  
+      var permissions_table = $('#permissions_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#permissions_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "permissions__id" },
+          { "title": "Name", "data": "permissions__name" },
+          { "title": "Controller", "data": "permissions__subject_class" },
+          { "title": "Action", "data": "permissions__action" },
+          { "title": "Description", "data": "permissions__description" },
+          { "title": "Actions", "data": "permission_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#permissions_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#permissions_table_length").val() }
+          );
+        },
+      });
+      $("#permissions_table_length").on("change", function() {
+        permissions_table.dataTable().api().draw(false);
+      });
+      $('#permissions_table_refresh').click(function(e){
+        permissions_table.dataTable().api().draw(false);
+      });
+      $('#permissions_table_search').keyup(function(){
+       	permissions_table.dataTable().api().draw(false);
+      });
+		});
+  </script>
+<% end %>
