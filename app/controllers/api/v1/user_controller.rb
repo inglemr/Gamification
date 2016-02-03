@@ -22,7 +22,12 @@ class API::V1::UserController < ApplicationController
 #     "id": "2"
 #    }
 #}
+#
+#Example GET Call
+#localhost:3000/api/v1/user/add_event?user_id=1?event_id=1111
+#
   def add_event
+  	if request.post?
   		message = Hash.new
   		user = User.find_by(:gsw_id => params[:user][:id])
   		event = Event.find_by(:id => params[:event][:id])
@@ -44,5 +49,28 @@ class API::V1::UserController < ApplicationController
 	      	format.json { render :json => message.to_json }
 	      end
 	    end
+	  else
+	  	message = Hash.new
+  		user = User.find_by(:gsw_id => params[:user_id])
+  		event = Event.find_by(:id => params[:event_id])
+  		if (user && event)
+  			if event.add_attendee(user)
+  				message[:success] = "Added Event"
+	  			respond_to do |format|
+		      	format.json { render :json => message.to_json }
+		      end
+		    else
+		    	message[:error] = "User already added event"
+		    	respond_to do |format|
+		      	format.json { render :json => message.to_json }
+		      end
+	    	end
+	    else
+	    	message[:error] = "User or event could not be found"
+	    	respond_to do |format|
+	      	format.json { render :json => message.to_json }
+	      end
+	    end
+	  end
   end
 end
