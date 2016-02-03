@@ -9,6 +9,8 @@ class Event < ActiveRecord::Base
   	if !user.attended_events.all.include?(self)
   		self.attendees << user
   		self.attendance = self.attendance + 1
+      user.points = user.points.to_f + self.point_val.to_f
+      user.save
   		self.save
   		true
   	else
