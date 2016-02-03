@@ -40,6 +40,7 @@ class Admin::EventsController < Admin::BaseController
 			params[:event][:day_time] = Time.zone.parse(without_zone.strftime('%Y-%m-%d %H:%M:%S'))
     end
     params[:event][:created_by] = current_user.id
+    params[:event][:updated_by] = current_user.id
 		@event = Event.new(event_params)
 		@event.image = params[:image]
 		if @event.save
