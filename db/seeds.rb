@@ -14,6 +14,7 @@
 	 ##Event Permissions
 	 Permission.create!(:name => "Admin Events",:description => "Full Access to Events",:subject_class => "Admin::Event", :action => "manage")
 	 Permission.create!(:name => "Admin Create Events",:description => "Create Events",:subject_class => "Admin::Event", :action => "create")
+	 Permission.create!(:name => "Admin Update Events",:description => "Can only update events the user owns",:subject_class => "Admin::Event", :action => "update")
 
 	 ##User
 	 Permission.create!(:name => "Admin Users",:description => "Full Access to Users",:subject_class => "Admin::User", :action => "manage")
