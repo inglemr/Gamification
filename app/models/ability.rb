@@ -23,6 +23,8 @@ class Ability
               sub_array = permission.subject_class.split('::')
               if sub_array.first == "API"
                 can permission.action.to_sym, sub_array.last.to_sym , :context => sub_array.first.downcase.to_sym
+              elsif permission.action == "destory" || permission.action == "update"
+                can permission.action.to_sym, sub_array.last.constantize, :created_by => user.id , :context => sub_array.first.downcase.to_sym
               else
                 can permission.action.to_sym, sub_array.last.constantize , :context => sub_array.first.downcase.to_sym
               end
