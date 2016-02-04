@@ -27,6 +27,13 @@ Rails.application.routes.draw do
       end
     end
 
+    resource :events do
+       get '/:id' => 'events#show'
+       collection do
+        get :index
+       end
+    end
+
     match ':controller(/:action(/:id))', :via => [:get, :post]
   end
 

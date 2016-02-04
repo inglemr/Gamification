@@ -1,0 +1,58 @@
+<div class= "row">
+	<div class="page-heading-bar">
+		<ol class="breadcrumb">
+			<li ><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
+	  	<li class="active">My Events</li>
+      <input id='events_table_search' type="search" class="" placeholder="Search..." style="display: inline; width: 200px; height: 20px;float: right; margin-right:5%">
+    </ol>
+	</div>
+</div>
+<div class="row">
+
+  <h2 class="text-center">Current points: <%= current_user.points %></h2>
+</div>
+<br>
+<div class="table-responsive">
+<table summary "Events List" id="events_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= events_path(format: "json") %>"></table>
+</div>
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){  
+      var events_table = $('#events_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#events_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "events__id" },
+          { "title": "Name", "data": "events__event_name" },
+          { "title": "Description", "data": "events__description" },
+          { "title": "Location", "data": "events__location" },
+          { "title": "Point Value", "data": "events__point_val" },
+          { "title": "Day/Time", "data": "events__day_time" }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#events_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+          );
+        },
+      });
+      $("#events_table_length").on("change", function() {
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_refresh').click(function(e){
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_search').keyup(function(){
+       	events_table.dataTable().api().draw(false);
+      });
+		});
+  </script>
+<% end %>
+
+
