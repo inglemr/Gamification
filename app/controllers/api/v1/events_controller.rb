@@ -3,4 +3,5 @@ class API::V1::EventsController < ApplicationController
 	before_action :authenticate_token!
 	before_filter :load_permissions 
 	before_action :log_call
+	after_action :end_api_session
 end

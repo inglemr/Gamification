@@ -4,6 +4,7 @@ class API::V1::UserController < ApplicationController
 	load_and_authorize_resource :context => :admin, :class => false
 	protect_from_forgery except: :add_event
 	before_action :log_call
+	after_action :end_api_session
 
 	def index
 	    @user = User.select(:id, :email, :username, :points, :events_attended).all

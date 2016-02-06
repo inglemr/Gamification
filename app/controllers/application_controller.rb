@@ -22,6 +22,10 @@ private
     end
   end
 
+  def end_api_session
+    sign_out(@api_user)
+  end
+
   def log_call
     log = Log.new
     log.user_id = @api_user.id
