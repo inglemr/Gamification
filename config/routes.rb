@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   devise_scope :user do
   authenticated :user do
     root 'dashboard#index', as: :authenticated_root
+    controller :settings do
+        get :settings
+        post :updatesettings
+    end
     namespace :admin do
       resources :events do
       end
@@ -41,7 +45,7 @@ Rails.application.routes.draw do
       end
     end
 
-  
+
 end
   # You c
   # The priority is based upon order of creation: first created -> highest priority.

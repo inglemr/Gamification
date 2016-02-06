@@ -16,7 +16,7 @@
         <li class=""><%= link_to '<i class="fa fa-star fa-lg"></i> My Points'.html_safe, authenticated_root_path %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right mainnav">
-        <li class=""><%= link_to '<i class="fa fa-cog fa-lg"></i> Settings'.html_safe, authenticated_root_path %></li>
+        <li class="<%= current_class?(settings_path) %>"><%= link_to '<i class="fa fa-cog fa-lg"></i> Settings'.html_safe, settings_path %></li>
         <li> <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, destroy_user_session_path , :method => :delete%></li>
       </ul>
     </div>
