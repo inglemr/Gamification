@@ -18,6 +18,7 @@ private
   def authenticate_token!
     authenticate_or_request_with_http_token do |token, options|
       @api_user = User.find_by(api_token: token)
+      sign_in(@api_user)
     end
   end
 
@@ -36,9 +37,17 @@ protected
   
   def load_permissions
     @current_permissions = Hash.new
-    current_user.roles.each do |role|
-      role.permissions.each do |perm|
-        @current_permissions[perm.subject_class] = perm.action
+    if current_user
+      current_user.roles.each do |role|
+        role.permissions.each do |perm|
+          @current_permissions[perm.subject_class] = perm.action
+        end
+      end
+    else
+      @api_user.roles.each do |role|
+        role.permissions.each do |perm|
+          @current_permissions[perm.subject_class] = perm.action
+        end
       end
     end
   end

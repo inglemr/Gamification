@@ -24,9 +24,10 @@ private
       {
         'DT_RowId' => log.id.to_s,
         "logs__id" => log.id,
-        "logs__user_id" => log.user_id,
+        "logs__user_id" => User.find(log.user_id).username,
         "logs__path" => log.path,
-        "logs__params" => log.params
+        "logs__params" => log.params,
+        "logs__created_at" => log.created_at
       }
     end
   end

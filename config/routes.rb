@@ -18,17 +18,6 @@ Rails.application.routes.draw do
       end
     end
 
-    namespace :api, :defaults => {:format => :json} do
-      namespace :v1 do
-        resources :user do
-          collection do
-             get :add_event
-             post :add_event
-          end
-        end
-      end
-    end
-
     resource :events do
        get '/:id' => 'events#show'
        collection do
@@ -40,6 +29,19 @@ Rails.application.routes.draw do
   end
 
   root 'devise/sessions#new'
+
+    namespace :api, :defaults => {:format => :json} do
+      namespace :v1 do
+        resources :user do
+          collection do
+             get :add_event
+             post :add_event
+          end
+        end
+      end
+    end
+
+  
 end
   # You c
   # The priority is based upon order of creation: first created -> highest priority.
