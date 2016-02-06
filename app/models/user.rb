@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 	after_commit :assign_default_role, on: :create
+  validates :api_token, presence: true, uniqueness: true
+  before_validation :generate_api_token
 	has_and_belongs_to_many :roles
   has_many :user_events, foreign_key: :attendee_id
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"
@@ -27,6 +29,15 @@ class User < ActiveRecord::Base
       end
     else
       puts "Role Does Not Exist"
+    end
+  end
+
+  def generate_api_token
+    return if api_token.present?
+
+    loop do
+      self.api_token = SecureRandom.hex
+      break unless User.exists? api_token: api_token
     end
   end
 end

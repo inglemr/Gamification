@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       end
       resources :permissions do
       end
+      resources :log do
+      end
     end
 
     namespace :api, :defaults => {:format => :json} do

@@ -47,10 +47,8 @@
                   </ul>
                 <% end %>
                 <% if  (can? :manage, :all) %>
-                <li><a><i class="fa fa-phone fa-lg"></i>API Call Log</a></li>
-                 <li>
-                  <%= link_to '<i class="fa fa-sign-out fa-lg"></i>Log Out'.html_safe, destroy_user_session_path , :method => :delete%>
-                </li>
+                  <li><%= link_to '<i class="fa fa-phone fa-lg"></i>API Call Log'.html_safe, admin_log_index_path %></li>
+                  <li><%= link_to '<i class="fa fa-sign-out fa-lg"></i>Log Out'.html_safe, destroy_user_session_path , :method => :delete%></li>
                 <% end %>
             </ul>
      </div>

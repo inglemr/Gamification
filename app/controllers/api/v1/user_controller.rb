@@ -2,6 +2,8 @@ class API::V1::UserController < ApplicationController
 	load_and_authorize_resource :context => :admin, :class => false
 	before_filter :load_permissions 
 	protect_from_forgery except: :add_event
+	before_action :authenticate_token!
+	before_action :log_call
 
 	def index
 			puts params

@@ -1,0 +1,53 @@
+<div class= "row">
+	<div class="page-heading-bar">
+		<ol class="breadcrumb">
+			<li >Admin</li>
+	  	<li class="active">API Calls</li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 text-right">
+		  <input id='log_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+	   <span class="btn btn-sm btn-primary text-right" id="log_table_refresh"><i class="fa fa-refresh"></i></span>
+	</div>
+</div>
+<div class="table-responsive">
+<table summary "Logs List" id="log_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_log_index_path(format: "json") %>"></table>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){  
+      var log_table = $('#log_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#log_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "logs__id" },
+          { "title": "Path", "data": "logs__path" },
+          { "title": "Params", "data": "logs__params" },
+          { "title": "User", "data": "logs__user_id" }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#log_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#log_table_length").val() }
+          );
+        },
+      });
+      $("#log_table_length").on("change", function() {
+        log_table.dataTable().api().draw(false);
+      });
+      $('#log_table_refresh').click(function(e){
+        log_table.dataTable().api().draw(false);
+      });
+      $('#log_table_search').keyup(function(){
+       	log_table.dataTable().api().draw(false);
+      });
+		});
+  </script>
+<% end %>

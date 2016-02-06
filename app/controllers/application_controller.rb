@@ -13,6 +13,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
+private
+  def authenticate_token!
+    authenticate_or_request_with_http_token do |token, options|
+      @api_user = User.find_by(api_token: token)
+    end
+  end
+
+  def log_call
+    log = Log.new
+    log.user_id = @api_user.id
+    log.params = params
+    log.path = params[:controller] + "#" + params[:action]
+    log.save
+  end
+
 protected
   def self.permission
     return name = self.name.gsub('Controller','').singularize.split('::').last.constantize.name rescue nil
@@ -26,5 +42,6 @@ protected
       end
     end
   end
+
 
 end
