@@ -15,7 +15,9 @@ class User < ActiveRecord::Base
   scope :sorted, lambda { order("users.id ASC")}
 
   def assign_default_role
+    self.points = 0;
     self.roles << Role.find_by(:name => "Student") if self.roles.blank?
+    self.save
   end
 
 
