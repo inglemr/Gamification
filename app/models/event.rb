@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   def add_attendee(user)
   	if !user.attended_events.all.include?(self)
   		self.attendees << user
-  		self.attendance = self.attendance + 1
+  		self.attendance = self.attendance.to_f + 1
       user.points = user.points.to_f + self.point_val.to_f
       user.save
   		self.save
