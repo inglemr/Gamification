@@ -1,6 +1,6 @@
 <div class="login_panel col-md-4 col-md-offset-4 centered">
   <div class="row">
-    <h1 class="login_header text-center">Log In</h1>
+    <h1 class="login_header text-center login_text_header">Gameification Log In</h1>
   </div>
   <hr/>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -14,11 +14,6 @@
         <%= f.password_field :password, autocomplete: "off" ,:placeholder => "Password" , :class => "form-control"%>
         </div>
     </div>
-      <div class="row form-group">
-        <div class="col-md-12 col-md-offset-3 centered">
-          <%= render "devise/shared/links" %>
-        </div>
-      </div>
       <div class="row form-group col-md-6 col-md-offset-4">
           <% if devise_mapping.rememberable? -%>
             <%= f.check_box :remember_me %>
@@ -32,3 +27,44 @@
       </div>
     <%end%>
 </div>
+
+
+
+
+<nav class="navbar usermenu navbar-inverse navbar-fixed-bottom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Gameification</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav mainnav">
+        <li class=""><%= link_to '<i class="fa fa-star fa-lg"></i> Earn Points'.html_safe, "#" %></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right mainnav">
+        <%= render "devise/shared/links" %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<style>
+
+body {
+   background-image: url('https://scontent-atl3-1.xx.fbcdn.net/hphotos-xtf1/t31.0-8/12493572_10153125372135666_147825417027944823_o.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+.login_panel{
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0.15+0,0.15+100;White+to+Transparent */
+background: -moz-linear-gradient(top,  rgba(255,255,255,0.70) 0%, rgba(255,255,255,.70) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(255,255,255,0.70) 0%,rgba(255,255,255,.90) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(255,255,255,0.70) 0%,rgba(255,255,255,.70) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26ffffff', endColorstr='#26ffffff',GradientType=0 ); /* IE6-9 */
+
+
+}
+</style>
