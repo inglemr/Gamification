@@ -8,7 +8,7 @@
 </div>
   <%= form_for(@user, :class =>"form-horizontal", url: {action: "updatesettings"}, :method => :POST) do |f| %>
 <div class="page-panel panel col-md-12 ">
-    <div class="row"><h2 class="text-center">Edit User</h2></div>
+    <div class="row"><h2 class="text-center">Settings</h2></div>
     <hr>
     <div class="col-md-6 verticalLineRight">
       <h3 class="panel">Basic Data</h3>
@@ -26,9 +26,12 @@
       </div>
     </div>
     <div class="col-md-6">
+      <h3 class="panel">Private Data</h3>
       <% if (can? :manage, :all) %>
-      <%= f.label "API Token:" %>
-      <%= current_user.api_token %>
+      <div class="col-md-12 form-group">
+        <%= f.label "API Token:" %>
+        <%= current_user.api_token %>
+      </div>
       <% end %>
     </div>
 </div>
