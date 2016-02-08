@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-	after_commit :assign_default_role, on: :create
+	after_create :assign_default_role
   validates :api_token, presence: true, uniqueness: true
   before_validation :generate_api_token
 	has_and_belongs_to_many :roles
@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   scope :sorted, lambda { order("users.id ASC")}
 
   def assign_default_role
+    self.events_attended = 0;
     self.points = 0;
     self.roles << Role.find_by(:name => "Student") if self.roles.blank?
     self.save

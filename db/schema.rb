@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(version: 20160206181953) do
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
   create_table "user_events", force: :cascade do |t|
-    t.integer  "event_id"
+    t.integer  "attended_event_id"
     t.integer  "attendee_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|

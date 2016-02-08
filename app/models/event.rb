@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  after_commit :set_attendance, on: :create
+  after_create :set_attendance
 	validates :day_time, presence: true
   validates :point_val, presence: true
   belongs_to :users
