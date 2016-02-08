@@ -1,0 +1,11 @@
+toolbar:
+  - fontselect | fontsizeselect | forecolor backcolor | bold italic underline
+  - bullist numlist outdent indent | alignleft aligncenter alignright alignjustify | styleselect
+  - emoticons | table | link | hr | preview
+plugins:
+  - emoticons
+  - table
+  - link
+  - hr
+  - preview
+  - textcolor

@@ -13,6 +13,9 @@ gem 'cancan_namespace'
 #Used to create QR Codes
 gem 'rqrcode'
 
+#Used to create menu for user html editing
+gem 'tinymce-rails'
+
 #Assets
 # Use jquery as the JavaScript library
 gem "font-awesome-rails"
