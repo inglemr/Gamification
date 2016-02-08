@@ -22,10 +22,11 @@
 //= require jquery-ui/position
 //= bootstrap.js
 //= bootstrap.min.js
-//= require turbolinks
+// require turbolinks
 //= require moment
 //= require bootstrap-datetimepicker
 //= require tinymce
 //= require_tree .
+
 
 
