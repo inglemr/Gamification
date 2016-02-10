@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160206181953) do
+ActiveRecord::Schema.define(version: 20160210154045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,21 @@ ActiveRecord::Schema.define(version: 20160206181953) do
     t.text     "description"
     t.string   "image"
     t.integer  "updated_by"
+  end
+
+  create_table "kiosks", force: :cascade do |t|
+    t.string  "location"
+    t.string  "token"
+    t.integer "location_id"
+  end
+
+  add_index "kiosks", ["location_id"], name: "index_kiosks_on_location_id", using: :btree
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "building_name"
+    t.string   "room_number"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "logs", force: :cascade do |t|
@@ -73,10 +88,10 @@ ActiveRecord::Schema.define(version: 20160206181953) do
   add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
 
   create_table "user_events", force: :cascade do |t|
-    t.integer  "attended_event_id"
+    t.integer  "event_id"
     t.integer  "attendee_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|
