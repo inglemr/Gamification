@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       end
       resources :log do
       end
+      resources :location do
+      end
     end
 
     resource :events do
@@ -27,6 +29,13 @@ Rails.application.routes.draw do
        collection do
         get :index
        end
+    end
+
+    resource :location do
+      get '/:id' => 'location#show'
+      collection do
+        get :index
+      end
     end
 
     match ':controller(/:action(/:id))', :via => [:get, :post]

@@ -27,7 +27,7 @@ private
         "events__id" => event.id,
         "events__event_name" => event.event_name.capitalize,
         "events__description" => truncate(event.description, :length => 20, :separator => ' '),
-        "events__location" => event.location,
+        "events__location_id" => Location.find(event.location_id).building_name + " Room" + Location.find(event.location_id).room_number,
         "events__point_val" => event.point_val,
         "events__created_by" => User.find(event.created_by).username + " (" + event.created_at.to_formatted_s(:short) +")",
         "events__updated_by" => User.find(event.updated_by).username + " (" + event.updated_at.to_formatted_s(:short) +")",
@@ -56,7 +56,7 @@ private
   end
 
   def search_string
-    "event_name LIKE :search OR description LIKE :search OR location LIKE :search" 
+    "event_name LIKE :search OR description LIKE :search" 
   end
 
   def sort_column

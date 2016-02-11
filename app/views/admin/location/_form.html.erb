@@ -1,0 +1,86 @@
+<div class= "row">
+  <div class="page-heading-bar">
+    <ol class="breadcrumb">
+      <li >Admin</li>
+      <li><%= link_to("All Locations", {:action => 'index'}) %></li>
+      <li ><%= page_type %> Location</li>
+    </ol>
+  </div>
+</div>
+<%= form_for(@location, :class =>"form-horizontal" , :url => path) do |f| %>
+<div class="page-panel panel col-md-12 ">
+  <% if @location.errors.any? %>
+    <% @location.errors.full_messages.each do |message| %>
+        <% concat(content_tag(:div, message, class: "row col-md-4 col-md-offset-8 flash_msg alert fade in") do %>
+         <% concat content_tag(:button, 'x', class: "close", data: { dismiss: 'alert' }) %>
+         <% concat message %>
+       <% end) %>
+    <% end %>
+  <% end %>
+
+    <div class="row"><h2 class="text-center"><%= page_type %> Location</h2></div>
+    <hr>
+    <div class="col-md-6 verticalLineRight">
+      <h3 class="panel">Basic Data</h3>
+      <div class="col-md-12 form-group">
+        <%= f.label :building_name ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :building_name, autofocus: true , :class => "form-control"%>
+        </div>
+      </div>
+
+      <div class="col-md-12 form-group">
+        <%= f.label :room_number ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :room_number, autofocus: true , :class => "form-control"%>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="form-group col-md-12 col-md-offset-5">
+  <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
+</div>
+<% end %>
+
+
+<% content_for :scripts do %>
+<script type="text/javascript">
+  <% content_for :inner_scripts do %>
+
+  $(document).ready(function () {
+
+  $("#new_location").validate({
+  rules : {
+    "location[building_name]" : {
+      required: true
+    },
+    "location[room_number]" : {
+      required: true
+    },
+  },
+  showErrors: function(errorMap, errorList) {
+    $.each(this.successList, function(index, value) {
+      return $(value).popover("hide");
+    });
+    return $.each(errorList, function(index, value) {
+      var _popover;
+      _popover = $(value.element).popover({
+        trigger: "manual",
+        placement: "top",
+        content: value.message,
+        template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
+      });
+      // Bootstrap 3.x :      
+      _popover.data("bs.popover").options.content = value.message;
+      return $(value.element).popover("show");
+    });
+  }
+});
+    });
+
+
+
+  <% end %>
+  <%= content_for :inner_scripts %>
+</script>
+<% end %>

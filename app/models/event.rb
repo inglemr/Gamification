@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   belongs_to :users
   has_many :user_events, foreign_key: :attended_event_id
   has_many :attendees, through: :user_events, dependent: :destroy
+  has_one :location, foreign_key: :location_id
   mount_uploader :image, ImageUploader
 
   def add_attendee(user)

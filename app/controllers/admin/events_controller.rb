@@ -50,6 +50,7 @@ class Admin::EventsController < ApplicationController
 
 	def new
 		@event = Event.new
+		@locations = Location.all.pluck(:building_name)
 	end
 
 	def create

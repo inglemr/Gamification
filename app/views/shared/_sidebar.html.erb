@@ -46,6 +46,15 @@
                     <li><%= link_to '<i class="fa fa-calendar fa-lg"></i>All Events'.html_safe, admin_events_path %></li>
                   </ul>
                 <% end %>
+                <!-- Locations -->
+                <% if   (can? :manage, :all) || @current_permissions["Admin::Location"] == "manage"%>
+                  <li data-toggle="collapse" data-target="#locations" class="collapsed">
+                    <a href="#"><i class="fa fa-map-marker fa-lg"></i> Locations <span class="arrow"></span></a>
+                  </li>  
+                  <ul class="sub-menu collapse" id="locations">
+                    <li><%= link_to '<i class="fa fa-map-marker fa-lg"></i>All Locations'.html_safe, admin_location_index_path %></li>
+                  </ul>
+                <% end %>
                 <% if  (can? :manage, :all) %>
                   <li><%= link_to '<i class="fa fa-phone fa-lg"></i>API Call Log'.html_safe, admin_log_index_path %></li>
                   <li><%= link_to '<i class="fa fa-sign-out fa-lg"></i>Log Out'.html_safe, destroy_user_session_path , :method => :delete%></li>
