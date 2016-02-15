@@ -3,7 +3,7 @@ class Admin::LocationsDatatable
 
   def initialize(view)
     @view = view
-    @locations = Location.select('distinct building_name, *')
+    @locations = Location.order("#{sort_column} #{sort_direction}").where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch]}%")
     @locations = @locations.page(page).per_page(per_page)
 
   end
@@ -25,8 +25,7 @@ private
       {
         'DT_RowId' => location.id.to_s,
         "locations__id" => location.id,
-        "locations__building_name" => location.building_name.capitalize,
-        "locations__room_number" => location.room_number,
+        "locations__building_name" => location.building_name,
         location_actions: actions(location)
       }
     end
@@ -51,16 +50,13 @@ private
   end
 
   def search_string
-    "building_name LIKE :search OR room_number LIKE :search" 
+    "building_name LIKE :search" 
   end
 
   def sort_column
     [*0..params[:iColumns].to_i-1].map{|i| params["mDataProp_#{i}"].gsub("__", ".") if params["bSortable_#{i}"] != 'false' }[params[:iSortCol_0].to_i]
   end
 
-  def select_statement
-    ""
-  end
 end
 
 

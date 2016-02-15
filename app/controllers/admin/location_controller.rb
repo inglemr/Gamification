@@ -47,7 +47,7 @@ class Admin::LocationController < ApplicationController
 		@location = Location.find(params[:id])
   	@location.destroy
  
-  	redirect_to admin_location_path
+  	redirect_to admin_location_index_path
 	end
 
 	private
