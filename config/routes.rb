@@ -36,6 +36,7 @@ Rails.application.routes.draw do
         resources :log do
         end
         resources :location do
+          get 'events' => 'location#events'
         end
       end
       resource :events do

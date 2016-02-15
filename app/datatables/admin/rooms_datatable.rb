@@ -24,7 +24,6 @@ private
     @rooms.map do |room|
       {
         'DT_RowId' => room.id.to_s,
-        "rooms__id" => room.id,
         "rooms__room_number" => room.room_number,
         room_actions: actions(room)
       }

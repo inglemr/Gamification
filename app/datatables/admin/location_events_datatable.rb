@@ -1,9 +1,9 @@
-class Admin::EventsDatatable
-   delegate :params, :h,  :content_tag, :datetime ,:current_ability, :render, :can?,:truncate, to: :@view
+class Admin::LocationEventsDatatable
+   delegate :params, :h,  :content_tag, :datetime, :current_ability, :render, :can?,:truncate, to: :@view
 
-  def initialize(view)
+  def initialize(view,location_id)
     @view = view
-    @events = Event.order("#{sort_column} #{sort_direction}").where('day_time >= ?', DateTime.now).where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    @events = Event.order("#{sort_column} #{sort_direction}").where('day_time >= ?', DateTime.now).where(:location_id => location_id).where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
     @events = @events.page(page).per_page(per_page)
 
   end

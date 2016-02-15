@@ -17,6 +17,14 @@ class Admin::LocationController < ApplicationController
   		end
 	end
 
+	def events
+		@location = Location.find(params[:location_id])
+		respond_to do |format|
+    		format.html
+    		format.json { render json: Admin::LocationEventsDatatable.new(view_context, @location.id) }
+  		end
+	end
+
 	def edit
 		@location = Location.find(params[:id])
 	end

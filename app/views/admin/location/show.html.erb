@@ -11,18 +11,27 @@
 <div class="page-panel panel col-md-12 ">
   <div class="row"><h2 class="text-center"><%= @location.building_name %></h2></div>
   <hr>
-    <div class="col-md-6">
-      <h3 class="panel">Basic Data</h3>
+    <div class="col-md-8">
+      <h3 class="panel">Upcoming events at this location</h3>
+      <div class="col-md-12 text-right">
+        <input id='rooms_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 100px; height: 20px;">
+        <span class="btn btn-sm btn-primary text-right" id="rooms_table_refresh"><i class="fa fa-refresh"></i></span>
+      </div>
+      <div id="events" class="col-md-12">
+        <div class="table-responsive">
+          <table summary "Events List" id="events_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_location_events_path(@location, :format => :json) %>"></table>
+        </div>
+      </div>
     </div>
 
-    <div class="col-md-6 verticalLineLeft">
+    <div class="col-md-4 verticalLineLeft">
       <h3 class="panel">Rooms</h3>
         <div id="new-room" class="col-md-12 text-right">
           <div class="col-md-6">
            <%= render :partial => "new_room", :locals => { :room => Room.new(:location_id=>@location.id), :location => @location }%>
            </div>
           <div class="col-md-6">
-          <input id='rooms_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+          <input id='rooms_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 75px; height: 20px;">
           <span class="btn btn-sm btn-primary text-right" id="rooms_table_refresh"><i class="fa fa-refresh"></i></span>
           </div>
         </div>
@@ -47,7 +56,6 @@
         "sAjaxSource": $('#rooms_table').data('source'),
         "aaSorting": [[ 0, "desc" ]],
          "columns": [
-          { "title": "Id", "data": "rooms__id" },
           { "title": "Room Number", "data": "rooms__room_number" },
           { "title": "Actions", "data": "room_actions", "bSortable" : false }
         ],
@@ -70,6 +78,42 @@
       $('#rooms_table_search').keyup(function(){
        	rooms_table.dataTable().api().draw(false);
       });
+
+      var events_table = $('#events_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#events_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "events__id" },
+          { "title": "Name", "data": "events__event_name" },
+          { "title": "Description", "data": "events__description" },
+          { "title": "Location", "data": "events__location_id" },
+          { "title": "Point Value", "data": "events__point_val" },
+          { "title": "Created By", "data": "events__created_by" },
+          { "title": "Updated By", "data": "events__updated_by" },
+          { "title": "Day/Time", "data": "events__day_time" },
+          { "title": "Actions", "data": "event_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#events_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+          );
+        },
+      });
+      $("#events_table_length").on("change", function() {
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_refresh').click(function(e){
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_search').keyup(function(){
+        events_table.dataTable().api().draw(false);
+      });
+
 		});
   </script>
 <% end %>
