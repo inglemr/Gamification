@@ -100,7 +100,7 @@ end
 
 private
   def event_params
-    params.require(:event).permit(:end_time,:event_name, :department, :day_time, :location, :point_val, :description, :created_by, :updated_by, :image)
+    params.require(:event).permit(:location_id,:end_time,:event_name, :department, :day_time, :point_val, :description, :created_by, :updated_by, :image)
   end
 
 	def self.permission
