@@ -1,0 +1,1 @@
+Time::DATE_FORMATS[:datepicker] = "%m/%d/%Y %I:%M %p"

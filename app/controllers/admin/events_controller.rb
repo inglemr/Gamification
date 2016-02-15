@@ -37,9 +37,18 @@ class Admin::EventsController < ApplicationController
 	def update
 		@event = Event.find(params[:id])
 		@event.image = params[:image]
-		if params[:event][:day_time] != ""
-    	without_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
-			params[:event][:day_time] = Time.zone.parse(without_zone.strftime('%Y-%m-%d %H:%M:%S'))
+		if params[:event][:time] != ""
+			time = params[:time]
+			times = time.split.split("-")
+			params[:event][:day_time] = times[0]
+			params[:event][:day_time] = params[:event][:day_time][0] + " " + params[:event][:day_time][1] + " " + params[:event][:day_time][2]
+			params[:event][:end_time] = times[1]
+			params[:event][:end_time] = params[:event][:end_time][0] + " " + params[:event][:end_time][1] + " " + params[:event][:end_time][2]
+			params[:event].delete :time
+    	start_time_no_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
+    	end_time_no_zone = DateTime.strptime(params[:event][:end_time], "%m/%d/%Y %I:%M %p")
+			params[:event][:day_time] = Time.zone.parse(start_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
+			params[:event][:end_time] = Time.zone.parse(end_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
     end
 		if @event.update_attributes(event_params)
   		redirect_to admin_events_path, :flash => { :success => 'Event was successfully updated.' }
@@ -54,9 +63,18 @@ class Admin::EventsController < ApplicationController
 	end
 
 	def create
-		if params[:event][:day_time] != ""
-    	without_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
-			params[:event][:day_time] = Time.zone.parse(without_zone.strftime('%Y-%m-%d %H:%M:%S'))
+		if params[:event][:time] != ""
+			time = params[:time]
+			times = time.split.split("-")
+			params[:event][:day_time] = times[0]
+			params[:event][:day_time] = params[:event][:day_time][0] + " " + params[:event][:day_time][1] + " " + params[:event][:day_time][2]
+			params[:event][:end_time] = times[1]
+			params[:event][:end_time] = params[:event][:end_time][0] + " " + params[:event][:end_time][1] + " " + params[:event][:end_time][2]
+			params[:event].delete :time
+    	start_time_no_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
+    	end_time_no_zone = DateTime.strptime(params[:event][:end_time], "%m/%d/%Y %I:%M %p")
+			params[:event][:day_time] = Time.zone.parse(start_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
+			params[:event][:end_time] = Time.zone.parse(end_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
     end
     params[:event][:created_by] = current_user.id
     params[:event][:updated_by] = current_user.id
@@ -82,7 +100,7 @@ end
 
 private
   def event_params
-    params.require(:event).permit(:event_name, :department, :day_time, :location, :point_val, :description, :created_by, :updated_by, :image)
+    params.require(:event).permit(:end_time,:event_name, :department, :day_time, :location, :point_val, :description, :created_by, :updated_by, :image)
   end
 
 	def self.permission

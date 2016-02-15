@@ -36,7 +36,6 @@
         </div>
       </div>
 
-
       <div class="col-md-12 form-group">
         <%= f.label :location_id ,:class => "col-md-3 control-label"%>
         <div class="col-md-7">
@@ -51,19 +50,14 @@
         </div>
       </div>
 
-        <div class="col-md-12">
-        <%= f.label "Day/Time" ,:class => "col-md-3 control-label"%>
+        <div class="col-md-12 form-group">
+        <%= f.label "Time" ,:class => "col-md-3 control-label"%>
             <div class='input-group date' id='datetimepicker1'>
-              <div class="col-md-7">
-              <%= f.text_field :day_time , :class => "form-control"%>
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-              </span>
+              <div class="col-md-9">
+                <%= text_field_tag "time", "time", :id => "daterange", :class => "form-control", :size => "150" %>
               </div>
             </div>
           </div>
-
-
     </div>
     <div class="col-md-6">
       <h3 class="panel">Description</h3>
@@ -90,21 +84,25 @@
   <% content_for :inner_scripts do %>
 
   $(document).ready(function () {
+$('#daterange').daterangepicker({
+  <% if page_type == "Edit" %>
+    "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
+    "endDate": "<%= @event.end_time.to_s(:datepicker)%>",
+    <% end %>
+    "showDropdowns": true,
+    "timePicker": true,
+    "timePickerIncrement": 30,
+    "locale": {
+      "format": 'MM/DD/YYYY h:mm A'
+        },
+    "autoApply": true,
+});
+
+
 
   $(function () {
   $('[data-toggle="popover"]').popover()
 })
-
-              $(function () {
-                $('#datetimepicker1').datetimepicker({
-                inline: true,
-                sideBySide: true,
-                minDate: 0
-                <% if page_type == "Edit" %>
-                ,defaultDate: '<%= @event.day_time %>'
-                <% end %>
-            });
-            })
 
   $("#new_event").validate({
   rules : {
