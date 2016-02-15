@@ -61,6 +61,9 @@
       $("#rooms_table_length").on("change", function() {
         rooms_table.dataTable().api().draw(false);
       });
+      $('#new_room_submit').click(function(e){
+        rooms_table.dataTable().api().draw(false);
+      });
       $('#rooms_table_refresh').click(function(e){
         rooms_table.dataTable().api().draw(false);
       });
