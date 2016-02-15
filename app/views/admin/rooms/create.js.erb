@@ -1,0 +1,4 @@
+$('#new-room').html('<%= escape_javascript( render :partial => "/admin/location/new_room", :locals => { :room => Room.new } ) %>');
+$('.notice').html("<p>Room Number was successfully created.</p>");
+$('.notice').show(300);
+$('#show-rooms').html('<%= escape_javascript( render :partial => "/admin/location/show_rooms" ) %>');

@@ -1,0 +1,6 @@
+<% rooms = Room.where(:location_id => @location.id) %>
+<table class="display table-striped responsive ">
+<% rooms.each do |room| %>
+<tr><th>Room Number:</th><td><%= room.room_number %></td></tr>
+<% end %>
+</table>

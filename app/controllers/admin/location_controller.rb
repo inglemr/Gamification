@@ -11,6 +11,10 @@ class Admin::LocationController < ApplicationController
 
 	def show
 		@location = Location.find(params[:id])
+		respond_to do |format|
+    		format.html
+    		format.json { render json: Admin::RoomsDatatable.new(view_context, @location.id) }
+  		end
 	end
 
 	def edit
