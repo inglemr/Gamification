@@ -32,7 +32,7 @@ private
   end
 
   def actions(kiosk)
-    render(:partial=>"admin/kiosk/actions.html.erb", locals: { kiosk: kiosk} , :formats => [:html]) 
+    render(:partial=>"admin/kiosks/actions.html.erb", locals: { kiosk: kiosk} , :formats => [:html]) 
   end
 
   def page

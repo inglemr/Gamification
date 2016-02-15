@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160215143443) do
+ActiveRecord::Schema.define(version: 20160215170135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20160215143443) do
     t.string   "kiosk_name"
   end
 
-  add_index "kiosks", ["email"], name: "index_kiosks_on_email", unique: true, using: :btree
   add_index "kiosks", ["location_id"], name: "index_kiosks_on_location_id", using: :btree
   add_index "kiosks", ["reset_password_token"], name: "index_kiosks_on_reset_password_token", unique: true, using: :btree
 

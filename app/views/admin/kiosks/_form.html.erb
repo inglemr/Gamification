@@ -4,15 +4,13 @@
       <li >Admin</li>
       <li >Kiosks</li>
       <li><%= link_to("All Kiosks", {:action => 'index'}) %></li>
-      <li >Edit</li>
+      <li ><%= page_type %> Kiosk</li>
       <li class="active"><%= @kiosk.kiosk_name %></li>
     </ol>
   </div>
 </div>
-  <%= form_for(@kiosk, :class =>"form-horizontal", :url => admin_kiosk_path) do |f| %>
+  <%= form_for(@kiosk, :class =>"form-horizontal", :url => path) do |f| %>
 <div class="page-panel panel col-md-12 ">
-    <div class="row"><h2 class="text-center">Edit kiosk</h2></div>
-    <hr>
     <div class="col-md-6 verticalLineRight">
       <h3 class="panel">Basic Data</h3>
       <div class="col-md-12 form-group">
@@ -21,9 +19,24 @@
           <%= f.text_field :kiosk_name, autofocus: true ,:value => @kiosk.kiosk_name , :class => "form-control"%>
         </div>
       </div>
+      <div class="col-md-12 form-group">
+        <%= f.label :password ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.password_field :password, :class => "form-control"%>
+        </div>
+      </div>
+      <% if page_type == "New" %>
+      <div class="col-md-12 form-group">
+        <%= f.label :password_confirmation ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.password_field :password_confirmation, :class => "form-control"%>
+        </div>
+      </div>
+      <% end %>
     </div>
     <div class="col-md-6">
-      <h3 class="panel">Other Data</h3>
+      <h3 class="panel">Location</h3>
+
     </div>
 </div>
 <div class="form-group col-md-12 col-md-offset-5">

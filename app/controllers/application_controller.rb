@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
 
+
 private
   def authenticate_token!
     authenticate_or_request_with_http_token do |token, options|
@@ -34,6 +35,15 @@ private
     log.path = params[:controller] + "#" + params[:action]
     log.save
   end
+
+  def after_sign_out_path_for(resource_or_scope)
+     if resource_or_scope == :user
+        root_path
+     else
+        new_kiosk_session_path
+     end
+  end
+
 
 protected
 

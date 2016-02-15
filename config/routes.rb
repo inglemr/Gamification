@@ -1,64 +1,68 @@
 Rails.application.routes.draw do
   devise_for :kiosks
-  get 'dashboard/index'
 
-  devise_for :users
-  devise_scope :user do
-  authenticated :user do
-    root 'dashboard#index', as: :authenticated_root
-    controller :settings do
-        get :settings
-        post :updatesettings
-    end
-    namespace :admin do
-      resources :kiosk do
-      end
-      resources :events do
-      end
-      resources :user do
-      end
-      resources :roles do
-      end
-      resources :permissions do
-      end
-      resources :log do
-      end
-      resources :location do
+  devise_scope :kiosk do
+    authenticated :kiosk do
+      root 'kiosk_pages#index', as: :kiosk_root
+      resources :kiosk_pages do
       end
     end
-
-    resource :events do
-       get '/:id' => 'events#show'
-       collection do
-        get :index
-       end
-    end
-
-    resource :location do
-      get '/:id' => 'location#show'
-      collection do
-        get :index
-      end
-    end
-
-    match ':controller(/:action(/:id))', :via => [:get, :post]
   end
 
-  root 'devise/sessions#new'
 
+  get 'dashboard/index'
+  devise_for :users
+  devise_scope :user do
+    authenticated :user do
+      root 'dashboard#index', as: :authenticated_root
+      controller :settings do
+          get :settings
+          post :updatesettings
+      end
+      namespace :admin do
+        resources :kiosks do
+          post 'admin/kiosks' => 'kiosks#create'
+        end
+        resources :events do
+        end
+        resources :user do
+        end
+        resources :roles do
+        end
+        resources :permissions do
+        end
+        resources :log do
+        end
+        resources :location do
+        end
+      end
+      resource :events do
+         get '/:id' => 'events#show'
+         collection do
+          get :index
+         end
+      end
+
+      resource :location do
+        get '/:id' => 'location#show'
+        collection do
+          get :index
+        end
+      end
+      match ':controller(/:action(/:id))', :via => [:get, :post]
+    end
+    root 'devise/sessions#new'
     namespace :api, :defaults => {:format => :json} do
       namespace :v1 do
         resources :user do
           collection do
-             get :add_event
-             post :add_event
+            get :add_event
+            post :add_event
           end
         end
       end
     end
-
-
-end
+  end
   # You c
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
