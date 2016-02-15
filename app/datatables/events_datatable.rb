@@ -1,9 +1,9 @@
 class EventsDatatable
-   delegate :params, :h,  :content_tag, :current_ability, :render, :can?,:truncate, to: :@view
+   delegate :params, :h, :day, :datetime ,:content_tag, :current_ability, :render, :can?,:truncate, to: :@view
 
   def initialize(view)
     @view = view
-    @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first#.past_events
+    @events = Event.where('day_time >= ?', DateTime.now).where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first#.past_events
     @events = @events.page(page).per_page(per_page)
 
   end
