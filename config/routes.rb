@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :kiosks
   get 'dashboard/index'
 
   devise_for :users
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
         post :updatesettings
     end
     namespace :admin do
+      resources :kiosk do
+      end
       resources :events do
       end
       resources :user do

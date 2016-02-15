@@ -1,0 +1,57 @@
+<div class= "row">
+	<div class="page-heading-bar">
+		<ol class="breadcrumb">
+			<li >Admin</li>
+			<li >Kiosks</li>
+	  	<li class="active">All Kiosks</li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Kiosk'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
+	</div>
+	<div class="col-md-6 text-right">
+		  <input id='kiosks_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
+	   <span class="btn btn-sm btn-primary text-right" id="kioskss_table_refresh"><i class="fa fa-refresh"></i></span>
+	</div>
+</div>
+<div class="table-responsive">
+<table summary "kiosk List" id="kiosks_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_kiosk_index_path(format: "json") %>"></table>
+</div>
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){  
+      var kiosks_table = $('#kiosks_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#kiosks_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "kiosks__id" },
+          { "title": "Kiosk Name", "data": "kiosks__kiosk_name" },
+          { "title": "Actions", "data": "kiosk_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push( 
+            { "name": "sSearch", "value": $("#kiosks_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#kiosks_table_length").val() }
+          );
+        },
+      });
+      $("#kiosks_table_length").on("change", function() {
+        kiosks_table.dataTable().api().draw(false);
+      });
+      $('#kiosks_table_refresh').click(function(e){
+        kiosks_table.dataTable().api().draw(false);
+      });
+      $('#kiosks_table_search').keyup(function(){
+       	kiosks_table.dataTable().api().draw(false);
+      });
+		});
+  </script>
+<% end %>

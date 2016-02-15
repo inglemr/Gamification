@@ -3,7 +3,7 @@ class EventsDatatable
 
   def initialize(view)
     @view = view
-    @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first#.past_events
     @events = @events.page(page).per_page(per_page)
 
   end
