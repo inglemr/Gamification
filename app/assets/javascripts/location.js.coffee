@@ -1,4 +1,5 @@
 jQuery ->
+  $('#event_room_numbers').parent().hide()
   rooms = $('#event_room_numbers').html()
   $('#event_location_id').change ->
     building = $('#event_location_id :selected').text()
