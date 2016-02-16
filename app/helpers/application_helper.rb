@@ -1,5 +1,10 @@
 module ApplicationHelper  
 
+  def current_host
+    return unless session[:current_host]
+    @current_host ||= User.find(session[:current_host])
+  end
+
 	def current_class?(test_path)
     	return 'active' if request.path == test_path
     	''

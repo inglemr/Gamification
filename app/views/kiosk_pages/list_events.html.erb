@@ -19,8 +19,10 @@
     </div>
   </div>
 </nav>
-
-
+<br/>
+<hr>
+<h2 class="text-center"><%= Location.find(current_kiosk.location_id).building_name + " - RM:" + Room.find(current_kiosk.room_id).room_number %></h2>
+<hr>
 <div id='events_grid' class="row" style='display: block;margin-top:40px;'></div>
 <table summary "Events List" id="events_table" style="display: none"class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= list_path(format: "json") %>"></table>
 
