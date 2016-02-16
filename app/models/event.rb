@@ -2,7 +2,6 @@ class Event < ActiveRecord::Base
   after_create :set_attendance
 	validates :day_time, presence: true
   validates :end_time, presence: true
-  validates :room_numbers, presence: true
   validates :location_id, presence: true
   validates :point_val, presence: true
   belongs_to :users

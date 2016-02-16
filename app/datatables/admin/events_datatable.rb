@@ -3,7 +3,7 @@ class Admin::EventsDatatable
 
   def initialize(view)
     @view = view
-    @events = Event.order("#{sort_column} #{sort_direction}").where('day_time >= ?', DateTime.now).where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    @events = Event.order("#{sort_column} #{sort_direction}").where('end_time >= ?', DateTime.now).where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
     @events = @events.page(page).per_page(per_page)
 
   end
