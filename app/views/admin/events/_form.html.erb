@@ -35,13 +35,19 @@
           <%= f.text_field :department, autofocus: true , :class => "form-control"%>
         </div>
       </div>
-
       <div class="col-md-12 form-group">
-        <%= f.label :location_id ,:class => "col-md-3 control-label"%>
+        <%= f.label :location_id, "Building" ,:class => "col-md-3 control-label"%>
+          <div class="col-md-7">
+            <%= f.collection_select :location_id, Location.order(:building_name), :id, :building_name, include_blank: false %>
+          </div>
+       </div>
+      <div class="col-md-12 form-group">
+        <%= f.label :location_id, "Room" ,:class => "col-md-3 control-label"%>
         <div class="col-md-7">
-        <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id, :room_number, {:include_blank => false, :selected => @event.room_numbers}, { :multiple => true })%>
+        <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id, :room_number, {:include_blank => false}, { :multiple => true })%>
         </div>
       </div>
+
 
       <div class="col-md-12 form-group">
         <%= f.label "Point Value" ,:class => "col-md-3 control-label"%>
@@ -90,15 +96,17 @@
 
   $(document).ready(function () {
 
-//Do it simple
+
 <% if page_type == "Edit" %>
 <% array = (@event.room_numbers.join(',')) %>
 var data= "<%= array %>";
 var dataarray=data.split(",");
+$("#event_location_id").val("<%= @event.location_id %>");
 $("#event_room_numbers").val(dataarray);
 <% end %>
 
-    $('#event_room_numbers').addClass("form-control");
+$('#event_room_numbers').addClass("form-control");
+$('#event_location_id').addClass("form-control");
 $('#daterange').daterangepicker({
   <% if page_type == "Edit" %>
     "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
