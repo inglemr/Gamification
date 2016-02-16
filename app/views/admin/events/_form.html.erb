@@ -102,11 +102,12 @@ $('#event_room_numbers').parent().show();
 var data= "<%= array %>";
 var dataarray=data.split(",");
 $("#event_location_id").val("<%= @event.location_id %>");
+$("#event_location_id").trigger("change");
 $("#event_room_numbers").val(dataarray);
 <% end %>
 
 $('#event_room_numbers').addClass("form-control");
-$('#event_room_numbers').addClass("form-control");
+$('#event_location_id').addClass("form-control");
 $('#daterange').daterangepicker({
   <% if page_type == "Edit" %>
     "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
