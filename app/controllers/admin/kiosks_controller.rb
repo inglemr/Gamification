@@ -26,7 +26,7 @@ class Admin::KiosksController < ApplicationController
 	def update
 		@kiosk = Kiosk.find(params[:id])
 		
-		if @Kiosk.update_attributes(params[:kiosk].permit(:kiosk_name))
+		if @kiosk.update_attributes(kiosk_params)
   		redirect_to admin_kiosk_path, :flash => { :success => 'Kiosk was successfully updated.' }
 		else
   		redirect_to admin_kiosk_path, :flash => { :error => 'Kiosk was unsuccesfully updated.' }
@@ -51,7 +51,7 @@ class Admin::KiosksController < ApplicationController
 
 private
  def kiosk_params
-    params.require(:kiosk).permit(:kiosk_name, :password, :password_confirmation,:room_id,:location_id)
+    params.require(:kiosk).permit(:password, :password_confirmation,:room_id,:location_id,:kiosk_name)
   end
 
 	def self.permission
