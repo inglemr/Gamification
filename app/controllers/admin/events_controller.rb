@@ -63,6 +63,12 @@ class Admin::EventsController < ApplicationController
 	end
 
 	def create
+		puts params
+		puts "tom"
+		if params[:event][:room_numbers]
+			params[:event][:room_numbers].delete("")
+			params[:event][:location_id] = Room.find(params[:event][:room_numbers][0]).location_id
+		end
 		if params[:event][:time] != ""
 			time = params[:time]
 			times = time.split.split("-")
@@ -79,6 +85,7 @@ class Admin::EventsController < ApplicationController
     params[:event][:created_by] = current_user.id
     params[:event][:updated_by] = current_user.id
 		@event = Event.new(event_params)
+		@event.room_numbers << params[:event][:room_numbers]
 		@event.image = params[:image]
 		if @event.save
 			if can? :show, Event, :context => :admin
@@ -100,7 +107,7 @@ end
 
 private
   def event_params
-    params.require(:event).permit(:location_id,:end_time,:event_name, :department, :day_time, :point_val, :description, :created_by, :updated_by, :image)
+    params.require(:event).permit(:room_numbers,:location_id,:end_time,:event_name, :department, :day_time, :point_val, :description, :created_by, :updated_by, :image)
   end
 
 	def self.permission
