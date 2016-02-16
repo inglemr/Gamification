@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   devise_scope :kiosk do
     authenticated :kiosk do
       root 'kiosk_pages#index', as: :kiosk_root
-      resources :kiosk_pages do
+      controller :kiosk_pages do
+        get 'list' => "kiosk_pages#list_events"
+        get 'main' => "kiosk_pages#main"
+        post 'main' => "kiosk_pages#main"
       end
     end
   end

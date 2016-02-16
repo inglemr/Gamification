@@ -14,7 +14,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+  def current_host
+    return unless session[:current_host]
+    @current_host ||= User.find(session[:current_host])
+  end
 
 private
   def authenticate_token!

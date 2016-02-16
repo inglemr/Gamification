@@ -1,1 +1,32 @@
-<%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, destroy_kiosk_session_path , :method => :delete%>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <div class="row">
+                        <%= form_tag("/main", method: "post") do %>
+                            <div class="input-group">
+                              <%= password_field_tag "pin", "" , :placeholder => "Host PIN", :style => "height:100px;font-size: 50px" ,:class => "form-control"%>
+                                <span class="input-group-btn">
+                                    <%= submit_tag "Submit", :class => "btn btn-success ",:style => "height:100px;"%>
+                                </span>
+                            </div>
+                        <% end %>       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+
+
+input { font-size: 18px; }
+ .panel{
+    margin-top:50%;
+ 	border:none;
+ }
+</style>

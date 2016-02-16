@@ -51,7 +51,7 @@ class Admin::KiosksController < ApplicationController
 
 private
  def kiosk_params
-    params.require(:kiosk).permit(:kiosk_name, :password, :password_confirmation)
+    params.require(:kiosk).permit(:kiosk_name, :password, :password_confirmation,:room_id,:location_id)
   end
 
 	def self.permission
