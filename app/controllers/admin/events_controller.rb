@@ -67,7 +67,6 @@ class Admin::EventsController < ApplicationController
 		puts "tom"
 		if params[:event][:room_numbers]
 			params[:event][:room_numbers].delete("")
-			params[:event][:location_id] = Room.find(params[:event][:room_numbers][0]).location_id
 		end
 		if params[:event][:time] != ""
 			time = params[:time]
