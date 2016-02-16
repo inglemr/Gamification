@@ -1,10 +1,13 @@
 class UserEventsDatatable
    delegate :params, :h,  :content_tag, :current_ability, :render, :can?,:truncate, :current_user, to: :@view
 
-  def initialize(view)
+  def initialize(view, attended)
     @view = view
-
-    @events = current_user.attended_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    if (attended)
+      @events = current_user.attended_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    else
+      @events = current_user.created_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    end
     @events = @events.page(page).per_page(per_page)
 
   end

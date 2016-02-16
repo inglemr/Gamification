@@ -2,14 +2,17 @@
   <div class="page-heading-bar">
     <ol class="breadcrumb">
       <li ><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
-      <li class="active">My Events</li>
+      <li class="active">My Points</li>
       <input id='events_table_search' type="search" class="" placeholder="Search..." style="display: inline; width: 200px; height: 20px;float: right; margin-right:5%">
     </ol>
   </div>
 </div>
+<div class="row">
 
+  <h2 class="text-center">Current points: <%= current_user.points %></h2>
+</div>
 <div id='events_grid' class="row" style='display: block'></div>
-<table summary "Events List" id="events_table" style="display: none"class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= events_path(format: "json") %>"></table>
+<table summary "Events List" id="events_table" style="display: none"class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= my_points_events_path(format: "json") %>"></table>
 
 
 <% content_for :scripts do %>
