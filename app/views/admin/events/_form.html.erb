@@ -39,7 +39,7 @@
       <div class="col-md-12 form-group">
         <%= f.label :location_id ,:class => "col-md-3 control-label"%>
         <div class="col-md-7">
-        <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id, :room_number, {:include_blank => false}, { :multiple => true })%>
+        <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id, :room_number, {:include_blank => false, :selected => @event.room_numbers}, { :multiple => true })%>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
 <% end %>
 
 <style>
-#event_location{
+#event_room_numbers{
   height:200px;
   width:100px;
 }
@@ -89,7 +89,16 @@
   <% content_for :inner_scripts do %>
 
   $(document).ready(function () {
-    $('#event_location').addClass("form-control");
+
+//Do it simple
+<% if page_type == "Edit" %>
+<% array = (@event.room_numbers.join(',')) %>
+var data= "<%= array %>";
+var dataarray=data.split(",");
+$("#event_room_numbers").val(dataarray);
+<% end %>
+
+    $('#event_room_numbers').addClass("form-control");
 $('#daterange').daterangepicker({
   <% if page_type == "Edit" %>
     "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
