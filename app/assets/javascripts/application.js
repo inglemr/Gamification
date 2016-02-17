@@ -27,6 +27,9 @@
 //= require bootstrap-datetimepicker
 //= require tinymce
 //= require_tree .
+//= require app.config.js
+//= require app.js
+
 
 
 

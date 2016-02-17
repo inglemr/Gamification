@@ -2,13 +2,11 @@
  
     <ol class="breadcrumb">
       <li ><%= current_user.username %>'s Dashboard</li>
+    </ol>
       <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
       <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary new text-right" , :style => "margin-left: 20%;") %>
       <% end %>
       <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;margin-left: 30%;">
-
-    </ol>
-
 </div>
 
 <div id='events_grid' class="row" style='display: block;margin-top:40px;'></div>
