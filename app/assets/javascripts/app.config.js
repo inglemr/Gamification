@@ -10,22 +10,6 @@
  * Save a reference to the global object (window in the browser)
  */
 	var root = this,	
-/*
- * DEBUGGING MODE
- * debugState = true; will spit all debuging message inside browser console.
- * The colors are best displayed in chrome browser.
- */
-	debugState = false,	
-	debugStyle = 'font-weight: bold; color: #00f;',
-	debugStyle_green = 'font-weight: bold; font-style:italic; color: #46C246;',
-	debugStyle_red = 'font-weight: bold; color: #ed1c24;',
-	debugStyle_warning = 'background-color:yellow',
-	debugStyle_success = 'background-color:green; font-weight:bold; color:#fff;',
-	debugStyle_error = 'background-color:#ed1c24; font-weight:bold; color:#fff;',
-/*
- * Impacts the responce rate of some of the responsive elements (lower 
- * value affects CPU but improves speed)
- */
 	throttle_delay = 350,
 /*
  * The rate at which the menu expands revealing child elements on click
