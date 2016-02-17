@@ -2,11 +2,10 @@
 <div class="col-md-4">
 <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
         <header>
-          <span class="widget-icon"> <i class="fa fa-comments txt-color-white"></i> </span>
           <h2><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %></h2>
 
           <% if (can? :update, event, :context => :admin) %>
-          <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-sm"></i>'.html_safe, {:controller => 'Admin::Events',:action => 'edit', :id => event.id} ,:class => "btn btn-primary btn-sm", :style => "float:right") %>
+          <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-sm"></i>'.html_safe, {:controller => 'Admin::Events',:action => 'edit', :id => event.id} ,:class => "btn  btn-sm", :style => "float:right") %>
           <% end %>
         </header>
         <div>
