@@ -7,26 +7,26 @@
     <title><%= content_for?(:title) ? yield(:title) : "Capstone" %></title>
 
     <%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "application"%>
     <%= csrf_meta_tags %>
   </head>
-  <body class="smart-style-5 minified">
- 
+  <body class="smart-style-5 hidden-menu">
     <% if  current_user %>
       <%= render "shared/usermenu.html.erb"%>
     <% end %>
     <% if  can? :view, :sidebar%>
       <aside id="left-panel"><%= render "shared/sidebar.html.erb"%></aside>
     <% end %>
-
-    <div class="main">
+    <div id="main" role="main">
+        <div id="content">
         <% if !flash.empty? %>
           <%= flash_messages %>
         <% end %>
       <%= yield %>
+      </div>
     </div>
-  <%= yield :scripts %>
+  <%= javascript_include_tag "application"%>
 
+  <%= yield :scripts %>
   </body>
 </html>
 

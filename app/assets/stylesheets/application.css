@@ -34,9 +34,12 @@
  *= require daterangepicker-bs3
  *= require bootstrap-datetimepicker
  */
- a.navbar{
- 	font-size: 10;
- }
+
+#header > :first-child{
+width: 100%;
+
+}
+
 div.daterangepicker.dropdown-menu.show-calendar.opensright{
 	background-color: white;
 		color:black;
@@ -62,8 +65,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 }
 
-body{
-	margin-top: 40px;
-}
+
 
 
