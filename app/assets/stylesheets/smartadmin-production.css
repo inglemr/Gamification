@@ -10845,14 +10845,14 @@ html {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: url(image-path("mybg.png") #ffffff;
+  background: url(image-path("mybg.png")) #ffffff;
   position: relative;
 }
 body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: url(image-path("mybg.png") #ffffff;
+  background: url(image-path("mybg.png")) #ffffff;
   direction: ltr;
 }
 /* when mobile menu is active */
@@ -14583,7 +14583,7 @@ img.away {
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
   font-weight: bold;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  background-image: url(image-path("pattern/overlay-pattern.png');
+  background-image: url(image-path("pattern/overlay-pattern.png"));
 }
 .progress-striped .progress-bar {
   background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
@@ -15899,19 +15899,19 @@ label:hover input[type="checkbox"][disabled].checkbox:checked + span:before {
 }
 .colorblind-friendly .alert-danger,
 .colorblind-friendly .btn-danger {
-  background-image: url(image-path("colorblind-friendly/pt1.png');
+  background-image: url(image-path("colorblind-friendly/pt1.png"));
   border-color: #272727;
   background-color: #303030;
 }
 .colorblind-friendly .alert-success,
 .colorblind-friendly .btn-success {
-  background-image: url(image-path("colorblind-friendly/pt2.png');
+  background-image: url(image-path("colorblind-friendly/pt2.png"));
   border-color: #FF00EB;
   background-color: #1E5E00;
 }
 .colorblind-friendly .alert-warning,
 .colorblind-friendly .btn-warning {
-  background-image: url(image-path("colorblind-friendly/pt3.png');
+  background-image: url(image-path("colorblind-friendly/pt3.png"));
   border-color: #5F4415;
   background-color: #A07A00;
 }
