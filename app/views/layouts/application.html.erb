@@ -9,11 +9,11 @@
     <%= stylesheet_link_tag    "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="smart-style-5 hidden-menu">
+  <body class="smart-style-5 <%= current_user ? hidden-menu : "" %>">
     <% if  current_user %>
       <%= render "shared/usermenu.html.erb"%>
     <% end %>
-    <% if  can? :view, :sidebar%>
+    <% if can? :view, :sidebar%>
       <aside id="left-panel"><%= render "shared/sidebar.html.erb"%></aside>
     <% end %>
     <div id="main" role="main">
