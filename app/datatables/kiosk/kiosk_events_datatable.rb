@@ -1,4 +1,4 @@
-class Kiosk::EventsDatatable
+class Kiosk::KioskEventsDatatable
    delegate :params, :h,  :content_tag, :current_ability, :render, :can?,:truncate, to: :@view
 
   def initialize(view, current_host, location_id, room_number)
