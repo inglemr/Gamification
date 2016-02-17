@@ -1,6 +1,6 @@
 
 <nav class="navbar navbar-inverse  navbar-fixed-top">
-<header id="header">
+
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -11,7 +11,7 @@
       </button>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav mainnav">
+      <ul class="nav navbar-nav">
         <li class="<%= current_class?(authenticated_root_path) %>"><%= link_to '<i class="fa fa-home fa-lg"></i> Home'.html_safe, authenticated_root_path %></li>
         <li class="<%= current_class?(events_path) %>"><%= link_to '<i class="fa fa-calendar fa-lg"></i> My Created Events'.html_safe, events_path %></li>
         <li class="<%= current_class?(my_points_events_path) %> "><%= link_to '<i class="fa fa-star fa-lg"></i> My Points'.html_safe, my_points_events_path %></li>
@@ -21,5 +21,4 @@
     </div>
   </div>
 
-</header>
 </nav>
