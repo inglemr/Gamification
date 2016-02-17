@@ -11,12 +11,16 @@
         <div>
           <div class="widget-body widget-hide-overflow no-padding">
             <div class="row">
+              <div class="col-md-4">
               <% if event.image_url.to_s == "" %>
                 <img class="event_tile_img" src="http://placehold.it/140x100">
               <% else %>
                 <%= image_tag event.image_url(:resized).to_s ,:class => "event_tile_img" %>
               <% end %>
+              </div>
+              <div class="col-md-8">
               <%= ActionView::Base.full_sanitizer.sanitize(event.description.html_safe)[0,180] + '...' %>
+              </div>
           </div>
           <p style='margin-bottom:0px'><small><b>Points: </b><i><%= event.point_val %></i></small></p>
           </div>
