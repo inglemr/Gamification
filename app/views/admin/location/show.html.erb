@@ -1,4 +1,4 @@
-<div class= "row">
+<div id= "ribbon">
   <div class="page-heading-bar">
     <ol class="breadcrumb">
       <li >Admin</li>
@@ -6,7 +6,6 @@
       <li >Show</li>
       <li class="active"><%= @location.building_name.capitalize %></li>
     </ol>
-  </div>
 </div>
 <div class="page-panel panel col-md-12 ">
   <div class="row"><h2 class="text-center"><%= @location.building_name %></h2></div>
@@ -19,7 +18,7 @@
       </div>
       <div id="events" class="col-md-12">
         <div class="table-responsive">
-          <table summary "Events List" id="events_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_location_events_path(@location, :format => :json) %>"></table>
+          <table summary "Events List" id="events_table" class="table table-hover"  data-source="<%= admin_location_events_path(@location, :format => :json) %>"></table>
         </div>
       </div>
     </div>
@@ -37,7 +36,7 @@
         </div>
       <div id="show-rooms" class="col-md-12">
         <div class="table-responsive">
-          <table summary "Rooms List" id="rooms_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_location_path(@location, :format => :json) %>"></table>
+          <table summary "Rooms List" id="rooms_table" class="table table-hover"  data-source="<%= admin_location_path(@location, :format => :json) %>"></table>
         </div>
       </div>
   </div>

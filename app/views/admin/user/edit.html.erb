@@ -1,5 +1,4 @@
-<div class= "row">
-  <div class="page-heading-bar">
+<div id= "ribbon">
     <ol class="breadcrumb">
       <li >Admin</li>
       <li >Users</li>
@@ -7,7 +6,6 @@
       <li >Edit</li>
       <li class="active"><%= @user.username %></li>
     </ol>
-  </div>
 </div>
   <%= form_for(@user, :class =>"form-horizontal", :url => admin_user_path) do |f| %>
 <div class="page-panel panel col-md-12 ">

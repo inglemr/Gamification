@@ -1,11 +1,9 @@
-<div class= "row">
-	<div class="page-heading-bar">
+<div id= "ribbon">
 		<ol class="breadcrumb">
 			<li >Admin</li>
 	  	<li class="active">All Locations</li>
 		</ol>
 	</div>
-</div>
 <div class="row">
 	<div class="col-md-6">
 		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Location'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
@@ -17,7 +15,7 @@
 </div>
 <br>
 <div class="table-responsive">
-<table summary "Locations List" id="locations_table" class="table table-hover table-bordered bootstrap-datatable datatable" data-source="<%= admin_location_index_path(format: "json") %>"></table>
+<table summary "Locations List" id="locations_table" class="table table-hover"  data-source="<%= admin_location_index_path(format: "json") %>"></table>
 </div>
 
 

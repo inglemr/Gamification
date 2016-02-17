@@ -1,5 +1,4 @@
-<div class= "row">
-  <div class="page-heading-bar">
+<div id= "ribbon">
     <ol class="breadcrumb">
       <li >Admin</li>
       <li >Kiosks</li>
@@ -7,7 +6,6 @@
       <li ><%= page_type %> Kiosk</li>
       <li class="active"><%= @kiosk.kiosk_name %></li>
     </ol>
-  </div>
 </div>
   <% if @kiosk.errors.any? %>
     <% @kiosk.errors.full_messages.each do |message| %>

@@ -1,11 +1,9 @@
-<div class= "row">
-  <div class="page-heading-bar">
+<div id= "ribbon">
     <ol class="breadcrumb">
       <li >Admin</li>
       <li><%= link_to("All Permissions", {:action => 'index'}) %></li>
       <li class="active" ><%= page_type %> Permission</li>
     </ol>
-  </div>
 </div>
 <%= form_for(@permission, :class =>"form-horizontal" , :url => path) do |f| %>
 <div class="page-panel panel col-md-12 ">

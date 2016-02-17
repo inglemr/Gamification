@@ -10,20 +10,23 @@
     <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body class="smart-style-5">
+ 
     <% if  current_user %>
       <%= render "shared/usermenu.html.erb"%>
     <% end %>
     <% if  can? :view, :sidebar%>
       <%= render "shared/sidebar.html.erb"%>
     <% end %>
-    <% if !flash.empty? %>
-      <%= flash_messages %>
-    <% end %>
+
     <div class="main">
+        <% if !flash.empty? %>
+          <%= flash_messages %>
+        <% end %>
       <%= yield %>
     </div>
   <%= yield :scripts %>
+
   </body>
 </html>
 
