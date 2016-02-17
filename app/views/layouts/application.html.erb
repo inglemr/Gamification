@@ -16,7 +16,7 @@
       <%= render "shared/usermenu.html.erb"%>
     <% end %>
     <% if  can? :view, :sidebar%>
-      <%= render "shared/sidebar.html.erb"%>
+      <aside id="left-panel"><%= render "shared/sidebar.html.erb"%></aside>
     <% end %>
 
     <div class="main">

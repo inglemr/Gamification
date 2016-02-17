@@ -21,7 +21,6 @@
 //= require jquery-ui/position
 //= bootstrap.js
 //= bootstrap.min.js
-// require turbolinks
 //= require moment
 //= require daterangepicker
 //= require bootstrap-datetimepicker
@@ -29,7 +28,3 @@
 //= require_tree .
 //= require app.config.js
 //= require app.js
-
-
-
-
