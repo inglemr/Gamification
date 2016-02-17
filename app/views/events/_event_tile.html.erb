@@ -1,41 +1,30 @@
- <%= link_to({:controller => 'events',:action => 'show', :id => event.id}) do %>
- <div class="event_show_tile">
-   <div class="event_tile col-lg-4 col-md-4 col-sm-6">
-  <div class="thumbnail userevent">
-    <div class='row'>
-      <div class='col-lg-12 col-md-12 col-sm-12' style='padding-bottom:5px;font-weight: 700;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>
-        <span class="col-md-6"><%= event.event_name %></span>
-        <div class="col-md-6 text-right">
-            <span class=""><%= event.day_time.to_formatted_s(:long_ordinal) %></span>
-        </div>
-      </div>
-    </div>
-    <div class='row data'>
-      <div class='col-lg-4 col-md-4 col-sm-4' style='padding-right: 0px;'>
-      <% if event.image_url.to_s == "" %>
-        <img class="event_tile_img" src="http://placehold.it/140x100">
-      <% else %>
-        <%= image_tag event.image_url(:resized).to_s ,:class => "event_tile_img" %>
-      <% end %>
-      </div>
-      <div class='col-lg-8 col-md-8 col-sm-8 short-description'>
-        <%= ActionView::Base.full_sanitizer.sanitize(event.description.html_safe)[0,180] + '...' %>
-      </div>
-    </div>
-    <div class='row'>
-      <div class='col-lg-12 col-md-12 col-sm-12' style='margin-top: 3px;'>
-        <div class='col-md-6 col-sm-6'> 
-          <p style='margin-bottom:0px'><small><b>Points: </b><i><%= event.point_val %></i></small></p>
-        </div>
-        <div class="text-right">
-          <% if (can? :update, event, :context => :admin) %>
-          <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-lg"></i>'.html_safe, {:controller => 'Admin::Events',:action => 'edit', :id => event.id} ,:class => "tile-show btn btn-primary") %>
-          <% end %>
-          </div>
-      </div>
+<%= link_to({:controller => 'events',:action => 'show', :id => event.id}) do %>
+<div class="col-md-4">
+<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
+        <header>
+          <span class="widget-icon"> <i class="fa fa-comments txt-color-white"></i> </span>
+          <h2><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %></h2>
 
-    </div>
-  </div>
-  </div>
-</div>
+          <% if (can? :update, event, :context => :admin) %>
+          <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-sm"></i>'.html_safe, {:controller => 'Admin::Events',:action => 'edit', :id => event.id} ,:class => "btn btn-primary btn-sm", :style => "float:right") %>
+          <% end %>
+        </header>
+        <div>
+          <div class="widget-body widget-hide-overflow no-padding">
+            <div class="row">
+              <% if event.image_url.to_s == "" %>
+                <img class="event_tile_img" src="http://placehold.it/140x100">
+              <% else %>
+                <%= image_tag event.image_url(:resized).to_s ,:class => "event_tile_img" %>
+              <% end %>
+              <%= ActionView::Base.full_sanitizer.sanitize(event.description.html_safe)[0,180] + '...' %>
+          </div>
+          <p style='margin-bottom:0px'><small><b>Points: </b><i><%= event.point_val %></i></small></p>
+          </div>
+        </div>
+        <!-- end widget div -->
+      </div>
+      </div> 
 <% end %>
+ 
+
