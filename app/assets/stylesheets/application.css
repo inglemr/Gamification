@@ -34,7 +34,13 @@
  *= require daterangepicker-bs3
  *= require bootstrap-datetimepicker
  */
+body {
+	margin-top:50px;
+}
 
+.navbar-inverse{
+	opacity: .7;
+}
 #header > :first-child{
 width: 100%;
 
