@@ -34,12 +34,18 @@
  *= require daterangepicker-bs3
  *= require bootstrap-datetimepicker
  */
+#left-panel{
+  margin-top:50px;
+  padding-top:0px;
+  z-index: 4;
+}
 body {
 	margin-top:50px;
 }
 
 .navbar-inverse{
 	opacity: .7;
+	z-index: 5;
 }
 #header > :first-child{
 width: 100%;

@@ -1,8 +1,5 @@
       <nav>
         <ul>
-          <li>
-            <%= link_to '<i class="fa fa-home fa-lg"></i> <span class="menu-item-parent">Home</span>'.html_safe, authenticated_root_path %>
-          </li>
           <% if  (can? :manage, :all) || @current_permissions["Admin::User"] == "manage" || @current_permissions["Admin::Role"] == "manage" || @current_permissions["Admin::Permission"] == "manage" %>
           <li class="top-menu-invisible">
             <a href="#"><i class="fa fa-lg fa-fw fa-users txt-color-blue"></i> <span class="menu-item-parent">Users & Roles</span></a>
