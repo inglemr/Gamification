@@ -9,7 +9,7 @@
     <%= stylesheet_link_tag    "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="smart-style-5 <%= current_user ? hidden-menu : "" %>">
+  <body class="smart-style-5 <%= current_user ? "hidden-menu" : "" %>">
     <% if  current_user %>
       <%= render "shared/usermenu.html.erb"%>
     <% end %>
