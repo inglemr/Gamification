@@ -16,7 +16,7 @@
     <% if can? :view, :sidebar%>
       <aside id="left-panel"><%= render "shared/sidebar.html.erb"%></aside>
     <% end %>
-    <div id="main" role="main">
+    <div role="main">
         <div id="content">
         <% if !flash.empty? %>
           <%= flash_messages %>
