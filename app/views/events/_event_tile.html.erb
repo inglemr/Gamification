@@ -20,9 +20,9 @@
               </div>
               <div class="col-md-5">
               <%= ActionView::Base.full_sanitizer.sanitize(event.description.html_safe)[0,180] + '...' %>
+              <p style='margin-bottom:0px'><small><b>Points: </b><i><%= event.point_val %></i></small></p>
               </div>
           </div>
-          <p style='margin-bottom:0px'><small><b>Points: </b><i><%= event.point_val %></i></small></p>
           </div>
         </div>
         <!-- end widget div -->
