@@ -1,5 +1,9 @@
 module ApplicationHelper  
 
+    def mobile_device?
+      request.user_agent =~ /Mobile|webOS/
+    end
+
   def current_host
     return unless session[:current_host]
     @current_host ||= User.find(session[:current_host])
