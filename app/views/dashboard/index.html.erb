@@ -9,16 +9,10 @@
       <% end %>     
 </div>
     <% if !mobile_device? %>
-      <div class="jarviswidget jarviswidget col-md-5">
-        <header>
-          <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-            <h2> My Events </h2>
-          </header> 
-          <div>
-            <div class="widget-body no-padding">
+      <div class="col-md-5">
               <div id="calendar"></div>
-            </div>
-           </div>
+
+
        </div>
     <% end %>
 <div id='events_grid'></div>
@@ -63,9 +57,33 @@
         events_table.dataTable().api().draw(true);
       });
           $('#calendar').fullCalendar({
+
+            timezone: 'local',
                 windowResize: function (event, ui) {
                   $('#calendar').fullCalendar('render');
-              }
+              },
+
+
+        eventSources: [
+
+        // your event source
+        {
+            url: '/cal_events.json',
+            type: 'GET',
+            error: function() {
+                alert('there was an error while fetching events!');
+            },
+            color: 'teal',  
+            textColor: 'white'
+        }
+
+    ],
+        eventClick: function(event) {
+        if (event.url) {
+            window.open(event.url);
+            return false;
+        }
+    }
           });
           
     })
