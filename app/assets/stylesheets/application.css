@@ -33,6 +33,7 @@
  *= require jquery-ui/tooltip
  *= require daterangepicker-bs3
  *= require bootstrap-datetimepicker
+ *= require fullcalendar
  */
 
 body {

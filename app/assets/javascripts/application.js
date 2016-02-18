@@ -28,3 +28,5 @@
 //= require_tree .
 //= require app.config.js
 //= require app.js
+//= require fullcalendar
+

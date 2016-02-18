@@ -1,4 +1,4 @@
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, admin_room_path(room), method: :delete, data: { confirm: 'Are you sure?' }) %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, admin_room_path(room), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 
 <%= javascript_tag do %>
 $(function () {
