@@ -32,6 +32,7 @@ gem 'sass-rails'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'turbolinks'
 gem 'bootstrap-daterangepicker-rails'
+gem 'fullcalendar-rails'
 
 #File uploads
 gem 'carrierwave'
