@@ -64,10 +64,10 @@
       }
     });
       $("#events_table_length").on("change", function() {
-        events_table.dataTable().api().draw(false);
+        events_table.dataTable().api().draw(true);
       });
       $('#events_table_search').keyup(function(){
-        events_table.dataTable().api().draw(false);
+        events_table.dataTable().api().draw(true);
       });
           $('#calendar').fullCalendar({
                 windowResize: function (event, ui) {
