@@ -26,7 +26,7 @@ private
         'DT_RowId' => location.id.to_s,
         "locations__id" => location.id,
         "locations__building_name" => location.building_name,
-        "locations__rooms" => location.rooms.size,
+        "locations__rooms_count" => location.rooms_count,
         location_actions: actions(location)
       }
     end

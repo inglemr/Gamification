@@ -32,13 +32,13 @@
          "columns": [
           { "title": "Id", "data": "locations__id" },
           { "title": "Building Name", "data": "locations__building_name" },
-          { "title": "Rooms", "data": "locations__rooms" },
+          { "title": "Rooms", "data": "locations__rooms_count" },
           { "title": "Actions", "data": "location_actions", "bSortable" : false }
         ],
         fnServerParams: function ( aoData ) {
           aoData.push( 
             { "name": "sSearch", "value": $("#locations_table_search").val() },
-            { "name": "iDisplayLength", "value": $("#locationss_table_length").val() }
+            { "name": "iDisplayLength", "value": $("#locations_table_length").val() }
           );
         },
       });

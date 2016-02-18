@@ -19,6 +19,8 @@ class Admin::RoomsController < ApplicationController
 	    @location = Location.find(params[:room][:location_id])
 	    respond_to do |format|
 	      if @room.save
+	      	@location.rooms_count = @location.rooms_count + 1
+	      	@location.save
 	        format.html { redirect_to @event.timeline, notice: 'Room Number was successfully created.' }
 	        format.json { render json: @room, status: :created, location: @room }
 	        format.js
@@ -31,6 +33,9 @@ class Admin::RoomsController < ApplicationController
 	end
 	def destroy
 	  @room = Room.find(params[:id])
+	  @location = Location.find(@room.location_id)
+	  @location.rooms_count = @location.rooms_count - 1
+	  @location.save
 	  @room.destroy
 	  redirect_to :back
 	end
