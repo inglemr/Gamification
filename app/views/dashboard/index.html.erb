@@ -8,26 +8,19 @@
       <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary" , :style => "float:right;") %>
       <% end %>     
 </div>
-
+    <% if !mobile_device? %>
       <div class="jarviswidget jarviswidget col-md-5">
-  
-              <header>
-                <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-                <h2> My Events </h2>
-              </header>
-        
-              <div>
-        
-                <div class="widget-body no-padding">
-
-                  <div id="calendar"></div>
-          
-                  <!-- end content -->
-                </div>
-        
-              </div>
-              <!-- end widget div -->
+        <header>
+          <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+            <h2> My Events </h2>
+          </header> 
+          <div>
+            <div class="widget-body no-padding">
+              <div id="calendar"></div>
             </div>
+           </div>
+       </div>
+    <% end %>
 <div id='events_grid'></div>
 <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
 
