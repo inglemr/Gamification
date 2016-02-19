@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
 
   get 'dashboard/index'
+  get 'cal_events' => 'dashboard#cal_events'
   devise_for :users
   devise_scope :user do
     authenticated :user do
