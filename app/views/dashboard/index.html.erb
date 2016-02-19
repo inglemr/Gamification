@@ -34,13 +34,9 @@
                 </div>
               </header>
               <div>
-        
                 <div class="widget-body no-padding">
-                  <!-- content goes here -->
-                  <div class="widget-body-toolbar">
-        
+                  <div class="widget-body-toolbar">     
                     <div id="calendar-buttons">
-        
                       <div class="btn-group">
                         <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
                         <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
@@ -72,7 +68,7 @@
       var events_table = $('#events_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
-        "iDisplayLength": 6,
+        "iDisplayLength": 8,
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": $('#events_table').data('source'),
