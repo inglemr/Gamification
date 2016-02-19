@@ -1,5 +1,5 @@
-class KioskPagesController < ApplicationController
-  before_filter :authenticate_kiosk!
+class Kiosk::KioskPagesController < ApplicationController
+  #before_filter :authenticate_kiosk!
   #load_and_authorize_resource :class => false
   #before_filter :load_permissions
 

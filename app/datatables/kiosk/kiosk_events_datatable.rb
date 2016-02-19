@@ -37,7 +37,7 @@ private
   end
   
   def eventTile(event)
-    render(:partial=>"kiosk_pages/tile.html.erb", locals: { event: event},:formats => [:html])
+    render(:partial=>"kiosk/kiosk_pages/tile.html.erb", locals: { event: event},:formats => [:html])
   end
 
   def page

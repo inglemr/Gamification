@@ -1,22 +1,18 @@
 class Kiosk < ActiveRecord::Base
-	attr_accessor :kisok_name
-  validates :email, :presence => false, :email => false
+	attr_accessor :login
   validates :kiosk_name,
   :presence => true,
   :uniqueness => {
     :case_sensitive => true
   }
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:kiosk_name]
 
-def email_required?
-  false
+def self.authenticate(kiosk_id, gsw_pin)
+  kiosk = Kiosk.where(:kiosk_name => kiosk_id).first
+  user = User.where(:gsw_id => gsw_pin).first
+  if kiosk && user
+    kiosk
+  else
+    nil
+  end
 end
-
-def email_changed?
-  false
-end
-
 end

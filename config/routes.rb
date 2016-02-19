@@ -1,19 +1,22 @@
 Rails.application.routes.draw do
-  devise_for :kiosks
 
-  devise_scope :kiosk do
-    authenticated :kiosk do
-      root 'kiosk_pages#index', as: :kiosk_root
+    namespace :kiosk do
+      get "log_in" => "sessions#new", :as => "log_in"
+      get "log_out" => "sessions#destroy", :as => "log_out"
+      get 'index' => "kiosk_pages#index"
+      resources :kiosks
+      resources :sessions
+      #root 'kiosk_pages#index', as: :kiosk_root
       controller :kiosk_pages do
         get 'list' => "kiosk_pages#list_events"
         get 'main' => "kiosk_pages#main"
         post 'main' => "kiosk_pages#main"
+
         get 'kiosk/:event_id/manage' => "kiosk_pages#manage"
         get 'kiosk/:event_id/swipe' => "kiosk_pages#swipe"
         post 'kiosk/:event_id/new_swipe' => "kiosk_pages#new_swipe"
       end
     end
-  end
 
 
   get 'dashboard/index'

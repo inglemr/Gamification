@@ -1,0 +1,21 @@
+<div class="login_panel col-md-4 col-md-offset-4 centered">
+  <div class="row">
+    <h1 class="login_header text-center login_text_header">Kiosk Log In</h1>
+  </div>
+  <hr/>
+    <%=  form_tag kiosk_sessions_path do%>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <%= text_field_tag :kiosk_name, nil, :placeholder => "Kiosk ID", :class => "form-control"%>
+      </div>
+    </div>
+    <div class="row form-group">
+            <div class="col-md-12 ">
+        <%= password_field_tag :password,nil, :placeholder => "GSW PIN" , :class => "form-control"%>
+        </div>
+    </div>
+      <div class="row form-group col-md-6 col-md-offset-3">
+       <%= submit_tag "Log In", class: "btn btn-primary form-control" %>
+      </div>
+    <%end%>
+</div>

@@ -1,11 +1,11 @@
 <h2 class="text-center"><%= Location.find(current_kiosk.location_id).building_name + " - RM:" + Room.find(current_kiosk.room_id).room_number %></h2>
 <div class="row" %>
-  <%= link_to '<i class="fa fa-arrow-circle-left fa-lg"></i> Back'.html_safe,main_path,:class => "btn btn-primary btn-md ",:style => "float:left; margin-left:20px;" %>
-  <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, destroy_kiosk_session_path , :method => :delete,:class => "btn btn-danger btn-md text-right", :style => "float:right; margin-right:20px;"%>
+  <%= link_to '<i class="fa fa-arrow-circle-left fa-lg"></i> Back'.html_safe,kiosk_main_path,:class => "btn btn-primary btn-md ",:style => "float:left; margin-left:20px;" %>
+  <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, kiosk_log_out_path , :method => :delete,:class => "btn btn-danger btn-md text-right", :style => "float:right; margin-right:20px;"%>
 </div>
 <hr>
 <div id='events_grid' class="row" style='display: block;margin-top:40px;'></div>
-<table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= list_path(format: "json") %>"></table>
+<table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= kiosk_list_path(format: "json") %>"></table>
 
 
 

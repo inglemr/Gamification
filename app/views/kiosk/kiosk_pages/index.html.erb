@@ -4,7 +4,7 @@
             <div class="panel panel-primary">
                 <div class="panel-body">
                     <div class="row">
-                        <%= form_tag("/main", method: "post") do %>
+                        <%= form_tag("/kiosk/main", method: "post") do %>
                             <div class="input-group">
                               <%= password_field_tag "pin", "" , :placeholder => "Host PIN", :style => "height:100px;font-size: 50px" ,:class => "form-control"%>
                                 <span class="input-group-btn">
