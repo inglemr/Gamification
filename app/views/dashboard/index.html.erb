@@ -9,11 +9,54 @@
       <% end %>     
 </div>
     <% if !mobile_device? %>
-      <div class="col-md-5">
-              <div id="calendar"></div>
-
-
-       </div>
+      <div class="col-md-6">
+            <div class="jarviswidget jarviswidget-color-blueDark">
+              <header>
+                <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+                <h2> My Events </h2>
+                <div class="widget-toolbar">
+                  <!-- add: non-hidden - to disable auto hide -->
+                  <div class="btn-group">
+                    <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
+                      Showing <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu js-status-update pull-right">
+                      <li>
+                        <a href="javascript:void(0);" id="mt">Month</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);" id="ag">Agenda</a>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0);" id="td">Today</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </header>
+              <div>
+        
+                <div class="widget-body no-padding">
+                  <!-- content goes here -->
+                  <div class="widget-body-toolbar">
+        
+                    <div id="calendar-buttons">
+        
+                      <div class="btn-group">
+                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="calendar"></div>
+        
+                  <!-- end content -->
+                </div>
+        
+              </div>
+              <!-- end widget div -->
+            </div>
+            </div>
     <% end %>
 <div id='events_grid'></div>
 <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
@@ -26,10 +69,11 @@
     var datatable;
     $( document ).ready(function() {
 
+  
       var events_table = $('#events_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
-        "iDisplayLength": 6,
+        "iDisplayLength": 8,
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": $('#events_table').data('source'),
@@ -56,27 +100,30 @@
       $('#events_table_search').keyup(function(){
         events_table.dataTable().api().draw(true);
       });
-          $('#calendar').fullCalendar({
 
+      var hdr = {left: 'title',
+                center: 'month,agendaWeek,agendaDay',
+                right: 'prev,today,next'
+          };
+          $('#calendar').fullCalendar({
+              header: hdr,
+              buttonIcons: {
+                  prev: 'left-single-arrow',
+                  next: 'right-single-arrow'
+              },
             timezone: 'local',
                 windowResize: function (event, ui) {
                   $('#calendar').fullCalendar('render');
               },
 
-
         eventSources: [
-
-        // your event source
         {
             url: '/cal_events.json',
             type: 'GET',
             error: function() {
                 alert('there was an error while fetching events!');
-            },
-            color: 'teal',  
-            textColor: 'white'
+            }
         }
-
     ],
         eventClick: function(event) {
         if (event.url) {
@@ -85,7 +132,48 @@
         }
     }
           });
+      
+          /* hide default buttons */
+          $('.fc-header-right, .fc-header-center').hide();
+
+      
+        $('#calendar-buttons #btn-prev').click(function () {
+            $('.fc-button-prev').click();
+            return false;
+        });
+        
+        $('#calendar-buttons #btn-next').click(function () {
+            $('.fc-button-next').click();
+            return false;
+        });
+        
+        $('#calendar-buttons #btn-today').click(function () {
+            $('.fc-button-today').click();
+            return false;
+        });
+        
+        $('#mt').click(function () {
+            $('#calendar').fullCalendar('changeView', 'month');
+        });
+        
+        $('#ag').click(function () {
+            $('#calendar').fullCalendar('changeView', 'agendaWeek');
+        });
+        
+        $('#td').click(function () {
+            $('#calendar').fullCalendar('changeView', 'agendaDay');
+        });     
+     
           
     })
   </script>
 <% end %>
+
+
+
+<style>
+.fc-left{
+    margin-top: -20px;
+    margin-left: 10px;
+}
+</style>
