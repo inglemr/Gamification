@@ -3,9 +3,8 @@ class Kiosk::KioskEventsDatatable
 
   def initialize(view, current_host, location_id, room_number)
     @view = view
-    @events = current_host.created_events.where(:location_id => location_id).where("'#{room_number}' = ANY (room_numbers)").where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    @events = current_host.created_events.where("(events.day_time >= '#{(Time.now - (2 * 60 * 60)).to_s(:db)}' AND events.day_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}') OR events.end_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}'")
     @events = @events.page(page).per_page(per_page)
-
   end
 
   def as_json(options = {})

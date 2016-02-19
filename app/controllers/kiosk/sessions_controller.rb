@@ -6,7 +6,8 @@ class Kiosk::SessionsController < ApplicationController
     kiosk = Kiosk.authenticate(params[:kiosk_name], params[:password])
     if kiosk
       session[:kiosk_id] = kiosk.id
-      redirect_to kiosk_index_path, :notice => "Logged in!"
+      session[:current_host] ||= user.id
+      redirect_to kiosk_list_path, :notice => "Logged in!"
     else
       flash.now.alert = "Invalid Kiosk ID or GSW ID"
       render "new"
