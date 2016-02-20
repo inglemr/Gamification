@@ -12,8 +12,8 @@ def authenticate_kiosk
   if current_kiosk
 
   else
-    redirect_to root_path
-    flash[:alart] = "Not logged in"
+    redirect_to kiosk_log_in_path
+    flash[:alert] = "Not logged in"
   end
 end
 

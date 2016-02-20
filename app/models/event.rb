@@ -31,4 +31,21 @@ class Event < ActiveRecord::Base
     self.attendance = 0;
     self.save
   end
+
+  def swipe(event, gsw_id)
+    message = Hash.new
+    user = User.find_by(:gsw_id => gsw_id)
+    if (user)
+      if event.add_attendee(user)
+        message[:message] = "Swiped"
+      else
+        message[:message] = "User already added event"
+      end
+    else
+      message[:message] = "User could not be found register at {URL} and then try again"
+    end
+    return message
+  end
 end
+
+
