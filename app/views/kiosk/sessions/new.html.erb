@@ -6,16 +6,16 @@
     <%=  form_tag kiosk_sessions_path do%>
     <div class="row form-group">
       <div class="col-md-12">
-        <%= text_field_tag :kiosk_name, nil, :placeholder => "Kiosk ID", :class => "form-control"%>
+        <%= text_field_tag :kiosk_name, nil, :placeholder => "Kiosk ID",:style => "", :class => "form-control text-center"%>
       </div>
     </div>
     <div class="row form-group">
             <div class="col-md-12 ">
-        <%= password_field_tag :password,nil, :placeholder => "GSW PIN" , :class => "form-control"%>
+        <%= password_field_tag :password,nil, :placeholder => "GSW ID" , :class => "form-control text-center"%>
         </div>
     </div>
       <div class="row form-group col-md-6 col-md-offset-3">
-       <%= submit_tag "Log In", class: "btn btn-primary form-control" %>
+       <%= submit_tag "Log In", class: "btn btn-primary form-control " %>
       </div>
     <%end%>
 </div>
