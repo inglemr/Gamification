@@ -45,7 +45,7 @@ private
   end
 
   def per_page
-    params[:iDisplayLength].to_i > 0? params[:iDisplayLength].to_i : 8
+    params[:iDisplayLength].to_i > 0? params[:iDisplayLength].to_i : 6
   end
 
   def sort_direction
