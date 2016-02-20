@@ -1,5 +1,5 @@
 <%= link_to({:controller => 'events',:action => 'show', :id => event.id}) do %>
-<div class="col-md-3" style="padding:10px;">
+<div class="col-md-6" style="padding:10px;">
 <div class="jarviswidget jarviswidget ">
         <header class="bg-color-blueDark">
           <h2><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %></h2>

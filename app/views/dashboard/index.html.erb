@@ -7,6 +7,7 @@
     <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary" , :style => "float:right;") %>
   <% end %>     
 </div>
+<div class="col-md-12">
 <% if !mobile_device? %>
   <div class="col-md-6">
     <div class="jarviswidget jarviswidget-color-blueDark">
@@ -47,14 +48,17 @@
     </div>
   </div>
 <% end %>
-<div id='events_grid'></div>
-<table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
+<div class="col-md-6">
+  <div id='events_grid'></div>
+  <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
+</div>
+</div>
 <% content_for :scripts do %>
   <script type="text/javascript">
     var datatable;
     $( document ).ready(function() {
       var events_table = $('#events_table').dataTable({
-        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sDom": "<'row'<'col-lg-12'>r>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
         "iDisplayLength": 6,
         "bProcessing": true,
@@ -145,12 +149,17 @@
         
         $('#td').click(function () {
             $('#calendar').fullCalendar('changeView', 'agendaDay');
-        });        
+        });     
+        $('#events_table_processing').addClass('bg-color-red')    
     })
   </script>
 <% end %>
 
 <style>
+#events_table_processing
+{
+
+}
 .fc-left{
     margin-top: -20px;
     margin-left: 10px;
