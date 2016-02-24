@@ -1,74 +1,66 @@
 <div id="ribbon">
- 
-    <ol class="breadcrumb">
-      <li ><%= current_user.username %>'s Dashboard</li>
-    </ol>
-      <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 150px;float:right;">
-      <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
-      <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary" , :style => "float:right;") %>
-      <% end %>     
+  <ol class="breadcrumb">
+    <li ><%= current_user.username %>'s Dashboard</li>
+  </ol>
+  <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 150px;float:right;">
+  <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
+    <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary" , :style => "float:right;") %>
+  <% end %>     
 </div>
-    <% if !mobile_device? %>
-      <div class="col-md-6">
-            <div class="jarviswidget jarviswidget-color-blueDark">
-              <header>
-                <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
-                <div class="widget-toolbar">
-                  <!-- add: non-hidden - to disable auto hide -->
-                  <div class="btn-group">
-                    <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
-                      Showing <i class="fa fa-caret-down"></i>
-                    </button>
-                    <ul class="dropdown-menu js-status-update pull-right">
-                      <li>
-                        <a href="javascript:void(0);" id="mt">Month</a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0);" id="ag">Agenda</a>
-                      </li>
-                      <li>
-                        <a href="javascript:void(0);" id="td">Today</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </header>
-              <div>
-                <div class="widget-body no-padding">
-                  <div class="widget-body-toolbar">     
-                    <div id="calendar-buttons">
-                      <div class="btn-group">
-                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
-                        <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <div id="calendar"></div>
-        
-                  <!-- end content -->
-                </div>
-        
+<div class="col-md-12">
+<% if !mobile_device? %>
+  <div class="col-md-6">
+    <div class="jarviswidget jarviswidget-color-blueDark">
+      <header>
+        <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+          <div class="widget-toolbar">
+            <div class="btn-group">
+              <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
+                Showing <i class="fa fa-caret-down"></i>
+              </button>
+              <ul class="dropdown-menu js-status-update pull-right">
+                <li>
+                  <a href="javascript:void(0);" id="mt">Month</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" id="ag">Agenda</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" id="td">Today</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </header>
+      <div>
+        <div class="widget-body no-padding">
+          <div class="widget-body-toolbar">     
+            <div id="calendar-buttons">
+              <div class="btn-group">
+                <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
               </div>
-              <!-- end widget div -->
             </div>
-            </div>
-    <% end %>
-<div id='events_grid'></div>
-<table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
-
-
+          </div>
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="col-md-6">
+  <div id='events_grid'></div>
+  <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
+</div>
+</div>
 <% content_for :scripts do %>
   <script type="text/javascript">
-      
-
     var datatable;
     $( document ).ready(function() {
-
-  
       var events_table = $('#events_table').dataTable({
-        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sDom": "<'row'<'col-lg-12'>r>t<'row'<'col-lg-12 col-md-12'><'col-lg-9 col-md-9 center'p>>",
         "sPaginationType": "full_numbers",
-        "iDisplayLength": 8,
+        "iDisplayLength": 6,
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": $('#events_table').data('source'),
@@ -158,15 +150,20 @@
         $('#td').click(function () {
             $('#calendar').fullCalendar('changeView', 'agendaDay');
         });     
-     
-          
+        $('#events_table_processing').addClass('bg-color-red')    
     })
+        setTimeout(function(){
+            $('#flash').remove();
+        }, 5000);
+
   </script>
 <% end %>
 
-
-
 <style>
+#events_table_processing
+{
+
+}
 .fc-left{
     margin-top: -20px;
     margin-left: 10px;
