@@ -17,6 +17,21 @@ class Kiosk::KioskPagesController < ApplicationController
       flash[:alert] = "Unauthorized Access"
       redirect_to kiosk_list_path
     end
+    require 'rqrcode'
+
+    qrcode = RQRCode::QRCode.new(@event.description)
+    image = qrcode.as_png
+    svg = qrcode.as_svg
+    html = qrcode.as_html
+    string = qrcode.to_s
+
+    qrcode = RQRCode::QRCode.new(@event.description)
+    # With default options specified explicitly
+    svg = qrcode.as_svg(offset: 0, color: '000', 
+                        shape_rendering: 'crispEdges', 
+                        module_size: 11)
+
+    @qr = RQRCode::QRCode.new( admin_events_path, :size => 2, :level => :m )
   end
 
   def manage
