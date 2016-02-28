@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
 
   #Validations
   #validates :api_token, presence: true, uniqueness: true
-  validates :gsw_id, presence: true, uniqueness: {message: "ID must be unique"}
-  validates :email , uniqueness: {message: "must be unique or student account does not exist"}
+  validates :gsw_id, presence: true, uniqueness: {message: " must be unique"}
+  validates :email , uniqueness: {message: "must be unique or does not exist"}
  
 
   #Relationships
