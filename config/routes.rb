@@ -21,8 +21,9 @@ Rails.application.routes.draw do
 
   get 'dashboard/index'
   get 'cal_events' => 'dashboard#cal_events'
-  devise_for :users
+  devise_for :users, :controllers => {:confirmations => 'confirmations'}
   devise_scope :user do
+       match '/users/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
     authenticated :user do
       root 'dashboard#index', as: :authenticated_root
       controller :settings do

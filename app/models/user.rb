@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-	after_create :assign_default_role
+  before_validation :set_email, :on => :create
+  validates :gsw_id, presence: true, uniqueness: {message: "ID must be unique"}
+  validates :email , uniqueness: {message: "must be unique or student account does not exist"}
   validates :api_token, presence: true, uniqueness: true
   before_validation :generate_api_token
 	has_and_belongs_to_many :roles
@@ -8,11 +10,38 @@ class User < ActiveRecord::Base
   has_many :attended_events, through: :user_events
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  #  :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,:confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
   scope :sorted, lambda { order("users.id ASC")}
+
+  def set_email
+    require 'net/http'
+      params = Hash.new
+      params[:sid] = self.gsw_id
+      params[:pin] = self.gsw_pin
+      response = Net::HTTP.post_form(URI.parse("https://rainy.gswcm.net/rainer.php"), params)
+      res = JSON.parse response.body
+
+      if res["status"] == 0
+         emails = res["e-mails"]
+         if emails["student"]
+          self.email = emails["student"]
+         elsif emails["employee"]
+          self.email = emails["employee"]
+         end
+      else
+        self.email = "notfound@email.com"
+      end
+
+      self.gsw_pin = ""
+  end
+
+  def email_required?
+    false
+  end
+
 
   def assign_default_role
     self.events_attended = 0;
@@ -43,6 +72,41 @@ class User < ActiveRecord::Base
       break unless User.exists? api_token: api_token
     end
   end
+
+
+  def password_required?
+    super if confirmed?
+  end
+
+  def password_match?
+    self.errors[:password] << "can't be blank" if password.blank?
+    self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
+    self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
+    password == password_confirmation && !password.blank?
+  end
+
+  # new function to set the password without knowing the current 
+  # password used in our confirmation controller. 
+  def attempt_set_password(params)
+    p = {}
+    p[:password] = params[:password]
+    p[:password_confirmation] = params[:password_confirmation]
+    p[:username] = params[:username]
+    update_attributes(p)
+  end
+
+  # new function to return whether a password has been set
+  def has_no_password?
+    self.encrypted_password.blank?
+  end
+
+  # Devise::Models:unless_confirmed` method doesn't exist in Devise 2.0.0 anymore. 
+  # Instead you should use `pending_any_confirmation`.  
+  def only_if_unconfirmed
+    pending_any_confirmation {yield}
+  end
+
+
 end
 
   

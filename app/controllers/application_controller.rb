@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   helper_method :current_kiosk
+  before_filter :load_permissions 
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
@@ -90,7 +91,7 @@ protected
           @current_permissions[perm.subject_class] = perm.action
         end
       end
-    else
+    elsif @api_user
       @api_user.roles.each do |role|
         role.permissions.each do |perm|
           @current_permissions[perm.subject_class] = perm.action
