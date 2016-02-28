@@ -28,13 +28,14 @@ class User < ActiveRecord::Base
          emails = res["e-mails"]
          if emails["student"]
           self.email = emails["student"]
+          self.roles << Role.find_by(:name => "Student")
          elsif emails["employee"]
           self.email = emails["employee"]
+          self.roles << Role.find_by(:name => "Faculty")
          end
       else
         self.email = "notfound@email.com"
       end
-
       self.gsw_pin = ""
   end
 

@@ -1,14 +1,5 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-
-
- # ADMIN Permissions
+## BASIC PERMISSIONS ##
+ 	 ## EVERYTHING
 	 Permission.create!(:name => "Everything",:description => "Full Access", :subject_class => "all", :action => "manage")
 
 	 ##Event Permissions
@@ -31,20 +22,36 @@
 	 ##Customizer
 	 Permission.create!(:name => "Admin Customize",:description => "Full Access to Customizer",:subject_class => "Admin::Customize", :action => "manage")
 
+	 #API Permissions
+	 Permission.create!(:name => "API Events",:description => "Full Access to Events API",:subject_class => "API::Event", :action => "manage")
+	 Permission.create!(:name => "API Users",:description => "Full Access to Users API",:subject_class => "API::User", :action => "manage")
+	 Permission.create!(:name => "API QRCodes",:description => "Full Access to QRCodes API",:subject_class => "API::Qrcode", :action => "manage")
 
- #API Permissions
- Permission.create!(:name => "API Events",:description => "Full Access to Events API",:subject_class => "API::Event", :action => "manage")
- Permission.create!(:name => "API Users",:description => "Full Access to Users API",:subject_class => "API::User", :action => "manage")
- Permission.create!(:name => "API QRCodes",:description => "Full Access to QRCodes API",:subject_class => "API::Qrcode", :action => "manage")
+	 #Event organizer Permissions
 
+	 #Basic User Permissions
+	 Permission.create!(:name => "View Events",:description => "View Events", :subject_class => "Event", :action => "read")
+	 Permission.create!(:name => "View Dashboard",:description => "View Dashboard", :subject_class => "Dashboard", :action => "read")
+	 Permission.create!(:name => "Show events on calander", :description => "Show events On Calander", :subject_class =>"Dashboard", :action => "cal_events")
+	 Permission.create!(:name => "View my points",:description => "View my points", :subject_class => "Event", :action => "my_points")
 
- #Basic User Permissions
- Permission.create!(:name => "View Events",:description => "View Events", :subject_class => "Event", :action => "read")
- Permission.create!(:name => "View Dashboard",:description => "View Dashboard", :subject_class => "Dashboard", :action => "read")
+## BASIC ROLES ##
+	 #Faculty Role
+	 faculty = Role.create!(:name => "Faculty")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Admin::Event', :action => "create")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Admin::Event', :action => "update")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "cal_events")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "my_points")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
 
+	 #Admin Role
+	 admin = Role.create!(:name => "Admin")
+	 admin.permissions << Permission.find_by(:subject_class => 'all', :action => "manage")
 
- admin = Role.create!(:name => "Admin")
- student = Role.create!(:name => "Student") 
- student.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
- student.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
- admin.permissions << Permission.find_by(:subject_class => 'all', :action => "manage")
+	 #Student Role
+	 student = Role.create!(:name => "Student") 
+	 student.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
+	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "cal_events")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "my_points")

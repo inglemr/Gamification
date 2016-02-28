@@ -62,7 +62,6 @@ class ConfirmationsController < Devise::ConfirmationsController
   def do_confirm
     @confirmable.confirm
     set_flash_message :notice, :confirmed
-    @confirmable.assign_default_role
     sign_in_and_redirect(resource_name, @confirmable)
   end
 end
