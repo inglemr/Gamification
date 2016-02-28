@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
   helper_method :current_kiosk
   before_filter :load_permissions 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_filter :configure_devise_params, if: :devise_controller?
+  
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end
@@ -18,12 +21,6 @@ def authenticate_kiosk
   end
 end
 
-
-
-
-  protect_from_forgery with: :exception
-  before_filter :configure_devise_params, if: :devise_controller?
-  
   def configure_devise_params
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.permit(:email, :username, :gsw_id, :gsw_pin, :password, :password_confirmation)
