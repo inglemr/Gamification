@@ -74,6 +74,9 @@ class User < ActiveRecord::Base
   end
 
 
+  def password_required?
+    false
+  end
 
   def password_match?
     self.errors[:password] << "can't be blank" if password.blank?
