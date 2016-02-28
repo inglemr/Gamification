@@ -36,7 +36,7 @@
 	 Permission.create!(:name => "View my points",:description => "View my points", :subject_class => "Event", :action => "my_points")
 
 ## BASIC ROLES ##
-	 #Faculty Role
+	 ##Faculty Role
 	 faculty = Role.create!(:name => "Faculty")
 	 faculty.permissions << Permission.find_by(:subject_class => 'Admin::Event', :action => "create")
 	 faculty.permissions << Permission.find_by(:subject_class => 'Admin::Event', :action => "update")
@@ -45,11 +45,11 @@
 	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "my_points")
 	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
 
-	 #Admin Role
+	 ##Admin Role
 	 admin = Role.create!(:name => "Admin")
 	 admin.permissions << Permission.find_by(:subject_class => 'all', :action => "manage")
 
-	 #Student Role
+	 ##Student Role
 	 student = Role.create!(:name => "Student") 
 	 student.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
 	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")

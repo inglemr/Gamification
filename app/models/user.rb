@@ -1,9 +1,16 @@
 class User < ActiveRecord::Base
+
+  #Filters
   before_validation :set_email, :on => :create
+  #before_validation :generate_api_token
+
+  #Validations
+  #validates :api_token, presence: true, uniqueness: true
   validates :gsw_id, presence: true, uniqueness: {message: "ID must be unique"}
   validates :email , uniqueness: {message: "must be unique or student account does not exist"}
-  validates :api_token, presence: true, uniqueness: true
-  before_validation :generate_api_token
+ 
+
+  #Relationships
 	has_and_belongs_to_many :roles
   has_many :user_events, foreign_key: :attendee_id
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"
@@ -65,15 +72,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def generate_api_token
-    return if api_token.present?
-
-    loop do
-      self.api_token = SecureRandom.hex
-      break unless User.exists? api_token: api_token
-    end
-  end
-
+  #def generate_api_token
+  #  return if api_token.present?
+  #  loop do
+  #    self.api_token = SecureRandom.hex
+  #    break unless User.exists? api_token: api_token
+  #  end
+  #end
 
   def password_required?
     false
@@ -86,8 +91,6 @@ class User < ActiveRecord::Base
     password == password_confirmation && !password.blank?
   end
 
-  # new function to set the password without knowing the current 
-  # password used in our confirmation controller. 
   def attempt_set_password(params)
     p = {}
     p[:password] = params[:password]
@@ -96,13 +99,10 @@ class User < ActiveRecord::Base
     update_attributes(p)
   end
 
-  # new function to return whether a password has been set
   def has_no_password?
     self.encrypted_password.blank?
   end
-
-  # Devise::Models:unless_confirmed` method doesn't exist in Devise 2.0.0 anymore. 
-  # Instead you should use `pending_any_confirmation`.  
+ 
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
