@@ -37,7 +37,10 @@ class Admin::UserController  < ApplicationController
 		end
 	end
 
-	def delete
+	def destroy
+	  @user = User.find(params[:id])
+	  @user.destroy
+	  redirect_to admin_user_index_path
 	end
 private
 	def self.permission

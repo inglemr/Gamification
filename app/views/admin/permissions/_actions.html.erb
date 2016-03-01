@@ -1,6 +1,6 @@
 <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-search-plus fa-lg"></i>'.html_safe, {:action => 'show', :id => permission.id}, :class  => "btn form-control btn-sm") %>
 <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Edit" class="fa fa-pencil fa-lg"></i>'.html_safe, {:action => 'edit', :id => permission.id}, :class  => "btn form-control btn-sm") %>
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, admin_role_path(permission), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, admin_permission_path(permission), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 
 <%= javascript_tag do %>
 $(function () {
