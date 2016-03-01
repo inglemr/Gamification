@@ -1,9 +1,9 @@
 module ApplicationHelper  
 
     def mobile_device?
-      puts request.user_agent 
-      puts "MOBILE DETECTOR"
-      request.user_agent =~ /Mobile|webOS/
+      request.user_agent 
+      #puts "MOBILE DETECTOR"
+      #request.user_agent =~ /Mobile|webOS/
     end
 
   def current_host
