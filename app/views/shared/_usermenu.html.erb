@@ -21,7 +21,9 @@
           <li style="float:right"> <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, destroy_user_session_path , :method => :delete%></li>
           <li style="float:right" class="<%= current_class?(settings_path) %>"><%= link_to '<i class="fa fa-cog fa-lg"></i> My Profile'.html_safe, settings_path %></li>
         <% else %>
-          <li><%= render "users/shared/links" %></li>
+          <% if current_user %>
+            <li><%= render "users/shared/links" %></li>
+          <% end %>
         <% end %>
 
       </ul>
@@ -33,5 +35,8 @@
 <style>
 .navbar{
   min-height: 0px;
+}
+.navbar-inverse .navbar-nav>li>a{
+    color: white;
 }
 </style>

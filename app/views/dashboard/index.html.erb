@@ -1,18 +1,24 @@
-<div id="ribbon">
-  <ol class="breadcrumb">
+
+<div class="col-md-12"id="ribbon">
+  <ol class="breadcrumb col-md-6">
     <li ><%= current_user.username %>'s Dashboard</li>
   </ol>
-  <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 150px;float:right;">
-  <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
-    <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary" , :style => "float:right;") %>
-  <% end %>     
+  <% if !mobile_device? %>
+    <div class="col-md-6">
+      <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 150px;float:right;">
+      <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
+        <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'} ,:class => "btn btn-primary" , :style => "float:right;") %>
+      <% end %>   
+    </div>  
+  <% end %>
 </div>
 <div class="col-md-12">
 <% if !mobile_device? %>
   <div class="col-md-6">
     <div class="jarviswidget jarviswidget-color-blueDark">
-      <header>
+      <header role="heading">  
         <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+          <h2><i>Event Calendar</i> </h2>     
           <div class="widget-toolbar">
             <div class="btn-group">
               <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
@@ -49,8 +55,36 @@
   </div>
 <% end %>
 <div class="col-md-6">
-  <div id='events_grid'></div>
+<div class="jarviswidget jarviswidget-color-blueDark jarviswidget-sortable" id="wid-id-10" role="widget">
+        <header role="heading">
+          <h2><strong>Upcoming</strong> <i>Events</i> </h2>       
+        <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span></header>
+
+        <!-- widget div-->
+        <div role="content">
+          
+          <!-- widget edit box -->
+          <div class="jarviswidget-editbox">
+            <!-- This area used as dropdown edit box -->
+          </div>
+          <!-- end widget edit box -->
+          
+          <!-- widget content -->
+          <div class="widget-body no-padding">
+              <div id='events_grid'></div>
   <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
+            
+            <div class="widget-footer">
+              
+            </div>
+            
+          </div>
+          <!-- end widget content -->
+          
+        </div>
+        <!-- end widget div -->
+        
+      </div>
 </div>
 </div>
 <% content_for :scripts do %>

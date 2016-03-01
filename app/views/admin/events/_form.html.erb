@@ -111,6 +111,8 @@ $('#daterange').daterangepicker({
     "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
     "endDate": "<%= @event.end_time.to_s(:datepicker)%>",
     <% end %>
+    "drops": "up",
+    "applyClass": "btn  btn-primary",
     "showDropdowns": true,
     "timePicker": true,
     "timePickerIncrement": 30,
@@ -119,7 +121,6 @@ $('#daterange').daterangepicker({
         },
     "autoApply": true,
 });
-
 
 
   $(function () {

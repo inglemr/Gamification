@@ -17,8 +17,12 @@ class Kiosk::SessionsController < ApplicationController
       flash[:alert] = "Already Logged In"
       redirect_to root_path
     else
-      kiosk = Kiosk.authenticate(params[:kiosk_name], params[:password])
-      user = User.where(:gsw_id => params[:password]).first
+      id = params[:password]
+      if(id.length == 16)
+        id = id[4,9]
+      end
+      kiosk = Kiosk.authenticate(params[:kiosk_name], id)
+      user = User.where(:gsw_id => id).first
       if kiosk
         session[:kiosk_id] = kiosk.id
         session[:current_host] ||= user.id

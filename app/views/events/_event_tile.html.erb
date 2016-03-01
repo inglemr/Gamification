@@ -1,7 +1,7 @@
 <%= link_to({:controller => 'events',:action => 'show', :id => event.id}) do %>
 <div class="col-md-6" style="padding:10px;">
-<div class="jarviswidget jarviswidget ">
-        <header class="bg-color-blueDark">
+<div class="jarviswidget jarviswidget jarviswidget-color-blue">
+        <header role="heading" class="jarviswidget-color-blueDark">
           <h2><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %></h2>
 
           <% if (can? :update, event, :context => :admin) %>
@@ -39,3 +39,6 @@ margin-right: 5px;
 float:right;
 }
 </style>
+
+
+

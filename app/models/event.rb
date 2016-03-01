@@ -27,21 +27,22 @@ class Event < ActiveRecord::Base
   		false
   	end
   end
-
   def set_attendance
     self.attendance = 0;
     self.save
   end
 
-  def swipe(event, gsw_id)
+  def swipe(event, id)
     message = Hash.new
-    user = User.find_by(:gsw_id => gsw_id)
+    user = User.find_by(:gsw_id => id)
     if (user)
       if event.add_attendee(user)
         message[:message] = "Swiped"
       else
         message[:message] = "User already added event"
       end
+    elsif (id == ";E?")
+      message[:message] = "Error Swiping Card"
     else
       message[:message] = "User could not be found register at {URL} and then try again"
     end

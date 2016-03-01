@@ -17,7 +17,7 @@
                         <div class="row">
                             <%= form_tag({:controller => 'kiosk_pages',:action => 'new_swipe', :event_id => @event.id}, method: "post") do %>
                                 <div class="input-group">
-                                  <%= password_field_tag "id", "" , :placeholder => "Swipe", :style => "height:100px;font-size: 50px;" ,:class => "form-control text-center"%>
+                                  <%= password_field_tag "id", "" ,  autofocus: true , :style => "height:100px;font-size: 50px;" ,:class => "form-control text-center"%>
                                     <span class="input-group-btn">
                                         <%= submit_tag "Swipe", :class => "btn btn-success ",:style => "height:100px;", :id => "submit"%>
                                     </span>
@@ -31,12 +31,11 @@
     </div>
 </div>
 <div class="qrcode centered"><%= raw @qr.as_html %></div>
-
-
 <% content_for :scripts do %>
   <script type="text/javascript">
     $( document ).ready(function() {
         $('#id').keyup(function () {
+            if(this.value.first != ";")
             if (this.value.length == 9) {
               $('#submit').click();                    
                 

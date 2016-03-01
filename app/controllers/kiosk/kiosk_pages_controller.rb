@@ -46,9 +46,13 @@ class Kiosk::KioskPagesController < ApplicationController
 
   def new_swipe
     @event = Event.find(params[:event_id])
+    id = params[:id]
+    if(id.length == 16)
+      id = id[4,9]
+    end
     if current_host.created_events.where(:id => @event.id).in_range.first
-      if current_host.gsw_id != params[:id]
-        message = @event.swipe(@event, params[:id])
+      if current_host.gsw_id != id
+        message = @event.swipe(@event, id)
         flash[:alert] = message[:message]
         redirect_to :back
       else
