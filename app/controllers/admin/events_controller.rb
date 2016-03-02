@@ -82,12 +82,13 @@ class Admin::EventsController < ApplicationController
 		@event = Event.new(event_params)
 		@event.room_numbers << params[:event][:room_numbers]
 		@event.image = params[:image]
-		if(recureEvent == "1")
-			@event.createRecurrences(recureStop, excludeEvent)
-		end
 
 
 		if @event.save
+			if(recureEvent == "1")
+				@event.createRecurrences(recureStop, excludeEvent)
+				@event.save
+			end
 			if can? :show, Event, :context => :admin
   			redirect_to admin_event_path(@event), :flash => { :success => 'Event created successfully.' }
   		else
