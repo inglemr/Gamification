@@ -38,6 +38,17 @@ class Kiosk::KioskPagesController < ApplicationController
     end
   end
 
+  def end_event
+    @event = Event.find(params[:event_id])
+    if current_host.created_events.where(:id => @event.id).in_range.first
+      @event.end_time = DateTime.now.in_time_zone
+      redirect_to kiosk_log_out_path
+    else
+      flash[:alert] = "Unauthorized Access"
+      redirect_to kiosk_list_path
+    end
+  end
+
   def new_swipe
     @event = Event.find(params[:event_id])
     id = params[:id]
