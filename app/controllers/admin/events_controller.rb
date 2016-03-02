@@ -45,11 +45,25 @@ class Admin::EventsController < ApplicationController
 	end
 
 	def create
-		puts params
-		puts "tom"
+		#Recurring Events
+		recureEvent = params[:event][:recurring_id]
+		recureStop = []
+		excludeEvent = "";
+		if( recureEvent == "1")
+			excludeEvent = params[:exclude].split(",")
+			recureStop = params[:recudeEndDate]
+		end
+
+		params[:event].delete(:recudeEndDate)
+		params[:event].delete(:exclude)
+		params[:event].delete(:recurring_id)
+
+		# Room Numbers
 		if params[:event][:room_numbers]
 			params[:event][:room_numbers].delete("")
 		end
+
+		#Time parsing
 		if params[:event][:time] != ""
 			time = params[:time]
 			times = time.split.split("-")
@@ -68,6 +82,11 @@ class Admin::EventsController < ApplicationController
 		@event = Event.new(event_params)
 		@event.room_numbers << params[:event][:room_numbers]
 		@event.image = params[:image]
+		if(recureEvent == "1")
+			@event.createRecurrences(recureStop, excludeEvent)
+		end
+
+
 		if @event.save
 			if can? :show, Event, :context => :admin
   			redirect_to admin_event_path(@event), :flash => { :success => 'Event created successfully.' }

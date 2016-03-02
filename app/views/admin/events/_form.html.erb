@@ -61,6 +61,24 @@
               </div>
             </div>
           </div>
+        <div class="col-md-12 form-group">
+          <%= f.label "Recurring Event" ,:class => "col-md-3 control-label"%>
+          <div class="col-md-1">
+            <%= f.check_box :recurring_id , :class => "form-control"%>
+          </div>
+        </div>
+        <div class="col-md-12 form-group">
+          <%= f.label "Excluding"  ,:id => "lblRecure",:class => "hidden col-md-3 control-label"%>
+          <div class="col-md-5">
+            <%= text_field_tag "exclude", "", :class => "hidden form-control", placeholder: "March 21 2016, March 22 2016" %>
+          </div>
+        </div>
+        <div class="col-md-12 form-group">
+          <%= f.label "Stop Date"  ,:id => "lblEnd",:class => "hidden col-md-3 control-label"%>
+          <div class="col-md-5">
+            <%= text_field_tag "recudeEndDate", "", :placeholder => "March 21 2016", :class => "hidden form-control", :size => "150" %>
+          </div>
+        </div>
     </div>
     <div class="col-md-6">
       <h3 class="panel">Description</h3>
@@ -91,8 +109,37 @@
 <script type="text/javascript">
   <% content_for :inner_scripts do %>
 
+var value = "";
+var dates = "";
   $(document).ready(function () {
 
+$('#event_recurring_id').click(function () {
+            if(document.getElementById('event_recurring_id').checked)
+            {
+              $('#exclude').removeClass("hidden");
+              $("#lblRecure").removeClass("hidden");
+              $("#lblEnd").removeClass("hidden");
+            
+              $("#recudeEndDate").removeClass("hidden");
+              
+              $('#exclude').val(value);
+               $('#recudeEndDate').val(dates);
+            }
+            else
+            {
+              $('#exclude').addClass("hidden");
+              $("#lblRecure").addClass("hidden");
+              $("#recudeEndDate").addClass("hidden");
+              $("#lblEnd").addClass("hidden");
+
+              dates = $('#recudeEndDate').val();
+              $('#recudeEndDate').val("");
+
+              value = $('#exclude').val();
+              $('#exclude').val("");
+            }
+        });
+        
 
 <% if page_type == "Edit" %>
 <% array = (@event.room_numbers.join(',')) %>

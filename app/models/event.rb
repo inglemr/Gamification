@@ -32,6 +32,35 @@ class Event < ActiveRecord::Base
     self.save
   end
 
+  def createRecurrences(stopDay, excludeDays)
+    excludeDays.each_with_index do |day, i|
+      excludeDays[i] = Time.zone.parse(day)
+       puts "excludeDays " +  excludeDays[i].to_s
+    end
+    start_time = self.day_time
+    recurring_id = self.id
+
+
+    nextWeekStart = self.day_time.advance(:weeks => 1)
+    nextWeekEnd = self.end_time.advance(:weeks => 1)
+    stop = Time.zone.parse(stopDay)
+    while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
+      puts "---------"
+      puts "Start: " + "'" + nextWeekStart.to_s + "'"
+      puts "STOP: " + "'" + stop.to_s + "'"
+      nextWeekStart =  nextWeekStart.advance(:weeks => 1)
+      nextWeekEnd =   nextWeekEnd.advance(:weeks => 1)
+      if excludeDays.include?(nextWeekStart)
+        #SKIP
+        puts "SKIPPED"
+      else
+        event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+        event.save
+      end
+      puts "---------"
+    end
+  end
+
   def swipe(event, id)
     message = Hash.new
     user = User.find_by(:gsw_id => id)

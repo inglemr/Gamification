@@ -3,12 +3,6 @@ class Kiosk::KioskPagesController < ApplicationController
   #load_and_authorize_resource :class => false
   #before_filter :load_permissions
 
-  def index
-    if current_host != nil
-      redirect_to kiosk_main_path
-    end
-  end
-
   def swipe
     @event = Event.find(params[:event_id])
     if current_host.created_events.where(:id => @event.id).in_range.first
