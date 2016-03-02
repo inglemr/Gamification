@@ -1,5 +1,5 @@
  <%= link_to({:controller => 'kiosk_pages',:action => 'manage', :event_id => event.id}) do %>
-<div class="col-md-4">
+<div class="col-md-3 col-sm-6">
 <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
         <header>
           <span class="widget-icon"> <i class="fa fa-comments txt-color-white"></i> </span>
@@ -10,7 +10,7 @@
           <% end %>
         </header>
         <div>
-          <div class="widget-body widget-hide-overflow no-padding">
+          <div class="widget-body widget-hide-overflow no-padding" style="height:230px;">
             <div class="row">
               <% if event.image_url.to_s == "" %>
                 <img class="event_tile_img" src="http://placehold.it/140x100">

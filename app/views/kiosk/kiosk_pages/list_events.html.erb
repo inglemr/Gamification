@@ -1,6 +1,5 @@
-<h2 class="text-center"><%= current_kiosk.kiosk_name %></h2>
 <div class="row" %>
-  <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, kiosk_log_out_path ,:class => "btn btn-danger btn-md text-right", :style => "float:right; margin-right:20px;"%>
+  <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, kiosk_log_out_path ,:class => "btn btn-danger btn-lg text-right", :style => "float:left;position:fixed;left:0;top:0;font-size:30px;"%>
 </div>
 <div id='events_grid' class="row" style='display: block;margin-top:40px;'></div>
 <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= kiosk_list_path(format: "json") %>"></table>
