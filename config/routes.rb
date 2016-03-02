@@ -11,10 +11,10 @@ Rails.application.routes.draw do
         get 'list' => "kiosk_pages#list_events"
         get 'main' => "kiosk_pages#main"
         post 'main' => "kiosk_pages#main"
-        get ':event_id/end_event' => "kiosk_pages#end_event"
-        get ':event_id/manage' => "kiosk_pages#manage"
-        get ':event_id/swipe' => "kiosk_pages#swipe"
-        post ':event_id/new_swipe' => "kiosk_pages#new_swipe"
+        get ':event_id/end_event' => "kiosk_pages#end_event", :as => 'end_event'
+        get ':event_id/manage' => "kiosk_pages#manage", :as => 'manage'
+        get ':event_id/swipe' => "kiosk_pages#swipe", :as => 'swipe'
+        post ':event_id/new_swipe' => "kiosk_pages#new_swipe" , :as => 'new_swipe'
       end
     end
 

@@ -39,11 +39,12 @@ class Kiosk::KioskPagesController < ApplicationController
   end
 
   def end_event
+    puts "It worked!"
     @event = Event.find(params[:event_id])
     if current_host.created_events.where(:id => @event.id).in_range.first
       @event.end_time = DateTime.now.in_time_zone
       @event.save
-      redirect_to(:controller => 'Kiosk::SessionsController', :action => 'destroy')
+      redirect_to kiosk_log_out_path
     else
       flash[:alert] = "Unauthorized Access"
       redirect_to kiosk_list_path
@@ -62,7 +63,7 @@ class Kiosk::KioskPagesController < ApplicationController
         flash[:alert] = message[:message]
         redirect_to :back
       else
-        redirect_to  kiosk_path(@event)
+        redirect_to  kiosk_manage_path(@event)
       end
     else
       flash[:alert] = "Unauthorized Access"
