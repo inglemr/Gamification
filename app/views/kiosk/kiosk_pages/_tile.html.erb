@@ -1,15 +1,15 @@
  <%= link_to({:controller => 'kiosk_pages',:action => 'manage', :event_id => event.id}) do %>
 
-<div class="col-md-3 col-sm-6">
+<div class="col-md-6 col-sm-6" >
 <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
         <div>
           <div class="widget-body widget-hide-overflow no-padding" style="height:230px;">
               <% if event.image_url.to_s == "" %>
-                <img class="event_tile_img" src="http://placehold.it/320x330">
+                <img class="event_tile_img" src="http://placehold.it/400x330">
               <% else %>
-                <%= image_tag event.image_url(:kiosk_page).to_s ,:class => "event_tile_img" %>
+                <%= image_tag event.image_url(:kiosk_page_mobile).to_s ,:class => "event_tile_img" %>
               <% end %>
-           <div class="widget-footer" style="position:absolute;bottom:0;width:100%">
+           <div class="widget-footer text-left" style="position:absolute;bottom:0;width:100%">
             <p><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %></p>
           </div>
           </div>
