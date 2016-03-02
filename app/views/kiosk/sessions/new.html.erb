@@ -48,3 +48,15 @@
     </div>
   </div>
 </div>
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $( document ).ready(function() {
+        setTimeout(function(){
+            $('#flash').remove();
+        }, 5000);
+    })
+
+  </script>
+<% end %>

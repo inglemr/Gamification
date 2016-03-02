@@ -2,8 +2,29 @@
   <div class="tile">
     <%= link_to '<i class="fa fa-list fa-lg"></i><br/> List Events'.html_safe, kiosk_list_path, :class => "btn btn-warning bg-color-blue btn-lg"%>
     <%= link_to '<i class="fa fa-credit-card-alt fa-lg"></i><br/> Start Swipe'.html_safe, {:controller => 'kiosk_pages',:action => 'swipe', :event_id => @event.id}, :class => "btn btn-primary bg-color-green btn-lg"%>
-    <%= link_to '<i class="fa fa-times-circle fa-lg"></i><br/> End Event'.html_safe, "#" , :class => "btn btn-danger bg-color-orange btn-lg"%>
+    <%#= link_to '<i class="fa fa-times-circle fa-lg"></i><br/> End Event'.html_safe, "#" , :class => "btn btn-danger bg-color-orange btn-lg"%>
+    <button type="button" class="btn btn-danger bg-color-orange btn-lg" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><%= link_to '<i class="fa fa-times-circle fa-lg"></i><br/> End Event'.html_safe, "#" %></button>
     <%= link_to '<i class="fa fa-sign-out fa-lg"></i><br/> Log Out'.html_safe, kiosk_log_out_path , :class => "btn btn-danger btn-lg"%>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel" style="font-size:30px;">Are You Sure?</h4>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:20px;">Are you sure you would like to end this event?<br /><br />Once this action takes place, it cannot be undone!
+          </p>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-danger btn-lg" data-dismiss="modal"><%= link_to 'Accept'.html_safe, {:controller => 'kiosk_pages',:action => 'end_event', :event_id => @event.id} %></button>
+        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 

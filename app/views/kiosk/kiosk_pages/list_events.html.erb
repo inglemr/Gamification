@@ -43,7 +43,9 @@
       $('#events_table_search').keyup(function(){
        	events_table.dataTable().api().draw(false);
       });
-
+      setTimeout(function(){
+          $('#flash').remove();
+      }, 5000);
     })
   </script>
 <% end %>
