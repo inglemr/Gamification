@@ -1,25 +1,17 @@
  <%= link_to({:controller => 'kiosk_pages',:action => 'manage', :event_id => event.id}) do %>
+
 <div class="col-md-3 col-sm-6">
 <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
-        <header>
-          <span class="widget-icon"> <i class="fa fa-comments txt-color-white"></i> </span>
-          <h2><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %></h2>
-
-          <% if (can? :update, event, :context => :admin) %>
-          <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-sm"></i>'.html_safe, {:controller => 'Admin::Events',:action => 'edit', :id => event.id} ,:class => "btn btn-primary btn-sm", :style => "float:right") %>
-          <% end %>
-        </header>
         <div>
           <div class="widget-body widget-hide-overflow no-padding" style="height:230px;">
-            <div class="row">
               <% if event.image_url.to_s == "" %>
-                <img class="event_tile_img" src="http://placehold.it/140x100">
+                <img class="event_tile_img" src="http://placehold.it/320x330">
               <% else %>
-                <%= image_tag event.image_url(:resized).to_s ,:class => "event_tile_img" %>
+                <%= image_tag event.image_url(:kiosk_page).to_s ,:class => "event_tile_img" %>
               <% end %>
-              <%= ActionView::Base.full_sanitizer.sanitize(event.description.html_safe)[0,180] + '...' %>
+           <div class="widget-footer" style="position:absolute;bottom:0;width:100%">
+            <p><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %></p>
           </div>
-          <p style='margin-bottom:0px'><small><b>Points: </b><i><%= event.point_val %></i></small></p>
           </div>
         </div>
         <!-- end widget div -->
