@@ -9,11 +9,8 @@
     <%= stylesheet_link_tag    "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <% if mobile_device? %>
-    <body class="smart-style-5 minified mobile-detected">
-  <% else %>
-   <body class="smart-style-5 minified">
-  <% end %>
+    <body class="smart-style-5 minified">
+
 
     <% if !current_kiosk && !(current_class?(kiosk_log_in_path) == "active" )%>
       <%= render "shared/usermenu.html.erb"%>
