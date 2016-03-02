@@ -42,7 +42,8 @@ class Kiosk::KioskPagesController < ApplicationController
     @event = Event.find(params[:event_id])
     if current_host.created_events.where(:id => @event.id).in_range.first
       @event.end_time = DateTime.now.in_time_zone
-      redirect_to kiosk_log_out_path
+      @event.save
+      redirect_to(:controller => 'Kiosk::SessionsController', :action => 'destroy')
     else
       flash[:alert] = "Unauthorized Access"
       redirect_to kiosk_list_path
