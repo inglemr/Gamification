@@ -51,7 +51,7 @@ Rails.application.routes.draw do
         end
       end
       resource :events do
-         get 'events/:id' => 'events#show'
+         get ':id/show' => 'events#show', :as => "show"
          get '/my_points' => 'events#my_points'
          collection do
           get :index

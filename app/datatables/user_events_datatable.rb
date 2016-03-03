@@ -41,7 +41,7 @@ private
   end
   
   def eventTile(event)
-    render(:partial=>"events/event_tile.html.erb", locals: { event: event},:formats => [:html])
+    render(:partial=>"events/event_tile.html.erb", locals: { event: event, style: "col-md-3"},:formats => [:html])
   end
 
   def page

@@ -37,7 +37,7 @@ private
   end
   
   def eventTile(event)
-    render(:partial=>"events/event_tile.html.erb", locals: { event: event},:formats => [:html])
+    render(:partial=>"events/event_tile.html.erb", locals: { event: event, style: "col-md-6"},:formats => [:html])
   end
 
   def page
@@ -45,7 +45,7 @@ private
   end
 
   def per_page
-    params[:iDisplayLength].to_i > 0? params[:iDisplayLength].to_i : 6
+    params[:iDisplayLength].to_i > 0? params[:iDisplayLength].to_i : 4
   end
 
   def sort_direction

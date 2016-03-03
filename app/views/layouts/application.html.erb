@@ -17,8 +17,10 @@
     <% end %>  
     <% if can? :view, :sidebar%>
       <aside id="left-panel"><%= render "shared/sidebar.html.erb"%></aside>
+      <div id='main'role="main"> 
+    <% else %>
+      <div role="main">
     <% end %>
-    <div id=<%=  mobile_device? ? "" : "" %> role="main"> <!--- class="main" for desktop -->
         <div id="content">
         <% if !flash.empty? %>
           <%= flash_messages %>
