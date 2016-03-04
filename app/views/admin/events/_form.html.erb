@@ -1,12 +1,4 @@
-<div id= "ribbon">
-    <ol class="breadcrumb">
-      <li >Admin</li>
-      <li><%= link_to("All Events", {:action => 'index'}) %></li>
-      <li ><%= page_type %> Event</li>
-    </ol>
-</div>
 <%= form_for(@event, :class =>"form-horizontal" , :url => path) do |f| %>
-<div class="page-panel panel col-md-12 ">
   <% if @event.errors.any? %>
     <% @event.errors.full_messages.each do |message| %>
         <% concat(content_tag(:div, message, class: "row col-md-4 col-md-offset-8 flash_msg alert fade in") do %>
@@ -15,94 +7,201 @@
        <% end) %>
     <% end %>
   <% end %>
-    <div class="row"><h2 class="text-center"><%= page_type %> Event</h2></div>
-    <hr>
-    <div class="col-md-6 verticalLineRight">
-      <h3 class="panel">Basic Data</h3>
-      <div class="col-md-12 form-group">
-        <%= f.label :event_name ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= f.text_field :event_name, autofocus: true , :class => "form-control"%>
-        </div>
-      </div>
 
-      <div class="col-md-12 form-group">
-        <%= f.label :department ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= f.text_field :department, autofocus: true , :class => "form-control"%>
-        </div>
-      </div>
-      <div class="col-md-12 form-group">
-        <%= f.label :location_id, "Building" ,:class => "col-md-3 control-label"%>
-          <div class="col-md-7">
-            <%= f.collection_select :location_id, Location.order(:building_name), :id, :building_name, include_blank: true , :value =>  "Blank"  %>
-          </div>
-       </div>
-      <div class="col-md-12 form-group">
-        <%= f.label :location_id, "Room" ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-        <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id, :room_number, {:include_blank => false}, { :multiple => true })%>
-        </div>
-      </div>
+  
+                <div id="bootstrapWizard" class="col-sm-12">
+                  <div class="bootstrapWizard">
+                    <ul class="bootstrapWizard form-wizard">
+                      <li class="active" data-target="#step1">
+                        <a href="#tab1" data-toggle="tab" aria-expanded="true"> <span class="step">1</span> <span class="title">Basic Data</span> </a>
+                      </li>
+                      <li data-target="#step2" class="">
+                        <a href="#tab2" data-toggle="tab" aria-expanded="false"> <span class="step">2</span> <span class="title ">Description</span> </a>
+                      </li>
+                      <li data-target="#step3" class="">
+                        <a href="#tab3" data-toggle="tab" aria-expanded="false"> <span class="step">3</span> <span class="title">Time and Place</span> </a>
+                      </li>
+                      <li data-target="#step4" class="">
+                        <a href="#tab4" data-toggle="tab" aria-expanded="false"> <span class="step">4</span> <span class="title">Finishing Up</span> </a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                      <br>
+                      <h3><strong>Step 1 </strong> - Basic Data</h3>
 
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Event Name</span>
+                              <%= f.text_field :event_name, autofocus: true , :class => "form-control input-lg"%>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Department</span>
+                              <%= f.text_field :department, autofocus: true , :class => "form-control input-lg"%>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Point Value</span>
+                               <%= f.text_field :point_val, autofocus: true , :class => "form-control input-lg"%>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-      <div class="col-md-12 form-group">
-        <%= f.label "Point Value" ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= f.text_field :point_val, autofocus: true , :class => "form-control"%>
-        </div>
-      </div>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                      <br>
+                      <h3><strong>Step 2</strong> - Description</h3>
 
-        <div class="col-md-12 form-group">
-        <%= f.label "Time" ,:class => "col-md-3 control-label"%>
-            <div class='input-group date' id='datetimepicker1'>
-              <div class="col-md-9">
-                <%= text_field_tag "time", "time", :id => "daterange", :class => "form-control", :size => "150" %>
-              </div>
-            </div>
-          </div>
-        <div class="col-md-12 form-group">
-          <%= f.label "Recurring Event" ,:class => "col-md-3 control-label"%>
-          <div class="col-md-1">
-            <%= f.check_box :recurring_id , :class => "form-control"%>
-          </div>
-        </div>
-        <div class="col-md-12 form-group">
-          <%= f.label "Excluding"  ,:id => "lblRecure",:class => "hidden col-md-3 control-label"%>
-          <div class="col-md-5">
-            <%= text_field_tag "exclude", "", :class => "hidden form-control", placeholder: "March 21 2016, March 22 2016" %>
-          </div>
-        </div>
-        <div class="col-md-12 form-group">
-          <%= f.label "Stop Date"  ,:id => "lblEnd",:class => "hidden col-md-3 control-label"%>
-          <div class="col-md-5">
-            <%= text_field_tag "recudeEndDate", "", :placeholder => "March 21 2016", :class => "hidden form-control", :size => "150" %>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-      <h3 class="panel">Description</h3>
-      <div class="col-md-12 form-group">
-        <div class="col-md-12 form-group">
-            <%= tinymce %>
-            <%= f.text_area :description, autofocus: true, :class => "tinymce", :rows => 11 %>
-        </div>
-         <%= f.label "Image:" ,:class => "col-md-3 control-label"%>
-        <%= f.file_field :image %>
-      </div>
-    </div>
-</div>
-<div class="form-group col-md-12 col-md-offset-5">
-  <%= hidden_field_tag :created_by, :value => @event.created_by %>
-  <%= hidden_field_tag :updated_by, :value => current_user.id %>
-  <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
-</div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <%= tinymce %>
+                          <%= f.text_area :description, autofocus: true, :class => "tinymce", :rows => 20 %>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <%= f.label "Image:" ,:class => "col-md-3 control-label"%>
+                          <%= f.file_field :image %>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab3">
+                      <br>
+                      <h3><strong>Step 3</strong> - Time and Place</h3>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h2 class="row-seperator-header"><i class="fa fa-clock-o"></i> Time </h2>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Time</span>
+                              <%= text_field_tag "time", "time", :id => "daterange", :class => "form-control input-lg", :size => "150" %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h2 class="row-seperator-header"><i class="fa fa-map-marker"></i> Location </h2>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Department</span>
+                              <%= f.collection_select :location_id, Location.order(:building_name), :id, :building_name, include_blank: true , :value =>  "Blank" %>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Rooms</span>
+                               <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id, :room_number, {:include_blank => false}, { :multiple => true })%>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+ 
+ 
+
+                    <div class="tab-pane" id="tab4">
+                      <br>
+                      <h3><strong>Step 4</strong> - Save Form</h3>
+                      <br>
+
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Reccuring Event</span>
+                              <%= f.check_box :recurring_id , :class => "smart-control form-control"%>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+       
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon hidden" id="lblRecure">Excluding</span>
+                              <%= text_field_tag "exclude", "", :class => "hidden form-control", placeholder: "March 21 2016, March 22 2016" %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon hidden" id="lblEnd">Stop Date</span>
+                              <%= text_field_tag "recudeEndDate", "", :placeholder => "March 21 2016", :class => "hidden form-control", :size => "150" %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+    
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group col-md-offset-5">
+                            <%= hidden_field_tag :created_by, :value => @event.created_by %>
+                            <%= hidden_field_tag :updated_by, :value => current_user.id %>
+                            <%= f.submit "Save" , :class => "col-md-2 btn btn-primary btn-lg"%>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                   <!-- <div class="form-actions">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <ul class="pager wizard no-margin">
+                            <li class="previous">
+                              <a href="javascript:void(0);" class="btn btn-lg btn-default"> Previous </a>
+                            </li>
+                            <li class="next">
+                              <a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Next </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div> ---->
+
+                  </div>
+                </div>
 <% end %>
-
 <style>
 #event_room_numbers{
   height:200px;
   width:100px;
+}
+.smart-style-5 .bootstrapWizard li .title{
+  color:white;
 }
 </style>
 <% content_for :scripts do %>
@@ -151,14 +250,14 @@ $("#event_location_id").trigger("change");
 $("#event_room_numbers").val(dataarray);
 <% end %>
 
-$('#event_room_numbers').addClass("form-control");
-$('#event_location_id').addClass("form-control");
+$('#event_room_numbers').addClass("form-control input-lg");
+$('#event_location_id').addClass("form-control input-lg");
 $('#daterange').daterangepicker({
   <% if page_type == "Edit" %>
     "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
     "endDate": "<%= @event.end_time.to_s(:datepicker)%>",
     <% end %>
-    "drops": "up",
+    "drops": "down",
     "applyClass": "btn  btn-primary",
     "showDropdowns": true,
     "timePicker": true,
@@ -221,3 +320,12 @@ $('#daterange').daterangepicker({
   <%= content_for :inner_scripts %>
 </script>
 <% end %>
+
+
+
+
+
+
+
+
+

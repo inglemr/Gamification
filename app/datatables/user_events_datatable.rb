@@ -4,9 +4,9 @@ class UserEventsDatatable
   def initialize(view, attended)
     @view = view
     if (attended)
-      @events = current_user.attended_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+      @events = current_user.attended_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event
     else
-      @events = current_user.created_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+      @events = current_user.created_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event
     end
     @events = @events.page(page).per_page(per_page)
 
