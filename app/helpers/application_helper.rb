@@ -15,18 +15,16 @@ module ApplicationHelper
   	end
 
     def bootstrap_class_for flash_type
-        { success: "alert-success", error: "alert-error", alert: "alert-warning", notice: "alert-info" }[flash_type.to_sym] || flash_type.to_s
+        { success: "#468847", error: "#b94a48", alert: "#c09853", notice: "#346597" }[flash_type.to_sym] || flash_type.to_s
     end
 
   	def flash_messages(opts = {})
-    	flash.each do |msg_type, message|
-      	concat(content_tag(:div, message, id:"flash", class: "row col-md-4 col-md-offset-8 flash_msg alert " +  bootstrap_class_for(msg_type) + " fade in") do 
-              concat content_tag(:button, 'x', class: "close", data: { dismiss: 'alert' })
-              concat message 
-            end)
-    	end
-    	nil
-  	end
+      test = ""
+      flash.each do |msg_type, message|
+      end
+      test
+    end
+
 end
 
 module ActionView

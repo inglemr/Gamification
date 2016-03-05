@@ -9,9 +9,7 @@
     <%= stylesheet_link_tag    "application" %>
     <%= csrf_meta_tags %>
   </head>
-    <body class="smart-style-5 minified">
-
-
+  <body class="smart-style-5 minified">
     <% if !current_kiosk && !(current_class?(kiosk_log_in_path) == "active" )%>
       <%= render "shared/usermenu.html.erb"%>
     <% end %>  
@@ -22,14 +20,28 @@
       <div role="main">
     <% end %>
         <div id="content">
-        <% if !flash.empty? %>
-          <%= flash_messages %>
-        <% end %>
-      <%= yield %>
+          <%= yield %>
+        </div>
       </div>
-    </div>
   <%= javascript_include_tag "application"%>
-
+  <% if !flash.empty? %>
+    <% content_for :scripts do %>
+      <script type="text/javascript">
+        $(document).ready(function () {
+          <% flash.each do |msg_type, message| %>
+            $.bigBox({
+              title: "<%= message %>",
+              content: "",
+              color: "<%=bootstrap_class_for(msg_type) %>",
+              iconSmall: "fa fa-times bounce animated",
+              icon : "fa fa-info fadeInLeft animated",
+              timeout: 5000
+            });
+          <% end %>
+        });
+      </script>
+    <% end %>
+  <% end %> 
   <%= yield :scripts %>
 
   </body>
