@@ -8,6 +8,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <% if can? :view, :sidebar%>
+        <button type="button" class="navbar-toggle collapsed pull-left" data-action="toggleMenu" title="Collapse Menu" aria-expanded="false">
+          <span class="sr-only">Toggle Admin Menu</span>
+          <i class="fa fa-lock fa-lg"></i>
+      </button>
+      <% end %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
