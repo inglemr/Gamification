@@ -38,13 +38,6 @@ class Event < ActiveRecord::Base
     date  = DateTime.parse(day + " " + current_date.hour.to_s + ":" + current_date.min.to_s + " " + current_date.zone)
     delta = date > Date.today ? 0 : 7
     future = date + delta.days
-
-    diff = (current_date.to_date - DateTime.now.to_date).to_i
-    diff = diff - 2;
-    if diff > 0
-      future = future + diff.days
-    end
-    future
   end
 
   def createRecurrences(stopDay, excludeDays, recureDays, recureInterval, recureStart)
@@ -90,12 +83,11 @@ class Event < ActiveRecord::Base
       nextWeekStart = date_of_next(self.day_time, day)
       nextWeekEnd = date_of_next(self.end_time, day)
       event = Event.new
-      if( nextWeekStart == recureStart)
-        nextWeekStart = nextWeekStart.advance(:weeks => 1)
-        nextWeekEnd = nextWeekEnd.advance(:weeks => 1)
-        event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
-        event.save
+      if( nextWeekStart == self.day_time)
+        event = self
       else
+        puts "Tiny Stew"
+        puts nextWeekStart
         event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
         event.save
       end
@@ -110,6 +102,8 @@ class Event < ActiveRecord::Base
         stop = Time.zone.parse(stopDay)
         while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
           if !excludeDays.include?(nextWeekStart)
+            puts "Tiny Moo"
+            puts nextWeekStart
             event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
             event.save
           end
@@ -123,12 +117,12 @@ class Event < ActiveRecord::Base
         nextWeekEnd = event.end_time.advance(:weeks => 2)
         stop = Time.zone.parse(stopDay)
         while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
-          nextWeekStart =  nextWeekStart.advance(:weeks => 2)
-          nextWeekEnd =   nextWeekEnd.advance(:weeks => 2)
           if !excludeDays.include?(nextWeekStart)
             event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
             event.save
           end
+          nextWeekStart =  nextWeekStart.advance(:weeks => 2)
+          nextWeekEnd =   nextWeekEnd.advance(:weeks => 2)
         end
       end
     elsif(recureInterval == "Monthly")
@@ -137,12 +131,12 @@ class Event < ActiveRecord::Base
         nextWeekEnd = event.end_time + 1.month
         stop = Time.zone.parse(stopDay)
         while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
-          nextWeekStart =  nextWeekStart + 1.month
-          nextWeekEnd =   nextWeekEnd + 1.month
           if !excludeDays.include?(nextWeekStart)
             event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
             event.save
           end
+          nextWeekStart =  nextWeekStart + 1.month
+          nextWeekEnd =   nextWeekEnd + 1.month
         end
       end
     elsif(recureInterval == "Daily")
@@ -151,12 +145,12 @@ class Event < ActiveRecord::Base
         nextWeekEnd = event.end_time.advance(:days => 1)
         stop = Time.zone.parse(stopDay)
         while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
-          nextWeekStart =  nextWeekStart.advance(:days => 1)
-          nextWeekEnd =   nextWeekEnd.advance(:days => 1)
           if !excludeDays.include?(nextWeekStart)
             event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
             event.save
           end
+          nextWeekStart =  nextWeekStart.advance(:days => 1)
+          nextWeekEnd =   nextWeekEnd.advance(:days => 1)
         end
       end
     end
