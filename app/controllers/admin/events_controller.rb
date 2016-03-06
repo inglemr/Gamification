@@ -54,6 +54,27 @@ class Admin::EventsController < ApplicationController
 		if( recureEvent == "recure")
 			excludeEvent = params[:exclude].split(",")
 			recureStop = params[:recudeEndDate]
+			recureStart = params[:recudeStartDate]
+			start = recureStart + " " + params[:event][:day_time] + " EST"
+			endT = recureStart + " " + params[:event][:end_time] + " EST"
+			startTime = DateTime.parse(start)
+			endTime = DateTime.parse(endT)
+			params[:event][:day_time] = startTime
+			params[:event][:end_time] = endTime
+		else
+			if params[:event][:time] != ""
+				time = params[:time]
+				times = time.split.split("-")
+				params[:event][:day_time] = times[0]
+				params[:event][:day_time] = params[:event][:day_time][0] + " " + params[:event][:day_time][1] + " " + params[:event][:day_time][2]
+				params[:event][:end_time] = times[1]
+				params[:event][:end_time] = params[:event][:end_time][0] + " " + params[:event][:end_time][1] + " " + params[:event][:end_time][2]
+				params[:event].delete :time
+	    	start_time_no_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
+	    	end_time_no_zone = DateTime.strptime(params[:event][:end_time], "%m/%d/%Y %I:%M %p")
+				params[:event][:day_time] = Time.zone.parse(start_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
+				params[:event][:end_time] = Time.zone.parse(end_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
+    	end
 		end
 
 		params[:event].delete(:recudeEndDate)
@@ -66,19 +87,7 @@ class Admin::EventsController < ApplicationController
 		end
 
 		#Time parsing
-		if params[:event][:time] != ""
-			time = params[:time]
-			times = time.split.split("-")
-			params[:event][:day_time] = times[0]
-			params[:event][:day_time] = params[:event][:day_time][0] + " " + params[:event][:day_time][1] + " " + params[:event][:day_time][2]
-			params[:event][:end_time] = times[1]
-			params[:event][:end_time] = params[:event][:end_time][0] + " " + params[:event][:end_time][1] + " " + params[:event][:end_time][2]
-			params[:event].delete :time
-    	start_time_no_zone = DateTime.strptime(params[:event][:day_time], "%m/%d/%Y %I:%M %p")
-    	end_time_no_zone = DateTime.strptime(params[:event][:end_time], "%m/%d/%Y %I:%M %p")
-			params[:event][:day_time] = Time.zone.parse(start_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
-			params[:event][:end_time] = Time.zone.parse(end_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
-    end
+		
     params[:event][:created_by] = current_user.id
     params[:event][:updated_by] = current_user.id
 		@event = Event.new(event_params)
@@ -88,7 +97,7 @@ class Admin::EventsController < ApplicationController
 
 		if @event.save
 			if(recureEvent == "recure")
-				@event.createRecurrences(recureStop, excludeEvent, recureDays, recureInterval)
+				@event.createRecurrences(recureStop, excludeEvent, recureDays, recureInterval,recureStart)
 				@event.save
 			end
 			if can? :show, Event, :context => :admin

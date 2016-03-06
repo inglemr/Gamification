@@ -144,15 +144,31 @@
 
 
                         <div class="row hidden" id="rangeItems">
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
                           <div class="form-group">
                             <div class="input-group">
-                              <span class="input-group-addon">Start Day/Time</span>
-                              <%= text_field_tag "time", "time",:id => "daterange",:class => "form-control input-lg" %>
+                              <span class="input-group-addon">Start Time</span>
+                              <%= time_field(:event, :day_time , :class => "form-control input-lg") %>
                             </div>
                           </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">End Time</span>
+                              <%= time_field(:event, :end_time , :class => "form-control input-lg") %>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="lblEnd">Start Date</span>
+                              <%= text_field_tag "recudeStartDate", "", :placeholder => "March 20 2016", :class => "form-control input-lg", :size => "150" %>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon" id="lblEnd">Stop Date</span>
@@ -161,7 +177,6 @@
                           </div>
                         </div>
                       </div>
-
 
 
                       <div class="row hidden" id="excludeItems">
