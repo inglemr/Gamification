@@ -28,7 +28,6 @@
  *= require jquery-ui/tooltip
  *= require daterangepicker-bs3
  *= require bootstrap-datetimepicker
-
  *= require_tree .
  *= require_self
  */

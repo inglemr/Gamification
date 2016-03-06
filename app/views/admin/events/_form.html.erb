@@ -1,4 +1,4 @@
-<%= form_for(@event, :id =>"fuelux-wizard" ,:class =>"form-horizontal" , :url => path) do |f| %>
+
   <% if @event.errors.any? %>
   <% content_for :scripts do %>
     <script type="text/javascript">
@@ -18,8 +18,6 @@
     </script>
   <% end %>
   <% end %>
-
-
   <div class="widget-body fuelux">
 
             <div class="wizard">
@@ -33,12 +31,6 @@
                 <li data-target="#step3">
                   <span class="badge">3</span>Step 3<span class="chevron"></span>
                 </li>
-                <li data-target="#step4">
-                  <span class="badge">4</span>Step 4<span class="chevron"></span>
-                </li>
-                <li data-target="#step5">
-                  <span class="badge">5</span>Step 5<span class="chevron"></span>
-                </li>
               </ul>
               <div class="actions">
                 <button type="button" class="btn btn-sm btn-primary btn-prev">
@@ -50,7 +42,7 @@
               </div>
             </div>
             <div class="step-content">
-              <form class="form-horizontal" id="fuelux-wizard" method="post">
+              <%= form_for(@event, :id =>"fuelux-wizard" ,:class =>"form-horizontal" , :url => path) do |f| %>
 
                 <div class="step-pane active" id="step1">
                   <h3><strong>Step 1 </strong> - Basic Data</h3>
@@ -72,7 +64,7 @@
                         <div class="col-sm-6">
                           <div class="form-group">
                             <div class="input-group">
-                              <span class="input-group-addon">Department</span>
+                              <span class="input-group-addon">Organization</span>
                               <%= f.text_field :department, autofocus: true , :class => "form-control input-lg"%>
                             </div>
                           </div>
@@ -117,17 +109,82 @@
                           <h2 class="row-seperator-header"><i class="fa fa-clock-o"></i> Time </h2>
                         </div>
                       </div>
+
                       <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                           <div class="form-group">
                             <div class="input-group">
-                              <span class="input-group-addon">Time</span>
-                              <%= text_field_tag "time", "time", :id => "daterange", :class => "form-control input-lg", :size => "150" %>
+                              <span class="input-group-addon">Type</span>
+                                <%= select_tag "event_type", "<option ></option><option value='recure'>Recuring</option><option value='onetime'>One-Time</option>".html_safe, :class=> "form-control input-lg" %>
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="col-sm-6 hidden", id="selectRecureDays">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Days</span>
+                                <%= select_tag "event_days", "<option value='SU'>Sunday</option><option value='M'>Monday</option><option value='T'>Tuesday</option><option value='W'>Wednesday</option><option value='TH'>Thursday</option><option value='F'>Friday</option><option value='S'>Saturday</option>".html_safe,:multiple => true , :id=> "select2DaysList" ,:class=>"select2 input-lg", :placeholder => "Enter days" %>
                             </div>
                           </div>
                         </div>
                       </div>
 
+
+                        <div class="row hidden" id= "intervalRecure">
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <div class="input-group">
+                                <span class="input-group-addon" id="">How Often?</span>
+                                  <%= select_tag "event_recure_intervals", "<option value='W'>Weekly</option><option value='BiW'>Bi-Weekly</option><option value='D'>Daily</option><option value='M'>Monthly</option>".html_safe, :id=> "select2Interval" ,:class=>"select2 input-lg" %>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+
+                        <div class="row hidden" id="rangeItems">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Start Day/Time</span>
+                              <%= text_field_tag "time", "time",:id => "daterange",:class => "form-control input-lg" %>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="lblEnd">Stop Date</span>
+                              <%= text_field_tag "recudeEndDate", "", :placeholder => "March 21 2016", :class => "form-control input-lg", :size => "150" %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                      <div class="row hidden" id="excludeItems">
+                          <div class="col-sm-12">
+                            <div class="form-group">
+                              <div class="input-group">
+                                <span class="input-group-addon" id="lblRecure">Excluding</span>
+                                <%= text_field_tag "exclude", "", :class => "form-control input-lg", placeholder: "March 21 2016, March 22 2016" %>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <div class="row hidden" id="onetimeDayTime">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <span class="input-group-addon">Day/Time</span>
+                              <%= text_field_tag "time", "time",:id => "daterange2",:class => "form-control input-lg" %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div class="row">
                         <div class="col-md-12">
                           <h2 class="row-seperator-header"><i class="fa fa-map-marker"></i> Location </h2>
@@ -136,9 +193,9 @@
                       <div class="row">
                         <div class="col-sm-6">
                           <div class="form-group">
-                            <div class="input-group">
-                              <span class="input-group-addon">Department</span>
-                              <%= f.collection_select :location_id, Location.order(:building_name), :id, :building_name, include_blank: true , :value =>  "Blank" %>
+                            <div class="input-group col-md-6">
+                              <span class="input-group-addon">Building</span>
+                              <%= f.collection_select :location_id, Location.order(:building_name), :id, :building_name, include_blank: true, :class => "input-lg"%>
                             </div>
                           </div>
                         </div>
@@ -146,74 +203,17 @@
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon">Rooms</span>
-                               <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id, :room_number, {:include_blank => false}, { :multiple => true })%>
+                               <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id,:room_number, {:include_blank => false},{ :multiple => true, :class => "select2 input-lg" })%>
                             </div>
                           </div>
                         </div>
                       </div>
-                </div>
-
-                <div class="step-pane" id="step4">
-                  <h3><strong>Step 4 </strong> - Recurring Event</h3>
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <span class="input-group-addon">Reccuring Event</span>
-                              <%= f.check_box :recurring_id , :class => "smart-control form-control"%>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-       
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <span class="input-group-addon hidden" id="lblRecure">Excluding</span>
-                              <%= text_field_tag "exclude", "", :class => "hidden form-control", placeholder: "March 21 2016, March 22 2016" %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <div class="input-group">
-                              <span class="input-group-addon hidden" id="lblEnd">Stop Date</span>
-                              <%= text_field_tag "recudeEndDate", "", :placeholder => "March 21 2016", :class => "hidden form-control", :size => "150" %>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-    
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group col-md-offset-5">
-                            <%= hidden_field_tag :created_by, :value => @event.created_by %>
+                       <%= hidden_field_tag :created_by, :value => @event.created_by %>
                             <%= hidden_field_tag :updated_by, :value => current_user.id %>
                             <%= f.submit "Save" , :id => "submitForm", :class => "hidden col-md-2 btn btn-primary btn-lg"%>
-                          </div>
-                        </div>
-                      </div>
                 </div>
 
-                <div class="step-pane" id="step5">
-                  <h3><strong>Step 5 </strong> - Finished!</h3>
-                  <br>
-                  <br>
-                  <h1 class="text-center text-success"><i class="fa fa-check"></i> Congratulations!
-                  <br>
-                  <small>Click finish to end wizard</small></h1>
-                  <br>
-                  <br>
-                  <br>
-                  <br>
-                </div>
 
-              </form>
             </div>
 
           </div>
@@ -221,6 +221,15 @@
 <% end %>
 
 <style>
+.select2-container{
+  padding: 0px;
+}
+ul.select2-choices, a.select2-choice{
+  height: 46px !important;
+}
+#s2id_autogen1{
+  height: 42px;
+}
 #event_room_numbers{
   height:200px;
   width:100px;
@@ -228,6 +237,7 @@
 .smart-style-5 .bootstrapWizard li .title{
   color:white;
 }
+
 </style>
 <% content_for :scripts do %>
 <script type="text/javascript">
@@ -237,7 +247,6 @@ var value = "";
 var dates = "";
   $(document).ready(function () {
   pageSetUp();    
-
         var wizard = $('.wizard').wizard();
 
         wizard.on('finished', function (e, data) {
@@ -255,52 +264,78 @@ var dates = "";
     
     })
 
-
-
-
-
-
-$('#event_recurring_id').click(function () {
-            if(document.getElementById('event_recurring_id').checked)
+$('#event_type').change(function () { 
+  var option = $(this).find('option:selected').val();
+            if(option == "recure")
             {
-              $('#exclude').removeClass("hidden");
-              $("#lblRecure").removeClass("hidden");
-              $("#lblEnd").removeClass("hidden");
-            
-              $("#recudeEndDate").removeClass("hidden");
+              $('#selectRecureDays').removeClass("hidden");
+              $('#intervalRecure').removeClass("hidden");
+              $('#excludeItems').removeClass("hidden");
+              $('#rangeItems').removeClass("hidden");
+              $('#onetimeDayTime').removeClass("hidden");
+              $('#onetimeDayTime').addClass("hidden");
               
-              $('#exclude').val(value);
-               $('#recudeEndDate').val(dates);
+              console.log(option);
             }
-            else
+            else if (option == "onetime")
             {
-              $('#exclude').addClass("hidden");
-              $("#lblRecure").addClass("hidden");
-              $("#recudeEndDate").addClass("hidden");
-              $("#lblEnd").addClass("hidden");
+              $("#select2DaysList").select2("val", "");
+              $('#selectRecureDays').addClass("hidden");
+              $('#intervalRecure').addClass("hidden");
+              $('#excludeItems').addClass("hidden");
+              $("#select2Interval").select2("val", "");
+              $('#rangeItems').addClass("hidden");
+              $('#onetimeDayTime').removeClass("hidden");
 
-              dates = $('#recudeEndDate').val();
-              $('#recudeEndDate').val("");
-
-              value = $('#exclude').val();
-              $('#exclude').val("");
+              console.log(option);
+            }
+            else if (option == "")
+            {
+               $("#select2Interval").select2("val", "");
+              $('#selectRecureDays').addClass("hidden");
+              $('#excludeItems').addClass("hidden");
+              $('#intervalRecure').addClass("hidden");
+              $('#rangeItems').addClass("hidden");
+              $('#onetimeDayTime').addClass("hidden");
+              console.log(option);
             }
         });
-        
 
+$('#event_location_id').change(function () { 
+  $('#event_room_numbers').select2("val", "");
+});
+
+      
 <% if page_type == "Edit" %>
-<% array = (@event.room_numbers.join(',')) %>
-$('#event_room_numbers').parent().show();
-var data= "<%= array %>";
-var dataarray=data.split(",");
-$("#event_location_id").val("<%= @event.location_id %>");
-$("#event_location_id").trigger("change");
-$("#event_room_numbers").val(dataarray);
+  <% array = (@event.room_numbers.join(',')) %>
+  $('#event_room_numbers').parent().show();
+  var data= "<%= array %>";
+  var dataarray=data.split(",");
+  $("#event_location_id").val("<%= @event.location_id %>");
+  $("#event_location_id").trigger("change");
+  $("#event_room_numbers").val(dataarray);
 <% end %>
 
-$('#event_room_numbers').addClass("form-control input-lg");
-$('#event_location_id').addClass("form-control input-lg");
+$('#event_location_id').addClass("select2 input-lg");
+
+
 $('#daterange').daterangepicker({
+  <% if page_type == "Edit" %>
+    "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
+    "endDate": "<%= @event.end_time.to_s(:datepicker)%>",
+    <% end %>
+    "drops": "down",
+    "applyClass": "btn  btn-primary",
+    "showDropdowns": true,
+    "timePicker": true,
+    "timePickerIncrement": 30,
+    "locale": {
+      "format": 'MM/DD/YYYY h:mm A'
+        },
+    "autoApply": true,
+});
+
+$('#daterange2').daterangepicker({
   <% if page_type == "Edit" %>
     "startDate": "<%= @event.day_time.to_s(:datepicker)%>",
     "endDate": "<%= @event.end_time.to_s(:datepicker)%>",

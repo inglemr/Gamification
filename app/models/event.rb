@@ -33,32 +33,115 @@ class Event < ActiveRecord::Base
     self.save
   end
 
-  def createRecurrences(stopDay, excludeDays)
+  def date_of_next(date)
+    delta = date > Date.today ? 0 : 7
+    date + delta
+  end
+
+  def createRecurrences(stopDay, excludeDays, recureDays, recureInterval)
+    recureIntervals = Hash.new
+    recureIntervals["W"] = "Weekly"
+    recureIntervals["BiW"] = "Bi-Weekly"
+    recureIntervals["D"] = "Daily"
+    recureIntervals["M"] = "Monthly"
+
+    days = Hash.new
+    days["SU"] = "Sunday"
+    days["M"] = "Monday"
+    days["T"] = "Tuesday"
+    days["W"] = "Wednesday"
+    days["TH"] = "Thursday"
+    days["F"] = "Friday"
+    days["S"] = "Saturday"
+
+    daysInNum = Hash.new
+    daysInNum[0] = "Sunday"
+    daysInNum[1] = "Monday"
+    daysInNum[2] = "Tuesday"
+    daysInNum[3] = "Wednesday"
+    daysInNum[4] = "Thursday"
+    daysInNum[5] = "Friday"
+    daysInNum[6] = "Saturday"
+
+    recureOnDays = Array.new
+    recureDays.each do |day|
+      recureOnDays << days[day]
+    end
+
+    recureInterval = recureIntervals[recureInterval]
+
     excludeDays.each_with_index do |day, i|
       excludeDays[i] = Time.zone.parse(day)
-       puts "excludeDays " +  excludeDays[i].to_s
     end
-    start_time = self.day_time
+    start_time = self.day_time  
     recurring_id = self.id
 
+    eventsToRecure = Array.new
+    recureOnDays.each do |day|
+      nextStart = self.day_time
+      nextEnd = self.end_time
+      event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+      event.save
+      eventsToRecure << event
+    end
 
-    nextWeekStart = self.day_time.advance(:weeks => 1)
-    nextWeekEnd = self.end_time.advance(:weeks => 1)
-    stop = Time.zone.parse(stopDay)
-    while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
-      puts "---------"
-      puts "Start: " + "'" + nextWeekStart.to_s + "'"
-      puts "STOP: " + "'" + stop.to_s + "'"
-      nextWeekStart =  nextWeekStart.advance(:weeks => 1)
-      nextWeekEnd =   nextWeekEnd.advance(:weeks => 1)
-      if excludeDays.include?(nextWeekStart)
-        #SKIP
-        puts "SKIPPED"
-      else
-        event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
-        event.save
+
+    if(recureInterval == "Weekly")
+      eventsToRecure.each do |event|
+        nextWeekStart = event.day_time.advance(:weeks => 1)
+        nextWeekEnd = event.end_time.advance(:weeks => 1)
+        stop = Time.zone.parse(stopDay)
+        while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
+          nextWeekStart =  nextWeekStart.advance(:weeks => 1)
+          nextWeekEnd =   nextWeekEnd.advance(:weeks => 1)
+          if !excludeDays.include?(nextWeekStart)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.save
+          end
+        end
       end
-      puts "---------"
+    elsif(recureInterval == "Bi-Weekly")
+      eventsToRecure.each do |event|
+        nextWeekStart = event.day_time.advance(:weeks => 2)
+        nextWeekEnd = event.end_time.advance(:weeks => 2)
+        stop = Time.zone.parse(stopDay)
+        while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
+          nextWeekStart =  nextWeekStart.advance(:weeks => 2)
+          nextWeekEnd =   nextWeekEnd.advance(:weeks => 2)
+          if !excludeDays.include?(nextWeekStart)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.save
+          end
+        end
+      end
+    elsif(recureInterval == "Monthly")
+      eventsToRecure.each do |event|
+        nextWeekStart = event.day_time.advance(:weeks => 4)
+        nextWeekEnd = event.end_time.advance(:weeks => 4)
+        stop = Time.zone.parse(stopDay)
+        while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
+          nextWeekStart =  nextWeekStart.advance(:weeks => 4)
+          nextWeekEnd =   nextWeekEnd.advance(:weeks => 4)
+          if !excludeDays.include?(nextWeekStart)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.save
+          end
+        end
+      end
+    elsif(recureInterval == "Daily")
+      eventsToRecure.each do |event|
+        nextWeekStart = event.day_time.advance(:days => 1)
+        nextWeekEnd = event.end_time.advance(:days => 1)
+        stop = Time.zone.parse(stopDay)
+        while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
+          nextWeekStart =  nextWeekStart.advance(:days => 1)
+          nextWeekEnd =   nextWeekEnd.advance(:days => 1)
+          if !excludeDays.include?(nextWeekStart)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.save
+          end
+        end
+      end
     end
   end
 

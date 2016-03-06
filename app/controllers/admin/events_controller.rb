@@ -46,10 +46,12 @@ class Admin::EventsController < ApplicationController
 
 	def create
 		#Recurring Events
-		recureEvent = params[:event][:recurring_id]
+		recureInterval = params[:event_recure_intervals]
+		recureDays = params[:event_days]
+		recureEvent = params[:event_type]
 		recureStop = []
 		excludeEvent = "";
-		if( recureEvent == "1")
+		if( recureEvent == "recure")
 			excludeEvent = params[:exclude].split(",")
 			recureStop = params[:recudeEndDate]
 		end
@@ -85,8 +87,8 @@ class Admin::EventsController < ApplicationController
 
 
 		if @event.save
-			if(recureEvent == "1")
-				@event.createRecurrences(recureStop, excludeEvent)
+			if(recureEvent == "recure")
+				@event.createRecurrences(recureStop, excludeEvent, recureDays, recureInterval)
 				@event.save
 			end
 			if can? :show, Event, :context => :admin
