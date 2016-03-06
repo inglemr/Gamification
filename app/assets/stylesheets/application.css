@@ -32,10 +32,16 @@
  *= require_self
  */
 
+.bigBox span {
+font-size: 30px;
+}	
+
  .col-centered{
     float: none;
     margin: 0 auto;
 }
+
+
 
 body {
 	margin-top:50px;

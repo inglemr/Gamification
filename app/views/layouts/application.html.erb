@@ -32,6 +32,19 @@
             $.bigBox({
               title: "<%= message %>",
               content: "",
+              <% if msg_type == "success" %>
+                sound_file: "bigbox",
+                src: "<%= asset_path('bigbox.ogg') %>",
+              <% elsif msg_type == "alert" %>
+                sound_file: "messagebox",
+                src: "<%= asset_path('messagebox.ogg') %>",
+              <% elsif msg_type == "swiped" %>
+                sound_file: "messagebox",
+                src: "<%= asset_path('messagebox.ogg') %>",
+              <% elsif msg_type == "info" %>
+                sound_file: "messagebox",
+                src: "<%= asset_path('messagebox.ogg') %>",
+              <% end %>
               color: "<%=bootstrap_class_for(msg_type) %>",
               iconSmall: "fa fa-times bounce animated",
               icon : "fa fa-info fadeInLeft animated",

@@ -161,14 +161,14 @@ class Event < ActiveRecord::Base
     user = User.find_by(:gsw_id => id)
     if (user)
       if event.add_attendee(user)
-        message[:message] = "Swiped"
+        message[:success] = "Swiped"
       else
-        message[:message] = "User already added event"
+        message[:danger] = "User already added event"
       end
     elsif (id == ";E?")
-      message[:message] = "Error Swiping Card"
+      message[:danger] = "Error Swiping Card"
     else
-      message[:message] = "User could not be found register at {URL} and then try again"
+      message[:danger] = "User could not be found register at {URL} and then try again"
     end
     return message
   end

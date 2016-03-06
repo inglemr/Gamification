@@ -60,13 +60,17 @@ class Kiosk::KioskPagesController < ApplicationController
     if current_host.created_events.where(:id => @event.id).in_range.first
       if current_host.gsw_id != id
         message = @event.swipe(@event, id)
-        flash[:alert] = message[:message]
+        if message[:success]
+          flash[:swiped] = message[:success]
+        elsif message[:danger]
+          flash[:danger] = message[:danger]
+        end
         redirect_to :back
       else
         redirect_to  kiosk_manage_path(@event)
       end
     else
-      flash[:alert] = "Unauthorized Access"
+      flash[:danger] = "Unauthorized Access"
       redirect_to kiosk_list_path
     end
   end

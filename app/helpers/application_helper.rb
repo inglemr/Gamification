@@ -17,7 +17,7 @@ module ApplicationHelper
   	end
 
     def bootstrap_class_for flash_type
-        { success: "#468847", error: "#b94a48", alert: "#c09853", notice: "#346597" }[flash_type.to_sym] || flash_type.to_s
+        { success: "#468847", swiped: "#468847", error: "#b94a48", alert: "#c09853", notice: "#346597" }[flash_type.to_sym] || flash_type.to_s
     end
 
   	def flash_messages(opts = {})
