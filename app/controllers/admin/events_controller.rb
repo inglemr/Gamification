@@ -97,6 +97,7 @@ class Admin::EventsController < ApplicationController
 
 		if @event.save
 			if(recureEvent == "recure")
+				@event.recurring_id = @event.id
 				@event.createRecurrences(recureStop, excludeEvent, recureDays, recureInterval,recureStart)
 				@event.save
 			end
