@@ -8,7 +8,7 @@ class Kiosk::KioskPagesController < ApplicationController
     if current_host.created_events.where(:id => @event.id).in_range.first
 
     else
-      flash[:alert] = "Unauthorized Access"
+      flash[:danger] = "Unauthorized Access"
       redirect_to kiosk_list_path
     end
     require 'rqrcode'
@@ -33,7 +33,7 @@ class Kiosk::KioskPagesController < ApplicationController
     if current_host.created_events.where(:id => @event.id).in_range.first
 
     else
-      flash[:alert] = "Unauthorized Access"
+      flash[:danger] = "Unauthorized Access"
       redirect_to kiosk_list_path
     end
   end
@@ -46,7 +46,7 @@ class Kiosk::KioskPagesController < ApplicationController
       @event.save
       redirect_to kiosk_log_out_path
     else
-      flash[:alert] = "Unauthorized Access"
+      flash[:danger] = "Unauthorized Access"
       redirect_to kiosk_list_path
     end
   end

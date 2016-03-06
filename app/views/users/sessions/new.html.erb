@@ -3,50 +3,88 @@
   <h1 class="text-center"><%= link_to "Log in", kiosk_log_in_path %></h1>
 <% else %>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<div class="login_panel col-md-4 col-centered">
-  <div class="row">
-    <h1 class="login_header text-center login_text_header">Gameification Log In</h1>
-  </div>
-  <hr/>
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <%= f.email_field :email, autofocus: true ,:placeholder => "Email" , :class => "form-control"%>
-      </div>
-    </div>
-    <div class="row form-group">
-            <div class="col-md-12 ">
-        <%= f.password_field :password, autocomplete: "off" ,:placeholder => "Password" , :class => "form-control"%>
+<div id="extr-page">
+
+  
+
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+            <h1 class="txt-color-red login-header-big">Gameification</h1>
+            <div class="hero">
+
+              <div class="pull-left login-desc-box-l">
+                <h4 class="paragraph-header">Sign up and start winning today!</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fringilla a diam non accumsan. Nam dignissim lorem quis convallis dictum.</p>
+                <div class="login-app-icons">
+                  <a href="javascript:void(0);" class="btn btn-danger btn-lg">Learn More</a>
+                </div>
+              </div>
+              
+              <img src="https://www.union.ic.ac.uk/acc/ultimate/images/icons/events_unselected.png" alt="" style="width:210px">
+
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <h5 class="about-heading">Earn Points</h5>
+                <p class="well">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fringilla a diam non accumsan. Nam dignissim lorem quis convallis dictum. Sed condimentum aliquam justo non pretium. Donec odio nisi, tempus in risus vitae, blandit condimentum nulla. Fusce eget auctor quam, non tincidunt nisi. Suspendisse placerat eros consequat diam tempor, eget efficitur lectus mattis. Integer vitae pharetra libero, sit amet sodales erat. Cras eu dapibus urna, aliquet gravida augue. Donec a nisi ut lorem porta rhoncus. Duis quis justo eget libero facilisis efficitur non non libero. Phasellus non lacus cursus urna luctus posuere et ullamcorper magna.
+                </p>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <h5 class="about-heading">Get Rewarded</h5>
+                  <p class="well">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fringilla a diam non accumsan. Nam dignissim lorem quis convallis dictum. Sed condimentum aliquam justo non pretium. Donec odio nisi, tempus in risus vitae, blandit condimentum nulla.</p>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+            <div class="well no-padding">
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name) , :html=> { :id => "login-form", :class => "smart-form client-form"}) do |f| %>
+                <header>
+                  Sign In
+                </header>
+
+                <fieldset>
+                  
+                  <section>
+                    <label class="label">E-mail</label>
+                    <label class="input"> <i class="icon-append fa fa-user"></i>
+                      <%= f.email_field :email, autofocus: true ,:placeholder => "Email" , :class => ""%>
+                      <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b></label>
+                  </section>
+
+                  <section>
+                    <label class="label">Password</label>
+                    <label class="input"> <i class="icon-append fa fa-lock"></i>
+                      <%= f.password_field :password, autocomplete: "off" ,:placeholder => "Password"%>
+                      <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b> </label>
+                    <div class="note">
+                      <a href="forgotpassword.html">Forgot password?</a>
+                    </div>
+                  </section>
+
+                  <section>
+                    <label class="checkbox">
+                      <% if devise_mapping.rememberable? -%>
+                        <%= f.check_box :remember_me %>
+          
+                      <% end -%>
+                      <i></i>Stay signed in</label>
+                  </section>
+                </fieldset>
+                <footer>
+                <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+                          <i class="fa fa-sign-in fa-lg"></i> Log In
+                        <% end %>
+                </footer>
+                <%end%>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-      <div class="row form-group col-md-6 col-md-offset-4">
-          <% if devise_mapping.rememberable? -%>
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          <% end -%>
-      </div>
-      <div class="row form-group col-md-6 col-md-offset-3">
-        <%= button_tag(type: 'submit', class: "btn btn-primary form-control") do %>
-          <i class="fa fa-sign-in fa-lg"></i> Log In
-        <% end %>
-      </div>
-    <%end%>
-</div>
+    </div>
 <% end %>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav mainnav">
-        <%= render "users/shared/links" %>
-      </ul>
-    </div>
-  </div>
-</nav>
