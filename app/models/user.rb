@@ -1,9 +1,5 @@
 class User < ActiveRecord::Base
 
-  include Encryption
-  attr_encrypted :last_semester, :key => :encryption_key
-  attr_encrypted :current_semester, :key => :encryption_key
-
   #Filters
   before_validation :set_email, :on => :create
   #before_validation :generate_api_token
@@ -44,35 +40,10 @@ class User < ActiveRecord::Base
           self.email = emails["employee"]
           self.roles << Role.find_by(:name => "Faculty")
          end
-         transcripts = res["transcripts"][0]
-         puts transcripts
-         if !transcripts["type"].nil?
-          self.user_type = transcripts["type"]
-          summary = transcripts["summary"]
-          self.current_semester = summary
-          hours = summary["hours"]
-          self.class_type = set_user_class(hours.to_f)
-        elsif !transcripts["last_semester"].nil?
-          self.last_semester = transcripts["last_semester"]
-        end
-          
-
       else
         self.email = "notfound@email.com"
       end
       self.gsw_pin = ""
-  end
-
-  def set_user_class(hours)
-    if hours < 30
-      return "Freshman"
-    elsif hours >= 30 && hours < 60
-      return "Sophomore"
-    elsif hours >= 60 && hours < 90
-      return "Junior"
-    else
-      return "Senior"
-    end
   end
 
   def email_required?
