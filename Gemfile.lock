@@ -57,6 +57,8 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
+    attr_encrypted (2.0.0)
+      encryptor (~> 2.0.0)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -92,6 +94,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    encryptor (2.0.0)
     erubis (2.7.0)
     execjs (2.6.0)
     font-awesome-rails (4.5.0.1)
@@ -211,6 +214,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  attr_encrypted
   bcrypt
   bootstrap-daterangepicker-rails
   bootstrap3-datetimepicker-rails (~> 4.17.37)
