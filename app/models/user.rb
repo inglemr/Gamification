@@ -1,5 +1,7 @@
-class User < ActiveRecord::Base
 
+#<%= SymmetricEncryption.decrypt (current_user.current_semester["GPA"]) %>
+
+class User < ActiveRecord::Base
   #Filters
   before_validation :set_email, :on => :create
   #before_validation :generate_api_token
@@ -40,10 +42,67 @@ class User < ActiveRecord::Base
           self.email = emails["employee"]
           self.roles << Role.find_by(:name => "Faculty")
          end
+         transcripts = res["transcripts"][0]
+         puts transcripts
+         if !transcripts["type"].nil?
+          self.user_type = transcripts["type"]
+          
+        #   "summary": {
+        #    "hours": "122.00",
+        #    "points": "391.00",
+        #    "GPA": "3.20"
+        # },
+        summary = transcripts["summary"]
+        hours = summary["hours"]
+        points = summary["points"]
+        gpa = summary["GPA"]
+
+        current_semester_enc = Hash.new
+        current_semester_enc["hours"] = SymmetricEncryption.encrypt(hours)
+        current_semester_enc["points"] = SymmetricEncryption.encrypt(points)
+        current_semester_enc["GPA"] =  SymmetricEncryption.encrypt(gpa)
+          self.current_semester =  current_semester_enc
+
+          self.class_type = set_user_class(hours.to_f)
+        end
+        if !transcripts["last_semester"].nil?
+          # "last_semester": {
+          #    "term": "Fall 2015",
+          #    "academic_standing": "Good Standing",
+          #    "additional_standing": "Dean's List"
+          # }
+          #Unecrypted
+          last_semester = transcripts["last_semester"]
+          term = last_semester["term"]
+          academic_standing = last_semester["academic_standing"]
+          additional_standing = last_semester["additional_standing"]
+          #ecrypted
+          last_semester_enc = Hash.new
+          last_semester_enc["term"] = SymmetricEncryption.encrypt(term)
+          last_semester_enc["academic_standing"] =  SymmetricEncryption.encrypt(academic_standing)
+          last_semester_enc["additional_standing"] =  SymmetricEncryption.encrypt(additional_standing)
+          self.last_semester =  last_semester_enc
+        end
+          
+
       else
         self.email = "notfound@email.com"
       end
       self.gsw_pin = ""
+  end
+
+
+
+  def set_user_class(hours)
+    if hours < 30
+      return "Freshman"
+    elsif hours >= 30 && hours < 60
+      return "Sophomore"
+    elsif hours >= 60 && hours < 90
+      return "Junior"
+    else
+      return "Senior"
+    end
   end
 
   def email_required?

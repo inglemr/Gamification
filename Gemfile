@@ -9,7 +9,7 @@ gem 'devise'
 gem 'bcrypt'
 gem 'cancancan'
 gem 'cancan_namespace'
-
+gem 'symmetric-encryption'
 #Used to create QR Codes
 gem 'rqrcode'
 
