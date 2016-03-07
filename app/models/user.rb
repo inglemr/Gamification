@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   #validates :api_token, presence: true, uniqueness: true
   validates :gsw_id, presence: true, uniqueness: {message: " must be unique"}
   validates :email , uniqueness: {message: "must be unique or does not exist"}
+  validates :username, :uniqueness: {message: " must be unique"}
  
 
   #Relationships
@@ -88,6 +89,7 @@ class User < ActiveRecord::Base
       else
         self.email = "notfound@email.com"
       end
+      self.name = res["name"]
       self.gsw_pin = ""
   end
 
