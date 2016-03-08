@@ -1,7 +1,7 @@
       <nav>
         <ul>
           <% if  (can? :manage, :all) || @current_permissions["Admin::User"].include?("manage") || @current_permissions["Admin::Role"].include?("manage") || @current_permissions["Admin::Permission"].include?("manage") %>
-          <li class="top-menu-invisible">
+          <li class="menu-top">
             <a href="#"><i class="fa fa-lg fa-fw fa-users txt-color-blue"></i> <span class="menu-item-parent">Users & Roles</span></a>
             <ul>
               <% if (can? :manage, :all) || @current_permissions["Admin::User"].include?("manage")%>
@@ -67,10 +67,23 @@
         <i class="fa fa-arrow-circle-left hit"></i> 
       </span>
     <!-- END NAVIGATION -->
+<style>
 
+.smart-style-5 aside#left-panel{
+  background:none ;
+}
 
+.menu-top{
+  border-top-right-radius: 25px;
 
-
+}
+li{
+  background: rgba(0, 0, 0, 0.43);
+}
+.smart-style-5 .minifyme{
+   border-bottom-right-radius: 25px;
+}
+</style>
 
 
 

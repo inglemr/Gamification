@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   #validates :api_token, presence: true, uniqueness: true
   validates :gsw_id, presence: true, uniqueness: {message: " must be unique"}
   validates :email , uniqueness: {message: "must be unique or does not exist"}
-  validates :username, :uniqueness: {message: " must be unique"}
+  validates :username, uniqueness: {message: " must be unique"}
  
 
   #Relationships
