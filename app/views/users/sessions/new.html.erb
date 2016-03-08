@@ -4,10 +4,6 @@
 <% else %>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <div id="extr-page">
-
-  
-
-
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
             <h1 class="txt-color-red login-header-big">Gameification</h1>
@@ -21,7 +17,7 @@
                 </div>
               </div>
               
-              <img src="https://www.union.ic.ac.uk/acc/ultimate/images/icons/events_unselected.png" alt="" style="width:210px">
+              <!--<img src="https://www.union.ic.ac.uk/acc/ultimate/images/icons/events_unselected.png" alt="" style="width:210px">-->
 
             </div>
 
@@ -31,11 +27,6 @@
                 <p class="well">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fringilla a diam non accumsan. Nam dignissim lorem quis convallis dictum. Sed condimentum aliquam justo non pretium. Donec odio nisi, tempus in risus vitae, blandit condimentum nulla. Fusce eget auctor quam, non tincidunt nisi. Suspendisse placerat eros consequat diam tempor, eget efficitur lectus mattis. Integer vitae pharetra libero, sit amet sodales erat. Cras eu dapibus urna, aliquet gravida augue. Donec a nisi ut lorem porta rhoncus. Duis quis justo eget libero facilisis efficitur non non libero. Phasellus non lacus cursus urna luctus posuere et ullamcorper magna.
                 </p>
-              </div>
-              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <h5 class="about-heading">Get Rewarded</h5>
-                  <p class="well">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fringilla a diam non accumsan. Nam dignissim lorem quis convallis dictum. Sed condimentum aliquam justo non pretium. Donec odio nisi, tempus in risus vitae, blandit condimentum nulla.</p>
-
               </div>
             </div>
 
@@ -62,10 +53,19 @@
                       <%= f.password_field :password, autocomplete: "off" ,:placeholder => "Password"%>
                       <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b> </label>
                     <div class="note">
-                      <a href="forgotpassword.html">Forgot password?</a>
+                    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                     <%= link_to '<i class="fa fa-question-circle fa-lg"></i> Forgot your password?'.html_safe, new_password_path(resource_name) %>
+                    <% end -%>
+                     <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+                     <br>
+                        <%= link_to '<i class="fa fa-envelope fa-lg"></i> Resend confirmation instructions?'.html_safe, new_user_confirmation_path(resource_name) %>
+                      <% end -%>
+                      <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+                      <br>
+                        <%= link_to '<i class="fa fa-key fa-lg"></i> Didn\'t receive unlock instructions?'.html_safe, new_unlock_path(resource_name) %></li>
+                      <% end -%>
                     </div>
                   </section>
-
                   <section>
                     <label class="checkbox">
                       <% if devise_mapping.rememberable? -%>
@@ -76,9 +76,12 @@
                   </section>
                 </fieldset>
                 <footer>
+                <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                  <%= link_to '<i class="fa fa-check fa-lg"></i> Sign up'.html_safe, new_registration_path(resource_name), :class=> "btn btn-danger pull-left" %>
+                <% end -%>
                 <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-                          <i class="fa fa-sign-in fa-lg"></i> Log In
-                        <% end %>
+                  <i class="fa fa-sign-in fa-lg"></i> Log In
+                <% end %>
                 </footer>
                 <%end%>
             </div>
