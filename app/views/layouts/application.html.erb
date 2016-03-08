@@ -29,7 +29,9 @@
       <script type="text/javascript">
         $(document).ready(function () {
           <% flash.each do |msg_type, message| %>
+          console.log("<%= msg_type %>");
             $.bigBox({
+
               title: "<%= message %>",
               content: "",
               <% if msg_type == "success" %>
@@ -39,9 +41,12 @@
                 sound_file: "messagebox",
                 src: "<%= asset_path('messagebox.ogg') %>",
               <% elsif msg_type == "swiped" %>
-                sound_file: "messagebox",
-                src: "<%= asset_path('messagebox.ogg') %>",
-              <% elsif msg_type == "info" %>
+                sound_file: "bigbox",
+                src: "<%= asset_path('bigbox.ogg') %>",
+              <% elsif msg_type == "notice" %>
+                sound_file: "bigbox",
+                src: "<%= asset_path('bigbox.ogg') %>",
+              <% else %>
                 sound_file: "messagebox",
                 src: "<%= asset_path('messagebox.ogg') %>",
               <% end %>
