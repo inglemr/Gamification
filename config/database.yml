@@ -40,7 +40,7 @@ production:
   adapter: postgresql
   encoding: unicode
   database: capstone_production
-  pool: 30
+  pool: 20
   username: postgres
   password: root
 
