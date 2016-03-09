@@ -24,10 +24,17 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
 
+    var row;
     var datatable;
     $( document ).ready(function() {
 pageSetUp();
       $("#events_table").delegate('tr', 'click', function() {
+          if (row != undefined)
+          {
+            row.removeClass('success')
+          }
+
+          row = $("#" + this.id).addClass('success');
             $.ajax({url: '<%= url_for :action => 'index' %>',
           data: 'event_id=' + this.id,
           dataType: 'script'})
