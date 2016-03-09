@@ -2,8 +2,8 @@ class Admin::EventsDatatable
    delegate :params, :h,  :content_tag, :datetime ,:current_ability, :render, :can?,:truncate, to: :@view
 
   def initialize(view)
-    @view = view
-    @events = Event.order("#{sort_column} #{sort_direction}").where('end_time >= ?', DateTime.now).where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    @view = view #.where('end_time >= ?', DateTime.now)
+    @events = Event.order("#{sort_column} #{sort_direction}").where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
     @events = @events.page(page).per_page(per_page)
 
   end
@@ -57,7 +57,7 @@ private
   end
 
   def search_string
-    "event_name LIKE :search OR description LIKE :search" 
+    "event_name LIKE :search OR description LIKE :search"
   end
 
   def sort_column

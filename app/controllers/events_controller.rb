@@ -14,10 +14,22 @@ class EventsController < ApplicationController
 	end
 
 	def index
+    @event = current_user.created_events.first;
+    if (params[:event_id])
+      temp = Event.find(params[:event_id])
+      if( current_user.created_events.include?(temp))
+        @event = temp
+        render(:index, locals: { event: @event} , :formats => [:js])
+      else
+        flash[:danger] = "Unauthorized"
+      end
+    else
 		respond_to do |format|
     		format.html
+        format.js
     		format.json { render json: UserEventsDatatable.new(view_context, false) }
   	end
+  end
 	end
 
   def manage

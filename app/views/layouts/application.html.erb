@@ -60,6 +60,13 @@
       </script>
     <% end %>
   <% end %>
+  <% content_for :scripts do %>
+  <script>
+    $( document ).ready(function() {
+      pageSetUp();
+      });
+  </script>
+<% end %>
   <%= yield :scripts %>
 
   </body>

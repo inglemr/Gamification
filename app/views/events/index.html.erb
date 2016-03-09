@@ -10,7 +10,9 @@
 <div class="row">
   <div class="col-md-5">
     <div id="myfirstchart" class="chart no-padding" style="position: relative;"></div>
+    <%= render(:partial=>"quick_stats.html.erb", locals: { event: @event} , :formats => [:html]) %>
   </div>
+
   <div class="col-md-7">
   <div id='events_grid' class="hidden row" style='display: block'></div>
 <table summary "Events List" id="events_table" style=""class="table table-hover"  data-source="<%= events_path(format: "json") %>"></table>
@@ -25,6 +27,12 @@
     var datatable;
     $( document ).ready(function() {
 
+      $("#events_table").delegate('tr', 'click', function() {
+            $.ajax({url: '<%= url_for :action => 'index' %>',
+          data: 'event_id=' + this.id,
+          dataType: 'script'})
+        //get <td> element values here!!??
+    });
 
       $( "#list" ).click(function() {
         $('#events_grid').addClass("hidden");
@@ -34,26 +42,18 @@
         $('#events_table').addClass("hidden");
         $('#events_grid').removeClass("hidden");
       });
-
-    new Morris.Line({
-      // ID of the element in which to draw the chart.
+      var val = 10;
+      var year = 2000;
+    new Morris.Bar({
       element: 'myfirstchart',
-      // Chart data records -- each entry in this array corresponds to a point on
-      // the chart.
       data: [
-        { year: '2008', value: 20 },
-        { year: '2009', value: 10 },
-        { year: '2010', value: 5 },
-        { year: '2011', value: 5 },
-        { year: '2012', value: 20 }
+      <% current_user.created_events.each do |event| %>
+        { event: '<%= event.event_name %>', attendance: <%= event.attendance.to_f %> },
+      <% end %>
       ],
-      // The name of the data record attribute that contains x-values.
-      xkey: 'year',
-      // A list of names of data record attributes that contain y-values.
-      ykeys: ['value'],
-      // Labels for the ykeys -- will be displayed when you hover over the
-      // chart.
-      labels: ['Value']
+      xkey: 'event',
+      ykeys: ['attendance'],
+      labels: ['Attendance']
     });
 
 
@@ -71,6 +71,7 @@
           { "title": "Points", "data": "events__point_val"},
           { "title": "Start", "data": "events__day_time"},
           { "title": "End", "data": "events__end_time"},
+          { "title": "Actions", "data": "event_actions"}
 
         ],
         fnServerParams: function ( aoData ) {

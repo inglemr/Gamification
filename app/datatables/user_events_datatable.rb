@@ -7,7 +7,7 @@ class UserEventsDatatable
     if (attended)
       @events = current_user.attended_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event
     else
-      @events = current_user.created_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event
+      @events = current_user.created_events.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first
     end
     @events = @events.page(page).per_page(per_page)
 
@@ -37,9 +37,14 @@ private
         "events__point_val" => event.point_val,
         events_eventTile: eventTile(event),
         "events__day_time" => event.day_time.to_formatted_s(:short),
-        "events__end_time" => event.end_time.to_formatted_s(:short)
+        "events__end_time" => event.end_time.to_formatted_s(:short),
+        event_actions: actions(event)
       }
     end
+  end
+
+  def actions(event)
+    render(:partial=>"events/actions.html.erb", locals: { event: event} , :formats => [:html])
   end
 
   def eventTile(event)
