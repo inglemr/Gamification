@@ -37,3 +37,11 @@
     </div>
   </div>
 </div>
+
+  <% content_for :scripts do %>
+  <script>
+    $( document ).ready(function() {
+      pageSetUp();
+      });
+  </script>
+<% end %>

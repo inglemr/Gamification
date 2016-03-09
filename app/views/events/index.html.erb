@@ -7,15 +7,15 @@
  <% end %>
 <div class="row">
   <div class="col-md-5">
-  <% if !mobile_device? %>
-    <div id="myfirstchart" class="chart no-padding" style="position: relative;"></div>
-  <% end %>
     <%= render(:partial=>"quick_stats.html.erb", locals: { event: @event} , :formats => [:html]) %>
+    <% if !mobile_device? %>
+      <div id="myfirstchart" class="chart no-padding" style="position: relative;"></div>
+    <% end %>
   </div>
 
   <div class="col-md-7">
   <div id='events_grid' class="hidden row" style='display: block'></div>
-<table summary "Events List" id="events_table" style=""class="table table-hover"  data-source="<%= events_path(format: "json") %>"></table>
+<table summary "Events List" id="events_table" style=""class="table table-hover dataTable no-footer"  data-source="<%= events_path(format: "json") %>"></table>
   </div>
 </div>
 
