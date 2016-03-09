@@ -15,7 +15,7 @@
 
   <div class="col-md-7">
   <div id='events_grid' class="hidden row" style='display: block'></div>
-<table summary "Events List" id="events_table" style=""class="table table-hover dataTable no-footer"  data-source="<%= events_path(format: "json") %>"></table>
+<table id="events_table" onload="setTableRow()" class="table table-hover dataTable no-footer"  data-source="<%= events_path(format: "json") %>"></table>
   </div>
 </div>
 
@@ -23,7 +23,6 @@
 
 <% content_for :scripts do %>
   <script type="text/javascript">
-
     var row;
     var datatable;
     $( document ).ready(function() {
@@ -100,7 +99,6 @@ pageSetUp();
       $('#events_table_search').keyup(function(){
         events_table.dataTable().api().draw(false);
       });
-
     })
   </script>
 <% end %>

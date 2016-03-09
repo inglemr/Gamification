@@ -35,8 +35,6 @@ class EventsController < ApplicationController
   def manage
     @event = Event.find(params[:id])
     cols = params[:user_col]
-
-
     if current_user.created_events.include?(@event)
       respond_to do |format|
         format.html
@@ -45,7 +43,7 @@ class EventsController < ApplicationController
       end
     else
       flash[:danger] = "Unauthorized Access"
-      redirect_to :back
+      redirect_to events_path
     end
   end
 
