@@ -34,6 +34,7 @@ class Event < ActiveRecord::Base
   end
 
 
+
   def date_of_next(current_date,day)
     date  = DateTime.parse(day + " " + current_date.hour.to_s + ":" + current_date.min.to_s + " " + current_date.zone)
     delta = date > Date.today ? 0 : 7
@@ -75,7 +76,7 @@ class Event < ActiveRecord::Base
     excludeDays.each_with_index do |day, i|
       excludeDays[i] = Time.zone.parse(day)
     end
-    start_time = self.day_time  
+    start_time = self.day_time
     recurring_id = self.id
 
     eventsToRecure = Array.new
