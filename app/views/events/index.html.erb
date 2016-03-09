@@ -1,15 +1,15 @@
-<div id="ribbon">
-    <ol class="breadcrumb">
-      <li ><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
-      <li class="active">My Created Events</li>
-    </ol>
+<% if !mobile_device? %>
+<div class="row col-md-12">
     <button id="list" class="btn btn-info pull-right"><i class="fa fa-list"></i></button>
     <button id="tile" class="btn btn-info pull-right"><i class="glyphicon glyphicon-th"></i></button>
     <input id='events_table_search' type="search" class="form-control pull-right" placeholder="Search..." style="display: inline; width: 200px">
 </div>
+ <% end %>
 <div class="row">
   <div class="col-md-5">
+  <% if !mobile_device? %>
     <div id="myfirstchart" class="chart no-padding" style="position: relative;"></div>
+  <% end %>
     <%= render(:partial=>"quick_stats.html.erb", locals: { event: @event} , :formats => [:html]) %>
   </div>
 
