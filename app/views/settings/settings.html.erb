@@ -1,7 +1,6 @@
-  <%= form_for(@user, :class =>"form-horizontal", url: {action: "updatesettings"}, :method => :POST) do |f| %>
 <div class="row">
    <div class="col-sm-12">
-      <div class="well well-sm">
+      <div class="well well-sm bg-color-darken ">
          <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6">
              <div class="well well-light well-sm no-margin no-padding">
@@ -40,7 +39,7 @@
                   </div>
                   <div class="row">
                      <div class="col-sm-12">
-                        <hr>
+
                         <div class="col-md-12">
                            <ul class="nav nav-tabs tabs-pull-right">
                               <li class="active">
@@ -87,7 +86,9 @@
                </div>
             </div>
              </div>
-            <div class="col-sm-12 col-md-12 col-lg-6 well padding-bottom-10">
+
+            <div class="col-sm-12 col-md-12 col-lg-6 well">
+            <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
               <div class="col-md-12 form-group">
                 <%= f.label :theme ,:class => "col-md-3 control-label"%>
                   <div class="col-md-7">
@@ -98,7 +99,10 @@
           <div class="form-group col-md-12 col-md-offset-5">
             <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
           </div>
+
+
           </div>
+          <% end %>
          </div>
       </div>
    </div>
@@ -111,5 +115,4 @@
 </script>
 <% end %>
 
-<% end %>
 
