@@ -6,8 +6,6 @@ class Kiosk::SessionsController < ApplicationController
     elsif current_user
       flash[:alert] = "Already Logged In"
       redirect_to root_path
-    else
-      redirect_to new_kiosk_session_path
     end
   end
 
