@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-	load_and_authorize_resource
+	load_and_authorize_resource :except => [:show]
    protect_from_forgery except: :csv
 	before_filter :load_permissions
 
@@ -34,8 +34,6 @@ class EventsController < ApplicationController
 	end
 
   def csv
-    puts "Jummy"
-    puts params
     cols = params[:user_col]
     @event = Event.find(params[:id])
      if( current_user.created_events.include?(@event))
@@ -57,7 +55,6 @@ class EventsController < ApplicationController
 
   def manage
     @event = Event.find(params[:id])
-
     if current_user.created_events.include?(@event)
       respond_to do |format|
         format.html
