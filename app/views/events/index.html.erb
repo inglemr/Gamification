@@ -7,7 +7,9 @@
  <% end %>
 <div class="row">
   <div class="col-md-5">
-    <%= render(:partial=>"quick_stats.html.erb", locals: { event: @event} , :formats => [:html]) %>
+    <div id="stats">
+      <%= render(:partial=>"quick_stats.html.erb", locals: { event: @event} , :formats => [:html]) %>
+    </div>
     <% if !mobile_device? %>
       <div id="myfirstchart" class="chart no-padding" style="position: relative;"></div>
     <% end %>
@@ -27,6 +29,10 @@
     var datatable;
     $( document ).ready(function() {
 pageSetUp();
+    $('#exportsubmit').click(function(){
+       $('#exportForm').submit();
+  });
+
       $("#events_table").delegate('tr', 'click', function() {
           if (row != undefined)
           {

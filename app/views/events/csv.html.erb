@@ -1,0 +1,19 @@
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">CSV Column Selection</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for(@event, url: manage_events_path(@event, format: :csv), :html => {:class=>"smart-form" , :id=>"exportForm"}, method: :get) do |f| %>
+           <%= select_tag "user_col", "<option value='email'>Email</option><option value='gsw_id'>GSW ID</option><option value='name'>Name</option><option value='class_type'>Class</option><option value='time'>Arrival Time</option>".html_safe,:multiple => true,:class=>"select2 input-lg", :placeholder => "Enter Columns" %>
+
+
+      </div>
+      <div class="modal-footer">
+        <%= f.submit "Export" , :id=>"exportsubmit",:class => "col-md-2 btn btn-primary btn-lg"%>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      <% end %>
+    </div>
+  </div>
