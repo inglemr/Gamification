@@ -38,27 +38,39 @@
 </nav>
 
 <style>
-.navbar-nav>li {
-  background: none;
-}
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
-  background: black;
-}
+/*
+  ALL THEMES
+*/
 .navbar-nav>li:hover a:hover {
   background: white;
 }
 .navbar{
   border-bottom: none;
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#606c88+0,3f4c6b+100;Grey+3D+%232 */
+    min-height: 0px;
+}
+
+.navbar-nav>li {
+  background: none;
+}
+
+.navbar .navbar-nav>li>a{
+    color: white;
+}
+/*
+
+ONLY GLASS
+ */
+.smart-style-5 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+  background: black;
+}
+.smart-style-5 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+  background: black;
+}
+.smart-style-5 .navbar{
 background: rgb(96,108,136); /* Old browsers */
 background: -moz-linear-gradient(top,  rgba(96,108,136,.2) 0%, rgba(63,76,107,.2) 100%); /* FF3.6-15 */
 background: -webkit-linear-gradient(top,  rgba(96,108,136,.2) 0%,rgba(63,76,107,.2) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom,  rgba(96,108,136,.9) 0%,rgba(63,76,107,.9) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+background: linear-gradient(to bottom,  rgba(96,108,136,.9) 0%,rgba(63,76,107,.9) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 ); /* IE6-9 */
-
-  min-height: 0px;
-}
-.navbar .navbar-nav>li>a{
-    color: white;
 }
 </style>

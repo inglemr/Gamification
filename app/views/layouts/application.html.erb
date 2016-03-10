@@ -9,13 +9,13 @@
     <%= stylesheet_link_tag    "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="smart-style-5 minified">
+  <body class="<%= current_user ? current_user.theme : "smart-style-5" %> minified">
     <% if !current_kiosk && !(current_class?(kiosk_log_in_path) == "active" )%>
         <%= render "shared/usermenu.html.erb"%>
-    <% end %>  
+    <% end %>
     <% if can? :view, :sidebar%>
       <aside id="left-panel"><%= render "shared/sidebar.html.erb"%></aside>
-      <div id='main'role="main"> 
+      <div id='main'role="main">
     <% else %>
       <div role="main">
     <% end %>
@@ -59,8 +59,29 @@
         });
       </script>
     <% end %>
-  <% end %> 
+  <% end %>
+  <% content_for :scripts do %>
+  <script>
+    $( document ).ready(function() {
+      pageSetUp();
+      });
+  </script>
+<% end %>
   <%= yield :scripts %>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Modal</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 
   </body>
 </html>

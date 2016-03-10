@@ -35,13 +35,13 @@
           </li>
           <% end %>
           <!-- Locations -->
-          <% if   (can? :manage, :all) || @current_permissions["Admin::Location"].include?("manage") %>          
+          <% if   (can? :manage, :all) || @current_permissions["Admin::Location"].include?("manage") %>
           <li>
             <a href="#"><i class="fa fa-lg fa-fw fa-map-marker"></i> <span class="menu-item-parent">Locations</span></a>
             <ul>
               <li><%= link_to '<i class="fa fa-map-marker fa-lg"></i>All Locations'.html_safe, admin_location_index_path %></li>
             </ul>
-          </li> 
+          </li>
           <% end %>
           <!-- Kiosk -->
           <% if   (can? :manage, :all) || @current_permissions["Admin::Kiosk"].include?("manage")%>
@@ -63,25 +63,32 @@
           <% end %>
         </ul>
       </nav>
-      <span class="minifyme" data-action="minifyMenu"> 
-        <i class="fa fa-arrow-circle-left hit"></i> 
+      <span class="minifyme" style=" border-bottom-right-radius: 25px;" data-action="minifyMenu">
+        <i class="fa fa-arrow-circle-left hit"></i>
       </span>
     <!-- END NAVIGATION -->
 <style>
 
-.smart-style-5 aside#left-panel{
-  background:none ;
-}
 
 .menu-top{
   border-top-right-radius: 25px;
 
 }
-li{
-  background: rgba(0, 0, 0, 0.43);
+
+/* ONLY Material */
+.smart-style-6 aside#left-panel{
+  border-top-right-radius: 25px;
 }
-.smart-style-5 .minifyme{
-   border-bottom-right-radius: 25px;
+
+
+/* ONLY GLASS */
+
+.smart-style-5 aside#left-panel{
+  background:none ;
+}
+
+.smart-style-5 li{
+  background: rgba(0, 0, 0, 0.43);
 }
 </style>
 

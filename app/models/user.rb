@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   validates :gsw_id, presence: true, uniqueness: {message: " must be unique"}
   validates :email , uniqueness: {message: "must be unique or does not exist"}
   validates :username, uniqueness: {message: " must be unique"}
- 
+
 
   #Relationships
 	has_and_belongs_to_many :roles
@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
          puts transcripts
          if !transcripts["type"].nil?
           self.user_type = transcripts["type"]
-          
+
         #   "summary": {
         #    "hours": "122.00",
         #    "points": "391.00",
@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
           last_semester_enc["additional_standing"] =  SymmetricEncryption.encrypt(additional_standing)
           self.last_semester =  last_semester_enc
         end
-          
+
 
       else
         self.email = "notfound@email.com"
@@ -145,6 +145,38 @@ class User < ActiveRecord::Base
     false
   end
 
+  def self.to_csv(attributes,event)
+    CSV.generate(headers: true) do |csv|
+      cols = Array.new
+      attributes.each do |col|
+        if col == "email"
+          cols << "Email"
+        elsif col == "gsw_id"
+          cols << "GSW ID"
+        elsif col == "name"
+          cols << "Student Name"
+        elsif col =="class_type"
+          cols << "Student Class"
+        elsif col =="time"
+          cols <<"Arrival Time"
+        end
+      end
+      csv << cols
+
+      all.each do |user|
+        csv << attributes.map{ |attr| getCSVCol(user, attr,event) }
+      end
+    end
+  end
+
+  def self.getCSVCol(user, attr,event)
+    if attr == "time"
+       User.find_by_sql("SELECT users.id, user_events.created_at FROM users INNER JOIN user_events ON users.id = user_events.attendee_id WHERE users.id='#{user.id}' AND user_events.attended_event_id='#{event.id}'").first.created_at
+    else
+      user.send(attr)
+    end
+  end
+
   def password_match?
     self.errors[:password] << "can't be blank" if password.blank?
     self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
@@ -163,7 +195,7 @@ class User < ActiveRecord::Base
   def has_no_password?
     self.encrypted_password.blank?
   end
- 
+
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
@@ -171,4 +203,4 @@ class User < ActiveRecord::Base
 
 end
 
-  
+

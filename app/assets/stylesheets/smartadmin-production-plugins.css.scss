@@ -1201,7 +1201,7 @@ div.dataTables_scrollHead table.table-bordered {
 /*
  * TableTools styles
  */
-/* conflicting styles with bootstrap 
+/* conflicting styles with bootstrap
 .table tbody tr.active td,
 .table tbody tr.active th {
 	background-color: #08C;
@@ -1215,7 +1215,7 @@ div.dataTables_scrollHead table.table-bordered {
 
 .table tbody tr.active a {
 	color: white;
-} 
+}
 
 .table-striped tbody tr.active:nth-child(odd) td,
 .table-striped tbody tr.active:nth-child(odd) th {
@@ -1510,7 +1510,7 @@ div.ColVis_catcher {
  * Language:    Javascript
  * License:     GPL v2 / 3 point BSD
  * Project:     DataTables
- * 
+ *
  * Copyright 2009-2012 Allan Jardine, all rights reserved.
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -2731,12 +2731,12 @@ body.fd-slider-drag-horizontal * {
 }
 /*
 	 Sample tooltip code. Only works on grade A browsers (so no IE6,7 or 8).
-	
+
 	 See: http://nicolasgallagher.com/multiple-backgrounds-and-borders-with-css2/ for full info on
 	 how to style generated content & the associated pitfalls
-	
+
 	 This code to be taken as experimental & untested - use at your discretion
-	
+
 	 If showing the tooltip above the sider handle you are relegated to showing
 	 single line tooltips due to styling constraints!
 	 */
@@ -2767,7 +2767,7 @@ body.fd-slider-drag-horizontal * {
 	 The tooltip body - as we position it above the slider and position the tooltip arrow
 	 below it, we need to know the height of the body. This means that multi-line tooltips
 	 are not supported.
-	
+
 	 To support multi-line tooltips, you will need to position the tooltip below the slider
 	 and the tooltip pointer above the tooltip body. Additionally, you will have to set the
 	 tooltip bodies "height" to auto
@@ -3593,14 +3593,14 @@ table.fc-border-separate {
 /*
 
 	 Copyright 2013 - SmartAdmin : WebApp (Sunny)
-	
+
 	 * This is part of an item on wrapbootstrap.com
 	 * https://wrapbootstrap.com/user/myorange
 	 * ==================================
-	
+
 	 Table of Contents
 	 ---------------------------------------------------------------
-	
+
 	 - Main
 	 - Header
 	 - Content
@@ -3615,7 +3615,7 @@ table.fc-border-separate {
 	 - Clearfix
 	 - Examples (minimalistic in grid)
 	 - Examples (lists)
-	
+
 	 */
 /*
 	 * MAIN
@@ -4248,9 +4248,9 @@ body.nooverflow {
 .jarviswidget-color-greenLight .nav-tabs li a:hover {
   color: #333 !important;
 }
-/* 
+/*
 	 * WIDGET COLOR DROPDOWN
-	 * 
+	 *
 	 */
 .color-select {
   list-style: none;
@@ -4329,8 +4329,8 @@ body.nooverflow {
 }
 /*
 	 * RTL - SUPPORT
-	 
-	
+
+
 	.rtl .jarviswidget > header {
 		padding: 0 7px 0 0;
 	}
@@ -4537,7 +4537,7 @@ body.nooverflow {
   top: 3px !important;
 }
 /*
- * Enhancements for other plugins 
+ * Enhancements for other plugins
  */
 #jarviswidget-fullscreen-mode .fc-grid .fc-day-number {
   padding: 5px 12px;
@@ -5827,11 +5827,11 @@ Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
   top: 34%;
 }
 .select2-search input.select2-active {
-  background: #ffffff url('../img/select2-spinner.gif') no-repeat 100%;
-  background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #ffffff), color-stop(0.99, #eeeeee));
-  background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
-  background: url('../img/select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
-  background: url('../img/select2-spinner.gif') no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
+  background: #ffffff image-url("select2-spinner.gif") no-repeat 100%;
+  background: image-url("select2-spinner.gif") no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #ffffff), color-stop(0.99, #eeeeee));
+  background: image-url("select2-spinner.gif") no-repeat 100%, -webkit-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
+  background: image-url("select2-spinner.gif") no-repeat 100%, -moz-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
+  background: image-url("select2-spinner.gif") no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
 }
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
@@ -5967,7 +5967,7 @@ disabled look for disabled choices in the results dropdown
   display: none;
 }
 .select2-more-results.select2-active {
-  background: #f4f4f4 url('../img/select2-spinner.gif') no-repeat 100%;
+  background: #f4f4f4 image-url("select2-spinner.gif") no-repeat 100%;
 }
 .select2-more-results {
   background: #f4f4f4;
@@ -6032,7 +6032,7 @@ disabled look for disabled choices in the results dropdown
   background: transparent !important;
 }
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {
-  background: #ffffff url('../img/select2-spinner.gif') no-repeat 100% !important;
+  background: #ffffff image-url("select2-spinner.gif") no-repeat 100% !important;
 }
 .select2-default {
   color: #999 !important;
@@ -6427,7 +6427,7 @@ disabled look for disabled choices in the results dropdown
   color: #C2C2C2;
   border-radius: 5px;
 }
-/*! X-editable - v1.5.0 
+/*! X-editable - v1.5.0
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2013 Vitaliy Potapov; Licensed MIT */

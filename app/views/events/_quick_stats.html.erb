@@ -1,0 +1,22 @@
+
+    <div class="well" id="quick_stats">
+      <p class="text-center">Quick Stats</p>
+      <table class="table">
+        <tr>
+          <th>Event Name:</th>
+          <td><%= event.event_name %></td>
+        </tr>
+        <tr>
+          <th>Attendance:</th>
+          <td><%= event.attendance %></td>
+        </tr>
+        <tr>
+          <th>Export Attendance List:</th>
+          <td>
+          <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-download"></i> Export'.html_safe, {:controller => "events", :action => 'csv', :id => event.id},:remote => true ,:class => 'btn btn-danger btn-sm')%>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+

@@ -28,13 +28,17 @@
  *= require jquery-ui/tooltip
  *= require daterangepicker-bs3
  *= require bootstrap-datetimepicker
+ *= require twitter-bootstrap-static/bootstrap
+ *= require twitter-bootstrap-static/sprites
+ *= require smartadmin-production.scss
+ *= require smartadmin-skins.scss
  *= require_tree .
  *= require_self
  */
 
 .bigBox span {
 font-size: 30px;
-}	
+}
 
  .col-centered{
     float: none;
@@ -48,20 +52,20 @@ body {
 }
 
 
-div.daterangepicker.dropdown-menu.show-calendar.opensright{
+.smart-style-5 div.daterangepicker.dropdown-menu.show-calendar.opensright{
 	background-color: white;
 		color:black;
 
 }
 
-.form-control::-webkit-input-placeholder { color: white; }
-.form-control:-moz-placeholder { color: white; }
-.form-control::-moz-placeholder { color: white; }
-.form-control:-ms-input-placeholder { color: white; }
+.smart-style-5 .form-control::-webkit-input-placeholder { color: white; }
+.smart-style-5 .form-control:-moz-placeholder { color: white; }
+.smart-style-5 .form-control::-moz-placeholder { color: white; }
+.smart-style-5 .form-control:-ms-input-placeholder { color: white; }
  .smart-style-5 #ribbon .breadcrumb {
  	background:none;
  }
-.userevent div{
+.smart-style-5 .userevent div{
   color:black;
 }
 div.userevent:hover{

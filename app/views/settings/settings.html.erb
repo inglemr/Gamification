@@ -11,30 +11,24 @@
     <div class="col-md-6 verticalLineRight">
       <h3 class="panel">Basic Data</h3>
       <div class="col-md-12 form-group">
-        <%= f.label :email ,:class => "col-md-3 control-label"%>
+        <%= f.label :theme ,:class => "col-md-3 control-label"%>
         <div class="col-md-7">
-          <%= f.email_field :email, autofocus: true ,:value => @user.email , :class => "form-control"%>
-        </div>
-      </div>
-      <div class="col-md-12 form-group">
-        <%= f.label :username ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= f.text_field :username, autofocus: true ,:value => @user.username , :class => "form-control"%>
+          <%= select_tag "theme", "<option value='smart-style-0'>Smart</option><option value='smart-style-1'>Dark</option><option value='smart-style-2'>Light</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
         </div>
       </div>
     </div>
     <div class="col-md-6">
-      <h3 class="panel">Private Data</h3>
-      <% if (can? :manage, :all) %>
-      <div class="col-md-12 form-group">
-        <%= f.label "API Token:" %>
-        <%= current_user.api_token %>
-      </div>
-      <% end %>
     </div>
 </div>
 <div class="form-group col-md-12 col-md-offset-5">
   <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
 </div>
 
+<% end %>
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+  $("#theme").val("<%= current_user.theme %>");
+</script>
 <% end %>

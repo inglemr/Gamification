@@ -11,6 +11,7 @@ class Event < ActiveRecord::Base
   has_one :location, foreign_key: :location_id
   mount_uploader :image, ImageUploader
 
+  scope :latest_first , lambda { order("events.day_time DESC")}
   scope :upcoming_first , lambda { order("events.day_time ASC")}
   scope :past_events, lambda {("events.day_time > #{Time.now}")}
   scope :in_range, lambda {where("(day_time >= '#{(Time.now - (2 * 60 * 60)).to_s(:db)}' AND day_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}') OR (day_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}' AND end_time >= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}')")}
@@ -32,6 +33,7 @@ class Event < ActiveRecord::Base
     self.attendance = 0;
     self.save
   end
+
 
 
   def date_of_next(current_date,day)
@@ -75,7 +77,7 @@ class Event < ActiveRecord::Base
     excludeDays.each_with_index do |day, i|
       excludeDays[i] = Time.zone.parse(day)
     end
-    start_time = self.day_time  
+    start_time = self.day_time
     recurring_id = self.id
 
     eventsToRecure = Array.new

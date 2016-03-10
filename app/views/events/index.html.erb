@@ -1,20 +1,74 @@
-<div id="ribbon">
-    <ol class="breadcrumb">
-      <li ><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
-      <li class="active">My Events</li>
-    </ol>
-    <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; float: right;">
+<% if !mobile_device? %>
+<div class="row col-md-12">
+    <button id="list" class="btn btn-info pull-right"><i class="fa fa-list"></i></button>
+    <button id="tile" class="btn btn-info pull-right"><i class="glyphicon glyphicon-th"></i></button>
+    <input id='events_table_search' type="search" class="form-control pull-right" placeholder="Search..." style="display: inline; width: 200px">
+</div>
+ <% end %>
+<div class="row">
+  <div class="col-md-5">
+    <div id="stats">
+      <%= render(:partial=>"quick_stats.html.erb", locals: { event: @event} , :formats => [:html]) %>
+    </div>
+    <% if !mobile_device? %>
+      <div id="myfirstchart" class="chart no-padding" style="position: relative;"></div>
+    <% end %>
+  </div>
+
+  <div class="col-md-7">
+  <div id='events_grid' class="hidden row" style='display: block'></div>
+<table id="events_table" onload="setTableRow()" class="table table-hover dataTable no-footer"  data-source="<%= events_path(format: "json") %>"></table>
+  </div>
 </div>
 
-<div id='events_grid' class="row" style='display: block'></div>
-<table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= events_path(format: "json") %>"></table>
 
 
 <% content_for :scripts do %>
   <script type="text/javascript">
-
+    var row;
     var datatable;
     $( document ).ready(function() {
+pageSetUp();
+    $('#exportsubmit').click(function(){
+       $('#exportForm').submit();
+  });
+
+      $("#events_table").delegate('tr', 'click', function() {
+          if (row != undefined)
+          {
+            row.removeClass('success')
+          }
+
+          row = $("#" + this.id).addClass('success');
+            $.ajax({url: '<%= url_for :action => 'index' %>',
+          data: 'event_id=' + this.id,
+          dataType: 'script'})
+        //get <td> element values here!!??
+    });
+
+      $( "#list" ).click(function() {
+        $('#events_grid').addClass("hidden");
+        $('#events_table').removeClass("hidden");
+      });
+      $( "#tile" ).click(function() {
+        $('#events_table').addClass("hidden");
+        $('#events_grid').removeClass("hidden");
+      });
+      var val = 10;
+      var year = 2000;
+    new Morris.Bar({
+      element: 'myfirstchart',
+      data: [
+      <% current_user.created_events.each do |event| %>
+        { event: '<%= event.event_name %>', attendance: <%= event.attendance.to_f %> },
+      <% end %>
+      ],
+      xkey: 'event',
+      ykeys: ['attendance'],
+      labels: ['Attendance']
+    });
+
+
       var events_table = $('#events_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
@@ -24,10 +78,16 @@
         "sAjaxSource": $('#events_table').data('source'),
         "aaSorting": [[ 0, "desc" ]],
          "columns": [
-          { "title": "Square Setup", "data": "events_eventTile"}
+          { "title": "Name", "data": "events__event_name"},
+          { "title": "Location", "data": "events__location_id"},
+          { "title": "Points", "data": "events__point_val"},
+          { "title": "Start", "data": "events__day_time"},
+          { "title": "End", "data": "events__end_time"},
+          { "title": "Actions", "data": "event_actions"}
+
         ],
         fnServerParams: function ( aoData ) {
-          aoData.push( 
+          aoData.push(
             { "name": "sSearch", "value": $("#events_table_search").val() },
             { "name": "iDisplayLength", "value": $("#events_table_length").val() }
           );
@@ -45,15 +105,8 @@
       $('#events_table_search').keyup(function(){
         events_table.dataTable().api().draw(false);
       });
-
     })
   </script>
 <% end %>
-
-
-
-
-
-
 
 
