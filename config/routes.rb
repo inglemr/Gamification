@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         get ':event_id/manage' => "kiosk_pages#manage", :as => 'manage'
         get ':event_id/swipe' => "kiosk_pages#swipe", :as => 'swipe'
         post ':event_id/new_swipe' => "kiosk_pages#new_swipe" , :as => 'new_swipe'
-        get "kiosk_pages/:id/generate_qrcodes" => "kiosk_pages#generate_qrcodes", format: :svg 
+        get "kiosk_pages/:id/generate_qrcodes" => "kiosk_pages#generate_qrcodes", format: :svg
       end
     end
 
@@ -23,8 +23,10 @@ Rails.application.routes.draw do
   get 'dashboard/index'
   get 'cal_events' => 'dashboard#cal_events'
   devise_for :users, :controllers => {:confirmations => 'confirmations'}
+
   devise_scope :user do
        match '/users/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
+       get 'events/:id/show' => 'events#show', :as => "show"
     authenticated :user do
       root 'dashboard#index', as: :authenticated_root
       controller :settings do
@@ -54,7 +56,6 @@ Rails.application.routes.draw do
       resource :events do
          match ':id/csv' => 'events#csv', :via => [:get, :post], :as => "csv"
          match ':id/manage' => 'events#manage', :via => [:get, :post], :as => "manage"
-         get ':id/show' => 'events#show', :as => "show"
          get '/my_points' => 'events#my_points'
          collection do
           get :index
