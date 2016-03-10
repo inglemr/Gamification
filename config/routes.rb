@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       end
     end
 
-  get 'events/:id/show' => 'events#show', :as => "show"
+  get 'events/:id/show' => 'events#show', :as => "show_events"
   get 'dashboard/index'
   get 'cal_events' => 'dashboard#cal_events'
   devise_for :users, :controllers => {:confirmations => 'confirmations'}
