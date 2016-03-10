@@ -1,14 +1,6 @@
 <div class="login_panel col-md-4 col-centered">
-  <div class="row">
-    <h1 class="login_header text-center login_text_header" style="font-size:36px;">Kiosk Log In</h1>
-  </div>
-  <hr/>
+
     <%=  form_tag kiosk_sessions_path do%>
-    <div class="row form-group">
-      <div class="col-md-12">
-        <%= text_field_tag :kiosk_name, nil, :placeholder => "Kiosk ID",:style => "height:70px;font-size:26px;", :class => "form-control text-center"%>
-      </div>
-    </div>
     <div class="row form-group">
             <div class="col-md-12 ">
         <%= password_field_tag :password,nil, :placeholder => "GSW ID" ,:style => "height:70px;font-size:26px;", :class => "form-control text-center"%>
@@ -16,7 +8,7 @@
     </div>
       <div class="btn-group col-sm-12">
         <div class="col-sm-6 col-md-5">
-          <%= submit_tag "Log In", class: "btn btn-success btn-block",:style => "height:100px;font-size:26px;" %> 
+          <%= submit_tag "Log In", class: "btn btn-success btn-block",:style => "height:100px;font-size:26px;" %>
         </div>
         <div class="col-sm-6 col-md-7">
           <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="height:100px;font-size:26px;">How To Log In</button>

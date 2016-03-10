@@ -72,7 +72,7 @@ class Kiosk::KioskPagesController < ApplicationController
   def list_events
   	respond_to do |format|
     	format.html
-    	format.json { render json: Kiosk::KioskEventsDatatable.new(view_context,current_host,current_kiosk.location_id,current_kiosk.room_id) }
+    	format.json { render json: Kiosk::KioskEventsDatatable.new(view_context,current_host) }
   	end
   end
 
