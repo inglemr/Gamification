@@ -10,7 +10,7 @@
     <%= csrf_meta_tags %>
   </head>
   <body class="<%= current_user ? current_user.theme : "smart-style-5" %> minified">
-    <% if !current_kiosk && !(current_class?(kiosk_log_in_path) == "active" )%>
+    <% if !current_host && !(current_class?(kiosk_log_in_path) == "active" )%>
         <%= render "shared/usermenu.html.erb"%>
     <% end %>
     <% if can? :view, :sidebar%>

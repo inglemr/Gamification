@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_kiosk
-  before_filter :load_permissions 
+  before_filter :load_permissions
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_filter :configure_devise_params, if: :devise_controller?
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
 
 def authenticate_kiosk
-  if current_kiosk
+  if current_host
 
   else
     redirect_to kiosk_log_in_path
@@ -28,8 +28,7 @@ end
   end
 
   def current_host
-    return unless session[:current_host]
-    @current_host ||= User.find(session[:current_host])
+    @current_host ||= User.find(session[:current_host]) if session[:current_host]
   end
 
 private
@@ -60,12 +59,6 @@ private
      end
   end
 
-private
-
-  def current_kiosk
-    @current_kiosk ||= Kiosk.find(session[:kiosk_id]) if session[:kiosk_id]
-  end
-
 
 protected
 
@@ -79,7 +72,7 @@ protected
   def self.permission
     return name = self.name.gsub('Controller','').singularize.split('::').last.constantize.name rescue nil
   end
-  
+
   def load_permissions
     @current_permissions = Hash.new []
     if current_user

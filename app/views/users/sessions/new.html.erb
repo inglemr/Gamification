@@ -1,4 +1,4 @@
-<% if current_kiosk %>
+<% if current_host %>
   <% flash[:alert] = "Error currently logged in on kiosk" %>
   <h1 class="text-center"><%= link_to "Log in", kiosk_log_in_path %></h1>
 <% else %>
@@ -16,7 +16,7 @@
                   <a href="javascript:void(0);" class="btn btn-danger btn-lg">Learn More</a>
                 </div>
               </div>
-              
+
               <!--<img src="https://www.union.ic.ac.uk/acc/ultimate/images/icons/events_unselected.png" alt="" style="width:210px">-->
 
             </div>
@@ -39,7 +39,7 @@
                 </header>
 
                 <fieldset>
-                  
+
                   <section>
                     <label class="label">E-mail</label>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
@@ -70,7 +70,7 @@
                     <label class="checkbox">
                       <% if devise_mapping.rememberable? -%>
                         <%= f.check_box :remember_me %>
-          
+
                       <% end -%>
                       <i></i>Stay signed in</label>
                   </section>

@@ -1,7 +1,7 @@
 class Kiosk::KioskEventsDatatable
    delegate :params, :h,  :content_tag, :current_ability, :render, :can?,:truncate, to: :@view
 
-  def initialize(view, current_host, location_id, room_number)
+  def initialize(view, current_host)
     @view = view
     @events = current_host.created_events.in_range
     @events = @events.page(page).per_page(per_page)
@@ -34,7 +34,7 @@ private
       }
     end
   end
-  
+
   def eventTile(event)
     render(:partial=>"kiosk/kiosk_pages/tile.html.erb", locals: { event: event},:formats => [:html])
   end
@@ -52,13 +52,13 @@ private
   end
 
   def search_string
-    "event_name LIKE :search OR description LIKE :search" 
+    "event_name LIKE :search OR description LIKE :search"
   end
 
   def sort_column
     [*0..params[:iColumns].to_i-1].map{|i| params["mDataProp_#{i}"].gsub("__", ".") if params["bSortable_#{i}"] != 'false' }[params[:iSortCol_0].to_i]
   end
-end 
+end
 
 
 
