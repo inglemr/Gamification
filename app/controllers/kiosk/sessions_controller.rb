@@ -1,16 +1,18 @@
 class Kiosk::SessionsController < ApplicationController
   def new
-    if current_kiosk
+    if current_host
       flash[:alert] = "Already Logged In"
       redirect_to kiosk_list_path
     elsif current_user
       flash[:alert] = "Already Logged In"
       redirect_to root_path
+    else
+      redirect_to new_kiosk_session_path
     end
   end
-  
+
   def create
-    if current_kiosk
+    if current_host
       flash[:alert] = "Already Logged In"
       redirect_to kiosk_list_path
     elsif current_user
@@ -21,10 +23,8 @@ class Kiosk::SessionsController < ApplicationController
       if(id.length == 16)
         id = id[4,9]
       end
-      kiosk = Kiosk.authenticate(params[:kiosk_name], id)
       user = User.where(:gsw_id => id).first
-      if kiosk
-        session[:kiosk_id] = kiosk.id
+      if user
         session[:current_host] ||= user.id
         redirect_to kiosk_list_path, :notice => "Logged in!"
       else
@@ -35,7 +35,7 @@ class Kiosk::SessionsController < ApplicationController
   end
 
 	def destroy
-	  session[:kiosk_id] = nil
+	  session[:current_host] = nil
 	  redirect_to kiosk_log_in_path, :notice => "Logged out!"
 	end
 
