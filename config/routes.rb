@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get ':event_id/manage' => "kiosk_pages#manage", :as => 'manage'
         get ':event_id/swipe' => "kiosk_pages#swipe", :as => 'swipe'
         post ':event_id/new_swipe' => "kiosk_pages#new_swipe" , :as => 'new_swipe'
+        get "kiosk_pages/:id/generate_qrcodes" => "kiosk_pages#generate_qrcodes", format: :svg 
       end
     end
 

@@ -115,19 +115,19 @@ ActiveRecord::Schema.define(version: 20160307181054) do
   end
 
   create_table "user_events", force: :cascade do |t|
-    t.integer  "attended_event_id"
+    t.integer  "event_id"
     t.integer  "attendee_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                         default: "", null: false
-    t.string   "encrypted_password",            default: "", null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                 default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -145,18 +145,14 @@ ActiveRecord::Schema.define(version: 20160307181054) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",               default: 0,  null: false
+    t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "user_type"
     t.hstore   "last_semester"
-    t.hstore   "encrypted_last_semester"
     t.hstore   "current_semester"
-    t.hstore   "encrypted_current_semester"
     t.string   "class_type"
     t.string   "name"
-    t.string   "encrypted_current_semester_iv"
-    t.string   "encrypted_last_semester_iv"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

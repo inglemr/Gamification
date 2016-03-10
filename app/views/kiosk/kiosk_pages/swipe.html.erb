@@ -1,3 +1,7 @@
+<div id="qr-container" style="display: none; background-color: white;">
+  <div class="qrcode centered">
+  </div>
+</div>
 <div class="kiosk_header jumbotron">
   <div class="row">
     <p style="display:inline;float:left;">Points: <%= @event.point_val %></p>
@@ -18,28 +22,12 @@
                             <%= form_tag({:controller => 'kiosk_pages',:action => 'new_swipe', :event_id => @event.id}, method: "post") do %>
                                 <div class="input-group">
                                   <span class="input-group-btn">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="height:100px;">Information</button>
-                                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                              <h4 class="modal-title" id="exampleModalLabel">Information for <%= @event.event_name %></h4>
-                                            </div>
-                                            <div class="modal-body">
-                                              <div class="qrcode centered"><%= raw @qr.as_html %></div>
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </span>
+                                    <button type="button" class="btn btn-primary" id="qrcode" style="height:100px;">Information</button>
+                                  </span>
                                   <%= password_field_tag "id", "" ,  autofocus: true , :style => "height:100px;font-size: 50px;" ,:class => "form-control text-center"%>
-                                    <span class="input-group-btn">
-                                        <%= submit_tag "Swipe", :class => "btn btn-success ",:style => "height:100px;", :id => "submit"%>
-                                    </span>
+                                  <span class="input-group-btn">
+                                    <%= submit_tag "Swipe", :class => "btn btn-success ",:style => "height:100px;", :id => "submit"%>
+                                  </span>
                                 </div>
                             <% end %>       
                         </div>
@@ -62,10 +50,39 @@
         setTimeout(function(){
             $('#flash').remove();
         }, 5000);
-        $('#exampleModal').on('show.bs.modal', function (event) {
-          var button = $(event.relatedTarget) // Button that triggered the modal
-        })
-    })
+        $('#qrcode').click(function(){
+        var container =
+        $('#qr-container')
+        .find('div')
+        .empty()
+        .append('<%= image_tag("/kiosk/kiosk_pages/@event.id/generate_qrcodes.svg", :style => 'background-color: white;width: 100%; height: 100%;') %>')
+        .css({
+                'width': '100%',
+                'height' : '100%'
+            })
+            .click(function(){
+                $('#qr-container').fadeOut('slow');
+            })
+        .end()
+        .fadeToggle('slow');
+        $(window).trigger('resize');
+    });
+    $(window).resize(function(){
+        var container = $('#qr-container');
+        var isLandscape = ($(window).width() > $(window).height());
+        var minSide = isLandscape ? $(window).height() : $(window).width();
+        var maxSide = isLandscape ? $(window).width() : $(window).height();
+        var qrSide = parseInt(minSide * 0.9, 10);
+        var minGap = parseInt(minSide * 0.05, 10);
+        container
+        .find('div')
+        .css({
+            'width': qrSide,
+            'height': qrSide,
+            'top': isLandscape ? minGap : (maxSide - qrSide) / 2,
+        });
+      });
+  });
 
   </script>
 <% end %>
