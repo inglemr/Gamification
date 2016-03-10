@@ -1,34 +1,115 @@
-<div id= "ribbon">
-    <ol class="breadcrumb">
-      <li><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
-      <li class="active">Settings</li>
-    </ol>
-  </div>
   <%= form_for(@user, :class =>"form-horizontal", url: {action: "updatesettings"}, :method => :POST) do |f| %>
-<div class="page-panel panel col-md-12 ">
-    <div class="row"><h2 class="text-center">Settings</h2></div>
-    <hr>
-    <div class="col-md-6 verticalLineRight">
-      <h3 class="panel">Basic Data</h3>
-      <div class="col-md-12 form-group">
-        <%= f.label :theme ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= select_tag "theme", "<option value='smart-style-0'>Smart</option><option value='smart-style-1'>Dark</option><option value='smart-style-2'>Light</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
-        </div>
+<div class="row">
+   <div class="col-sm-12">
+      <div class="well well-sm">
+         <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+             <div class="well well-light well-sm no-margin no-padding">
+               <div class="row">
+                  <div class="col-sm-12">
+                     <div class="row">
+                        <div class="col-sm-3 profile-pic">
+                           <div class="padding-10">
+                              <h4 class="font-md"><strong><%= current_user.points %></strong>
+                                 <br>
+                                 <small>Points</small>
+                              </h4>
+                              <br>
+                              <h4 class="font-md"><strong><%= current_user.attended_events.count %></strong>
+                                 <br>
+                                 <small>Attended Events</small>
+                              </h4>
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <h1><%= current_user.name %>
+                              <br>
+                              <small> <%= current_user.class_type %>, <%= current_user.user_type %></small>
+                           </h1>
+                           <ul class="list-unstyled" stye:"background-color:none;">
+                              <li>
+                                 <p class="text-muted">
+                                    <i class="fa fa-envelope"></i>&nbsp;&nbsp;<%= current_user.email %>
+                                 </p>
+                              </li>
+                           </ul>
+                           <%=link_to('<i class="fa fa-refresh"></i> Update Records'.html_safe,  '{:controller => "events", :action => show, :id => event.id}',  :class=>"btn btn-default btn-sm") %>
+                           <br>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <hr>
+                        <div class="col-md-12">
+                           <ul class="nav nav-tabs tabs-pull-right">
+                              <li class="active">
+                                 <a href="#a1" data-toggle="tab">Recent Events</a>
+                              </li>
+                              <li>
+                                 <a href="#a2" data-toggle="tab">Points</a>
+                              </li>
+                           </ul>
+                           <div class="tab-content padding-top-10">
+                              <div class="tab-pane fade in active" id="a1">
+                                 <div class="row col-md-12">
+                                  <% current_user.attended_events.each do |event| %>
+                                  <%=link_to( {:controller => "events", :action => 'show', :id => event.id}) do %>
+                                    <div class="col-xs-2 col-sm-1">
+                                       <time datetime="<%= event.day_time.year %>-<%= event.day_time.month %>-<%= event.day_time.day %>" class="icon">
+                                       <strong><%= Date::MONTHNAMES[event.day_time.month] %></strong>
+                                       <span><%= event.day_time.day %></span>
+                                       </time>
+                                    </div>
+                                    <div class="col-xs-10 col-sm-11">
+                                       <h6 class="no-margin"><%= event.event_name %></h6>
+                                       <p>
+                                          <%= event.description %>
+                                       </p>
+                                    </div>
+                                    <div class="col-sm-12">
+                                       <hr>
+                                    </div>
+                                    <div class="col-sm-12">
+                                       <br>
+                                    </div>
+                                    <% end %>
+                                    <% end %>
+                                 </div>
+                              </div>
+                              <div class="tab-pane fade" id="a2">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- end row -->
+               </div>
+            </div>
+             </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 well padding-bottom-10">
+              <div class="col-md-12 form-group">
+                <%= f.label :theme ,:class => "col-md-3 control-label"%>
+                  <div class="col-md-7">
+                    <%= select_tag "theme", "<option value='smart-style-0'>Smart</option><option value='smart-style-1'>Dark</option><option value='smart-style-2'>Light</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+                  </div>
+              </div>
+
+          <div class="form-group col-md-12 col-md-offset-5">
+            <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
+          </div>
+          </div>
+         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-    </div>
+   </div>
 </div>
-<div class="form-group col-md-12 col-md-offset-5">
-  <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
-</div>
-
-<% end %>
-
 
 <% content_for :scripts do %>
   <script type="text/javascript">
+  pageSetUp();
   $("#theme").val("<%= current_user.theme %>");
 </script>
 <% end %>
+
+<% end %>
+
