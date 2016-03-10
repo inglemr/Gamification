@@ -34,13 +34,18 @@ class EventsController < ApplicationController
 	end
 
   def csv
-    @event = current_user.created_events.first;
+    puts "Jummy"
+    puts params
+    cols = params[:user_col]
+    @event = Event.find(params[:id])
      if( current_user.created_events.include?(@event))
         respond_to do |format|
           format.html {}
-            format.html { render :layout => true }
-            format.json { render :json => @event }
-            format.js   {}
+          format.js   {}
+          format.csv do
+            response.header['Content-Disposition'] = 'attachment; filename="' + Time.now.strftime("%Y%m%d%H%M") + '_' + @event.event_name.to_s + '_attendance.csv'
+            render text: @event.attendees.to_csv(cols,@event)
+          end
         end
       else
         flash[:danger] = "Unauthorized"
@@ -52,15 +57,11 @@ class EventsController < ApplicationController
 
   def manage
     @event = Event.find(params[:id])
-    cols = params[:user_col]
+
     if current_user.created_events.include?(@event)
       respond_to do |format|
         format.html
         format.json { render json: Events::UserAttendanceDatatable.new(view_context, @event) }
-        format.csv do
-          response.header['Content-Disposition'] = 'attachment; filename="' + Time.now.strftime("%Y%m%d%H%M") + '_' + @event.event_name.to_s + '_attendance.csv'
-          render text: @event.attendees.to_csv(cols,@event)
-        end
       end
     else
       flash[:danger] = "Unauthorized Access"
