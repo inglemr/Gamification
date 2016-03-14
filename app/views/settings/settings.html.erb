@@ -32,7 +32,16 @@
                                  </p>
                               </li>
                            </ul>
-                           <%=link_to('<i class="fa fa-refresh"></i> Update Records'.html_safe,  '{:controller => "events", :action => show, :id => event.id}',  :class=>"btn btn-default btn-sm") %>
+                           <br>
+                           <%= form_for(@user, url: {action: "updaterecords"}, :method => :POST) do |f| %>
+                             <div class="input-group">
+                               <%= f.password_field :gsw_pin, :class => "form-control text-center" , :placeholder => "GSW PIN"%>
+                               <span class="input-group-btn">
+                                <%= f.submit "Update Records" , :class => "btn btn-default" %>
+                               </span>
+                             </div>
+                           <% end%>
+                           <br>
                            <br>
                         </div>
                      </div>
@@ -43,14 +52,14 @@
                         <div class="col-md-12">
                            <ul class="nav nav-tabs tabs-pull-right">
                               <li class="active">
-                                 <a href="#a1" data-toggle="tab">Recent Events</a>
+                                 <a href="#recentevents" data-toggle="tab">Recent Events</a>
                               </li>
                               <li>
-                                 <a href="#a2" data-toggle="tab">Points</a>
+                                 <a href="#points" data-toggle="tab">Points</a>
                               </li>
                            </ul>
                            <div class="tab-content padding-top-10">
-                              <div class="tab-pane fade in active" id="a1">
+                              <div class="tab-pane fade in active" id="recentevents">
                                  <div class="row col-md-12">
                                   <% current_user.attended_events.each do |event| %>
                                   <%=link_to( {:controller => "events", :action => 'show', :id => event.id}) do %>
@@ -76,7 +85,21 @@
                                     <% end %>
                                  </div>
                               </div>
-                              <div class="tab-pane fade" id="a2">
+                              <div class="tab-pane fade" id="points">
+                                <div class="col-md-12 col-centered">
+                                  <div class="alert alert-success alert-block col-md-5">
+                                    <h4 class="alert-heading"><i class="fa fa-star"></i>10 points - Spring 2016</h4>
+                                    GPA Increase
+                                  </div>
+                                  <div class="alert alert-success alert-block col-md-5">
+                                    <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
+                                    Academic Standing
+                                  </div>
+                                  <div class="alert alert-success alert-block col-md-5">
+                                    <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
+                                    Some Other Award
+                                  </div>
+                                </div>
                               </div>
                            </div>
                         </div>
@@ -107,6 +130,13 @@
       </div>
    </div>
 </div>
+
+<style>
+.alert{
+  margin: 5px;
+}
+</style>
+
 
 <% content_for :scripts do %>
   <script type="text/javascript">

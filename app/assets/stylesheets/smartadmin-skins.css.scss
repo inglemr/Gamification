@@ -2087,7 +2087,7 @@ body.smart-style-4 {
 }
 .smart-style-5 .modal-header {
   background-image:url("modal.png");
-     
+
 }
 .smart-style-5 .modal-footer {
   background-image:url("modal.png");
@@ -3500,8 +3500,10 @@ body.smart-style-6 #logo img {
 body.smart-style-6 #activity b.badge {
   padding: 4px;
 }
+body #logo-group > span#logo:before{
+  content: "Gameification";
+}
 body.smart-style-6 #logo-group > span#logo:before {
-  content: "SmartAdmin";
   font-size: 17px;
   color: #fff;
   font-weight: 300;

@@ -26,6 +26,62 @@ class User < ActiveRecord::Base
 
   scope :sorted, lambda { order("users.id ASC")}
 
+  def update_records(pin)
+ require 'net/http'
+      params = Hash.new
+      params[:sid] = self.gsw_id
+      params[:pin] = pin
+      response = Net::HTTP.post_form(URI.parse("https://rainy.gswcm.net/rainer.php"), params)
+      res = JSON.parse response.body
+
+      if res["status"] == 0
+         transcripts = res["transcripts"][0]
+         if !transcripts["type"].nil?
+          self.user_type = transcripts["type"]
+          #   "summary": {
+          #    "hours": "122.00",
+          #    "points": "391.00",
+          #    "GPA": "3.20"
+          # },
+          summary = transcripts["summary"]
+          hours = summary["hours"]
+          points = summary["points"]
+          gpa = summary["GPA"]
+
+          current_semester_enc = Hash.new
+          current_semester_enc["hours"] = SymmetricEncryption.encrypt(hours)
+          current_semester_enc["points"] = SymmetricEncryption.encrypt(points)
+          current_semester_enc["GPA"] =  SymmetricEncryption.encrypt(gpa)
+          self.current_semester =  current_semester_enc
+
+          self.class_type = set_user_class(hours.to_f)
+         end
+         if !transcripts["last_semester"].nil?
+          # "last_semester": {
+          #    "term": "Fall 2015",
+          #    "academic_standing": "Good Standing",
+          #    "additional_standing": "Dean's List"
+          # }
+          #Unecrypted
+          last_semester = transcripts["last_semester"]
+          term = last_semester["term"]
+          academic_standing = last_semester["academic_standing"]
+          additional_standing = last_semester["additional_standing"]
+          #ecrypted
+          last_semester_enc = Hash.new
+          last_semester_enc["term"] = SymmetricEncryption.encrypt(term)
+          last_semester_enc["academic_standing"] =  SymmetricEncryption.encrypt(academic_standing)
+          last_semester_enc["additional_standing"] =  SymmetricEncryption.encrypt(additional_standing)
+          self.last_semester =  last_semester_enc
+         end
+      else
+        return "Error Getting Records"
+      end
+      self.name = res["name"]
+      self.save
+      return "Success"
+  end
+
   def set_email
     require 'net/http'
       params = Hash.new
