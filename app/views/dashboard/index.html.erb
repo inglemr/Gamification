@@ -24,6 +24,9 @@
               <li>
                 <a href="#s6" data-toggle="tab">Senior</a>
               </li>
+              <li>
+                <a href="#s7" data-toggle="tab">All</a>
+              </li>
             </ul>
           </li>
           <% end %>
@@ -155,6 +158,26 @@
               <% end %>
             <% else %>
               <h4 class="text-center">No Seniors Registered</h4>
+            <% end %>
+          </div>
+          <% end %>
+
+          <div class="tab-pane fade" id="s7">
+            <h2 class="text-center">Overall Leaderboard</h2>
+            <% if @all.size > 0 %>
+            <% top = @all.first.points%>
+              <% @senior.each do |user| %>
+              <div class="progress">
+                  <div class="progress-bar" role="progressbar" aria-valuemax="100" aria-valuenow="<%= user.points.to_f / top * 100 %>" aria-valuemin="0" style="width: <%= ((user.points.to_f / top) * 100)  %>%;">
+
+                      <span class="sr-only"><%= user.points %> Points</span>
+                  </div>
+                  <span class="progress-type"><%= user.username %> - <%= user.class_type %></span>
+                  <span class="progress-completed"><%= user.points %> Points</span>
+              </div>
+              <% end %>
+            <% else %>
+              <h4 class="text-center">No Users Registered</h4>
             <% end %>
           </div>
           <% end %>

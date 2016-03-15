@@ -146,6 +146,7 @@ class User < ActiveRecord::Base
         self.email = "notfound@email.com"
       end
       self.name = res["name"]
+      self.points = 0
       self.gsw_pin = ""
   end
 

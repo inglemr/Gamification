@@ -3,11 +3,12 @@ class DashboardController < ApplicationController
   load_and_authorize_resource :class => false
   before_filter :load_permissions
   def index
-    @userLeader = User.where(:class_type => current_user.class_type).order("points DESC").limit(10)
-    @freshmen = User.where(:class_type => "Freshmen").order("points DESC").limit(10)
-    @sophmore = User.where(:class_type => "Sophmore").order("points DESC").limit(10)
-    @junior = User.where(:class_type => "Junior").order("points DESC").limit(10)
-    @senior = User.where(:class_type => "Senior").order("points DESC").limit(10)
+    @userLeader = User.where(:class_type => current_user.class_type).order("points DESC").limit(5)
+    @freshmen = User.where(:class_type => "Freshmen").order("points DESC").limit(5)
+    @sophmore = User.where(:class_type => "Sophmore").order("points DESC").limit(5)
+    @junior = User.where(:class_type => "Junior").order("points DESC").limit(5)
+    @senior = User.where(:class_type => "Senior").order("points DESC").limit(5)
+    @all = User.all.order("points DESC").limit(5)
   	respond_to do |format|
     	format.html
     	format.json { render json: EventsDatatable.new(view_context) }
