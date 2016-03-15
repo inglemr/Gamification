@@ -1,11 +1,8 @@
 <div class="col-md-12">
-   <div class="col-md-6">
+   <div class="col-md-4">
       <div class="well" id="wid-id-3"role="widget">
-        <ul id="myTab1" class="nav nav-tabs bordered">
+        <ul id="myTab" class="nav nav-tabs bordered">
           <li class="active">
-            <a href="#s1" data-toggle="tab" aria-expanded="true">Calendar</a>
-          </li>
-          <li class="">
             <a href="#s2" data-toggle="tab" aria-expanded="false">Leaderboard</a>
           </li>
           <% if (can? :manage, :all) || @current_permissions["Admin::Leaderboard"].include?("read")%>
@@ -32,39 +29,7 @@
           <% end %>
         </ul>
         <div id="myTabContent1" class="tab-content padding-10">
-          <div class="tab-pane fade active in" id="s1">
-            <div class="jarviswidget">
-               <div>
-                  <div class="widget-body no-padding">
-                     <div class="widget-body-toolbar">
-                        <div id="calendar-buttons">
-                           <div class="btn-group">
-                              <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
-                              <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
-                              <div class="btn-group">
-                                <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">Showing <i class="fa fa-caret-down"></i>
-                                </button>
-                                <ul class="dropdown-menu js-status-update pull-right">
-                                   <li>
-                                      <a href="javascript:void(0);" id="mt">Month</a>
-                                   </li>
-                                   <li>
-                                      <a href="javascript:void(0);" id="ag">Agenda</a>
-                                   </li>
-                                   <li>
-                                      <a href="javascript:void(0);" id="td">Today</a>
-                                   </li>
-                                </ul>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-                    <div id="calendar"></div>
-                  </div>
-                </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="s2">
+          <div class="tab-pane fade active in" id="s2">
             <h2 class="text-center"><%= current_user.class_type %> Leaderboard</h2>
             <% top = @userLeader.first.points %>
             <% @userLeader.each do |user| %>
@@ -185,42 +150,85 @@
         </div>
       </div>
    </div>
-   <div class="col-md-6">
-      <div class="jarviswidget jarviswidget-color-blueDark jarviswidget-sortable" id="wid-id-10" role="widget">
-         <header role="heading">
-            <h2><strong>Upcoming</strong> <i>Events</i></h2>
-            <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
-         </header>
-         <div role="content">
-            <!-- widget content -->
-            <div class="widget-body no-padding">
-               <div class="widget-body-toolbar">
-                  <div class="row">
-                     <div class="col-xs-9 col-sm-5 col-md-5 col-lg-5">
-                        <div class="input-group">
-                           <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                           <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
-                        </div>
-                     </div>
-                     <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
-                     <div class="col-xs-3 col-sm-7 col-md-7 col-lg-7 text-right">
-                        <button class="btn btn-success">
-                        <i class="fa fa-plus"></i> <span class="hidden-mobile"><%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %></span>
-                        </button>
-                     </div>
-                     <% end %>
-                  </div>
-               </div>
-               <br>
-               <div class="col-md-12" id='events_grid'></div>
-               <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
-               <div class="widget-footer">
-               </div>
+   <div class="col-md-8">
+
+    <div class="" id="wid-id-7"role="widget">
+            <ul id="myTab2" class="nav nav-tabs bordered">
+              <li class="active">
+                <a href="#eventscal" data-toggle="tab" aria-expanded="true">Calendar View</a>
+              </li>
+              <li class="">
+                <a href="#tabevents" data-toggle="tab" aria-expanded="false">Tile View</a>
+              </li>
+
+               <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
+                <li class="pull-right bg-color-greenLight">
+                 <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+                </li>
+               <% end %>
+
+
+            </ul>
+            <div id="myTabContent2" class="tab-content no-padding">
+              <div class="tab-pane fade in active" id="eventscal">
+                <div class="jarviswidget">
+                <div>
+                      <div class="widget-body no-padding">
+                         <div class="widget-body-toolbar">
+                            <div id="calendar-buttons">
+                               <div class="btn-group">
+                                  <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                                  <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                                  <div class="btn-group">
+                                    <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">Showing <i class="fa fa-caret-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu js-status-update pull-right">
+                                       <li>
+                                          <a href="javascript:void(0);" id="mt">Month</a>
+                                       </li>
+                                       <li>
+                                          <a href="javascript:void(0);" id="ag">Agenda</a>
+                                       </li>
+                                       <li>
+                                          <a href="javascript:void(0);" id="td">Today</a>
+                                       </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div id="calendar"></div>
+                          </div>
+
+                      </div>
+                </div>
+              </div>
+              <div class="tab-pane fade in" id="tabevents">
+                <div class="jarviswidget" id="wid-id-10" role="widget">
+                   <div role="content">
+                      <!-- widget content -->
+                      <div class="widget-body no-padding">
+                         <div class="widget-body-toolbar">
+                            <div class="row">
+                               <div class="col-md-12">
+                                  <div class="input-group">
+                                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                     <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                         <br>
+                         <div class="col-md-12" id='events_grid'></div>
+                         <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
+                      </div>
+                      <!-- end widget content -->
+                   </div>
+                   <!-- end widget div -->
+                </div>
+              </div>
             </div>
-            <!-- end widget content -->
-         </div>
-         <!-- end widget div -->
-      </div>
+          </div>
    </div>
 </div>
 <% content_for :scripts do %>
@@ -330,6 +338,9 @@
 </script>
 <% end %>
 <style>
+#myTabContent2{
+  border:none;
+}
 .progress {
     position: relative;
   height: 25px;
