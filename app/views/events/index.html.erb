@@ -60,7 +60,7 @@ pageSetUp();
       element: 'myfirstchart',
       data: [
       <% current_user.created_events.each do |event| %>
-        { event: '<%= event.event_name %>', attendance: <%= event.attendance.to_f %> },
+        { event: '<%= event.event_name %>', attendance: <%= event.attendees.size.to_f %> },
       <% end %>
       ],
       xkey: 'event',

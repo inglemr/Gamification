@@ -170,7 +170,6 @@ class User < ActiveRecord::Base
 
 
   def assign_default_role
-    self.events_attended = 0;
     self.points = 0;
     self.roles << Role.find_by(:name => "Student") if self.roles.blank?
     self.save
