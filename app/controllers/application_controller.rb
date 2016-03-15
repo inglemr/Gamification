@@ -74,12 +74,16 @@ protected
   end
 
   def load_permissions
-    @current_permissions = Hash.new []
+    @current_permissions = Hash.new(Array.new)
     if current_user
       current_user.roles.each do |role|
+        subject_class = ""
+        temp = Array.new
         role.permissions.each do |perm|
-          @current_permissions[perm.subject_class] << perm.action
+          subject_class = perm.subject_class
+          temp << perm.action
         end
+        @current_permissions[subject_class] = temp
       end
     elsif @api_user
       @api_user.roles.each do |role|
@@ -88,6 +92,7 @@ protected
         end
       end
     end
+    return @current_permissions
   end
 
 
