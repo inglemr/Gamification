@@ -1,6 +1,6 @@
 <div class="row">
    <div class="col-sm-12">
-      <div class="well well-sm bg-color-darken ">
+      <div class="">
          <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-6">
              <div class="well well-light well-sm no-margin no-padding">
@@ -110,22 +110,28 @@
             </div>
              </div>
 
-            <div class="col-sm-12 col-md-12 col-lg-6 well">
-            <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
-              <div class="col-md-12 form-group">
-                <%= f.label :theme ,:class => "col-md-3 control-label"%>
-                  <div class="col-md-7">
-                    <%= select_tag "theme", "<option value='smart-style-0'>Smart</option><option value='smart-style-1'>Dark</option><option value='smart-style-2'>Light</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="well well-light well-sm">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
+                        <div class="col-md-12 form-group">
+                          <h2 class="text-center">Settings</h2>
+                          <%= f.label :theme ,:class => "col-md-3 control-label"%>
+                            <div class="col-md-7">
+                              <%= select_tag "theme", "<option value='smart-style-0'>Smart</option><option value='smart-style-1'>Dark</option><option value='smart-style-2'>Light</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 col-md-offset-5">
+                          <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
+                        </div>
+                      <% end %>
+                    </div>
                   </div>
+                </div>
               </div>
-
-          <div class="form-group col-md-12 col-md-offset-5">
-            <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
-          </div>
-
-
-          </div>
-          <% end %>
+            </div>
          </div>
       </div>
    </div>
