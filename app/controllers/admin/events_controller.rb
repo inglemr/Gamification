@@ -1,6 +1,6 @@
 class Admin::EventsController < ApplicationController
 	load_and_authorize_resource :context => :admin
-	before_filter :load_permissions 
+	before_filter :load_permissions
 	def index
 		respond_to do |format|
     		format.html
@@ -87,7 +87,7 @@ class Admin::EventsController < ApplicationController
 		end
 
 		#Time parsing
-		
+
     params[:event][:created_by] = current_user.id
     params[:event][:updated_by] = current_user.id
 		@event = Event.new(event_params)
@@ -114,8 +114,8 @@ class Admin::EventsController < ApplicationController
 def destroy
   @event = Event.find(params[:id])
   @event.destroy
- 
-  redirect_to admin_events_path
+
+  redirect_to :back
 end
 
 private
