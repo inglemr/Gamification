@@ -6,35 +6,35 @@ class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   version :resized do
-    # returns an image with a maximum width of 100px 
+    # returns an image with a maximum width of 100px
     # while maintaining the aspect ratio
-    # 10000 is used to tell CW that the height is free 
+    # 10000 is used to tell CW that the height is free
     # and so that it will hit the 100 px width first
     process :resize_to_fit => [140, 100]
   end
   version :page_size do
-    # returns an image with a maximum width of 100px 
+    # returns an image with a maximum width of 100px
     # while maintaining the aspect ratio
-    # 10000 is used to tell CW that the height is free 
+    # 10000 is used to tell CW that the height is free
     # and so that it will hit the 100 px width first
     process :resize_to_fit => [500, 500]
   end
   version :kiosk_page do
-    # returns an image with a maximum width of 100px 
+    # returns an image with a maximum width of 100px
     # while maintaining the aspect ratio
-    # 10000 is used to tell CW that the height is free 
+    # 10000 is used to tell CW that the height is free
     # and so that it will hit the 100 px width first
     process :resize_to_fit => [320, 330]
   end
 
     version :kiosk_page_mobile do
-    # returns an image with a maximum width of 100px 
+    # returns an image with a maximum width of 100px
     # while maintaining the aspect ratio
-    # 10000 is used to tell CW that the height is free 
+    # 10000 is used to tell CW that the height is free
     # and so that it will hit the 100 px width first
-    process :resize_to_fit => [320, 330]
+    process :resize_to_fit => [380, 200]
   end
-  
+
   # Choose what kind of storage to use for this uploader:
   storage :file
   # storage :fog

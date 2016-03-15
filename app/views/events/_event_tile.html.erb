@@ -5,7 +5,7 @@
         <div>
           <div class="widget-body widget-hide-overflow no-padding" style="height:200px;">
               <% if event.image_url.to_s == "" %>
-                <img class="event_tile_img" src="http://placehold.it/400x330">
+                <img class="event_tile_img" src="http://placehold.it/380x200">
               <% else %>
                 <%= image_tag event.image_url(:kiosk_page_mobile).to_s ,:class => "event_tile_img" %>
               <% end %>
