@@ -99,6 +99,9 @@ class User < ActiveRecord::Base
           self.email = emails["employee"]
           self.roles << Role.find_by(:name => "Faculty")
          end
+
+         self.username = self.email.split('@').first
+
          transcripts = res["transcripts"][0]
          puts transcripts
          if !transcripts["type"].nil?

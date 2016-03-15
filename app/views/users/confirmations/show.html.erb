@@ -8,13 +8,10 @@
     <%= form_for(resource, as: resource_name, url: update_user_confirmation_path , :html => {:method => 'patch'}) do |f| %>
     <div class="row form-group">
       <%= devise_error_messages! %>
-       <div class="col-md-12">
-          <%= f.text_field :username, autofocus: true ,:placeholder => "Username" ,:class =>"form-control text-center" %>
-      </div>
     </div>
     <div class="row form-group">
       <div class="col-md-6">
-        <%= f.password_field :password, autocomplete: "off" ,:placeholder => "Password" , :class => "form-control text-center"%>
+        <%= f.password_field :password, autofocus: true ,autocomplete: "off" ,:placeholder => "Password" , :class => "form-control text-center"%>
       </div>
       <div class="col-md-6">
         <%= f.password_field :password_confirmation, autocomplete: "off" ,:placeholder => "Password Confirmation" , :class => "form-control text-center", :id => "user_password_confirm"%>
@@ -50,9 +47,6 @@
     "user[password_confirmation]" : {
       required: true,
       equalTo: "#user_password"
-    },
-      "user[username]" : {
-      required: true
     }
   },
   showErrors: function(errorMap, errorList) {
@@ -67,7 +61,7 @@
         content: value.message,
         template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
       });
-      // Bootstrap 3.x :      
+      // Bootstrap 3.x :
       _popover.data("bs.popover").options.content = value.message;
       return $(value.element).popover("show");
     });
