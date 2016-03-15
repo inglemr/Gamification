@@ -3,6 +3,7 @@ class DashboardController < ApplicationController
   load_and_authorize_resource :class => false
   before_filter :load_permissions
   def index
+    @userLeader = User.where(:class_type => current_user.class_type).order("points DESC").limit(10)
   	respond_to do |format|
     	format.html
     	format.json { render json: EventsDatatable.new(view_context) }
@@ -38,7 +39,7 @@ class DashboardController < ApplicationController
 
   	@events.each do |event|
   		output = Hash.new
-      classArray = Array.new 
+      classArray = Array.new
       classArray << "event"
       classArray << colorArray[rand(0..19)]
 
@@ -53,5 +54,5 @@ class DashboardController < ApplicationController
 	    format.json { render :json => array }
 	  end
   end
-    
+
 end
