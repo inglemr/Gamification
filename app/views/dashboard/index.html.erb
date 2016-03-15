@@ -165,7 +165,7 @@
             <h2 class="text-center">Overall Leaderboard</h2>
             <% if @all.size > 0 %>
             <% top = @all.first.points%>
-              <% @senior.each do |user| %>
+              <% @all.each do |user| %>
               <div class="progress">
                   <div class="progress-bar" role="progressbar" aria-valuemax="100" aria-valuenow="<%= user.points.to_f / top * 100 %>" aria-valuemin="0" style="width: <%= ((user.points.to_f / top) * 100)  %>%;">
 
