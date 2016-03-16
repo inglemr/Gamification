@@ -247,7 +247,6 @@ class User < ActiveRecord::Base
     p = {}
     p[:password] = params[:password]
     p[:password_confirmation] = params[:password_confirmation]
-    p[:username] = params[:username]
     update_attributes(p)
   end
 
