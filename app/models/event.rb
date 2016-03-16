@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+
 	validates :day_time, presence: true
   validates :end_time, presence: true
   validates :location_id, presence: true
@@ -26,7 +27,6 @@ class Event < ActiveRecord::Base
   		false
   	end
   end
-
 
 
   def date_of_next(current_date,day)
