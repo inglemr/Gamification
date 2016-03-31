@@ -19,7 +19,6 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <% if current_user %>
-          <li class="<%= current_class?(authenticated_root_path) %>"><%= link_to '<i class="fa fa-home fa-lg"></i> Home'.html_safe, authenticated_root_path %></li>
           <% if (can? :manage, :all) || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") %>
             <li class="<%= current_class?(events_path) %>"><%= link_to '<i class="fa fa-calendar fa-lg"></i> My Created Events'.html_safe, events_path %></li>
           <% end %>
@@ -49,12 +48,19 @@
 
 .navbar-default .navbar-brand {
   color: white;
-  padding: 15px 5px 15px 5px;
+  padding: 15px 10px 15px 10px;
   font-size: 14px;
 }
 
+.navbar-default .navbar-brand:hover {
+  color: white;
+  padding: 15px 10px 15px 10px;
+  font-size: 14px;
+  background: black;
+}
+
 .navbar-default .navbar-nav>li>a{
-  padding: 15px 5px 15px 5px;
+  padding: 15px 10px 15px 10px;
 }
 
 nav ul {
@@ -67,12 +73,13 @@ ONLY GLASS
 .smart-style-5 .navbar .navbar-nav>li>a{
     color: white;
 }
-.smart-style-5 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
-  background: black;
+.smart-style-5 .navbar .navbar-nav>li>a:hover{
+    color: white;
 }
 .smart-style-5 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
   background: black;
 }
+
 .smart-style-5 .navbar{
 background: rgb(96,108,136); /* Old browsers */
 background: -moz-linear-gradient(top,  rgba(96,108,136,.2) 0%, rgba(63,76,107,.2) 100%); /* FF3.6-15 */
