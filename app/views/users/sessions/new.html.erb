@@ -17,7 +17,7 @@
           <div class="carousel-caption">
             <h1>Gameification</h1>
             <p>Go to sporting events. Excel in the classroom. Enjoy campus life. Win prizes. Yeah, it's that easy.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            <p><a href="#" role="button"><%= link_to 'Sign up today!'.html_safe, '#', data: {toggle: "modal", target: "#sampleModal"}, :class => "btn btn-lg btn-primary" %></a></p>
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
           <div class="carousel-caption">
             <h1>Earn Points by Doing the Things You Love</h1>
             <p>Earning points is easy! Participate in the things that you already love to do on campus.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+            <p><a class="btn btn-lg btn-primary" href="#info" role="button">Learn more</a></p>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
           <div class="carousel-caption">
             <h1>Win Prizes</h1>
             <p>That's right, you get rewarded. Prizes are given out at the end of each semester.</p>
-            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            <p><a href="#" role="button"><%= link_to 'Register Now!'.html_safe, '#', data: {toggle: "modal", target: "#sampleModal"}, :class => "btn btn-lg btn-primary" %></a></p>
           </div>
         </div>
       </div>
@@ -60,22 +60,22 @@
     <!-- Three columns of text below the carousel -->
     <div class="row">
       <div class="col-lg-3 text-center">
-        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <img class="img-circle" src="http://anna-photography.com/wp-content/uploads/2012/04/DSCF0300.jpg" alt="Generic placeholder image" width="140" height="140">
         <h2>Freshman Champion</h2>
         <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-3 text-center">
-        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <img class="img-circle" src="http://www.jandjphotography.net/sites/default/files/imagecache/blog_lb/blog/IMG_0664_pp.jpg" alt="Generic placeholder image" width="140" height="140">
         <h2>Sophomore Champion</h2>
         <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-3 text-center">
-        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <img class="img-circle" src="https://eclastudentshowcase.files.wordpress.com/2010/03/evan-rhoda-headshot.jpg" alt="Generic placeholder image" width="140" height="140">
         <h2>Junior Champion</h2>
         <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-3 text-center">
-        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <img class="img-circle" src="https://naspaapikc.files.wordpress.com/2013/10/samura_headshot.jpg" alt="Generic placeholder image" width="140" height="140">
         <h2>Senior Champion</h2>
         <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
       </div><!-- /.col-lg-4 -->
@@ -83,16 +83,16 @@
 
 
     <!-- START THE FEATURETTES -->
-
+    <section class="" id="info" data-spy="info" data-target="#info">
     <hr class="featurette-divider">
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <h2 class="featurette-heading">Earn Points Any Way You Want</h2>
+        <p class="lead">Georgia Southwestern State University's Gameification competition doesn't force you to do things you wouldn't want to. Whichever event peaks your interest, simply attend it! If you love sports, attend one of GSW's many sporting events. If you're passionate about Windows to the World, attend any of its seminars. The possibility of earning points are endless. You can even earn points by simply increasing your GPA!</p>
       </div>
       <div class="col-md-5">
-        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        <img class="featurette-image img-responsive center-block img-circle" src="http://www.usnews.com/img/college-photo_24638..jpg" alt="basketball">
       </div>
     </div>
 
@@ -104,7 +104,7 @@
         <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
       </div>
       <div class="col-md-5 col-md-pull-7">
-        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        <img class="featurette-image img-responsive center-block" src="https://gsw.edu/Assets/Home/perspective.jpg" alt="Generic placeholder image">
       </div>
     </div>
 
@@ -116,11 +116,12 @@
         <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
       </div>
       <div class="col-md-5">
-        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        <img class="featurette-image img-responsive center-block" src="https://gsw.edu/Assets/Home/graduate.jpg" alt="Generic placeholder image">
       </div>
     </div>
 
     <hr class="featurette-divider">
+  </section>
 
     <!-- /END THE FEATURETTES -->
 
