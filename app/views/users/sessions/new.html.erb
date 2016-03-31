@@ -2,40 +2,146 @@
   <% flash[:alert] = "Error currently logged in on kiosk" %>
   <h1 class="text-center"><%= link_to "Log in", kiosk_log_in_path %></h1>
 <% else %>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<div id="extr-page">
-        <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
-            <h1 class="txt-color-red login-header-big">Gameification</h1>
-            <div class="hero">
-
-              <div class="pull-left login-desc-box-l">
-                <h4 class="paragraph-header">Sign up and start winning today!</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fringilla a diam non accumsan. Nam dignissim lorem quis convallis dictum.</p>
-                <div class="login-app-icons">
-                  <a href="javascript:void(0);" class="btn btn-danger btn-lg">Learn More</a>
-                </div>
-              </div>
-
-              <!--<img src="https://www.union.ic.ac.uk/acc/ultimate/images/icons/events_unselected.png" alt="" style="width:210px">-->
-
-            </div>
-
-           <!-- <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <h5 class="about-heading">Earn Points</h5>
-                <p class="well">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fringilla a diam non accumsan. Nam dignissim lorem quis convallis dictum. Sed condimentum aliquam justo non pretium. Donec odio nisi, tempus in risus vitae, blandit condimentum nulla. Fusce eget auctor quam, non tincidunt nisi. Suspendisse placerat eros consequat diam tempor, eget efficitur lectus mattis. Integer vitae pharetra libero, sit amet sodales erat. Cras eu dapibus urna, aliquet gravida augue. Donec a nisi ut lorem porta rhoncus. Duis quis justo eget libero facilisis efficitur non non libero. Phasellus non lacus cursus urna luctus posuere et ullamcorper magna.
-                </p>
-              </div>
-            </div> -->
-
+  <!-- Carousel
+  ================================================== -->
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Gameification</h1>
+            <p>Go to sporting events. Excel in the classroom. Enjoy campus life. Win prizes. Yeah, it's that easy.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
-            <div class="well no-padding">
+        </div>
+      </div>
+      <div class="item">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Earn Points by Doing the Things You Love</h1>
+            <p>Earning points is easy! Participate in the things that you already love to do on campus.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Win Prizes</h1>
+            <p>That's right, you get rewarded. Prizes are given out at the end of each semester.</p>
+            <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div><!-- /.carousel -->
+
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-3 text-center">
+        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <h2>Freshman Champion</h2>
+        <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-3 text-center">
+        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <h2>Sophomore Champion</h2>
+        <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-3 text-center">
+        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <h2>Junior Champion</h2>
+        <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-3 text-center">
+        <img class="img-circle" src="http://www.accountingweb.co.uk/sites/default/files/siftmedia-accountingweb/u12757/Headshot_missing.png" alt="Generic placeholder image" width="140" height="140">
+        <h2>Senior Champion</h2>
+        <p>This is John Smith. He won last year by a landslide. Watch out for him on the leaderboard!</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5">
+        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 col-md-push-5">
+        <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5 col-md-pull-7">
+        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5">
+        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+
+    <!-- FOOTER -->
+    <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>&copy; 2016 Gameification &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
+
+  </div><!-- /.container -->
+<% end %>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="modal-login">
               <%= form_for(resource, as: resource_name, url: session_path(resource_name) , :html=> { :id => "login-form", :class => "smart-form client-form"}) do |f| %>
                 <header>
                   Sign In
+                  <button type="button" class="close fa fa-times-circle fa-3x" data-dismiss="modal"></button>
                 </header>
 
                 <fieldset>
@@ -53,17 +159,17 @@
                       <%= f.password_field :password, autocomplete: "off" ,:placeholder => "Password"%>
                       <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b> </label>
                     <div class="note">
-                    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-                     <%= link_to '<i class="fa fa-question-circle fa-lg"></i> Forgot your password?'.html_safe, new_password_path(resource_name) %>
-                    <% end -%>
-                     <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-                     <br>
-                        <%= link_to '<i class="fa fa-envelope fa-lg"></i> Resend confirmation instructions?'.html_safe, new_user_confirmation_path(resource_name) %>
-                      <% end -%>
-                      <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-                      <br>
-                        <%= link_to '<i class="fa fa-key fa-lg"></i> Didn\'t receive unlock instructions?'.html_safe, new_unlock_path(resource_name) %></li>
-                      <% end -%>
+                    <%#- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                     <%#= link_to '<i class="fa fa-question-circle fa-lg"></i> Forgot your password?'.html_safe, new_password_path(resource_name) %>
+                    <%# end -%>
+                     <%#- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+                     <!-- <br> -->
+                        <%#= link_to '<i class="fa fa-envelope fa-lg"></i> Resend confirmation instructions?'.html_safe, new_user_confirmation_path(resource_name) %>
+                      <%# end -%>
+                      <%#- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+                      <!--<br>-->
+                        <%#= link_to '<i class="fa fa-key fa-lg"></i> Didn\'t receive unlock instructions?'.html_safe, new_unlock_path(resource_name) %> <!-- YOU MAY NEED A LI HERE -->
+                      <%# end -%>
                     </div>
                   </section>
                   <section>
@@ -86,15 +192,44 @@
                 <%end%>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    </div>
-<% end %>
+  </div>
+</div>
 
 <style>
-.note{
-  line-height: 20px;
-}
+  #content {
+    padding: 0;
+  }
+  .smart-style-5 {
+    background-size: cover;
+    background-image: url('<%= asset_path("glass.jpg") %>');
+    background-position: 60%;
+  }
+
+  .marketing {
+    width: 100%;
+  }
+
+  body {
+    margin-top: 0;
+  }
+
+
+  .modal-login {
+    background: linear-gradient(to bottom, rgba(96,108,136,1) 0%,rgba(63,76,107,1) 100%);
+    margin-top: 20%;
+  }
+
+  .smart-style-5 .smart-form footer {
+    background: linear-gradient(to bottom, rgba(96,108,136,1) 0%,rgba(63,76,107,1) 100%);
+  }
+
+  .modal-backdrop {
+    background-color: rgb(0, 0, 0, 1);
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+  }
 
 </style>

@@ -1,3 +1,5 @@
-<%- if controller_name != 'sessions' %>
- <li><%= link_to '<i class="fa fa-sign-in fa-lg"></i> Log in'.html_safe, new_session_path(resource_name) %></li>
-<% end -%>
+<li><%= link_to '<i class="fa fa-sign-in fa-lg"></i> Log in'.html_safe, '#', data: { toggle: "modal", target: "#exampleModal"} %></li>
+<li><%= link_to '<i class="fa fa-check fa-lg"></i> Sign up'.html_safe, new_registration_path(resource_name) %></li>
+<li><%= link_to '<i class="fa fa-question-circle fa-lg"></i> Help'.html_safe, '#' %></li>
+
+

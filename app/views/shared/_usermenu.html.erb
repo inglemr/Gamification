@@ -2,12 +2,13 @@
 
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false", aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <%= link_to '<i class="fa fa-home fa-lg"></i> Gameification'.html_safe, root_path, :class => "navbar-brand" %>
       <% if can? :view, :sidebar%>
         <button type="button" class="navbar-toggle collapsed pull-left" data-action="toggleMenu" title="Collapse Menu" aria-expanded="false">
           <span class="sr-only">Toggle Admin Menu</span>
@@ -44,6 +45,20 @@
 .navbar{
   border-bottom: none;
     min-height: 0px;
+}
+
+.navbar-default .navbar-brand {
+  color: white;
+  padding: 15px 5px 15px 5px;
+  font-size: 14px;
+}
+
+.navbar-default .navbar-nav>li>a{
+  padding: 15px 5px 15px 5px;
+}
+
+nav ul {
+  width: auto;
 }
 /*
 
