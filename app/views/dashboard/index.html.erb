@@ -1,43 +1,48 @@
 <div class="col-md-12">
-   <div class="col-md-4">
-
- <div class="col-sm-12 col-md-12 col-lg-12">
-             <div class="well well-light well-sm">
-               <div class="row">
-                  <div class="col-md-12">
-                   <h1 class="text-center"><%= current_user.name %>
-                      <br>
-                      <small> <%= current_user.class_type %>, <%= current_user.user_type %></small>
-                   </h1>
+  <div class="col-md-4">
+     <div class="well no-padding col-md-12">
+       <div class="row">
+          <div class="col-md-12">
+             <h1 class="text-center"><%= current_user.name %>
+              <br>
+              <small> <%= current_user.class_type %>, <%= current_user.user_type %></small>
+             </h1>
+          </div>
+        </div>
+        <div class="col-centered">
+          <span class="col-md-6 label-info text-center"><h5><strong><%= current_user.points %></strong>
+             Points</h5>
+          </span>
+          <span class="col-md-6 label-info text-center"><h5><strong><%= current_user.attended_events.count %></strong>
+             Attended Events</h5>
+          </span>
+        </div>
+        <br>
+          <div class="row">
+             <div class="col-sm-12">
+             <br>
+              <h2 class="row-seperator-header col-centered text-center"><strong>Recent Activity</strong> </h2>
+                <br>
+                <div class="col-md-12 col-centered">
+                  <div class="alert alert-success alert-block col-md-12">
+                    <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Basketball Game</h4>
                   </div>
-                <div class="col-sm-12 col-md-12 col-centered">
-                  <span class="col-md-6 badge bg-color-blue"><h5><strong><%= current_user.points %></strong>
-                     Points</h5>
-                  </span>
-                  <span class="col-md-6 badge bg-color-green"><h5><strong><%= current_user.attended_events.count %></strong>
-                     Attended Events</h5>
-                  </span>
-                </div>
-                  <div class="row">
-                     <div class="col-sm-12">
-                      <h2 class="row-seperator-header"><i class="fa fa-star"></i> Recent Activity </h2>
-                        <div class="col-md-12 col-centered">
-                          <div class="alert alert-success alert-block col-md-12">
-                            <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
-                            Some Other Award
-                        </div>
-                     </div>
+                  <div class="alert alert-success alert-block col-md-12">
+                    <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - GPA Increase</h4>
                   </div>
-                  <!-- end row -->
-               </div>
-            </div>
+                  <div class="alert alert-success alert-block col-md-12">
+                    <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Dean's List</h4>
+                  </div>
              </div>
-             </div>
+          </div>
+          <!-- end row -->
+       </div>
+     </div>
 
 
 
       <div class="well no-padding col-md-12" id="wid-id-3"role="widget">
-        <ul id="myTab" class="nav nav-tabs bordered">
+        <ul id="myTab" class="nav nav-tabs bordered ">
           <li class="active">
             <a href="#s2" data-toggle="tab" aria-expanded="false">Leaderboard</a>
           </li>
@@ -376,6 +381,7 @@
 </script>
 <% end %>
 <style>
+
 #myTab{
   border:none;
 }

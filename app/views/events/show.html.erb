@@ -1,10 +1,4 @@
-<div id= "ribbon">
-    <ol class="breadcrumb">
-      <li><%= link_to(current_user.username + "'s Dashboard", { :controller => 'dashboard' ,:action => 'index'}) %></li>
-      <li class="active"><%= @event.event_name.capitalize %></li>
-    </ol>
-</div>
-<div class="col-md-12">	
+<div class="col-md-12">
 	<div class="jumbotron">
 		<h2 class="text-center"><%= @event.event_name %></h2>
 		<hr>
@@ -16,16 +10,8 @@
 		</div>
 	</div>
 
-	<div class="panel">
-		<p>
-			<%= @event.description.html_safe %>
-		</p>
-	</div>
-	<hr>
-	<div class="col-md-12">
-		<h2>Images</h2>
-		<hr>
-		<%= image_tag @event.image_url(:page_size).to_s ,:class => "text-center event_tile_img" ,:style => "float: left; margin-right: 15px;" %>
+	<div class="well">
+		<%= @event.description.html_safe %>
 	</div>
 </div>
 
