@@ -9,7 +9,7 @@
     <%= stylesheet_link_tag    "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="<%= current_user ? current_user.theme : "smart-style-5" %> minified fixed-header">
+  <body class="<%= current_user ? current_user.theme : "smart-style-5" %> minified fixed-header container-fluid">
     <% if !current_host && !(current_class?(kiosk_log_in_path) == "active" )%>
       <%= render "shared/usermenu.html.erb" %>
     <% end %>
