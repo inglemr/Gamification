@@ -33,9 +33,6 @@ Rails.application.routes.draw do
           post :updatesettings
       end
       namespace :admin do
-        resources :kiosks do
-          post 'admin/kiosks' => 'kiosks#create'
-        end
         resources :events do
         end
         resources :rooms do

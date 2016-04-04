@@ -43,15 +43,6 @@
             </ul>
           </li>
           <% end %>
-          <!-- Kiosk -->
-          <% if   (can? :manage, :all) || @current_permissions["Admin::Kiosk"].include?("manage")%>
-          <li>
-            <a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent">Kiosk</span></a>
-            <ul>
-              <li><%= link_to '<i class="fa fa-desktop fa-lg"></i>All Kiosk'.html_safe, admin_kiosks_path %></li>
-            </ul>
-          </li>
-          <% end %>
           <!-- API Call Log -->
           <% if  (can? :manage, :all) %>
           <li>
