@@ -3,11 +3,14 @@ class Event < ActiveRecord::Base
 	validates :day_time, presence: true
   validates :end_time, presence: true
   validates :location_id, presence: true
-  validates :room_numbers, presence: true
+  validates :rooms, presence: true
   validates :point_val, presence: true
   belongs_to :users
+  has_and_belongs_to_many :rooms
   has_many :user_events, foreign_key: :attended_event_id
   has_many :attendees, through: :user_events, dependent: :destroy
+  has_many :host_events, foreign_key: :hosted_event_id
+  has_many :hosts, through: :host_events, dependent: :destroy
   has_one :location, foreign_key: :location_id
   mount_uploader :image, ImageUploader
 
@@ -16,6 +19,7 @@ class Event < ActiveRecord::Base
   scope :past_events, lambda {("events.day_time > #{Time.now}")}
   scope :in_range, lambda {where("(day_time >= '#{(Time.now - (2 * 60 * 60)).to_s(:db)}' AND day_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}') OR (day_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}' AND end_time >= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}')")}
   scope :current_event, lambda {where("(day_time >= '#{(DateTime.now).to_s(:db)}') OR (end_time > '#{DateTime.now.to_s(:db)}')")}
+
   def add_attendee(user)
   	if !user.attended_events.all.include?(self)
   		self.attendees << user
@@ -28,6 +32,49 @@ class Event < ActiveRecord::Base
   	end
   end
 
+  def add_host(user)
+    if !user.hosted_events.all.include?(self)
+      self.hosts << user
+      user.save
+      self.save
+      true
+    else
+      false
+    end
+  end
+
+  def remove_host(user)
+    if user.hosted_events.all.include?(self)
+      self.hosts.delete(user)
+      user.save
+      self.save
+      true
+    else
+      false
+    end
+  end
+
+  def add_room(room)
+    if !room.events.all.include?(self)
+      self.rooms << room
+      room.save
+      self.save
+      true
+    else
+      false
+    end
+  end
+
+  def remove_room(room)
+    if room.events.all.include?(self)
+      self.rooms.delete(room)
+      room.save
+      self.save
+      true
+    else
+      false
+    end
+  end
 
   def date_of_next(current_date,day)
     date  = DateTime.parse(day + " " + current_date.hour.to_s + ":" + current_date.min.to_s + " " + current_date.zone)
@@ -83,7 +130,8 @@ class Event < ActiveRecord::Base
       else
         puts "Tiny Stew"
         puts nextWeekStart
-        event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+        event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+        event.rooms << self.rooms
         event.save
       end
       eventsToRecure << event
@@ -99,7 +147,8 @@ class Event < ActiveRecord::Base
           if !excludeDays.include?(nextWeekStart)
             puts "Tiny Moo"
             puts nextWeekStart
-            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.rooms << self.rooms
             event.save
           end
           nextWeekStart =  nextWeekStart.advance(:weeks => 1)
@@ -113,7 +162,8 @@ class Event < ActiveRecord::Base
         stop = Time.zone.parse(stopDay)
         while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
           if !excludeDays.include?(nextWeekStart)
-            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.rooms << self.rooms
             event.save
           end
           nextWeekStart =  nextWeekStart.advance(:weeks => 2)
@@ -127,7 +177,8 @@ class Event < ActiveRecord::Base
         stop = Time.zone.parse(stopDay)
         while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
           if !excludeDays.include?(nextWeekStart)
-            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.rooms << self.rooms
             event.save
           end
           nextWeekStart =  nextWeekStart + 1.month
@@ -141,7 +192,8 @@ class Event < ActiveRecord::Base
         stop = Time.zone.parse(stopDay)
         while ((nextWeekStart != stop) && ( nextWeekStart < stop)) do
           if !excludeDays.include?(nextWeekStart)
-            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id, :room_numbers => self.room_numbers ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event = Event.new(:created_by => self.created_by, :updated_by => self.updated_by ,:event_name => self.event_name , :department => self.department, :point_val => self.point_val, :location_id => self.location_id ,:description => self.description , :day_time => nextWeekStart, :end_time => nextWeekEnd,:recurring_id => recurring_id)
+            event.rooms << self.rooms
             event.save
           end
           nextWeekStart =  nextWeekStart.advance(:days => 1)

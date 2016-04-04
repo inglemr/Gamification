@@ -19,6 +19,9 @@ class User < ActiveRecord::Base
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"
   has_many :attended_events, through: :user_events
 
+  has_many :host_events, foreign_key: :host_id
+  has_many :hosted_events, through: :host_events, dependent: :destroy
+
   # Include default devise modules. Others available are:
   #  :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,:confirmable,

@@ -11,7 +11,7 @@
             color: "#b94a48",
             iconSmall: "fa fa-times bounce animated",
             icon : "fa fa-exclamation fadeInLeft animated"
-          });     
+          });
         });
        <% end %>
       <% end %>
@@ -49,7 +49,6 @@
 
                   <!-- wizard form starts here -->
                   <fieldset>
-
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="form-group">
@@ -77,8 +76,20 @@
                             </div>
                           </div>
                         </div>
-                      </div>
-
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                              <div class="input-group col-md-6">
+                                <span class="input-group-addon">Hosts</span>
+                                <%= f.collection_select(:id, User.all, :id, :email, {:prompt => "Please Select a Host"}, {:multiple => true,:id => "select_host" ,:class => "select2 input-lg"}) %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        TEST
+   <% @event.errors.full_messages.each do |msg| %>
+      <p><%= msg %></p>
+    <% end %>
+    TEST
                   </fieldset>
 
                 </div>
@@ -119,7 +130,7 @@
                             </div>
                           </div>
                         </div>
-                      
+
                         <div class="col-sm-8 hidden", id="selectRecureDays">
                           <div class="form-group">
                             <div class="input-group">
@@ -218,7 +229,7 @@
                           <div class="form-group">
                             <div class="input-group">
                               <span class="input-group-addon">Rooms</span>
-                               <%= f.grouped_collection_select(:room_numbers, Location.all, :rooms, :building_name, :id,:room_number, {:include_blank => false},{ :multiple => true, :class => "select2 input-lg" })%>
+                               <%= f.grouped_collection_select(:rooms, Location.all, :rooms, :building_name, :id,:room_number, {:include_blank => false},{ :multiple => true, :class => "select2 input-lg" })%>
                             </div>
                           </div>
                         </div>
@@ -252,7 +263,7 @@ ul.select2-choices, a.select2-choice{
 #s2id_autogen1{
   height: 42px;
 }
-#event_room_numbers{
+#event_rooms{
   height:200px;
   width:100px;
 }
@@ -268,7 +279,7 @@ ul.select2-choices, a.select2-choice{
 var value = "";
 var dates = "";
   $(document).ready(function () {
-  pageSetUp();    
+  pageSetUp();
         var wizard = $('.wizard').wizard();
 
         wizard.on('finished', function (e, data) {
@@ -280,13 +291,35 @@ var dates = "";
             iconSmall: "fa fa-check bounce animated",
             timeout: 4000
           });*/
-          
+
         });
 
-    
-    })
+      <% if page_type == "Edit" %>
+        $('#event_rooms').parent().show();;
+        $("#event_location_id").val(<%= @event.location_id %>).change();
+        $("#event_location_id").select2('val', <%= @event.location_id %>).change();
 
-$('#event_type').change(function () { 
+        var selectRooms = []
+        <% @event.rooms.each do |room| %>
+          selectRooms.push(<%= room.id %>);
+        <% end %>
+        $("#event_rooms").val(selectRooms).change();
+        $("#event_rooms").select2('val', selectRooms).change();
+
+        var selectedHost = []
+        <% @event.hosts.each do |host| %>
+          selectedHost.push(<%= host.id %>)
+        <% end %>
+        $("#select_host").val(selectedHost).change();
+        $("#select_host").select2('val', selectedHost).change();
+      <% end %>
+
+    })
+$('#event_location_id').change(function () {
+  $('#event_rooms').select2("val", "");
+});
+
+$('#event_type').change(function () {
   var option = $(this).find('option:selected').val();
             if(option == "recure")
             {
@@ -296,7 +329,7 @@ $('#event_type').change(function () {
               $('#rangeItems').removeClass("hidden");
               $('#onetimeDayTime').removeClass("hidden");
               $('#onetimeDayTime').addClass("hidden");
-              
+
               console.log(option);
             }
             else if (option == "onetime")
@@ -323,20 +356,6 @@ $('#event_type').change(function () {
             }
         });
 
-$('#event_location_id').change(function () { 
-  $('#event_room_numbers').select2("val", "");
-});
-
-      
-<% if page_type == "Edit" %>
-  <% array = (@event.room_numbers.join(',')) %>
-  $('#event_room_numbers').parent().show();
-  var data= "<%= array %>";
-  var dataarray=data.split(",");
-  $("#event_location_id").val("<%= @event.location_id %>");
-  $("#event_location_id").trigger("change");
-  $("#event_room_numbers").val(dataarray);
-<% end %>
 
 $('#event_location_id').addClass("select2 input-lg");
 
@@ -414,13 +433,13 @@ $('#daterange2').daterangepicker({
         content: value.message,
         template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p></p></div></div></div>"
       });
-      // Bootstrap 3.x :      
+      // Bootstrap 3.x :
       _popover.data("bs.popover").options.content = value.message;
       return $(value.element).popover("show");
     });
   }
 });
-    
+
 
 
 

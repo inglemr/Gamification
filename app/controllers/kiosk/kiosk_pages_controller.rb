@@ -5,7 +5,7 @@ class Kiosk::KioskPagesController < ApplicationController
 
   def swipe
     @event = Event.find(params[:event_id])
-    if current_host.created_events.where(:id => @event.id).in_range.first
+    if current_host.created_events.where(:id => @event.id).in_range.first || current_host.hosted_events.where(:id => @event.id).in_range.first
 
     else
       flash[:danger] = "Unauthorized Access"
@@ -24,7 +24,7 @@ class Kiosk::KioskPagesController < ApplicationController
 
   def manage
     @event = Event.find(params[:event_id])
-    if current_host.created_events.where(:id => @event.id).in_range.first
+    if current_host.created_events.where(:id => @event.id).in_range.first || current_host.hosted_events.where(:id => @event.id).in_range.first
 
     else
       flash[:danger] = "Unauthorized Access"
@@ -35,7 +35,7 @@ class Kiosk::KioskPagesController < ApplicationController
   def end_event
     puts "It worked!"
     @event = Event.find(params[:event_id])
-    if current_host.created_events.where(:id => @event.id).in_range.first
+    if current_host.created_events.where(:id => @event.id).in_range.first || current_host.hosted_events.where(:id => @event.id).in_range.first
       @event.end_time = DateTime.now.in_time_zone
       @event.save
       redirect_to kiosk_log_out_path
@@ -51,7 +51,7 @@ class Kiosk::KioskPagesController < ApplicationController
     if(id.length == 16)
       id = id[4,9]
     end
-    if current_host.created_events.where(:id => @event.id).in_range.first
+    if current_host.created_events.where(:id => @event.id).in_range.first || current_host.hosted_events.where(:id => @event.id).in_range.first
       if current_host.gsw_id != id
         message = @event.swipe(@event, id)
         if message[:success]

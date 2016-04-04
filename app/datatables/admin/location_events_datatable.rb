@@ -31,23 +31,21 @@ private
         "events__point_val" => event.point_val,
         "events__created_by" => User.find(event.created_by).username,
         "events__updated_by" => User.find(event.updated_by).username,
-        events_room: event_rooms(event.room_numbers),
+        events_room: event_rooms(event.rooms),
         events_time: event.day_time.to_formatted_s(:short) +  " - " + event.end_time.to_formatted_s(:short),
         event_actions: actions(event)
       }
     end
   end
 
-  def event_rooms(array)
-    
-      string = ""
-      array.each do |room|
-        room.each do |r|
-          string += Room.find(r).room_number + " "
-        end
-      end
-      return string
+  def event_rooms(rooms)
+    string = ""
+    rooms.each do |room|
+      strin += room.room_number + " "
     end
+    return string
+  end
+
   def actions(event)
     render(:partial=>"admin/events/actions.html.erb", locals: { event: event} , :formats => [:html])
   end
@@ -67,7 +65,7 @@ private
   end
 
   def search_string
-    "event_name LIKE :search OR description LIKE :search" 
+    "event_name LIKE :search OR description LIKE :search"
   end
 
   def sort_column

@@ -4,6 +4,7 @@ class Kiosk::KioskEventsDatatable
   def initialize(view, current_host)
     @view = view
     @events = current_host.created_events.in_range
+    @events <<  current_host.hosted_events.in_range
     @events = @events.page(page).per_page(per_page)
   end
 

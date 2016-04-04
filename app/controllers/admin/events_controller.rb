@@ -32,10 +32,50 @@ class Admin::EventsController < ApplicationController
 			params[:event][:day_time] = Time.zone.parse(start_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
 			params[:event][:end_time] = Time.zone.parse(end_time_no_zone.strftime('%Y-%m-%d %H:%M:%S'))
     end
+
+    current_rooms = @event.rooms
+    if params[:event][:rooms]
+      params[:event][:rooms].delete("")
+    end
+    rooms = params[:event].delete(:rooms)
+    params[:event].delete(:rooms)
+
+
+    remove_rooms = Array.new
+    current_rooms.each do |room|
+      if !rooms.include?(room.id)
+        @event.remove_room(room)
+      end
+    end
+    if rooms.size > 0
+      rooms.each do |room|
+        tmp = Room.find(room)
+        @event.add_room(tmp)
+      end
+    end
+
+    current_hosts = @event.hosts
+    hosts = params[:event][:id]
+    params[:event].delete(:id)
+    remove_host = Array.new
+    current_hosts.each do |host|
+      if !hosts.include?(host.id)
+        @event.remove_host(host)
+      end
+    end
+    if hosts.size > 0
+      hosts.each do |host|
+        if host.length > 0
+          user = User.find(host)
+          @event.add_host(user)
+        end
+      end
+    end
 		if @event.update_attributes(event_params)
+
   		redirect_to admin_events_path, :flash => { :success => 'Event was successfully updated.' }
 		else
-  		redirect_to admin_events_path, :flash => { :error => 'Event was unsuccesfully updated.' }
+  		render :edit , :flash => { :error => 'Event was unsuccesfully updated.' }
 		end
 	end
 
@@ -82,18 +122,32 @@ class Admin::EventsController < ApplicationController
 		params[:event].delete(:recurring_id)
 
 		# Room Numbers
-		if params[:event][:room_numbers]
-			params[:event][:room_numbers].delete("")
+		if params[:event][:rooms]
+			params[:event][:rooms].delete("")
 		end
-
+    rooms = params[:event].delete(:rooms)
 		#Time parsing
 
     params[:event][:created_by] = current_user.id
     params[:event][:updated_by] = current_user.id
+
 		@event = Event.new(event_params)
-		@event.room_numbers << params[:event][:room_numbers]
+    if rooms.size > 0
+      rooms.each do |room|
+        @event.add_room(room)
+      end
+    end
+
 		@event.image = params[:image]
 
+    #Designated Host
+    hosts = params[:event][:id].delete("")
+    if hosts.size > 0
+      hosts.each do |host|
+        user = User.find(host)
+        @event.add_host(user)
+      end
+    end
 
 		if @event.save
 			if(recureEvent == "recure")
@@ -120,7 +174,7 @@ end
 
 private
   def event_params
-    params.require(:event).permit(:room_numbers,:location_id,:end_time,:event_name, :department, :day_time, :point_val, :description, :created_by, :updated_by, :image)
+    params.require(:event).permit(:rooms,:location_id,:end_time,:event_name, :department, :day_time, :point_val, :description, :created_by, :updated_by, :image)
   end
 
 	def self.permission
