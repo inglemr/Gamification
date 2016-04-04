@@ -11,17 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160404161338) do
+ActiveRecord::Schema.define(version: 20160404230250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
 
   create_table "events", force: :cascade do |t|
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "event_name"
-    t.string   "department"
     t.datetime "day_time"
     t.integer  "point_val"
     t.integer  "created_by"
@@ -31,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160404161338) do
     t.integer  "location_id"
     t.datetime "end_time"
     t.integer  "recurring_id"
+    t.integer  "organization_id"
   end
 
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
@@ -65,6 +65,12 @@ ActiveRecord::Schema.define(version: 20160404161338) do
     t.string   "path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.text   "summary"
+    t.text   "description"
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -151,5 +157,15 @@ ActiveRecord::Schema.define(version: 20160404161338) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "users_organizations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "users_organizations", ["organization_id"], name: "index_users_organizations_on_organization_id", using: :btree
+  add_index "users_organizations", ["user_id"], name: "index_users_organizations_on_user_id", using: :btree
 
 end

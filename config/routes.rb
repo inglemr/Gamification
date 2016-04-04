@@ -33,6 +33,8 @@ Rails.application.routes.draw do
           post :updatesettings
       end
       namespace :admin do
+        resources :organization do
+        end
         resources :events do
         end
         resources :rooms do

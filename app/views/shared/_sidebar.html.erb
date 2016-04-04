@@ -1,18 +1,21 @@
       <nav>
         <ul>
-          <% if  (can? :manage, :all) || @current_permissions["Admin::User"].include?("manage") || @current_permissions["Admin::Role"].include?("manage") || @current_permissions["Admin::Permission"].include?("manage") %>
+          <% if  (can? :manage, :all) || @current_permissions["Admin::User"].include?("manage") || @current_permissions["Admin::Role"].include?("manage") || @current_permissions["Admin::Permission"].include?("manage") || @current_permissions["Admin::Organization"].include?("manage") %>
           <li class="menu-top">
             <a href="#"><i class="fa fa-lg fa-fw fa-users txt-color-blue"></i> <span class="menu-item-parent">Users & Roles</span></a>
             <ul>
               <% if (can? :manage, :all) || @current_permissions["Admin::User"].include?("manage")%>
-                      <li><%= link_to '<i class="fa fa-users fa-lg"></i>All Users'.html_safe, admin_user_index_path %></li>
-                    <% end %>
-                    <% if   (can? :manage, :all) || @current_permissions["Admin::Role"].include?("manage")%>
-                      <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Roles'.html_safe, admin_roles_path %></li>
-                    <% end %>
-                    <% if   (can? :manage, :all) || @current_permissions["Admin::Permission"].include?("manage") %>
-                      <li><%= link_to '<i class="fa fa-list fa-key"></i>All Permissions'.html_safe, admin_permissions_path %></li>
-                    <% end %>
+                <li><%= link_to '<i class="fa fa-user fa-lg"></i>All Users'.html_safe, admin_user_index_path %></li>
+              <% end %>
+              <% if   (can? :manage, :all) || @current_permissions["Admin::Role"].include?("manage")%>
+                <li><%= link_to '<i class="fa fa-list fa-lg"></i>All Roles'.html_safe, admin_roles_path %></li>
+              <% end %>
+              <% if   (can? :manage, :all) || @current_permissions["Admin::Permission"].include?("manage") %>
+                <li><%= link_to '<i class="fa fa-list fa-key"></i>All Permissions'.html_safe, admin_permissions_path %></li>
+              <% end %>
+              <% if   (can? :manage, :all) || @current_permissions["Admin::Organization"].include?("manage") %>
+                <li><%= link_to '<i class="fa fa-list fa-sitemap"></i>All Organizations'.html_safe, admin_organization_index_path %></li>
+              <% end %>
             </ul>
             <% end %>
           </li>

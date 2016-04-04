@@ -1,0 +1,52 @@
+<div class="row col-md-12">
+  <div class="col-md-9">
+    <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Organization'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
+    </div>
+
+  <div class="col-md-3">
+    <div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-search"></i></span>
+     <input id='organizations_table_search' type="search" class="form-control" placeholder="Search...">
+     <span class="input-group-addon"><span class="btn-sm" id="organizations_table_refresh"><i class="fa fa-refresh"></i></span></span>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+<table summary "organizations List" id="organizations_table" class="table table-hover"  data-source="<%= admin_organization_index_path(format: "json") %>"></table>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var organizations_table = $('#organizations_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#organizations_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "organizations__id" },
+          { "title": "Name", "data": "organizations__name" },
+          { "title": "Actions", "data": "organization_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#organizations_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#organizations_table_length").val() }
+          );
+        },
+      });
+      $("#organizations_table_length").on("change", function() {
+        organizations_table.dataTable().api().draw(false);
+      });
+      $('#organizations_table_refresh').click(function(e){
+        organizations_table.dataTable().api().draw(false);
+      });
+      $('#organizations_table_search').keyup(function(){
+        organizations_table.dataTable().api().draw(false);
+      });
+    });
+  </script>
+<% end %>

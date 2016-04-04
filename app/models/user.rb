@@ -1,6 +1,4 @@
-
 #<%= SymmetricEncryption.decrypt (current_user.current_semester["GPA"]) %>
-
 class User < ActiveRecord::Base
   #Filters
   before_validation :set_email, :on => :create
@@ -14,6 +12,8 @@ class User < ActiveRecord::Base
 
 
   #Relationships
+  #
+  has_and_belongs_to_many :organizations
 	has_and_belongs_to_many :roles
   has_many :user_events, foreign_key: :attendee_id
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"

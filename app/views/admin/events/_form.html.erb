@@ -59,7 +59,7 @@
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">Organization</span>
-                  <%= f.text_field :department, autofocus: true , :class => "form-control input-lg"%>
+                  <%= f.collection_select(:organization_id, Organization.all, :id, :name, {:include_blank => ''}, {:id => "select_organization" ,:class => "select2 input-lg"}) %>
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
               <div class="form-group">
                 <div class="input-group col-md-6">
                   <span class="input-group-addon">Hosts</span>
-                  <%= f.collection_select(:id, User.where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => ""), :id, :email, {:prompt => "Please Select a Host"}, {:multiple => true,:id => "select_host" ,:class => "select2 input-lg"}) %>
+                  <%= f.collection_select(:id, User.where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => ""), :id, :email, {}, {:multiple => true,:id => "select_host" ,:class => "select2 input-lg"}) %>
                 </div>
               </div>
             </div>
@@ -196,7 +196,7 @@
             <div class="form-group">
               <div class="input-group col-md-6">
                 <span class="input-group-addon">Building</span>
-                <%= f.collection_select :location_id, Location.order(:building_name), :id, :building_name, include_blank: true, :class => "input-lg"%>
+                  <%= f.collection_select :location_id, Location.order(:building_name), :id, :building_name, {:include_blank => ''}, {:class => "select2 input-lg"}%>
               </div>
             </div>
           </div>
@@ -277,6 +277,11 @@
         <% end %>
         $("#select_host").val(selectedHost).change();
         $("#select_host").select2('val', selectedHost).change();
+        <% if @event.organization_id %>
+          $("#select_organization").val(selectedHost).change();
+          $("#select_organization").select2('val', <%= @event.organization_id %>).change();
+        <% end %>
+
       <% end %>
 
     })
@@ -367,7 +372,7 @@
     "event[event_name]" : {
       required: true
     },
-    "event[department]" : {
+    "event[organization_id]" : {
       required: true
     },
     "event[point_val]" : {
