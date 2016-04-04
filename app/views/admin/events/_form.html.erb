@@ -80,7 +80,7 @@
                             <div class="form-group">
                               <div class="input-group col-md-6">
                                 <span class="input-group-addon">Hosts</span>
-                                <%= f.collection_select(:id, User.all, :id, :email, {:prompt => "Please Select a Host"}, {:multiple => true,:id => "select_host" ,:class => "select2 input-lg"}) %>
+                                <%= f.collection_select(:id, User.where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => ""), :id, :email, {:prompt => "Please Select a Host"}, {:multiple => true,:id => "select_host" ,:class => "select2 input-lg"}) %>
                               </div>
                             </div>
                           </div>

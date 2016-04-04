@@ -33,7 +33,7 @@ class Event < ActiveRecord::Base
   end
 
   def add_host(user)
-    if !user.hosted_events.all.include?(self)
+    if !user.hosted_events.all.include?(self) && User.find(self.created_by) != user
       self.hosts << user
       user.save
       self.save
