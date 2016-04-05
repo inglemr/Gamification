@@ -18,6 +18,25 @@ class Admin::OrganizationController < ApplicationController
   end
 
   def update
+    current_users = @organization.users
+    users = params[:organization][:id]
+    params[:organization].delete(:id)
+    remove_host = Array.new
+    current_users.each do |host|
+      if !users.include?(host.id)
+        @organization.remove_member(host)
+      end
+    end
+    if users.size > 0
+      users.each do |host|
+        if host.length > 0
+          user = User.find(host)
+          @organization.add_member(user)
+        end
+      end
+    end
+
+
     @organization = Organization.find(params[:id])
     if @organization.update_attributes(organization_params)
       redirect_to admin_organization_index_path, :flash => { :success => 'organization was successfully updated.' }
@@ -31,6 +50,25 @@ class Admin::OrganizationController < ApplicationController
   end
 
   def create
+
+    current_users = @organization.users
+    users = params[:organization][:id]
+    params[:organization].delete(:id)
+    remove_host = Array.new
+    current_users.each do |host|
+      if !users.include?(host.id)
+        @organization.remove_member(host)
+      end
+    end
+    if users.size > 0
+      users.each do |host|
+        if host.length > 0
+          user = User.find(host)
+          @organization.add_member(user)
+        end
+      end
+    end
+
     @organization = Organization.new(organization_params)
     if @organization.save
       redirect_to admin_organization_index_path(@organization)

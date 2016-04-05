@@ -61,9 +61,9 @@ Rails.application.routes.draw do
       end
 
       resource :organizations do
+          get 'show/:id' => 'organizations#show', :as => "show"
          collection do
           get :index
-          match 'show/:id' => 'organizations#show', :via => [:get, :post], :as => "show"
          end
       end
 

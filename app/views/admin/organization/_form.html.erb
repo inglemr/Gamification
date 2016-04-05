@@ -1,36 +1,87 @@
 <%= form_for(@organization, :class =>"form-horizontal" , :url => path) do |f| %>
-<div class="page-panel panel col-md-12 ">
-    <div class="row"><h2 class="text-center"><%= page_type %> Organization</h2></div>
-    <hr>
-    <div class="col-md-6 verticalLineRight">
-      <h3 class="panel">Basic Data</h3>
-      <div class="col-md-12 form-group">
-        <%= f.label :name ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= f.text_field :name, autofocus: true ,:value => @organization.name , :class => "form-control"%>
-        </div>
-      </div>
-
-      <div class="col-md-12 form-group">
-        <%= f.label :summary ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= f.text_area :summary, autofocus: true ,:value => @organization.summary , :class => "form-control"%>
-        </div>
-      </div>
-
-    </div>
-    <div class="col-md-6">
-      <h3 class="panel">Description</h3>
-      <div class="col-md-12 form-group">
+  <div class="page-panel panel col-md-12 ">
+      <div class="row"><h2 class="text-center"><%= page_type %> Organization</h2></div>
+      <hr>
+      <div class="col-md-6 verticalLineRight">
+        <h3 class="panel">Basic Data</h3>
         <div class="col-md-12 form-group">
-            <%= f.text_area :description, autofocus: true ,:value => @organization.description , :class => "form-control"%>
+          <%= f.label :name ,:class => "col-md-3 control-label"%>
+          <div class="col-md-7">
+            <%= f.text_field :name, autofocus: true ,:value => @organization.name , :class => "form-control"%>
+          </div>
+        </div>
+
+        <div class="col-md-12 form-group">
+          <%= f.label :summary ,:class => "col-md-3 control-label"%>
+          <div class="col-md-7">
+            <%= f.text_area :summary, autofocus: true ,:value => @organization.summary , :class => "form-control"%>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="input-group col-md-6">
+              <span class="input-group-addon">Members</span>
+              <%= f.collection_select(:id, User.where.not(:email => "notfound@email.com").where.not(:email => ""), :id, :email, {}, {:multiple => true,:id => "select_host" ,:class => "select2 input-lg"}) %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <h3 class="panel">Description</h3>
+        <div class="col-md-12 form-group">
+          <div class="col-md-12 form-group">
+              <%= f.text_area :description, autofocus: true ,:value => @organization.description , :class => "form-control"%>
+          </div>
         </div>
       </div>
-    </div>
 
-</div>
-<div class="form-group col-md-12 col-md-offset-5">
-  <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
-</div>
-
+  </div>
+  <div class="form-group col-md-12 col-md-offset-5">
+    <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
+  </div>
 <% end %>
+
+<%content_for :scripts do %>
+  <script type="text/javascript">
+  <% content_for :inner_scripts do %>
+    $(document).ready(function () {
+      pageSetUp();
+      <% if page_type == "Edit" %>
+        var selectedUsers = []
+        <% @organization.users.each do |user| %>
+          selectedUsers.push(<%= user.id %>)
+        <% end %>
+        $("#select_host").val(selectedUsers).change();
+        $("#select_host").select2('val', selectedUsers).change();
+      <% end %>
+    })
+  <% end %>
+  <%= content_for :inner_scripts %>
+  </script> <%end %>
+
+<style>
+  a.select2-choice{
+  line-height: 45px !important;
+  }
+
+  li.select2-search-field{
+  height: 44px;
+  }
+  .select2-container{
+  padding: 0px;
+  }
+  ul.select2-choices, a.select2-choice{
+  height: 46px !important;
+  }
+  #s2id_autogen1{
+  height: 42px;
+  }
+  #event_rooms{
+  height:200px;
+  width:100px;
+  }
+  .smart-style-5 .bootstrapWizard li .title{
+  color:white;
+  }
+  </style>

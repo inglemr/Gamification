@@ -2,7 +2,7 @@
    <div class="col-sm-12">
       <div class="">
          <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-6">
+            <div class="col-sm-12 col-md-12 col-lg-9">
              <div class="well well-light well-sm no-margin no-padding">
                <div class="row">
                   <div class="col-sm-12">
@@ -17,6 +17,11 @@
                               <h4 class="font-md"><strong><%= current_user.attended_events.count %></strong>
                                  <br>
                                  <small>Attended Events</small>
+                              </h4>
+                              <br>
+                              <h4 class="font-md"><strong><%= current_user.organizations.count %></strong>
+                                 <br>
+                                 <small>Organizations</small>
                               </h4>
                            </div>
                         </div>
@@ -56,6 +61,9 @@
                               </li>
                               <li>
                                  <a href="#points" data-toggle="tab">Points</a>
+                              </li>
+                              <li>
+                                 <a href="#orgs" data-toggle="tab">Organizations</a>
                               </li>
                            </ul>
                            <div class="tab-content padding-top-10">
@@ -101,6 +109,14 @@
                                   </div>
                                 </div>
                               </div>
+
+                              <div class="tab-pane fade" id="orgs">
+                                <div class= "col-md-12">
+                                  <% current_user.organizations.each do |organization| %>
+                                    <%= render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6"},:formats => [:html]) %>
+                                  <% end %>
+                                </div>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -110,7 +126,7 @@
             </div>
              </div>
 
-            <div class="col-sm-12 col-md-12 col-lg-6">
+            <div class="col-sm-12 col-md-12 col-lg-3">
               <div class="well well-light well-sm">
                 <div class="row">
                   <div class="col-sm-12">
