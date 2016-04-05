@@ -1,0 +1,78 @@
+<div class="col-md-12 ">
+   <div class="col-md-3 pull-right">
+      <div class="row">
+        <div class="input-group">
+           <span class="input-group-addon"><i class="fa fa-search"></i></span>
+           <input id='organizations_table_search' type="search" class="form-control" placeholder="Search...">
+        </div>
+      </div>
+   </div>
+   <br>
+   <br>
+   <div class="col-md-12" id='organizations_grid'></div>
+   <table summary "organizations List" id="organizations_table" style="display: none"class="table table-hover"  data-source="<%= organizations_path(format: "json") %>"></table>
+</div>
+
+
+<div class="row container col-centered">
+  <h1 class="text-center">Work In Progress</h1>
+  <div class="row well">
+    <div class="col-md-12">
+      <ol>
+        <li><s>Setup Organization Tile List</s></li>
+        <li>Setup Organization Show View</li>
+        <li>Setup Organization roles</li>
+        <li>Allow Organization leader to add new users/create roles</li>
+        <li>Setup ability for users to request access to an organization</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<% content_for :scripts do %>
+<script type="text/javascript">
+   var datatable;
+   $( document ).ready(function() {
+     pageSetUp();
+     var organizations_table = $('#organizations_table').dataTable({
+       "sDom": "<'row'<'col-lg-12'>r>t<'row'<'col-lg-12 col-md-12'><'col-lg-7 col-md-7 center'p>>",
+       "sPaginationType": "simple",
+       "iDisplayLength": 6,
+       "bProcessing": true,
+       "bServerSide": true,
+       "sAjaxSource": $('#organizations_table').data('source'),
+       "aaSorting": [[ 0, "desc" ]],
+        "columns": [
+         { "title": "Square Setup", "data": "organizations_orgTile"}
+       ],
+       fnServerParams: function ( aoData ) {
+         aoData.push(
+           { "name": "sSearch", "value": $("#organizations_table_search").val() },
+           { "name": "iDisplayLength", "value": $("#organizations_table_length").val() }
+         );
+       },
+       fnDrawCallback: function( oSettings ) {
+         $('#organizations_grid').html('');
+         $.each(oSettings.aoData, function( index, result ) {
+           $('#organizations_grid').append(result._aData.organizations_orgTile);
+         });
+     }
+   });
+     $("#organizations_table_length").on("change", function() {
+       organizations_table.dataTable().api().draw(true);
+     });
+     $('#organizations_table_search').keyup(function(){
+       organizations_table.dataTable().api().draw(true);
+     });
+
+
+
+       $('#organizations_table_processing').addClass('bg-color-red')
+   })
+       setTimeout(function(){
+           $('#flash').remove();
+       }, 5000);
+
+</script>
+<% end %>

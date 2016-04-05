@@ -35,9 +35,9 @@ private
       }
     end
   end
-  
+
   def eventTile(event)
-    render(:partial=>"events/event_tile.html.erb", locals: { event: event, style: "col-md-6"},:formats => [:html])
+    render(:partial=>"events/event_tile.html.erb", locals: { event: event, style: "col-md-4"},:formats => [:html])
   end
 
   def page
@@ -53,13 +53,13 @@ private
   end
 
   def search_string
-    "event_name LIKE :search OR description LIKE :search" 
+    "event_name LIKE :search OR description LIKE :search"
   end
 
   def sort_column
     [*0..params[:iColumns].to_i-1].map{|i| params["mDataProp_#{i}"].gsub("__", ".") if params["bSortable_#{i}"] != 'false' }[params[:iSortCol_0].to_i]
   end
-end 
+end
 
 
 

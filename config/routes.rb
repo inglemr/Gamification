@@ -60,6 +60,13 @@ Rails.application.routes.draw do
          end
       end
 
+      resource :organizations do
+         collection do
+          get :index
+          match 'show/:id' => 'organizations#show', :via => [:get, :post], :as => "show"
+         end
+      end
+
       resource :location do
         get '/:id' => 'location#show'
         collection do

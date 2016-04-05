@@ -1,8 +1,4 @@
 <% if @event.errors.any? %><% content_for :scripts do %>
-<!DOCTYPE html>
-<html>
-<head>
-
   <script type="text/javascript">
       <% content_for :inner_scripts do %>
        <% @event.errors.full_messages.each do |message| %>
@@ -18,9 +14,6 @@
        <% end %>
       <% end %>
   </script><%end %><%end %>
-  <title></title>
-</head>
-<body>
   <div class="widget-body fuelux">
     <div class="wizard">
       <ul class="steps">
@@ -416,5 +409,3 @@
   <% end %>
   <%= content_for :inner_scripts %>
   </script> <%end %>
-</body>
-</html>

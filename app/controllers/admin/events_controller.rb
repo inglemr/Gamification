@@ -17,8 +17,6 @@ class Admin::EventsController < ApplicationController
 	end
 
 	def update
-    puts params
-    puts "dangit"
 		@event = Event.find(params[:id])
 		@event.image = params[:image]
 		if params[:event][:time] != ""
