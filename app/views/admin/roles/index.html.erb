@@ -1,16 +1,13 @@
-<div id= "ribbon">
-		<ol class="breadcrumb">
-			<li >Admin</li>
-	  	<li class="active">All Roles</li>
-		</ol>
-</div>
 <div class="row">
 	<div class="col-md-6">
 		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Role'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
 	</div>
-	<div class="col-md-6 text-right">
-		  <input id='roles_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
-	   <span class="btn btn-sm btn-primary text-right" id="roles_table_refresh"><i class="fa fa-refresh"></i></span>
+	<div class="col-md-3 pull-right">
+    <div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      <input id='roles_table_search' type="search" class="form-control" placeholder="Search...">
+     <span class="input-group-addon"><span id="roles_table_refresh"><i class="fa fa-refresh"></i></span></span>
+    </div>
 	</div>
 </div>
 <div class="table-responsive">
@@ -19,7 +16,7 @@
 
 <% content_for :scripts do %>
   <script type="text/javascript">
-    $(document).ready(function(){  
+    $(document).ready(function(){
       var roles_table = $('#roles_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
@@ -34,7 +31,7 @@
           { "title": "Actions", "data": "role_actions", "bSortable" : false }
         ],
         fnServerParams: function ( aoData ) {
-          aoData.push( 
+          aoData.push(
             { "name": "sSearch", "value": $("#roles_table_search").val() },
             { "name": "iDisplayLength", "value": $("#roles_table_length").val() }
           );

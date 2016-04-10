@@ -32,9 +32,24 @@
  *= require twitter-bootstrap-static/sprites
  *= require smartadmin-production.scss
  *= require smartadmin-skins.scss
+ *= require animate
  *= require_tree .
  *= require_self
  */
+
+
+.container-page{
+ width:100%;
+ padding: 0px;
+ margin:0px;
+ border-radius: 5px;
+}
+
+.bg-blue{
+  background: #01579B !important;
+  border: none !important;
+
+}
 
 .bigBox span {
 font-size: 30px;

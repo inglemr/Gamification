@@ -1,27 +1,24 @@
-<div id= "ribbon">
-		<ol class="breadcrumb">
-			<li >Admin</li>
-			<li >Users</li>
-	  	<li class="active">All Users</li>
-		</ol>
-</div>
-<div class="row">
-	<div class="col-md-6">
+<!-- TODO(matt)  This doesnt really do anything. Placeholder incase we decide to allow users to be created by an admin for some reason-->
+	<!---<div class="col-md-6">
 		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New User'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
-	</div>
-	<div class="col-md-6 text-right">
-		  <input id='users_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
-	   <span class="btn btn-sm btn-primary text-right" id="userss_table_refresh"><i class="fa fa-refresh"></i></span>
+	</div> -->
+	<div class="col-md-3 pull-right">
+
+    <div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      <input id='users_table_search' type="search" class="form-control" placeholder="Search...">
+     <span class="input-group-addon"><span id="users_table_refresh"><i class="fa fa-refresh"></i></span></span>
+    </div>
+
 	</div>
 </div>
 <div class="table-responsive">
 <table summary "User List" id="users_table" class="table table-hover"  data-source="<%= admin_user_index_path(format: "json") %>"></table>
 </div>
 
-
 <% content_for :scripts do %>
   <script type="text/javascript">
-    $(document).ready(function(){  
+    $(document).ready(function(){
       var users_table = $('#users_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
@@ -38,7 +35,7 @@
           { "title": "Actions", "data": "user_actions", "bSortable" : false }
         ],
         fnServerParams: function ( aoData ) {
-          aoData.push( 
+          aoData.push(
             { "name": "sSearch", "value": $("#users_table_search").val() },
             { "name": "iDisplayLength", "value": $("#users_table_length").val() }
           );

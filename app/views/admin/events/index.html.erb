@@ -1,16 +1,15 @@
-<div id= "ribbon">
-		<ol class="breadcrumb">
-			<li >Admin</li>
-	  	<li class="active">All Events</li>
-		</ol>
-</div>
 <div class="row">
 	<div class="col-md-6">
 		<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Event'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
 	</div>
-	<div class="col-md-6 text-right">
-		  <input id='events_table_search' type="search" class="form-control" placeholder="Search..." style="display: inline; width: 200px; height: 20px;">
-	   <span class="btn btn-sm btn-primary text-right" id="events_table_refresh"><i class="fa fa-refresh"></i></span>
+	<div class="col-md-3 pull-right">
+
+    <div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-search"></i></span>
+      <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
+     <span class="input-group-addon"><span id="events_table_refresh"><i class="fa fa-refresh"></i></span></span>
+    </div>
+
 	</div>
 </div>
 <br>
@@ -21,7 +20,7 @@
 
 <% content_for :scripts do %>
   <script type="text/javascript">
-    $(document).ready(function(){  
+    $(document).ready(function(){
       var events_table = $('#events_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
@@ -42,7 +41,7 @@
           { "title": "Actions", "data": "event_actions", "bSortable" : false }
         ],
         fnServerParams: function ( aoData ) {
-          aoData.push( 
+          aoData.push(
             { "name": "sSearch", "value": $("#events_table_search").val() },
             { "name": "iDisplayLength", "value": $("#events_table_length").val() }
           );

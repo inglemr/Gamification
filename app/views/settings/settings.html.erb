@@ -1,9 +1,9 @@
-<div class="row">
-   <div class="col-sm-12">
-      <div class="">
+
+   <div class=" well no-padding">
+
          <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-9">
-             <div class="well well-light well-sm no-margin no-padding">
+            <div class="col-sm-12 col-md-12 col-lg-8 ">
+             <div class="">
                <div class="row">
                   <div class="col-sm-12">
                      <div class="row">
@@ -25,7 +25,7 @@
                               </h4>
                            </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                            <h1><%= current_user.name %>
                               <br>
                               <small> <%= current_user.class_type %>, <%= current_user.user_type %></small>
@@ -51,92 +51,20 @@
                         </div>
                      </div>
                   </div>
-                  <div class="row">
-                     <div class="col-sm-12">
-
-                        <div class="col-md-12">
-                           <ul class="nav nav-tabs tabs-pull-right">
-                              <li class="active">
-                                 <a href="#recentevents" data-toggle="tab">Recent Events</a>
-                              </li>
-                              <li>
-                                 <a href="#points" data-toggle="tab">Points</a>
-                              </li>
-                              <li>
-                                 <a href="#orgs" data-toggle="tab">Organizations</a>
-                              </li>
-                           </ul>
-                           <div class="tab-content padding-top-10">
-                              <div class="tab-pane fade in active" id="recentevents">
-                                 <div class="row col-md-12">
-                                  <% current_user.attended_events.each do |event| %>
-                                  <%=link_to( {:controller => "events", :action => 'show', :id => event.id}) do %>
-                                    <div class="col-xs-2 col-sm-1">
-                                       <time datetime="<%= event.day_time.year %>-<%= event.day_time.month %>-<%= event.day_time.day %>" class="icon">
-                                       <strong><%= Date::MONTHNAMES[event.day_time.month] %></strong>
-                                       <span><%= event.day_time.day %></span>
-                                       </time>
-                                    </div>
-                                    <div class="col-xs-10 col-sm-11">
-                                       <h6 class="no-margin"><%= event.event_name %></h6>
-                                       <p>
-                                          <%= event.description %>
-                                       </p>
-                                    </div>
-                                    <div class="col-sm-12">
-                                       <hr>
-                                    </div>
-                                    <div class="col-sm-12">
-                                       <br>
-                                    </div>
-                                    <% end %>
-                                    <% end %>
-                                 </div>
-                              </div>
-                              <div class="tab-pane fade" id="points">
-                                <div class="col-md-12 col-centered">
-                                  <div class="alert alert-success alert-block col-md-5">
-                                    <h4 class="alert-heading"><i class="fa fa-star"></i>10 points - Spring 2016</h4>
-                                    GPA Increase
-                                  </div>
-                                  <div class="alert alert-success alert-block col-md-5">
-                                    <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
-                                    Academic Standing
-                                  </div>
-                                  <div class="alert alert-success alert-block col-md-5">
-                                    <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
-                                    Some Other Award
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="tab-pane fade" id="orgs">
-                                <div class= "col-md-12">
-                                  <% current_user.organizations.each do |organization| %>
-                                    <%= render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6"},:formats => [:html]) %>
-                                  <% end %>
-                                </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- end row -->
                </div>
             </div>
              </div>
 
-            <div class="col-sm-12 col-md-12 col-lg-3">
-              <div class="well well-light well-sm">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+              <div class="">
                 <div class="row">
                   <div class="col-sm-12">
                     <div class="row">
                       <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
                         <div class="col-md-12 form-group">
-                          <h2 class="text-center">Settings</h2>
-                          <%= f.label :theme ,:class => "col-md-3 control-label"%>
-                            <div class="col-md-7">
-                              <%= select_tag "theme", "<option value='smart-style-0'>Smart</option><option value='smart-style-1'>Dark</option><option value='smart-style-2'>Light</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+                          <h2 class="text-center">Theme</h2>
+                            <div class="col-md-4 col-centered">
+                              <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
                             </div>
                         </div>
                         <div class="form-group col-md-12 col-md-offset-5">
@@ -148,16 +76,82 @@
                 </div>
               </div>
             </div>
+
+            <div class="col-md-12 padding-gutter">
+   <ul class="nav nav-tabs bordered">
+      <li class="active">
+         <a href="#recentevents" data-toggle="tab">Recent Events</a>
+      </li>
+      <li>
+         <a href="#points" data-toggle="tab">Points</a>
+      </li>
+      <li>
+         <a href="#orgs" data-toggle="tab">Organizations</a>
+      </li>
+   </ul>
+   <div class="tab-content">
+      <div class="tab-pane fade in active" id="recentevents">
+         <div class="col-md-12">
+          <% current_user.attended_events.each do |event| %>
+          <%=link_to( {:controller => "events", :action => 'show', :id => event.id}) do %>
+            <div class="col-xs-2 col-sm-1">
+               <time datetime="<%= event.day_time.year %>-<%= event.day_time.month %>-<%= event.day_time.day %>" class="icon">
+               <strong><%= Date::MONTHNAMES[event.day_time.month] %></strong>
+               <span><%= event.day_time.day %></span>
+               </time>
+            </div>
+            <div class="col-xs-10 col-sm-11">
+               <h6 class="no-margin"><%= event.event_name %></h6>
+               <p>
+                  <%= event.description %>
+               </p>
+            </div>
+            <div class="col-sm-12">
+               <hr>
+            </div>
+            <div class="col-sm-12">
+               <br>
+            </div>
+            <% end %>
+            <% end %>
          </div>
+      </div>
+      <div class="tab-pane fade" id="points">
+        <div class="col-md-12 col-centered">
+          <div class="alert alert-success alert-block col-md-5">
+            <h4 class="alert-heading"><i class="fa fa-star"></i>10 points - Spring 2016</h4>
+            GPA Increase
+          </div>
+          <div class="alert alert-success alert-block col-md-5">
+            <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
+            Academic Standing
+          </div>
+          <div class="alert alert-success alert-block col-md-5">
+            <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
+            Some Other Award
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="orgs">
+        <div class= "col-md-12">
+          <% current_user.organizations.each do |organization| %>
+            <%= render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6"},:formats => [:html]) %>
+          <% end %>
+        </div>
       </div>
    </div>
 </div>
+         </div>
+
+   </div>
 
 <style>
 .alert{
   margin: 5px;
 }
 </style>
+
 
 
 <% content_for :scripts do %>

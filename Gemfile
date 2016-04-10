@@ -18,6 +18,7 @@ gem 'tinymce-rails'
 
 #Assets
 # Use jquery as the JavaScript library
+gem "animate-rails"
 gem "font-awesome-rails"
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

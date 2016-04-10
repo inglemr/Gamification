@@ -1,5 +1,6 @@
-<div class="col-md-12 ">
-  <div class="col-md-4">
+<div class="">
+<div class="col-md-12 page-container">
+  <div class="col-md-4 no-padding" <% if !mobile_device? %> data-spy="affix" <% end %> style="width:30%">
      <div class="well no-padding col-md-12">
        <div class="row">
           <div class="col-md-12">
@@ -21,18 +22,18 @@
         </div>
         <br>
           <div class="row">
-             <div class="col-sm-12">
+             <div class="col-sm-12 no-padding">
              <br>
               <h2 class="row-seperator-header col-centered text-center"><strong>Recent Activity</strong> </h2>
                 <br>
                 <div class="col-md-12 col-centered">
-                  <div class="alert alert-success alert-block col-md-12">
+                  <div class="alert alert-success alert-block col-md-12 animated fadeInLeft">
                     <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Basketball Game</h4>
                   </div>
-                  <div class="alert alert-success alert-block col-md-12">
+                  <div class="alert alert-success alert-block col-md-12 animated fadeInLeft">
                     <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - GPA Increase</h4>
                   </div>
-                  <div class="alert alert-success alert-block col-md-12">
+                  <div class="alert alert-success alert-block col-md-12 animated fadeInLeft">
                     <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Dean's List</h4>
                   </div>
              </div>
@@ -40,7 +41,6 @@
           <!-- end row -->
        </div>
      </div>
-
 
 
       <div class="well no-padding col-md-12" id="wid-id-3"role="widget">
@@ -195,14 +195,14 @@
    </div>
 
 
-   <div class="col-md-8">
+   <div class="col-md-8 <% if !mobile_device? %> col-md-offset-4 <% end %> ">
 
     <div class="" id="wid-id-7"role="widget">
             <ul id="myTab2" class="nav nav-tabs bordered">
-              <li class="active">
+              <li class="">
                 <a href="#eventscal" data-toggle="tab" aria-expanded="true">Calendar View</a>
               </li>
-              <li class="">
+              <li class="active">
                 <a href="#tabevents" data-toggle="tab" aria-expanded="false">Tile View</a>
               </li>
 
@@ -215,7 +215,7 @@
 
             </ul>
             <div id="myTabContent2" class="tab-content no-padding">
-              <div class="tab-pane fade in active" id="eventscal">
+              <div class="tab-pane fade in" id="eventscal">
                 <div class="jarviswidget">
                 <div>
                       <div class="widget-body no-padding">
@@ -248,7 +248,7 @@
                       </div>
                 </div>
               </div>
-              <div class="tab-pane fade in" id="tabevents">
+              <div class="tab-pane fade in active" id="tabevents">
                 <div class="jarviswidget" id="wid-id-10" role="widget">
                    <div role="content">
                       <!-- widget content -->
@@ -263,8 +263,7 @@
                                </div>
                             </div>
                          </div>
-                         <br>
-                         <div class="col-md-12" id='events_grid'></div>
+                         <div class="col-md-12 no-padding" id='events_grid'></div>
                          <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
                       </div>
                       <!-- end widget content -->
@@ -276,6 +275,13 @@
           </div>
    </div>
 </div>
+</div>
+
+
+
+
+</div>
+
 <% content_for :scripts do %>
 <script type="text/javascript">
    var datatable;
