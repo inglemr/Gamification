@@ -1,28 +1,30 @@
  <%= link_to(manage_events_path(event) ) do %>
 
-<div class="<%=style %>" >
-<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false" data-widget-fullscreenbutton="false">
-        <div>
-          <div class="widget-body widget-hide-overflow no-padding" style="height:230px;">
+      <div class="<%= style %>">
+            <div class="cuadro_intro_hover " style="background-color:#cccccc;">
+            <p style="text-align:center; margin-top:20px;">
+            <span class="badge bg-color-red points"><b>Points: </b><i><%= event.point_val %></i></span>
               <% if event.image_url.to_s == "" %>
-                <img class="event_tile_img" src="http://placehold.it/400x330">
+                <img class="event_tile_img" src="http://placehold.it/380x200">
               <% else %>
                 <%= image_tag event.image_url(:kiosk_page_mobile).to_s ,:class => "event_tile_img" %>
               <% end %>
-               <span class="badge bg-color-red points"><small><b>Points: </b><i><%= event.point_val %></i></small></span>
-           <div class="widget-footer text-left" style="position:absolute;bottom:0;width:100%">
-
-            <p><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %>
-            <% if (can? :update, event, :context => :admin) %>
-              <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-sm"></i>'.html_safe, {:controller => 'Admin::Events',:action => 'edit', :id => event.id} ,:class => "btn  btn-sm", :style => "float:right;display:inline;") %>
-            <% end %>
             </p>
+            <div class="caption">
+              <div class="blur"></div>
+              <div class="caption-text">
+                <h3 style="padding:5px;"><%= event.event_name %> - <%= event.day_time.to_formatted_s(:long_ordinal) %><% if (can? :update, event, :context => :admin) %>
+              <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil "></i>'.html_safe, {:controller => 'Admin::Events',:action => 'edit', :id => event.id} ,:class => "btn  btn-sm", :style => "float:right;display:inline;") %>
+            <% end %></h3>
+                <p><%= event.description %></p>
+                <%= link_to(manage_events_path(event), :class => "btn") do %><span class="glyphicon glyphicon-plus">  INFO</span></a><%end %>
+              </div>
+            </div>
           </div>
-          </div>
-        </div>
-        <!-- end widget div -->
+
       </div>
-      </div>
+
+
 <% end %>
 
 
@@ -36,3 +38,6 @@
   float:right;
 }
 </style>
+
+
+

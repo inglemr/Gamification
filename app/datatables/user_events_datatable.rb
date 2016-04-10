@@ -49,9 +49,9 @@ private
 
   def eventTile(event)
     if(@attended)
-      render(:partial=>"events/event_tile.html.erb", locals: { event: event, style: "col-md-3"},:formats => [:html])
+      render(:partial=>"events/event_tile.html.erb", locals: { event: event, style: "col-md-3 padding-10"},:formats => [:html])
     else
-      render(:partial=>"events/user_event.html.erb", locals: { event: event, style: "col-md-3"},:formats => [:html])
+      render(:partial=>"events/user_event.html.erb", locals: { event: event, style: "col-md-3 padding-10"},:formats => [:html])
     end
   end
 

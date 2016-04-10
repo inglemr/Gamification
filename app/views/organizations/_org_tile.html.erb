@@ -1,34 +1,25 @@
 <%= link_to(show_organizations_path(organization) ) do %>
-  <div class="<%=style %>" >
-    <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
-      <div>
-        <div class="widget-body widget-hide-overflow no-padding" style="height:200px;">
-          <img class="organization_tile_img" src="http://placehold.it/610x200">
-          <div class="widget-footer text-left" style="position:absolute;bottom:0;width:100%">
-            <p><%= organization.name %>
-            <% if (can? :update, organization, :context => :admin) %>
+
+
+<div class="<%= style %>">
+      <div class="cuadro_intro_hover " style="background-color:#cccccc;">
+      <p style="text-align:center; margin-top:20px;">
+        <img class="event_tile_img" src="http://placehold.it/610x200">
+      </p>
+      <div class="caption">
+        <div class="blur"></div>
+        <div class="caption-text">
+          <h3 style="padding:5px;"><%= organization.name %>        <% if (can? :update, organization, :context => :admin) %>
               <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-sm"></i>'.html_safe, {:controller => 'Admin::Organization',:action => 'edit', :id => organization.id} ,:class => "btn  btn-sm", :style => "float:right;display:inline;") %>
-            <% end %>
-            </p>
-          </div>
+            <% end %></h3>
+          <p><%= organization.summary %></p>
+          <%= link_to(show_organizations_path(organization), :class => "btn") do %><span class="glyphicon glyphicon-plus">  INFO</span></a><%end %>
         </div>
       </div>
-        <!-- end widget div -->
     </div>
-  </div>
+
+</div>
+
 <% end %>
-
-
-
-<style>
-.points{
-  position: absolute;
-  top: 5%;
-  right: 0;
-  margin-right: 5px;
-  float:right;
-}
-</style>
-
 
 
