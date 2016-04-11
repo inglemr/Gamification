@@ -27,6 +27,9 @@
           <li class="<%= current_class?(organizations_path) %>">
             <%= link_to '<i class="fa fa-users fa-lg"></i> Organizations'.html_safe, organizations_path %>
           </li>
+          <li class="<%= current_class?(all_events_events_path) %>">
+            <%= link_to '<i class="fa fa-futbol-o fa-lg"></i> Events'.html_safe, all_events_events_path %>
+          </li>
           <li class="<%= current_class?(settings_path) %>"><%= link_to '<i class="fa fa-star fa-lg"></i> My Profile'.html_safe, settings_path %>
           </li>
           <li class=""> <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, destroy_user_session_path , :method => :delete%>

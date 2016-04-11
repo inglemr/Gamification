@@ -14,6 +14,11 @@ class EventsController < ApplicationController
   	end
 	end
 
+
+  def all_events
+
+  end
+
 	def index
     @event = current_user.created_events.first;
     if (params[:event_id])

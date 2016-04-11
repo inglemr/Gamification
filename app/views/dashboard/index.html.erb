@@ -195,84 +195,10 @@
 
 
    <div class="col-md-8 <% if !mobile_device? %> col-md-offset-4 <% end %> ">
-
-    <div class="" id="wid-id-7"role="widget">
-            <ul id="myTab2" class="nav nav-tabs bordered">
-              <li class="">
-                <a href="#eventscal" data-toggle="tab" aria-expanded="true">Calendar View</a>
-              </li>
-              <li class="active">
-                <a href="#tabevents" data-toggle="tab" aria-expanded="false">Tile View</a>
-              </li>
-
-               <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
-                <li class="pull-right bg-color-greenLight">
-                 <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
-                </li>
-               <% end %>
-
-
-            </ul>
-            <div id="myTabContent2" class="tab-content no-padding">
-              <div class="tab-pane fade in" id="eventscal">
-                <div class="jarviswidget">
-                <div>
-                      <div class="widget-body no-padding">
-                         <div class="widget-body-toolbar">
-                            <div id="calendar-buttons">
-                               <div class="btn-group">
-                                  <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
-                                  <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
-                                  <div class="btn-group">
-                                    <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">Showing <i class="fa fa-caret-down"></i>
-                                    </button>
-                                    <ul class="dropdown-menu js-status-update pull-right">
-                                       <li>
-                                          <a href="javascript:void(0);" id="mt">Month</a>
-                                       </li>
-                                       <li>
-                                          <a href="javascript:void(0);" id="ag">Agenda</a>
-                                       </li>
-                                       <li>
-                                          <a href="javascript:void(0);" id="td">Today</a>
-                                       </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div id="calendar"></div>
-                          </div>
-
-                      </div>
-                </div>
-              </div>
-              <div class="tab-pane fade in active" id="tabevents">
-                <div class="jarviswidget" id="wid-id-10" role="widget">
-                   <div role="content">
-                      <!-- widget content -->
-                      <div class="widget-body no-padding">
-                         <div class="widget-body-toolbar">
-                            <div class="row">
-                               <div class="col-md-12">
-                                  <div class="input-group">
-                                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                     <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                         <div class="col-md-12 no-padding" id='events_grid'></div>
-                         <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
-                      </div>
-                      <!-- end widget content -->
-                   </div>
-                   <!-- end widget div -->
-                </div>
-              </div>
-            </div>
-          </div>
-   </div>
+      <h2 class="text-center">Recommended Events</h2>
+      <div class="col-md-12 no-padding" id='events_grid'></div>
+      <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
+     </div>
 </div>
 </div>
 
@@ -427,3 +353,8 @@
    margin-left: 10px;
    }
 </style>
+
+
+
+
+

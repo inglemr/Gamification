@@ -55,6 +55,7 @@ Rails.application.routes.draw do
          match ':id/csv' => 'events#csv', :via => [:get, :post], :as => "csv"
          match ':id/manage' => 'events#manage', :via => [:get, :post], :as => "manage"
          get '/my_points' => 'events#my_points'
+         get '/all_events' => 'events#all_events'
          collection do
           get :index
          end
