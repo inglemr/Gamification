@@ -33,7 +33,7 @@ private
   end
 
   def orgTile(organization)
-    render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6"},:formats => [:html])
+    render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6 padding-bottom-10"},:formats => [:html])
   end
 
   def page
