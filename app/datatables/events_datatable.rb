@@ -3,7 +3,15 @@ class EventsDatatable
 
   def initialize(view)
     @view = view
-    @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event#.past_events
+    if (params[:orgFilter] != "" && params[:locFilter] != "")
+      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:location_id => params[:locFilter]).where(:organization_id => params[:orgFilter]).upcoming_first.current_event#.past_events
+    elsif params[:locFilter] != ""
+      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:location_id => params[:locFilter]).upcoming_first.current_event#.past_events
+    elsif params[:orgFilter] != ""
+      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:organization_id => params[:orgFilter]).upcoming_first.current_event#.past_events
+    else
+      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event#.past_events
+    end
     @events = @events.page(page).per_page(per_page)
 
   end
