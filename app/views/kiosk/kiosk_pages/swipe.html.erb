@@ -5,9 +5,9 @@
 <div class="kiosk_header jumbotron">
   <div class="row">
     <p style="display:inline;float:left;">Points: <%= @event.point_val %></p>
-      <p style="display:inline;float:right">Department: <%= @event.department %></p>
+      <p style="display:inline;float:right">Department: <%= Organization.find(@event.organization_id) %></p>
   </div>
-  <div class="row col-md-12"> 
+  <div class="row col-md-12">
     <h2 class="text-center"><%= @event.event_name %></h2>
   </div>
   <div class="row text-center">
@@ -29,7 +29,7 @@
                                     <%= submit_tag "Swipe", :class => "btn btn-success ",:style => "height:100px;", :id => "submit"%>
                                   </span>
                                 </div>
-                            <% end %>       
+                            <% end %>
                         </div>
                     </div>
                 </div>
@@ -43,8 +43,8 @@
         $('#id').keyup(function () {
             if(this.value.first != ";")
             if (this.value.length == 9) {
-              $('#submit').click();                    
-                
+              $('#submit').click();
+
             }
         });
         setTimeout(function(){
