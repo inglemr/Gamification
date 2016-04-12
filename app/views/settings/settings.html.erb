@@ -1,154 +1,182 @@
-
-   <div class=" well no-padding">
-
-         <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-8 ">
-             <div class="">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <div class="row">
-                        <div class="col-sm-3 profile-pic">
-                           <div class="padding-10">
-                              <h4 class="font-md"><strong><%= current_user.points %></strong>
-                                 <br>
-                                 <small>Points</small>
-                              </h4>
-                              <br>
-                              <h4 class="font-md"><strong><%= current_user.attended_events.count %></strong>
-                                 <br>
-                                 <small>Attended Events</small>
-                              </h4>
-                              <br>
-                              <h4 class="font-md"><strong><%= current_user.organizations.count %></strong>
-                                 <br>
-                                 <small>Organizations</small>
-                              </h4>
-                           </div>
-                        </div>
-                        <div class="col-sm-4">
-                           <h1><%= current_user.name %>
-                              <br>
-                              <small> <%= current_user.class_type %>, <%= current_user.user_type %></small>
-                           </h1>
-                           <ul class="list-unstyled" stye:"background-color:none;">
-                              <li>
-                                 <p class="text-muted">
-                                    <i class="fa fa-envelope"></i>&nbsp;&nbsp;<%= current_user.email %>
-                                 </p>
-                              </li>
-                           </ul>
-                           <br>
-                           <%= form_for(@user, url: {action: "updaterecords"}, :method => :POST) do |f| %>
-                             <div class="input-group">
-                               <%= f.password_field :gsw_pin, :class => "form-control text-center" , :placeholder => "GSW PIN"%>
-                               <span class="input-group-btn">
-                                <%= f.submit "Update Records" , :class => "btn btn-default" %>
-                               </span>
-                             </div>
-                           <% end%>
-                           <br>
-                           <br>
-                        </div>
+<div class="well no-padding">
+  <div class="row">
+    <div class="col-sm-4 col-centered text-center">
+       <h1><%= current_user.name %>
+          <br>
+          <small> <%= current_user.class_type %>, <%= current_user.user_type %></small>
+       </h1>
+       <ul class="list-unstyled" stye:"background-color:none;">
+          <li>
+             <p class="text-muted">
+                <i class="fa fa-envelope"></i>&nbsp;&nbsp;<%= current_user.email %>
+             </p>
+          </li>
+       </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 text-center">
+        <div class="col-md-4 col-sm-4">
+        <h4 class="font-md"><strong><%= current_user.points %></strong>
+           <small>Points</small>
+        </h4>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <h4 class="font-md"><strong><%= current_user.attended_events.count %></strong>
+           <small>Attended Events</small>
+        </h4>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <h4 class="font-md"><strong><%= current_user.organizations.count %></strong>
+           <small>Organizations</small>
+        </h4>
+      </div>
+    </div>
+  </div><br>
+  <div class="row">
+    <div class="col-sm-12">
+  <div class="panel-group smart-accordion-default" id="accordion">
+              <div class="panel panel-default top-panel">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> <i class="fa fa-lg fa-angle-down pull-right"></i> <i class="fa fa-lg fa-angle-up pull-right"></i>Recent Events</a></h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in">
+                  <div class="panel-body no-padding">
+                    <div class="col-md-12">
+                      <% if current_user.attended_events.size > 0 %>
+                        <% current_user.attended_events.each do |event| %>
+                        <%=link_to( {:controller => "events", :action => 'show', :id => event.id}) do %>
+                          <div class="col-xs-2 col-sm-1">
+                             <time datetime="<%= event.day_time.year %>-<%= event.day_time.month %>-<%= event.day_time.day %>" class="icon">
+                             <strong><%= Date::MONTHNAMES[event.day_time.month] %></strong>
+                             <span><%= event.day_time.day %></span>
+                             </time>
+                          </div>
+                          <div class="col-xs-10 col-sm-11">
+                             <h6 class="no-margin"><%= event.event_name %></h6>
+                             <p>
+                                <%= event.description %>
+                             </p>
+                          </div>
+                          <div class="col-sm-12">
+                             <hr>
+                          </div>
+                          <div class="col-sm-12">
+                             <br>
+                          </div>
+                          <% end %>
+                          <% end %>
+                        <% else %>
+                          <div class="col-lg-12 col-centered text-center">
+                            <br />
+                            <strong>No Recent Events Attended</strong><br /><br />
+                          </div>
+                        <% end %>
                      </div>
                   </div>
-               </div>
-            </div>
-             </div>
-
-            <div class="col-sm-12 col-md-12 col-lg-4">
-              <div class="">
-                <div class="row">
-                  <div class="col-sm-12">
-                    <div class="row">
-                      <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
-                        <div class="col-md-12 form-group">
-                          <h2 class="text-center">Theme</h2>
-                            <div class="col-md-4 col-centered">
-                              <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed"> <i class="fa fa-lg fa-angle-down pull-right"></i> <i class="fa fa-lg fa-angle-up pull-right"></i>Points</a></h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                  <div class="panel-body no-padding">
+                      <div class="col-centered">
+                        <div class="alert alert-success alert-block">
+                          <h4 class="alert-heading"><i class="fa fa-star"></i>10 points - Spring 2016</h4>
+                          GPA Increase
+                        </div>
+                        <div class="alert alert-success alert-block">
+                          <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
+                          Academic Standing
+                        </div>
+                        <div class="alert alert-success alert-block">
+                          <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
+                          Some Other Award
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed"> <i class="fa fa-lg fa-angle-down pull-right"></i> <i class="fa fa-lg fa-angle-up pull-right"></i>Organizations</a></h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <div class="col-md-12">
+                      <% if current_user.organizations.size > 0 %>
+                        <% current_user.organizations.each do |organization| %>
+                          <%= render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6"},:formats => [:html]) %>
+                        <% end %>
+                        <% else %>
+                        <div class="col-lg-12 col-centered text-center">
+                              <br />
+                              <strong>No Organizations Joined</strong><br /><br />
                             </div>
-                        </div>
-                        <div class="form-group col-md-12 col-md-offset-5">
-                          <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
-                        </div>
-                      <% end %>
+                        <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" class="collapsed"> <i class="fa fa-lg fa-angle-down pull-right"></i> <i class="fa fa-lg fa-angle-up pull-right"></i>Change Theme</a></h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse">
+                  <div class="panel-body no-padding">
+                    <div class="col-md-12">
+                        <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
+                          <div class="col-md-12 form-group">
+                            <h2 class="text-center">Theme</h2>
+                              <div class="col-md-4 col-sm-4 col-lg-4 col-centered">
+                                <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+                              </div>
+                          </div>
+                          <div class="col-centered text-center">
+                            <%= f.submit "Save" , :class => "btn btn-primary"%>
+                          </div>
+                        <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" class="collapsed"> <i class="fa fa-lg fa-angle-down pull-right"></i> <i class="fa fa-lg fa-angle-up pull-right"></i>Update Records</a></h4>
+                </div>
+                <div id="collapseFive" class="panel-collapse collapse">
+                  <div class="panel-body no-padding">
+                    <div class="col-md-12">
+                      <%= form_for(@user, url: {action: "updaterecords"}, :method => :POST) do |f| %>
+                       <div class="input-group" style="margin: 10px 0;">
+                         <%= f.password_field :gsw_pin, :class => "form-control text-center" , :placeholder => "GSW PIN"%>
+                         <span class="input-group-btn">
+                          <%= f.submit "Update Records" , :class => "btn btn-default" %>
+                         </span>
+                       </div>
+                     <% end%>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div class="col-md-12 padding-gutter">
-   <ul class="nav nav-tabs bordered">
-      <li class="active">
-         <a href="#recentevents" data-toggle="tab">Recent Events</a>
-      </li>
-      <li>
-         <a href="#points" data-toggle="tab">Points</a>
-      </li>
-      <li>
-         <a href="#orgs" data-toggle="tab">Organizations</a>
-      </li>
-   </ul>
-   <div class="tab-content">
-      <div class="tab-pane fade in active" id="recentevents">
-         <div class="col-md-12">
-          <% current_user.attended_events.each do |event| %>
-          <%=link_to( {:controller => "events", :action => 'show', :id => event.id}) do %>
-            <div class="col-xs-2 col-sm-1">
-               <time datetime="<%= event.day_time.year %>-<%= event.day_time.month %>-<%= event.day_time.day %>" class="icon">
-               <strong><%= Date::MONTHNAMES[event.day_time.month] %></strong>
-               <span><%= event.day_time.day %></span>
-               </time>
-            </div>
-            <div class="col-xs-10 col-sm-11">
-               <h6 class="no-margin"><%= event.event_name %></h6>
-               <p>
-                  <%= event.description %>
-               </p>
-            </div>
-            <div class="col-sm-12">
-               <hr>
-            </div>
-            <div class="col-sm-12">
-               <br>
-            </div>
-            <% end %>
-            <% end %>
-         </div>
-      </div>
-      <div class="tab-pane fade" id="points">
-        <div class="col-md-12 col-centered">
-          <div class="alert alert-success alert-block col-md-5">
-            <h4 class="alert-heading"><i class="fa fa-star"></i>10 points - Spring 2016</h4>
-            GPA Increase
-          </div>
-          <div class="alert alert-success alert-block col-md-5">
-            <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
-            Academic Standing
-          </div>
-          <div class="alert alert-success alert-block col-md-5">
-            <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
-            Some Other Award
           </div>
         </div>
-      </div>
+    </div>
 
-      <div class="tab-pane fade" id="orgs">
-        <div class= "col-md-12">
-          <% current_user.organizations.each do |organization| %>
-            <%= render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6"},:formats => [:html]) %>
-          <% end %>
-        </div>
-      </div>
-   </div>
-</div>
-         </div>
 
-   </div>
 
 <style>
 .alert{
   margin: 5px;
+}
+.top-panel {
+  border-top-color: rgba(255, 255, 225, 0.15) !important;
+}
+.minified #main {
+  margin-left: 0;
 }
 </style>
 
