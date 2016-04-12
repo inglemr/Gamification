@@ -54,7 +54,8 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def add_room(room)
+  def add_room(room_id)
+    room = Room.find(room_id)
     if !room.events.all.include?(self)
       self.rooms << room
       room.save
@@ -65,7 +66,8 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def remove_room(room)
+  def remove_room(room_id)
+    room = Room.find(room_id)
     if room.events.all.include?(self)
       self.rooms.delete(room)
       room.save
