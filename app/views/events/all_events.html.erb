@@ -1,6 +1,37 @@
+<!--- MOBILE SEARCH BAR -->
+<% if mobile_device? %>
+<div class="affix row col-md-12 mobile-search">
+ <div class="input-group">
+   <span class="input-group-addon"><i class="fa fa-search"></i></span>
+   <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
+   <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
+    <span class="input-group-addon bg-color-green">
+    <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+    </span>
+   <% end %>
+ </div>
+</div>
+<% end %>
+
+
 <div class="col-md-12 no-padding">
   <!--- LEFT SIDE PAGE -->
-  <div class="col-md-4 no-padding" <% if !mobile_device? %> data-spy="affix" <% end %> style="<% if !mobile_device? %> width:30%<% end %>">
+  <div class="col-md-4 no-padding" data-spy="affix" <% if !mobile_device? %> <% end %> style="
+      <% if !mobile_device? %>
+        width:30%;
+      <% else %>
+        margin-left:-5px;
+        width:100%;
+        bottom:0;
+        background: rgb(96,108,136);
+        background: -moz-linear-gradient(top, rgba(96,108,136,1) 0%, rgba(63,76,107,1) 100%);
+        background: -webkit-linear-gradient(top, rgba(96,108,136,1) 0%,rgba(63,76,107,1) 100%);
+        background: linear-gradient(to bottom, rgba(96,108,136,1) 0%,rgba(63,76,107,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 );
+        margin-bottom:-45px;
+        z-index:9000;
+      <% end %>">
+    <% if !mobile_device? %>
    <div class="input-group">
      <span class="input-group-addon"><i class="fa fa-search"></i></span>
      <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
@@ -11,17 +42,21 @@
      <% end %>
    </div>
    <br>
+   <% end %>
    <div class="well">
     <div class="row">
-      <h3 class="no-padding text-center">Filters</h3>
-      <div class="col-md-6">
-        <%= select_tag "organization", options_from_collection_for_select(Organization.all, "id", "name"), prompt: "Select Organization", :class => "form-control", :id=>"organization_filter" %>
-      </div>
-      <div class="col-md-6">
-        <%= select_tag "building", options_from_collection_for_select(Location.all, "id", "building_name"), prompt: "Select Location", :class => "form-control", :id=>"building_filter" %>
+      <div class="form-group">
+        <div class="col-md-6 col-sm-6">
+          <%= select_tag "organization", options_from_collection_for_select(Organization.all, "id", "name"), prompt: "Select Organization", :class => "form-control", :id=>"organization_filter" %>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <%= select_tag "building", options_from_collection_for_select(Location.all, "id", "building_name"), prompt: "Select Location", :class => "form-control", :id=>"building_filter" %>
+        </div>
       </div>
     </div>
    </div>
+
+  <% if !mobile_device? %>
   <br>
   <div class="jarviswidget">
     <div>
@@ -53,9 +88,16 @@
         </div>
       </div>
     </div>
+    <% end %>
   </div>
+
+
    <!--- RIGHT SIDE PAGE -->
-  <div class="col-md-8 <% if !mobile_device? %> col-md-offset-4 <% end %> ">
+  <div class="col-md-8 <% if !mobile_device? %> col-md-offset-4 <% end %> " style="
+    <% if mobile_device? %>
+      margin-top:50px;
+      margin-bottom:50px;
+    <% end %>">
    <div class="col-md-12 no-padding" id='events_grid'></div>
    <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
   </div>
