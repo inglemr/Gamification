@@ -5,7 +5,7 @@
 <div class="kiosk_header jumbotron">
   <div class="row">
     <p style="display:inline;float:left;">Points: <%= @event.point_val %></p>
-      <p style="display:inline;float:right">Department: <%= Organization.find(@event.organization_id) %></p>
+      <p style="display:inline;float:right">Organization: <%= Organization.find(@event.organization_id).name %></p>
   </div>
   <div class="row col-md-12">
     <h2 class="text-center"><%= @event.event_name %></h2>

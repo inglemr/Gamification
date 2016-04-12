@@ -1,6 +1,7 @@
 <div class="row" %>
   <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, kiosk_log_out_path ,:class => "btn btn-danger btn-lg text-right", :style => "float:left;position:fixed;left:0;top:0;font-size:30px;"%>
 </div>
+<br>
 <div id='events_grid' class="row" style='display: block;margin-top:40px;'></div>
 
 
@@ -27,7 +28,7 @@
           { "title": "Square Setup", "data": "events_eventTile"}
         ],
         fnServerParams: function ( aoData ) {
-          aoData.push( 
+          aoData.push(
             { "name": "sSearch", "value": $("#events_table_search").val() },
             { "name": "iDisplayLength", "value": $("#events_table_length").val() }
           );
