@@ -1,7 +1,10 @@
 <% if !mobile_device? %>
 <div class="row col-md-12">
-    <button id="list" class="btn btn-info pull-right"><i class="fa fa-list"></i></button>
-    <button id="tile" class="btn btn-info pull-right"><i class="glyphicon glyphicon-th"></i></button>
+    <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
+      <button class="btn btn-info pull-right">
+     <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+     </button>
+    <% end %>
     <input id='events_table_search' type="search" class="form-control pull-right" placeholder="Search..." style="display: inline; width: 200px">
 </div>
  <% end %>
@@ -16,7 +19,6 @@
   </div>
 
   <div class="col-md-8">
-  <div id='events_grid' class="hidden row" style='display: block'></div>
 <table id="events_table" onload="setTableRow()" class="table table-hover dataTable no-footer"  data-source="<%= events_path(format: "json") %>"></table>
   </div>
 </div>
@@ -75,6 +77,9 @@ pageSetUp();
         "iDisplayLength": 12,
         "bProcessing": true,
         "bServerSide": true,
+         "oLanguage": {
+        "sProcessing": "<div class='shaft-load3'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div> <div class='shaft10'></div></div>"
+           },
         "sAjaxSource": $('#events_table').data('source'),
         "aaSorting": [[ 0, "desc" ]],
          "columns": [

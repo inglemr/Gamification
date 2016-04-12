@@ -41,6 +41,9 @@
        "iDisplayLength": 6,
        "bProcessing": true,
        "bServerSide": true,
+                "oLanguage": {
+        "sProcessing": " <i class='fa fa-spinner  processing fa-pulse fa-3x fa-fw margin-bottom'></i>"
+           },
        "sAjaxSource": $('#organizations_table').data('source'),
        "aaSorting": [[ 0, "desc" ]],
         "columns": [
@@ -66,9 +69,6 @@
        organizations_table.dataTable().api().draw(true);
      });
 
-
-
-       $('#organizations_table_processing').addClass('bg-color-red')
    })
        setTimeout(function(){
            $('#flash').remove();
