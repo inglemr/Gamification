@@ -1,15 +1,15 @@
 <% if !mobile_device? %>
-<div class="row col-md-12">
-    <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
-      <button class="btn btn-info pull-right">
-     <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
-     </button>
-    <% end %>
-    <input id='events_table_search' type="search" class="form-control pull-right" placeholder="Search..." style="display: inline; width: 200px">
-</div>
+  <div class="row col-md-12">
+      <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
+        <button class="btn btn-info pull-right">
+       <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+       </button>
+      <% end %>
+      <input id='events_table_search' type="search" class="form-control pull-right" placeholder="Search..." style="display: inline; width: 200px">
+  </div>
  <% end %>
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-4 <% if mobile_device? %>  affix quickStatsTile" id="mobileQuickTile" <% else %> " <% end %> style="z-index:9000">
     <div id="stats">
       <%= render(:partial=>"quick_stats.html.erb", locals: { event: @event} , :formats => [:html]) %>
     </div>
@@ -19,7 +19,7 @@
   </div>
 
   <div class="col-md-8">
-<table id="events_table" onload="setTableRow()" class="table table-hover dataTable no-footer"  data-source="<%= events_path(format: "json") %>"></table>
+    <table id="events_table" onload="setTableRow()" class="table table-hover dataTable no-footer"  data-source="<%= events_path(format: "json") %>"></table>
   </div>
 </div>
 
@@ -56,19 +56,21 @@ pageSetUp();
         $('#events_table').addClass("hidden");
         $('#events_grid').removeClass("hidden");
       });
-      var val = 10;
-      var year = 2000;
-    new Morris.Bar({
-      element: 'myfirstchart',
-      data: [
-      <% current_user.created_events.each do |event| %>
-        { event: '<%= event.event_name %>', attendance: <%= event.attendees.size.to_f %> },
+      <% if !mobile_device? %>
+          var val = 10;
+          var year = 2000;
+        new Morris.Bar({
+          element: 'myfirstchart',
+          data: [
+          <% current_user.created_events.each do |event| %>
+            { event: '<%= event.event_name %>', attendance: <%= event.attendees.size.to_f %> },
+          <% end %>
+          ],
+          xkey: 'event',
+          ykeys: ['attendance'],
+          labels: ['Attendance']
+        });
       <% end %>
-      ],
-      xkey: 'event',
-      ykeys: ['attendance'],
-      labels: ['Attendance']
-    });
 
 
       var events_table = $('#events_table').dataTable({
@@ -110,8 +112,39 @@ pageSetUp();
       $('#events_table_search').keyup(function(){
         events_table.dataTable().api().draw(false);
       });
+      $('#mobileQuickTile').on("click", function() {
+        if ($('#mobileQuickTile').hasClass('quickStatsTile'))
+        {
+          $('#mobileQuickTile').removeClass('quickStatsTile');
+          $('#mobileQuickTile').addClass('quickstatsOpen');
+        }
+        else
+        {
+          $('#mobileQuickTile').removeClass('quickstatsOpen');
+          $('#mobileQuickTile').addClass('quickStatsTile');
+        }
+      });
     })
   </script>
 <% end %>
 
+<style>
 
+.quickStatsTile{
+  bottom: 0px;
+  height: 7%;
+  margin-left: -5px;
+  margin-right: -15px;
+  background: black;
+}
+
+.quickstatsOpen{
+  bottom: -40px;
+  margin-left: -5px;
+  margin-right: -15px;
+  background: black;
+}
+
+
+
+</style>
