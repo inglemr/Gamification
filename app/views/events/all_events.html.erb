@@ -1,80 +1,72 @@
-
-    <div class="" id="wid-id-7"role="widget">
-            <ul id="myTab2" class="nav nav-tabs bordered">
-              <li class="active">
-                <a href="#eventscal" data-toggle="tab" aria-expanded="true">Calendar View</a>
-              </li>
-              <li class="">
-                <a href="#tabevents" data-toggle="tab" aria-expanded="false">Tile View</a>
-              </li>
-
-               <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
-                <li class="pull-right bg-color-greenLight">
-                 <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
-                </li>
-               <% end %>
-
-
-            </ul>
-            <div id="myTabContent2" class="tab-content no-padding">
-              <div class="tab-pane fade in active" id="eventscal">
-                <div class="jarviswidget">
-                <div>
-                      <div class="widget-body no-padding">
-                         <div class="widget-body-toolbar">
-                            <div id="calendar-buttons">
-                               <div class="btn-group">
-                                  <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
-                                  <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
-                                  <div class="btn-group">
-                                    <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">Showing <i class="fa fa-caret-down"></i>
-                                    </button>
-                                    <ul class="dropdown-menu js-status-update pull-right">
-                                       <li>
-                                          <a href="javascript:void(0);" id="mt">Month</a>
-                                       </li>
-                                       <li>
-                                          <a href="javascript:void(0);" id="ag">Agenda</a>
-                                       </li>
-                                       <li>
-                                          <a href="javascript:void(0);" id="td">Today</a>
-                                       </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div id="calendar"></div>
-                          </div>
-
-                      </div>
-                </div>
-              </div>
-              <div class="tab-pane fade in " id="tabevents">
-                <div class="jarviswidget" id="wid-id-10" role="widget">
-                   <div role="content">
-                      <!-- widget content -->
-                      <div class="widget-body no-padding">
-                         <div class="widget-body-toolbar">
-                            <div class="row">
-                               <div class="col-md-12">
-                                  <div class="input-group">
-                                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                     <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
-                                  </div>
-                               </div>
-                            </div>
-                         </div>
-                         <div class="col-md-12 no-padding" id='events_grid'></div>
-                         <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
-                      </div>
-                      <!-- end widget content -->
-                   </div>
-                   <!-- end widget div -->
+<div class="col-md-12 no-padding">
+  <!--- LEFT SIDE PAGE -->
+  <div class="col-md-4 no-padding" <% if !mobile_device? %> data-spy="affix" <% end %> style="<% if !mobile_device? %> width:30%<% end %>">
+   <div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-search"></i></span>
+     <input id='events_table_search' type="search" class="form-control" placeholder="Search...">
+     <% if ((can? :manage, :all) || (can? :update, @event, :context => :admin))%>
+      <span class="input-group-addon bg-color-green">
+      <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+      </span>
+     <% end %>
+   </div>
+   <br>
+   <div class="well">
+    <div class="row">
+      <h3 class="no-padding text-center">Filters</h3>
+      <div class="col-md-6">
+        <%= select_tag "organization", options_from_collection_for_select(Organization.all, "id", "name"), prompt: "Select Organization", :class => "form-control", :id=>"organization_filter" %>
+      </div>
+      <div class="col-md-6">
+        <%= select_tag "building", options_from_collection_for_select(Location.all, "id", "building_name"), prompt: "Select Location", :class => "form-control", :id=>"building_filter" %>
+      </div>
+    </div>
+   </div>
+  <br>
+  <div class="jarviswidget">
+    <div>
+      <div class="widget-body no-padding">
+         <div class="widget-body-toolbar">
+            <div id="calendar-buttons">
+             <div class="btn-group">
+                <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
+                <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                <div class="btn-group">
+                  <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">Showing <i class="fa fa-caret-down"></i>
+                  </button>
+                  <ul class="dropdown-menu js-status-update pull-right">
+                     <li>
+                        <a href="javascript:void(0);" id="mt">Month</a>
+                     </li>
+                     <li>
+                        <a href="javascript:void(0);" id="ag">Agenda</a>
+                     </li>
+                     <li>
+                        <a href="javascript:void(0);" id="td">Today</a>
+                     </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--- RIGHT SIDE PAGE -->
+  <div class="col-md-8 <% if !mobile_device? %> col-md-offset-4 <% end %> ">
+   <div class="col-md-12 no-padding" id='events_grid'></div>
+   <table summary "Events List" id="events_table" style="display: none"class="table table-hover"  data-source="<%= root_path(format: "json") %>"></table>
+  </div>
+</div>
+
+
+
+
+
+
+
 
 
 
@@ -89,6 +81,9 @@
        "iDisplayLength": 6,
        "bProcessing": true,
        "bServerSide": true,
+       "oLanguage": {
+        "sProcessing": "<div class='shaft-load3'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div> <div class='shaft10'></div></div>"
+           },
        "sAjaxSource": $('#events_table').data('source'),
        "aaSorting": [[ 0, "desc" ]],
         "columns": [
@@ -97,7 +92,9 @@
        fnServerParams: function ( aoData ) {
          aoData.push(
            { "name": "sSearch", "value": $("#events_table_search").val() },
-           { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+           { "name": "iDisplayLength", "value": $("#events_table_length").val() },
+           { "name": "orgFilter", "value": $("#organization_filter").val() },
+           { "name": "locFilter", "value": $("#building_filter").val() }
          );
        },
        fnDrawCallback: function( oSettings ) {
@@ -107,9 +104,12 @@
          });
      }
    });
-     $("#events_table_length").on("change", function() {
-       events_table.dataTable().api().draw(true);
-     });
+     $("#organization_filter").change(function() {
+      events_table.dataTable().api().draw(true);
+      });
+     $("#building_filter").change(function() {
+      events_table.dataTable().api().draw(true);
+      });
      $('#events_table_search').keyup(function(){
        events_table.dataTable().api().draw(true);
      });
@@ -176,7 +176,6 @@
        $('#td').click(function () {
            $('#calendar').fullCalendar('changeView', 'agendaDay');
        });
-       $('#events_table_processing').addClass('bg-color-red')
    })
        setTimeout(function(){
            $('#flash').remove();
