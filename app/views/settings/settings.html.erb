@@ -129,12 +129,11 @@
                     <div class="col-md-12">
                         <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
                           <div class="col-md-12 form-group">
-                            <h2 class="text-center">Theme</h2>
-                              <div class="col-md-4 col-sm-4 col-lg-4 col-centered">
-                                <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
-                              </div>
+                            <div class="col-md-4 col-sm-4 col-lg-4 col-centered" style="margin: 10px 0;">
+                              <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+                            </div>
                           </div>
-                          <div class="col-centered text-center">
+                          <div class="col-centered text-center" style="margin: 10px 0;">
                             <%= f.submit "Save" , :class => "btn btn-primary"%>
                           </div>
                         <% end %>
