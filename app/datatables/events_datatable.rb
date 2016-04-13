@@ -3,14 +3,34 @@ class EventsDatatable
 
   def initialize(view)
     @view = view
-    if (params[:orgFilter] != "" && params[:locFilter] != "")
-      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:location_id => params[:locFilter]).where(:organization_id => params[:orgFilter]).upcoming_first.current_event#.past_events
-    elsif params[:locFilter] != ""
-      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:location_id => params[:locFilter]).upcoming_first.current_event#.past_events
-    elsif params[:orgFilter] != ""
-      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:organization_id => params[:orgFilter]).upcoming_first.current_event#.past_events
+    if(params[:recommended] != "1")
+      if (params[:orgFilter] != "" && params[:locFilter] != "")
+        @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:location_id => params[:locFilter]).where(:organization_id => params[:orgFilter]).upcoming_first.current_event#.past_events
+      elsif params[:locFilter] != ""
+        @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:location_id => params[:locFilter]).upcoming_first.current_event#.past_events
+      elsif params[:orgFilter] != ""
+        @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").where(:organization_id => params[:orgFilter]).upcoming_first.current_event#.past_events
+      else
+        @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event#.past_events
+      end
     else
-      @events = Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event#.past_events
+      # test = ActsAsTaggableOn::Tagging.where(:taggable_type => "Event").joins('INNER JOIN user_events ON user_events.attended_event_id = taggings.taggable_id').where('user_events.attendee_id = 1').map { |tagging| { 'id' => tagging.tag_id.to_s, 'name' => tagging.tag.name } }
+      #  test = ActsAsTaggableOn::Tagging.where(:taggable_type => "Event").joins('LEFT OUTER JOIN user_events ON user_events.attended_event_id = taggings.taggable_id').where('user_events.attendee_id = 1')
+
+      tags = ActsAsTaggableOn::Tagging.where(:taggable_type => "Event").joins('RIGHT OUTER JOIN user_events ON( user_events.attended_event_id = taggings.taggable_id AND user_events.attendee_id = 1)').map { |tagging| { 'id' => tagging.tag_id.to_s, 'name' => tagging.tag.name } }
+
+      #Gets all tags of events that the user has attended
+      temp = Hash.new
+      tags.each do |tag|
+        puts tag
+        tem = temp[tag["name"]]
+        if tem == nil
+          tem = 0;
+        end
+        tem = tem.to_i + 1
+        temp[tag["name"]] = tem
+      end
+      @events = Event.tagged_with(temp.keys, :match_all => true)
     end
     @events = @events.page(page).per_page(per_page)
 
