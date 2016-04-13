@@ -217,7 +217,14 @@ class Event < ActiveRecord::Base
     elsif (id == ";E?")
       message[:danger] = "Error Swiping Card"
     else
-      message[:danger] = "User could not be found register at {URL} and then try again"
+      if(SavedSwipe.where(:gsw_id => id, :event_id => event.id).size > 0)
+        message[:danger] = "GSW ID already linked to event please register at {URL} to claim your points"
+      else
+        swipe = SavedSwipe.new(:gsw_id => id, :event_id => event.id)
+        swipe.save
+        message[:success] = "GSW ID linked to event. Please register at {URL} to claim your points"
+      end
+
     end
     return message
   end
