@@ -4,6 +4,10 @@ gem 'rails', '4.2.4'
 # Database
 gem 'pg'
 
+
+#Tagging
+gem 'acts-as-taggable-on', '~> 3.4'
+
 #User Authentication
 gem 'devise'
 gem 'bcrypt'

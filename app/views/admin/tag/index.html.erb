@@ -1,0 +1,52 @@
+<div class="row col-md-12">
+  <div class="col-md-9">
+    <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="New" class="fa fa-plus-square fa-lg"></i> New Tag'.html_safe, {:action => 'new'} ,:class => "btn btn-primary new") %>
+    </div>
+
+  <div class="col-md-3">
+    <div class="input-group">
+     <span class="input-group-addon"><i class="fa fa-search"></i></span>
+     <input id='tags_table_search' type="search" class="form-control" placeholder="Search...">
+     <span class="input-group-addon"><span class="btn-sm" id="tags_table_refresh"><i class="fa fa-refresh"></i></span></span>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+<table summary "tags List" id="tags_table" class="table table-hover"  data-source="<%= admin_tag_index_path(format: "json") %>"></table>
+</div>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var tags_table = $('#tags_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#tags_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Id", "data": "tags__id" },
+          { "title": "Name", "data": "tags__name" },
+          { "title": "Actions", "data": "tag_actions", "bSortable" : false }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#tags_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#tags_table_length").val() }
+          );
+        },
+      });
+      $("#tags_table_length").on("change", function() {
+        tags_table.dataTable().api().draw(false);
+      });
+      $('#tags_table_refresh').click(function(e){
+        tags_table.dataTable().api().draw(false);
+      });
+      $('#tags_table_search').keyup(function(){
+        tags_table.dataTable().api().draw(false);
+      });
+    });
+  </script>
+<% end %>

@@ -37,6 +37,8 @@ Rails.application.routes.draw do
         end
         resources :events do
         end
+        resources :tag do
+        end
         resources :rooms do
         end
         resources :user do

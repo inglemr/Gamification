@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  acts_as_taggable
 
 	validates :day_time, presence: true
   validates :end_time, presence: true

@@ -71,6 +71,9 @@ class Admin::EventsController < ApplicationController
         end
       end
     end
+
+    @event.tag_list = params[:event][:tag_list]
+
 		if @event.update_attributes(event_params)
 
   		redirect_to admin_events_path, :flash => { :success => 'Event was successfully updated.' }
@@ -149,6 +152,8 @@ class Admin::EventsController < ApplicationController
       end
     end
 
+    @event.tag_list = params[:event][:tag_list]
+
 		if @event.save
 			if(recureEvent == "recure")
 				@event.recurring_id = @event.id
@@ -179,7 +184,7 @@ end
 
 private
   def event_params
-    params.require(:event).permit(:rooms,:location_id,:end_time,:event_name, :organization_id, :day_time, :point_val, :description, :created_by, :updated_by, :image)
+    params.require(:event).permit(:rooms,:location_id,:end_time,:event_name, :organization_id, :day_time, :point_val, :description, :created_by, :updated_by, :image, :tag_list)
   end
 
 	def self.permission

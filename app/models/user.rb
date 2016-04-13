@@ -1,10 +1,11 @@
 #<%= SymmetricEncryption.decrypt (current_user.current_semester["GPA"]) %>
 class User < ActiveRecord::Base
-  #Filters
+
+
+  #Validations
   before_validation :set_email, :on => :create
   #before_validation :generate_api_token
 
-  #Validations
   #validates :api_token, presence: true, uniqueness: true
   validates :gsw_id, presence: true, uniqueness: {message: " must be unique"}
   validates :email , uniqueness: {message: "must be unique or does not exist"}
@@ -140,6 +141,7 @@ class User < ActiveRecord::Base
           academic_standing = last_semester["academic_standing"]
           additional_standing = last_semester["additional_standing"]
           #ecrypted
+          #This should be pulled out into a helper method that encrypts / decrypts a hash map
           last_semester_enc = Hash.new
           last_semester_enc["term"] = SymmetricEncryption.encrypt(term)
           last_semester_enc["academic_standing"] =  SymmetricEncryption.encrypt(academic_standing)
