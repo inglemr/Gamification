@@ -1,12 +1,29 @@
 
-$("#updaterecords_btn").html('Update Records');
-$('#updatemessage').remove();
-<% if(@message == "Success") %>
-  $("#collapseFive").append('<div id="updatemessage" class="col-md-12 text-center alert alert-success fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-check"></i><strong>Records Updated</strong></div>');
-<% else %>
-  $("#collapseFive").append('<div id="updatemessage" class="col-md-12 text-center alert alert-danger fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-exclamation"></i><strong>Error Updating Records</strong></div>');
-<% end %>
-
-setTimeout(function(){
+<% if @form_type == "records" %>
+  $("#updaterecords_btn").html('Update Records');
   $('#updatemessage').remove();
-}, 5000);
+  <% if(@message == "Success") %>
+    $("#collapseFive").append('<div id="updatemessage" class="col-md-12 text-center alert alert-success fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-check"></i><strong>Records Updated</strong></div>');
+  <% else %>
+    $("#collapseFive").append('<div id="updatemessage" class="col-md-12 text-center alert alert-danger fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-exclamation"></i><strong>Error Updating Records</strong></div>');
+  <% end %>
+
+  setTimeout(function(){
+    $('#updatemessage').remove();
+  }, 5000);
+
+<% else %>
+
+  $("#updatetheme_btn").html('Update Settings');
+  $('#update_settings_message').remove();
+  <% if(@message == "User was successfully updated.") %>
+    $("#collapseFour").append('<div id="update_settings_message" class="col-md-12 text-center alert alert-success fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-check"></i><strong>Settings Updated</strong><br><i class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>Refreshing Page...</div>');
+  <% else %>
+    $("#collapseFour").append('<div id="update_settings_message" class="col-md-12 text-center alert alert-danger fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-exclamation"></i><strong>Error Updating Settings</strong></div>');
+  <% end %>
+
+  setTimeout(function(){
+    $('#update_settings_message').remove();
+  }, 5000);
+  window.location = '<%= settings_path %>';
+<% end %>

@@ -127,14 +127,15 @@
                 <div id="collapseFour" class="panel-collapse collapse">
                   <div class="panel-body no-padding">
                     <div class="col-md-12">
-                        <%= form_for(@user, url: {action: "updatesettings"}, :method => :POST) do |f| %>
+                        <%= form_for(@user, url: {action: "updatesettings"}, :remote => true , :method => :POST, :html =>{ :id => "update_theme_form" }) do |f| %>
                           <div class="col-md-12 form-group">
                             <div class="col-md-4 col-sm-4 col-lg-4 col-centered" style="margin: 10px 0;">
                               <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
                             </div>
                           </div>
                           <div class="col-centered text-center" style="margin: 10px 0;">
-                            <%= f.submit "Save" , :class => "btn btn-primary"%>
+                            <button class="btn btn-default" id="updatetheme_btn">Update Settings</button>
+                          <%= f.submit "Update Records", :id => "updatetheme_submit" ,:class => "hidden" %>
                           </div>
                         <% end %>
                     </div>
@@ -190,6 +191,11 @@
 $( "#updaterecords_btn" ).click(function() {
   $("#updaterecords_btn").html('<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
   $("#update_records_form").submit();
+});
+
+$( "#updatetheme_btn" ).click(function() {
+  $("#updatetheme_btn").html('<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+  $("#update_theme_form").submit();
 });
 
 

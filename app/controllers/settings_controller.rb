@@ -9,16 +9,20 @@ class SettingsController < ApplicationController
 			@user.update_attributes(:theme => params[:theme])
 		end
 		if @user.save
-  		redirect_to root_path, :flash => { :success => 'User was successfully updated.' }
+  		@message = 'User was successfully updated.'
 		else
-  		redirect_to settings_path, :flash => { :error => 'User was unsuccesfully updated.' }
+			@message = "User was unsuccesfully updated."
+		end
+		respond_to do |format|
+			format.js   { render 'settings.js.erb'}
+			format.html { redirect_to(:action => 'settings', :flash => { :error => @message })}
 		end
 	end
 
 	def updaterecords
 		@user = current_user
 		@message = @user.update_records(params[:user][:gsw_pin])
-
+		@form_type = "records"
 		@user.save
 		respond_to do |format|
 			format.js   { render 'settings.js.erb'}
