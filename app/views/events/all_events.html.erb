@@ -54,6 +54,14 @@
         </div>
       </div>
     </div>
+    <br>
+    <div class="row">
+      <div class="form-group">
+        <div class="col-md-12">
+           <%= select_tag "tags", options_from_collection_for_select(Tag.all, "name", "name"), prompt: "Select Tag", :class => "select2", :id=>"tag_filter" , :multiple => true %>
+        </div>
+      </div>
+    </div>
    </div>
 
   <% if !mobile_device? %>
@@ -136,6 +144,7 @@
            { "name": "sSearch", "value": $("#events_table_search").val() },
            { "name": "iDisplayLength", "value": $("#events_table_length").val() },
            { "name": "orgFilter", "value": $("#organization_filter").val() },
+           { "name": "tag", "value": $("#tag_filter").val() },
            { "name": "locFilter", "value": $("#building_filter").val() }
          );
        },
@@ -151,6 +160,9 @@
       });
      $("#building_filter").change(function() {
       events_table.dataTable().api().draw(true);
+      });
+      $("#tag_filter").change(function() {
+        events_table.dataTable().api().draw(true);
       });
      $('#events_table_search').keyup(function(){
        events_table.dataTable().api().draw(true);
@@ -227,7 +239,33 @@
 
 </script>
 <% end %>
+
+
 <style>
+  a.select2-choice{
+  line-height: 45px !important;
+  }
+
+  li.select2-search-field{
+  height: 44px;
+  }
+  .select2-container{
+  padding: 0px;
+  }
+  ul.select2-choices, a.select2-choice{
+  height: 46px !important;
+  }
+  #s2id_autogen1{
+  height: 42px;
+  }
+  #event_rooms{
+  height:200px;
+  width:100px;
+  }
+  .smart-style-5 .bootstrapWizard li .title{
+  color:white;
+  }
+
 
 
 .centerProcessing{
