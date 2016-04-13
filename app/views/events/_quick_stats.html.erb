@@ -38,7 +38,8 @@ if(trBelow.attr("id") == "attendance_tr")
 }
 else
 {
-  newRow = $('<tr id="attendance_tr" class="nohover"  ><td colspan="6" ><h2 class="text-center">Attendance Data</h2><%=  escape_javascript(render "events/inlineform.html.erb",:path => admin_event_path(event) ,:page_type => "Edit", :event => event)  %></td></tr>').insertAfter($("#<%= event.id %>").closest('tr'));
+  $(".nohover").remove();
+  newRow = $('<tr style="z-index: -90;" id="attendance_tr" class="nohover"  ><td colspan="6" ><h2 class="text-center">Attendance Data</h2><%=  escape_javascript(render "events/inlineform.html.erb",:path => admin_event_path(event) ,:page_type => "Edit", :event => event)  %></td></tr>').insertAfter($("#<%= event.id %>").closest('tr'));
 }
 
 
