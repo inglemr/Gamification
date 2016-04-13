@@ -236,6 +236,10 @@
          $.each(oSettings.aoData, function( index, result ) {
            $('#events_grid').append(result._aData.events_eventTile);
          });
+         if(oSettings.aoData.length == 0)
+         {
+          $('#events_grid').append('<div class="well text-center col-md-12"><h2>No Recommended Events</h2><p>Start attending events to get recommendations</p></div>');
+         }
      }
    });
      $("#events_table_length").on("change", function() {
