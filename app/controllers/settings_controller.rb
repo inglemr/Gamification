@@ -16,17 +16,14 @@ class SettingsController < ApplicationController
 	end
 
 	def updaterecords
-		puts params
-		puts "Testing"
 		@user = current_user
-		message = @user.update_records(params[:user][:gsw_pin])
-		if message != "Success"
-			flash[:alert] = message
-		else
-			flash[:success] = message
-		end
+		@message = @user.update_records(params[:user][:gsw_pin])
+
 		@user.save
-		redirect_to settings_path
+		respond_to do |format|
+			format.js   { render 'settings.js.erb'}
+		end
+
 	end
 
 end

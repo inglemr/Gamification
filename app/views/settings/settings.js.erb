@@ -1,0 +1,12 @@
+
+$("#updaterecords_btn").html('Update Records');
+$('#updatemessage').remove();
+<% if(@message == "Success") %>
+  $("#collapseFive").append('<div id="updatemessage" class="col-md-12 text-center alert alert-success fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-check"></i><strong>Records Updated</strong></div>');
+<% else %>
+  $("#collapseFive").append('<div id="updatemessage" class="col-md-12 text-center alert alert-danger fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-exclamation"></i><strong>Error Updating Records</strong></div>');
+<% end %>
+
+setTimeout(function(){
+  $('#updatemessage').remove();
+}, 5000);

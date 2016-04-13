@@ -148,11 +148,12 @@
                 <div id="collapseFive" class="panel-collapse collapse">
                   <div class="panel-body no-padding">
                     <div class="col-md-12">
-                      <%= form_for(@user, url: {action: "updaterecords"}, :method => :POST) do |f| %>
+                      <%= form_for(@user, url: {action: "updaterecords"}, :remote => true , :method => :POST, :html =>{ :id => "update_records_form" })  do |f| %>
                        <div class="input-group" style="margin: 10px 0;">
                          <%= f.password_field :gsw_pin, :class => "form-control text-center" , :placeholder => "GSW PIN"%>
                          <span class="input-group-btn">
-                          <%= f.submit "Update Records" , :class => "btn btn-default" %>
+                          <button class="btn btn-default" id="updaterecords_btn">Update Records</button>
+                          <%= f.submit "Update Records", :id => "updaterecords_submit" ,:class => "hidden" %>
                          </span>
                        </div>
                      <% end%>
@@ -185,6 +186,13 @@
   <script type="text/javascript">
   pageSetUp();
   $("#theme").val("<%= current_user.theme %>");
+
+$( "#updaterecords_btn" ).click(function() {
+  $("#updaterecords_btn").html('<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+  $("#update_records_form").submit();
+});
+
+
 </script>
 <% end %>
 
