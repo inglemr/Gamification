@@ -1,0 +1,41 @@
+
+<div class="table-responsive">
+<table summary "Events List" id="events_table_<%= event.event_name %>" class="table table-hover"  data-source="<%= manage_events_path(format: "json", :id => event.id) %>"></table>
+</div>
+
+  <script>
+
+    $( document ).ready(function() {
+
+   var events_table = $('#events_table_<%= event.event_name %>').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "iDisplayLength": 12,
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#events_table_<%= event.event_name %>').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "GSW ID" , "data": "users__gsw_id"},
+          { "title": "Name" , "data": "users__name"},
+          { "title": "Email", "data": "users__email"},
+          { "title": "Class", "data": "users__class_type"},
+          { "title": "Time", "data": "users_events__created_at"}
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#events_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+          );
+        },
+        fnDrawCallback: function( oSettings ) {
+          $('#events_grid').html('');
+          $.each(oSettings.aoData, function( index, result ) {
+            $('#events_grid').append(result._aData.events_eventTile);
+          });
+      }
+    });
+ });
+  </script>
+
+

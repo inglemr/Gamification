@@ -4,7 +4,8 @@ class Events::UserAttendanceDatatable
   def initialize(view, event)
     @view = view
     @event = event
-    @users = User.order("#{sort_column} #{sort_direction}").joins(:user_events).where("user_events.attended_event_id = '#{event.id}'").where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    #User.order("#{sort_column} #{sort_direction}").
+    @users = User.joins(:user_events).where("user_events.attended_event_id = '#{event.id}'").where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
     @users = @users.page(page).per_page(per_page)
 
   end

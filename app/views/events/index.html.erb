@@ -28,6 +28,8 @@
 <% content_for :scripts do %>
   <script type="text/javascript">
     var row;
+    var lastId;
+    var newRow;
     var datatable;
     $( document ).ready(function() {
 pageSetUp();
@@ -36,16 +38,21 @@ pageSetUp();
   });
 
       $("#events_table").delegate('tr', 'click', function() {
+        if(this.id != "attendance_tr")
+        {
           if (row != undefined)
           {
             row.removeClass('success')
           }
 
           row = $("#" + this.id).addClass('success');
-            $.ajax({url: '<%= url_for :action => 'index' %>',
+
+          $.ajax({url: '<%= url_for :action => 'index' %>',
+
           data: 'event_id=' + this.id,
           dataType: 'script'})
-        //get <td> element values here!!??
+          lastId = this.id
+        }
     });
 
       $( "#list" ).click(function() {

@@ -29,5 +29,27 @@
         </tr>
       </table>
     </div>
+<script>
+console.log("worked");
+var trBelow = $("#<%= event.id %>").closest("tr").next("tr");
+if(trBelow.attr("id") == "attendance_tr")
+{
+  trBelow.remove();
+}
+else
+{
+  newRow = $('<tr id="attendance_tr" class="nohover"  ><td colspan="6" ><h2 class="text-center">Attendance Data</h2><%=  escape_javascript(render "events/inlineform.html.erb",:path => admin_event_path(event) ,:page_type => "Edit", :event => event)  %></td></tr>').insertAfter($("#<%= event.id %>").closest('tr'));
+}
+
+
+
+
+</script>
+
+<style>
+.table-hover > tbody > tr.nohover:hover > td {
+     background: none;
+ }
+</style>
 
 
