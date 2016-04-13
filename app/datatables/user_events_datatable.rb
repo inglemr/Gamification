@@ -33,7 +33,7 @@ private
         "events__id" => event.id,
         "events__event_name" => event.event_name,
         "events__description" => truncate(event.description, :length => 200, :separator => ' '),
-        "events__location_id" => event.location_id,
+        "events__location_id" => Location.find(event.location_id).building_name,
         "events__point_val" => event.point_val,
         events_eventTile: eventTile(event),
         "events__day_time" => event.day_time.to_formatted_s(:short),

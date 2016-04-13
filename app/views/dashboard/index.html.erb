@@ -225,7 +225,9 @@
        fnServerParams: function ( aoData ) {
          aoData.push(
            { "name": "sSearch", "value": $("#events_table_search").val() },
-           { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+           { "name": "iDisplayLength", "value": $("#events_table_length").val() },
+          { "name": "orgFilter", "value": "" },
+           { "name": "locFilter", "value": "" }
          );
        },
        fnDrawCallback: function( oSettings ) {
