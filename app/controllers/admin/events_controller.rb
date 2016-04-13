@@ -167,7 +167,12 @@ class Admin::EventsController < ApplicationController
 
 def destroy
   @event = Event.find(params[:id])
-  @event.destroy
+  if (@event.attendees.size == 0)
+     flash[:success] = "Event deleted successfully"
+    @event.destroy
+  else
+    flash[:danger] = "Event can not be deleted with attendees"
+  end
 
   redirect_to :back
 end
