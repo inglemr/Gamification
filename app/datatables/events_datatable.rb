@@ -1,5 +1,5 @@
 class EventsDatatable
-   delegate :params, :h, :day, :datetime ,:content_tag, :current_ability, :render, :can?,:truncate, to: :@view
+   delegate :params, :h, :day, :datetime ,:content_tag, :current_ability,:current_user, :render, :can?,:truncate, to: :@view
 
   def initialize(view)
     @view = view
@@ -17,7 +17,7 @@ class EventsDatatable
       # test = ActsAsTaggableOn::Tagging.where(:taggable_type => "Event").joins('INNER JOIN user_events ON user_events.attended_event_id = taggings.taggable_id').where('user_events.attendee_id = 1').map { |tagging| { 'id' => tagging.tag_id.to_s, 'name' => tagging.tag.name } }
       #  test = ActsAsTaggableOn::Tagging.where(:taggable_type => "Event").joins('LEFT OUTER JOIN user_events ON user_events.attended_event_id = taggings.taggable_id').where('user_events.attendee_id = 1')
 
-      tags = ActsAsTaggableOn::Tagging.where(:taggable_type => "Event").joins('RIGHT OUTER JOIN user_events ON( user_events.attended_event_id = taggings.taggable_id AND user_events.attendee_id = 1)').map { |tagging| { 'id' => tagging.tag_id.to_s, 'name' => tagging.tag.name } }
+      tags = ActsAsTaggableOn::Tagging.where(:taggable_type => "Event").joins('RIGHT OUTER JOIN user_events ON( user_events.attended_event_id = taggings.taggable_id AND user_events.attendee_id =' +  current_user.id.to_s + ')').map { |tagging| { 'id' => tagging.tag_id.to_s, 'name' => tagging.tag.name } }
 
       #Gets all tags of events that the user has attended
       temp = Hash.new
@@ -30,7 +30,14 @@ class EventsDatatable
         tem = tem.to_i + 1
         temp[tag["name"]] = tem
       end
-      @events = Event.tagged_with(temp.keys, :match_all => true)
+
+      query_tags = Array.new
+      top_tags = temp.sort_by {|k,v| v}.reverse[0..5]
+      top_tags.each do |k,v|
+        query_tags << k
+      end
+
+      @events = Event.tagged_with(query_tags, :any => true).upcoming_first.current_event
     end
     @events = @events.page(page).per_page(per_page)
 
