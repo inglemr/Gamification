@@ -58,7 +58,7 @@
     <div class="row">
       <div class="form-group">
         <div class="col-md-12">
-           <%= select_tag "tags", options_from_collection_for_select(Tag.all, "name", "name"), prompt: "Select Tag", :class => "select2", :id=>"tag_filter" , :multiple => true %>
+           <%= select_tag "tags", options_from_collection_for_select(Tag.all, "name", "name"), :class => "select2", :id=>"tag_filter" , :multiple => true, :placeholder => "Select Tags To Filter" %>
         </div>
       </div>
     </div>
@@ -153,6 +153,10 @@
          $.each(oSettings.aoData, function( index, result ) {
            $('#events_grid').append(result._aData.events_eventTile);
          });
+         if(oSettings.aoData.length == 0)
+         {
+          $('#events_grid').append('<div class="well text-center col-md-12"><h2>No Events To Display</h2></div>');
+         }
      }
    });
      $("#organization_filter").change(function() {
