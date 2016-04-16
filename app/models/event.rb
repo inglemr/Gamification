@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
 
   scope :latest_first , lambda { order("events.day_time DESC")}
   scope :upcoming_first , lambda { order("events.day_time ASC")}
-  scope :past_events, lambda {("events.day_time > #{Time.now}")}
+  scope :past_events, lambda {where("day_time < '#{Time.now}'")}
   scope :in_range, lambda {where("(day_time >= '#{(Time.now - (2 * 60 * 60)).to_s(:db)}' AND day_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}') OR (day_time <= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}' AND end_time >= '#{(Time.now + (2 * 60 * 60)).to_s(:db)}')")}
   scope :current_event, lambda {where("(day_time >= '#{(DateTime.now).to_s(:db)}') OR (end_time > '#{DateTime.now.to_s(:db)}')")}
 

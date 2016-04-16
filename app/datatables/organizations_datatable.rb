@@ -49,7 +49,7 @@ private
   end
 
   def search_string
-    "name LIKE :search OR description LIKE :search"
+    "lower(name) LIKE :search"
   end
 
   def sort_column
