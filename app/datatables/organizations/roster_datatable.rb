@@ -43,7 +43,7 @@ private
   end
 
   def actions(member)
-    render(:partial=>"organizations/member_actions.html.erb", locals: { member: member} , :formats => [:html])
+    render(:partial=>"organizations/member_actions.html.erb", locals: { member: member, organization: @organization} , :formats => [:html])
   end
 
   def page

@@ -9,6 +9,25 @@ class OrganizationsController < ApplicationController
       end
   end
 
+  def member_role
+    @organization = Organization.find(params[:id])
+    @user = User.find(params[:member_id])
+    params['user']['_org_roles'] ||= []
+    params['user']['_org_roles'].each do |id|
+      if(!@user.org_roles.exists?(id))
+        @user.org_roles << OrgRole.find(id)
+      end
+    end
+    OrgRole.all.each do |role|
+      if !(params['user']['_org_roles'].include?(role.id.to_s)) && @user.org_roles.exists?(role.id)
+        @user.org_roles.delete(role)
+      end
+    end
+
+
+    redirect_to :back
+  end
+
   def new_role
     @organization = Organization.find(params[:id])
     @role = OrgRole.new

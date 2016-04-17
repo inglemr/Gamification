@@ -1,5 +1,4 @@
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i>'.html_safe, {:controller => "events", :action => 'manage', :id => member.id}, :class  => "btn form-control btn-sm") %>
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Edit" class="fa fa-pencil fa-lg"></i>'.html_safe, {:controller => "Admin::events",:action => 'edit', :id => member.id}, :class  => "btn form-control btn-sm") %>
+<button class="btn form-control btn-sm" data-toggle="modal" data-target="#edituserModal<%= member.id %>"><i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i></button>
 <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe,"#", method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 
 <%= javascript_tag do %>
@@ -7,3 +6,42 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 <% end %>
+
+<!-- NEW ROLE MODEL -->
+<div class="modal fade" id="edituserModal<%= member.id %>" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content"><div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title"><%= member.username %></h4>
+  </div>
+<div class="modal-body no-padding">
+  <%= form_for(member, :html => {:id =>"role-form" ,:class =>"" }, :url => member_role_organizations_path(:id => @organization, :member_id => member)) do |f| %>
+    <fieldset>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Roles</label>
+          <div class="col-md-10">
+            <% organization.org_roles.each do |role|%>
+              <%= f.label :role , :class => "checkbox" do %>
+                <%= check_box_tag 'user[_org_roles][]', role.id, member.org_roles.where(:org_id => organization.id).where(:id => role.id).any? %>
+                <%= role.name.capitalize %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </section>
+    </fieldset>
+    <footer>
+      <button type="submit" class="btn btn-primary">
+        Save
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">
+        Cancel
+      </button>
+    </footer>
+  <% end %>
+</div>
+</div>
+  </div>
+</div>
+<!-- NEW ROLE MODEL -->
