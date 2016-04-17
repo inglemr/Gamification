@@ -1,5 +1,8 @@
 class Location < ActiveRecord::Base
-validates :building_name,
+  extend FriendlyId
+  friendly_id :building_name, use: [:slugged, :history,:finders]
+
+  validates :building_name,
   :presence => true,
   :uniqueness => {
     :case_sensitive => false

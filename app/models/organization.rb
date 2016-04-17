@@ -1,4 +1,7 @@
 class Organization < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :history,:finders]
+
   has_and_belongs_to_many :users
   has_many :org_roles, foreign_key: :org_id,dependent: :destroy
 

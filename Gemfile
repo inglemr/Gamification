@@ -19,6 +19,9 @@ gem 'rqrcode'
 #Used to create menu for user html editing
 gem 'tinymce-rails'
 
+#Pretty URLs
+gem 'friendly_id', '~> 5.1.0'
+
 #Assets
 gem "animate-rails"
 gem "font-awesome-rails"

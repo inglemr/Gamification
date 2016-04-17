@@ -2,7 +2,10 @@
 
       <div class="<%= style %>">
             <div class="cuadro_intro_hover " style="background-color:#cccccc;">
-            <p style="text-align:center; margin-top:20px;">
+            <p style="text-align:center; margin-top:20px;display:inline;">
+            <% event.tags.each do |tag| %>
+              <span class="badge bg-color-blueDark tags"><i><%= tag.name %></i></span>
+            <% end %>
             <span class="badge bg-color-red points"><b>Points: </b><i><%= event.point_val %></i></span>
               <% if event.image_url.to_s == "" %>
                 <img class="event_tile_img" src="http://placehold.it/380x200">
@@ -36,6 +39,13 @@
   right: 0;
   margin-right: 5px;
   float:right;
+}
+
+.tags {
+  top: 0;
+  margin-top: 10px;
+  margin-left: 5px;
+  float:left;
 }
 </style>
 

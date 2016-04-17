@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417000413) do
+ActiveRecord::Schema.define(version: 20160417170341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,9 +31,11 @@ ActiveRecord::Schema.define(version: 20160417000413) do
     t.datetime "end_time"
     t.integer  "recurring_id"
     t.integer  "organization_id"
+    t.string   "slug"
   end
 
   add_index "events", ["location_id"], name: "index_events_on_location_id", using: :btree
+  add_index "events", ["slug"], name: "index_events_on_slug", using: :btree
 
   create_table "events_rooms", force: :cascade do |t|
     t.integer  "event_id"
@@ -44,6 +46,19 @@ ActiveRecord::Schema.define(version: 20160417000413) do
 
   add_index "events_rooms", ["event_id"], name: "index_events_rooms_on_event_id", using: :btree
   add_index "events_rooms", ["room_id"], name: "index_events_rooms_on_room_id", using: :btree
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "host_events", force: :cascade do |t|
     t.integer  "hosted_event_id"
@@ -57,7 +72,10 @@ ActiveRecord::Schema.define(version: 20160417000413) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "rooms_count",   default: 0
+    t.string   "slug"
   end
+
+  add_index "locations", ["slug"], name: "index_locations_on_slug", using: :btree
 
   create_table "logs", force: :cascade do |t|
     t.integer  "user_id"
@@ -79,7 +97,10 @@ ActiveRecord::Schema.define(version: 20160417000413) do
     t.string "name"
     t.text   "summary"
     t.text   "description"
+    t.string "slug"
   end
+
+  add_index "organizations", ["slug"], name: "index_organizations_on_slug", using: :btree
 
   create_table "organizations_users", force: :cascade do |t|
     t.integer  "user_id"
@@ -99,7 +120,10 @@ ActiveRecord::Schema.define(version: 20160417000413) do
     t.integer  "subject_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "slug"
   end
+
+  add_index "permissions", ["slug"], name: "index_permissions_on_slug", using: :btree
 
   create_table "permissions_roles", id: false, force: :cascade do |t|
     t.integer "role_id"
@@ -114,7 +138,10 @@ ActiveRecord::Schema.define(version: 20160417000413) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.text     "description"
+    t.string   "slug"
   end
+
+  add_index "roles", ["slug"], name: "index_roles_on_slug", using: :btree
 
   create_table "roles_users", id: false, force: :cascade do |t|
     t.integer "role_id"
@@ -129,7 +156,10 @@ ActiveRecord::Schema.define(version: 20160417000413) do
     t.string   "room_number"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "slug"
   end
+
+  add_index "rooms", ["slug"], name: "index_rooms_on_slug", using: :btree
 
   create_table "saved_swipes", force: :cascade do |t|
     t.string   "gsw_id"
@@ -197,10 +227,12 @@ ActiveRecord::Schema.define(version: 20160417000413) do
     t.string   "encrypted_current_semester_iv"
     t.string   "encrypted_last_semester_iv"
     t.string   "theme",                         default: "smart-style-5"
+    t.string   "slug"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["slug"], name: "index_users_on_slug", using: :btree
 
 end

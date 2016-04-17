@@ -1,4 +1,7 @@
 class Event < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :event_name, use: [:slugged, :history,:finders]
+
   acts_as_taggable
 
 	validates :day_time, presence: true

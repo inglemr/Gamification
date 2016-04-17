@@ -1,6 +1,6 @@
 class Admin::UserController  < ApplicationController
 	load_and_authorize_resource :context => :admin
-	before_filter :load_permissions 
+	before_filter :load_permissions
 	def index
 		respond_to do |format|
     		format.html
@@ -29,7 +29,7 @@ class Admin::UserController  < ApplicationController
 	  		@user.roles.delete(role.id)
 	  	end
 		end
-		
+
 		if @user.update_attributes(params[:user].permit(:email, :username))
   		redirect_to admin_user_path, :flash => { :success => 'User was successfully updated.' }
 		else

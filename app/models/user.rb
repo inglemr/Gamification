@@ -1,6 +1,7 @@
 #<%= SymmetricEncryption.decrypt (current_user.current_semester["GPA"]) %>
 class User < ActiveRecord::Base
-
+  extend FriendlyId
+  friendly_id :username, use: [:slugged, :history,:finders]
 
   #Validations
   before_validation :set_email, :on => :create
