@@ -52,7 +52,7 @@
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">Organization</span>
-                  <%= f.collection_select(:organization_id, Organization.all, :id, :name, {:include_blank => ''}, {:id => "select_organization" ,:class => "select2 input-lg"}) %>
+                  <%= f.collection_select(:organization_id, current_user.organizations, :id, :name, {:include_blank => ''}, {:id => "select_organization" ,:class => "select2 input-lg"}) %>
                 </div>
               </div>
             </div>

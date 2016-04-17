@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"
   has_many :attended_events, through: :user_events
 
-  has_many :org_roles, foreign_key: :user_id
+  has_many :user_org_roles, foreign_key: :user_id
+  has_many :org_roles, foreign_key: :user_id, through: :user_org_roles, :source => 'org_role'
 
   has_many :host_events, foreign_key: :host_id
   has_many :hosted_events, through: :host_events, dependent: :destroy

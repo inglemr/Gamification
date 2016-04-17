@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
       resource :organizations do
           get 'show/:id' => 'organizations#show', :as => "show"
+          post 'member_page/:id/new_role' => 'organizations#new_role', :as => "new_role"
           get 'member_page/:id' => 'organizations#member_page', :as => "member_page"
          collection do
           get :index

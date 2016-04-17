@@ -10,10 +10,9 @@
     <a href="#events" data-toggle="tab" aria-expanded="true">Events</a>
   </li>
   <li class="">
-    <a href="#roles" data-toggle="tab" aria-expanded="true"><i class="fa fa-fw fa-lg fa-gear"></i>Roles</a>
+    <a href="#roles" data-toggle="tab" aria-expanded="true">Roles</a>
   </li>
 </ul>
-
 <div id="myTabContent1" class="tab-content padding-10">
   <div class="tab-pane active fade in" id="dashboard">
     <div class="row">
@@ -32,18 +31,104 @@
     </div>
   </div>
   <div class="tab-pane fade" id="roster">
-    <button class="btn btn-info pull-right"> Invite Member</button>
+    <button class="btn btn-info pull-right" data-toggle="modal" data-target="#inviteModal">Invite Member</button>
     <table summary "Roster List" id="roster_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roster",:id => @organization.id ,format: "json") %>"></table>
   </div>
   <div class="tab-pane fade" id="events">
-    <button class="btn btn-info pull-right"> New Event</button>
+    <button class="btn btn-info pull-right">
+      <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+    </button>
     <table summary "Event List" id="events_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "event", :id => @organization.id ,format: "json") %>"></table>
   </div>
   <div class="tab-pane fade" id="roles">
-    <button class="btn btn-info pull-right"> New Role</button>
+    <button class="btn btn-info pull-right" data-toggle="modal" data-target="#remoteModal"> New Role</button>
     <table summary "Roles List" id="roles_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roles",:id => @organization.id ,format: "json") %>"></table>
   </div>
 </div>
+
+
+
+<!-- NEW ROLE MODEL -->
+<div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content"><div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">New Role</h4>
+  </div>
+<div class="modal-body no-padding">
+  <%= form_for(OrgRole.new, :html => {:id =>"role-form" ,:class =>"smart-form" }, :url => new_role_organizations_path(:id => @organization)) do |f| %>
+    <fieldset>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Name</label>
+          <div class="col col-10">
+            <label class="input">
+              <input type="name" name="name">
+            </label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Permissions</label>
+          <div class="col col-10">
+            <label class="input">
+              <input type="permissions" name="permissions">
+            </label>
+          </div>
+        </div>
+      </section>
+    </fieldset>
+    <footer>
+      <button type="submit" class="btn btn-primary">
+        Create
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">
+        Cancel
+      </button>
+    </footer>
+  <% end %>
+</div>
+</div>
+  </div>
+</div>
+<!-- NEW ROLE MODEL -->
+
+<!-- USER INVITATION MODEL -->
+<div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content"><div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">Invite Member</h4>
+  </div>
+<div class="modal-body no-padding">
+  <form action="" id="login-form" class="smart-form">
+    <fieldset>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Name</label>
+          <div class="col col-10">
+            <label class="input">
+              <input type="name" name="name">
+            </label>
+          </div>
+        </div>
+      </section>
+    </fieldset>
+    <footer>
+      <button type="submit" class="btn btn-primary">
+        Invite
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">
+        Cancel
+      </button>
+    </footer>
+  </form>
+</div>
+</div>
+  </div>
+</div>
+<!-- USER INVITATION MODEL -->
 
 
 

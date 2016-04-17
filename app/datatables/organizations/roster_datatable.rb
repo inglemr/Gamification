@@ -2,6 +2,7 @@ class Organizations::RosterDatatable
    delegate :params, :h, :day, :datetime ,:content_tag, :current_ability,:current_user, :render, :can?,:truncate, to: :@view
 
   def initialize(view, organization)
+    @organization = organization
     @view = view
     @roster = organization.users#Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event#.past_events
     @roster = @roster.page(page).per_page(per_page)
@@ -34,7 +35,7 @@ private
 
   def getRoles(member)
     test = ""
-    member.org_roles.each do |role|
+    member.org_roles.where(:org_id =>  @organization.id).each do |role|
       test += "<span class='badge'>" +role.name.to_s + "</span> "
     end
 

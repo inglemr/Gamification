@@ -9,6 +9,15 @@ class OrganizationsController < ApplicationController
       end
   end
 
+  def new_role
+    @organization = Organization.find(params[:id])
+    @role = OrgRole.new
+    @role.name = params[:name]
+    @role.org_id = @organization.id
+    @role.save
+    redirect_to :back
+  end
+
   def show
     @organization = Organization.find(params[:id])
   end
