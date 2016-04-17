@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
       resource :organizations do
           get 'show/:id' => 'organizations#show', :as => "show"
+          get 'member_page/:id' => 'organizations#member_page', :as => "member_page"
          collection do
           get :index
          end

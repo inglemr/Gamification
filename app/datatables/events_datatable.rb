@@ -43,7 +43,7 @@ class EventsDatatable
         query_tags << k
       end
 
-      @events = Event.tagged_with(query_tags, :any => true).upcoming_first.current_event
+      @events = Event.tagged_with(query_tags, :any => true).current_event.upcoming_first
     end
     @events = @events.page(page).per_page(per_page)
 

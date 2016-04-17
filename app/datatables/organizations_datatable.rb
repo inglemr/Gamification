@@ -1,9 +1,14 @@
 class OrganizationsDatatable
-   delegate :params, :h, :day, :datetime ,:content_tag, :current_ability, :render, :can?,:truncate, to: :@view
+   delegate :current_user,:show_organizations_path,:member_page_organizations_path, :params, :h, :day, :datetime ,:content_tag, :current_ability, :render, :can?,:truncate, to: :@view
 
   def initialize(view)
     @view = view
-    @organizations = Organization.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    if (params[:myOrgs] == "1")
+      @organizations = current_user.organizations
+    else
+      @organizations = Organization.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
+    end
+
     @organizations = @organizations.page(page).per_page(per_page)
 
   end
@@ -33,7 +38,11 @@ private
   end
 
   def orgTile(organization)
-    render(:partial=>"organizations/org_tile.html.erb", locals: { organization: organization, style: "col-md-6 padding-bottom-10"},:formats => [:html])
+    if (params[:myOrgs] == "1")
+      render(:partial=>"organizations/org_tile.html.erb", locals: {type: "Member Page",url: member_page_organizations_path(organization)  , organization: organization, style: "col-md-2 padding-bottom-10"},:formats => [:html])
+    else
+      render(:partial=>"organizations/org_tile.html.erb", locals: {type: "More Info",url: show_organizations_path(organization), organization: organization, style: "col-md-6 padding-bottom-10"},:formats => [:html])
+    end
   end
 
   def page

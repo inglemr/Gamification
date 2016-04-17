@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"
   has_many :attended_events, through: :user_events
 
+  has_many :org_roles, foreign_key: :user_id
+
   has_many :host_events, foreign_key: :host_id
   has_many :hosted_events, through: :host_events, dependent: :destroy
 
@@ -148,18 +150,6 @@ class User < ActiveRecord::Base
           last_semester_enc["additional_standing"] =  SymmetricEncryption.encrypt(additional_standing)
           self.last_semester =  last_semester_enc
         end
-        savedSwipes = SavedSwipe.where(:gsw_id => self.gsw_id)
-        if(savedSwipes.size > 0)
-          savedSwipes.each do |swipe|
-            tempEvent = Event.find(swipe.event_id)
-            tempEvent.add_attendee(self)
-          end
-          #This is just to make sure that all saved swipes were correctly added to the user before deleting all the records
-          if(savedSwipes.size == self.attended_events.size)
-            savedSwipes.destroy_all
-          end
-        end
-
       else
         self.email = "notfound@email.com"
       end

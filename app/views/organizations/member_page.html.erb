@@ -1,0 +1,118 @@
+<h1 class=" jumbotron text-center"><%= @organization.name %></h1>
+<ul id="myTab1" class="nav nav-tabs bordered">
+  <li class="active">
+    <a href="#dashboard" data-toggle="tab" aria-expanded="false">Dashboard<span class="badge bg-color-blue txt-color-white">12</span></a>
+  </li>
+  <li class="">
+    <a href="#roster" data-toggle="tab" aria-expanded="true"><i class="fa fa-fw fa-users"></i>Roster</a>
+  </li>
+  <li class="">
+    <a href="#events" data-toggle="tab" aria-expanded="true">Events</a>
+  </li>
+  <li class="">
+    <a href="#roles" data-toggle="tab" aria-expanded="true"><i class="fa fa-fw fa-lg fa-gear"></i>Roles</a>
+  </li>
+</ul>
+
+<div id="myTabContent1" class="tab-content padding-10">
+  <div class="tab-pane active fade in" id="dashboard">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <div class="well">
+            <%= @organization.description %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="well">
+            <%= @organization.summary %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="roster">
+    <button class="btn btn-info pull-right"> Invite Member</button>
+    <table summary "Roster List" id="roster_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roster",:id => @organization.id ,format: "json") %>"></table>
+  </div>
+  <div class="tab-pane fade" id="events">
+    <button class="btn btn-info pull-right"> New Event</button>
+    <table summary "Event List" id="events_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "event", :id => @organization.id ,format: "json") %>"></table>
+  </div>
+  <div class="tab-pane fade" id="roles">
+    <button class="btn btn-info pull-right"> New Role</button>
+    <table summary "Roles List" id="roles_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roles",:id => @organization.id ,format: "json") %>"></table>
+  </div>
+</div>
+
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var roster_table = $('#roster_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#roster_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Email", "data": "users__email" },
+          { "title": "Roles", "data": "users__org_roles" },
+          { "title": "Actions", "data": "user_actions"}
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#users_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#users_table_length").val() }
+          );
+        },
+      });
+
+    var events_table = $('#events_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#events_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Event Name", "data": "events__event_name" },
+          { "title": "Location", "data": "events__location_id" },
+          { "title": "Points", "data": "events__point_val" },
+          { "title": "Actions", "data": "event_actions"}
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#users_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#users_table_length").val() }
+          );
+        },
+      });
+
+    var roles_table = $('#roles_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#roles_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Role Name", "data": "roles__name" },
+          { "title": "Actions", "data": "role_actions"}
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#users_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#users_table_length").val() }
+          );
+        },
+      });
+
+
+    });
+
+
+  </script>
+<% end %>

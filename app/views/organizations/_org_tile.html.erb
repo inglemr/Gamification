@@ -1,4 +1,4 @@
-<%= link_to(show_organizations_path(organization) ) do %>
+<%= link_to(url ) do %>
 
 
 <div class="<%= style %>">
@@ -13,7 +13,7 @@
               <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Show" class="fa fa-pencil fa-sm"></i>'.html_safe, {:controller => 'Admin::Organization',:action => 'edit', :id => organization.id} ,:class => "btn  btn-sm", :style => "float:right;display:inline;") %>
             <% end %></h3>
           <p><%= organization.summary %></p>
-          <%= link_to(show_organizations_path(organization), :class => "btn") do %><span class="glyphicon glyphicon-plus">  INFO</span></a><%end %>
+          <%= link_to(url, :class => "btn") do %><span class="glyphicon glyphicon-plus"><%= type %></span></a><%end %>
         </div>
       </div>
     </div>

@@ -1,0 +1,9 @@
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i>'.html_safe, "#", :class  => "btn form-control btn-sm") %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Edit" class="fa fa-pencil fa-lg"></i>'.html_safe, "#", :class  => "btn form-control btn-sm") %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, "#", method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
+
+<%= javascript_tag do %>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+<% end %>

@@ -11,7 +11,7 @@
 	 Permission.create!(:name => "Admin Users",:description => "Full Access to Users",:subject_class => "Admin::User", :action => "manage")
 
 	 ##Roles
-	 Permission.create!(:name => "Admin Roles",:description => "Full Access to Roles",:subject_class => "Admin::Role", :action => "manage") 
+	 Permission.create!(:name => "Admin Roles",:description => "Full Access to Roles",:subject_class => "Admin::Role", :action => "manage")
 
 	 ##Sidebar
 	 Permission.create!(:name => "Admin Sidebar",:description => "View Admin Sidebar",:subject_class => "sidebar", :action => "manage")
@@ -22,7 +22,7 @@
 	 ##Customizer
 	 Permission.create!(:name => "Admin Customize",:description => "Full Access to Customizer",:subject_class => "Admin::Customize", :action => "manage")
 
-	 #API Permissions
+	 #API Permissions TODO(matt) DEPRECATED
 	 Permission.create!(:name => "API Events",:description => "Full Access to Events API",:subject_class => "API::Event", :action => "manage")
 	 Permission.create!(:name => "API Users",:description => "Full Access to Users API",:subject_class => "API::User", :action => "manage")
 	 Permission.create!(:name => "API QRCodes",:description => "Full Access to QRCodes API",:subject_class => "API::Qrcode", :action => "manage")
@@ -30,6 +30,8 @@
 	 #Event organizer Permissions
 
 	 #Basic User Permissions
+	 Permission.create!(:name => "View Organizations",:description => "View Organizations", :subject_class => "Organization", :action => "read")
+	 Permission.create!(:name => "View All Events Page",:description => "View All Events Page", :subject_class => "Event", :action => "all_events")
 	 Permission.create!(:name => "View Events",:description => "View Events", :subject_class => "Event", :action => "read")
 	 Permission.create!(:name => "View Dashboard",:description => "View Dashboard", :subject_class => "Dashboard", :action => "read")
 	 Permission.create!(:name => "Show events on calander", :description => "Show events On Calander", :subject_class =>"Dashboard", :action => "cal_events")
@@ -43,15 +45,16 @@
 	 faculty.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
 	 faculty.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "cal_events")
 	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "my_points")
-	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "read")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "all_events")
 
 	 ##Admin Role
 	 admin = Role.create!(:name => "Admin")
 	 admin.permissions << Permission.find_by(:subject_class => 'all', :action => "manage")
 
 	 ##Student Role
-	 student = Role.create!(:name => "Student") 
+	 student = Role.create!(:name => "Student")
 	 student.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
 	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
-	 faculty.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "cal_events")
-	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "my_points")
+	 student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "read")
+	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "all_events")

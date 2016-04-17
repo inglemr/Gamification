@@ -1,33 +1,28 @@
-<div class="col-md-12 ">
-   <div class="col-md-3 pull-right">
-      <div class="row">
-        <div class="input-group">
-           <span class="input-group-addon"><i class="fa fa-search"></i></span>
-           <input id='organizations_table_search' type="search" class="form-control" placeholder="Search...">
-        </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <button class="btn btn-info">Create New Organization</button>
+    <div class="col-md-3 pull-right">
+      <div class="input-group">
+         <span class="input-group-addon"><i class="fa fa-search"></i></span>
+         <input id='organizations_table_search' type="search" class="form-control" placeholder="Search all organizations...">
       </div>
-   </div>
-   <br>
-   <br>
-   <div class="col-md-12" id='organizations_grid'></div>
-   <table summary "organizations List" id="organizations_table" style="display: none"class="table table-hover"  data-source="<%= organizations_path(format: "json") %>"></table>
-</div>
-
-
-<div class="row container col-centered hidden">
-  <h1 class="text-center">Work In Progress</h1>
-  <div class="row well">
-    <div class="col-md-12">
-      <ol>
-        <li><s>Setup Organization Tile List</s></li>
-        <li>Setup Organization Show View</li>
-        <li>Setup Organization roles</li>
-        <li>Allow Organization leader to add new users/create roles</li>
-        <li>Setup ability for users to request access to an organization</li>
-      </ol>
     </div>
   </div>
 </div>
+<% if current_user.organizations.size > 0 %>
+   <h2>My Organizations</h2>
+   <div class="col-md-12" id='my_organizations_grid'></div>
+   <table summary "organizations List" id="my_organizations_table" style="display: none"class="table table-hover"  data-source="<%= organizations_path(format: "json") %>"></table>
+   <hr>
+<% end %>
+<h2>All Organizations</h2>
+  <br>
+   <br>
+   <div class="col-md-12" id='organizations_grid'></div>
+   <table summary "organizations List" id="organizations_table" style="display: none"class="table table-hover"  data-source="<%= organizations_path(format: "json") %>"></table>
+
+
 
 
 <% content_for :scripts do %>
@@ -52,6 +47,7 @@
        fnServerParams: function ( aoData ) {
          aoData.push(
            { "name": "sSearch", "value": $("#organizations_table_search").val() },
+            { "name": "myOrgs", "value": 0 },
            { "name": "iDisplayLength", "value": $("#organizations_table_length").val() }
          );
        },
@@ -62,6 +58,40 @@
          });
      }
    });
+
+
+     var my_organizations_table = $('#my_organizations_table').dataTable({
+       "sDom": "<'row'<'col-lg-12'>r>t<'row'<'col-lg-12 col-md-12'><'col-lg-7 col-md-7 center'p>>",
+       "sPaginationType": "simple",
+       "iDisplayLength": 6,
+       "bProcessing": true,
+       "bServerSide": true,
+                "oLanguage": {
+        "sProcessing": "<div class='shaft-load3'><div class='shaft1'></div><div class='shaft2'></div><div class='shaft3'></div><div class='shaft4'></div><div class='shaft5'></div><div class='shaft6'></div><div class='shaft7'></div><div class='shaft8'></div><div class='shaft9'></div> <div class='shaft10'></div></div>"
+           },
+       "sAjaxSource": $('#my_organizations_table').data('source'),
+       "aaSorting": [[ 0, "desc" ]],
+        "columns": [
+         { "title": "Square Setup", "data": "organizations_orgTile"}
+       ],
+       fnServerParams: function ( aoData ) {
+         aoData.push(
+           { "name": "sSearch", "value": $("#my_organizations_table_search").val() },
+           { "name": "myOrgs", "value": 1 },
+           { "name": "iDisplayLength", "value": 6 }
+         );
+       },
+       fnDrawCallback: function( oSettings ) {
+         $('#my_organizations_grid').html('');
+         $.each(oSettings.aoData, function( index, result ) {
+           $('#my_organizations_grid').append(result._aData.organizations_orgTile);
+         });
+     }
+   });
+
+
+
+
      $("#organizations_table_length").on("change", function() {
        organizations_table.dataTable().api().draw(true);
      });

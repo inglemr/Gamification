@@ -60,6 +60,17 @@ class ConfirmationsController < Devise::ConfirmationsController
   end
 
   def do_confirm
+    savedSwipes = SavedSwipe.where(:gsw_id => @confirmable.gsw_id)
+    if(savedSwipes.size > 0)
+      savedSwipes.each do |swipe|
+        tempEvent = Event.find(swipe.event_id)
+        tempEvent.add_attendee(@confirmable)
+      end
+      #This is just to make sure that all saved swipes were correctly added to the user before deleting all the records
+      if(savedSwipes.size == @confirmable.attended_events.size)
+        savedSwipes.destroy_all
+      end
+    end
     @confirmable.confirm
     set_flash_message :notice, :confirmed
     sign_in_and_redirect(resource_name, @confirmable)

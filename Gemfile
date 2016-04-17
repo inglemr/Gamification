@@ -4,7 +4,6 @@ gem 'rails', '4.2.4'
 # Database
 gem 'pg'
 
-
 #Tagging
 gem 'acts-as-taggable-on', '~> 3.4'
 
@@ -21,7 +20,6 @@ gem 'rqrcode'
 gem 'tinymce-rails'
 
 #Assets
-# Use jquery as the JavaScript library
 gem "animate-rails"
 gem "font-awesome-rails"
 gem 'jquery-rails'
@@ -31,10 +29,10 @@ gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jbuilder', '~> 2.0'
-gem 'will_paginate'
 gem 'uglifier', '>= 1.3.0'
 gem 'sprockets'
 gem 'sass-rails'
+gem 'will_paginate'
 gem "sass"
 gem "compass"
 gem 'compass-rails'
