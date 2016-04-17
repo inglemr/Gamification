@@ -1,9 +1,93 @@
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i>'.html_safe, "#", :class  => "btn form-control btn-sm") %>
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Edit" class="fa fa-pencil fa-lg"></i>'.html_safe, "#", :class  => "btn form-control btn-sm") %>
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, "#", method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
+<button class="btn form-control btn-sm" data-toggle="modal" data-target="#roleModal<%= role.id %>"><i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i></button>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, delete_role_organizations_path(:id => @organization.id, :role_id => role.id), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 
 <%= javascript_tag do %>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 <% end %>
+
+<!-- NEW ROLE MODEL -->
+<div class="modal fade" id="roleModal<%= role.id %>" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content"><div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title"><%= role.name %></h4>
+  </div>
+<div class="modal-body no-padding">
+  <%= form_for(OrgRole.new, :html => {:id =>"role-form" ,:class =>"smart-form" }, :url => edit_role_organizations_path(:id => @organization, :role_id => role.id)) do |f| %>
+    <fieldset>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Name</label>
+          <div class="col col-10">
+            <label class="input">
+              <input type="name" name="name" value="<%= role.name %>">
+            </label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Description</label>
+          <div class="col col-10">
+            <label class="input">
+              <input type="description" name="description" value="<%= role.description %>">
+            </label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Permissions</label>
+          <div class="col col-10">
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "everything" , role.permissions.include?("everything")%>
+              <i></i><%= "Everything" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "create-event", role.permissions.include?("create-event") %>
+              <i></i><%= "Create Events" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "delete-event", role.permissions.include?("delete-event") %>
+              <i></i><%= "Delete Events" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "host-event", role.permissions.include?("host-event") %>
+              <i></i><%= "Host Events" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "accept-member", role.permissions.include?("accept-member") %>
+              <i></i><%= "Accept Members" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "delete-member", role.permissions.include?("delete-member") %>
+              <i></i><%= "Delete Members" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "create-role", role.permissions.include?("create-role") %>
+              <i></i><%= "Create Roles" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "assign-roles", role.permissions.include?("assign-roles") %>
+              <i></i><%= "Assign Roles" %>
+            </label>
+          </div>
+        </div>
+      </section>
+    </fieldset>
+    <footer>
+      <button type="submit" class="btn btn-primary">
+        Save
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">
+        Cancel
+      </button>
+    </footer>
+  <% end %>
+</div>
+</div>
+  </div>
+</div>
+<!-- NEW ROLE MODEL -->

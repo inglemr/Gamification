@@ -67,6 +67,8 @@ Rails.application.routes.draw do
           get 'show/:id' => 'organizations#show', :as => "show"
           post 'member_page/:id/new_role' => 'organizations#new_role', :as => "new_role"
           patch 'member_page/:id/member_role/:member_id' => 'organizations#member_role', :as => "member_role"
+          delete 'member_page/:id/delete_role/:role_id' => 'organizations#delete_role', :as => "delete_role"
+          post 'member_page/:id/edit_role/:role_id' => 'organizations#edit_role', :as => "edit_role"
           get 'member_page/:id' => 'organizations#member_page', :as => "member_page"
          collection do
           get :index
