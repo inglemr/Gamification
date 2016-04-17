@@ -76,6 +76,11 @@ class OrganizationsController < ApplicationController
           format.html
           format.json { render json: Organizations::RolesDatatable.new(view_context,@organization) }
         end
+      elsif params[:type] == "pending"
+        respond_to do |format|
+          format.html
+          format.json { render json: Organizations::PendingDatatable.new(view_context,@organization) }
+        end
       else
         respond_to do |format|
           format.html

@@ -63,6 +63,12 @@ Rails.application.routes.draw do
          end
       end
 
+      resource :request do
+        post '/request/organization/:organization_id' => 'request#create_org_request', :as => "create_org"
+        post '/request/organization/:request_id/org_accept_member' => 'request#org_accept_member', :as => "org_accept_member"
+        post '/request/organization/:request_id/org_decline_member' => 'request#org_decline_member', :as => "org_decline_member"
+      end
+
       resource :organizations do
           get 'show/:id' => 'organizations#show', :as => "show"
           post 'member_page/:id/new_role' => 'organizations#new_role', :as => "new_role"

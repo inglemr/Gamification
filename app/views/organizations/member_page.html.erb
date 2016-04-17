@@ -33,6 +33,9 @@
   <div class="tab-pane fade" id="roster">
     <button class="btn btn-info pull-right" data-toggle="modal" data-target="#inviteModal">Invite Member</button>
     <table summary "Roster List" id="roster_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roster",:id => @organization.id ,format: "json") %>"></table>
+    <h2 class="row-seperator-header"><i class="fa fa-plus"></i> Pending Membership Request </h2>
+    <table summary "Pening List" id="pending_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "pending",:id => @organization.id ,format: "json") %>"></table>
+
   </div>
   <div class="tab-pane fade" id="events">
     <button class="btn btn-info pull-right">
@@ -215,6 +218,28 @@
           );
         },
       });
+
+    var pending_table = $('#pending_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#pending_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Username", "data": "users__username" },
+          { "title": "Email", "data": "users__email" },
+          { "title": "Actions", "data": "user_actions"}
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#users_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#users_table_length").val() }
+          );
+        },
+      });
+
+
 
     var roles_table = $('#roles_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",

@@ -23,6 +23,7 @@ gem 'tinymce-rails'
 gem 'friendly_id', '~> 5.1.0'
 
 #Assets
+gem "chartkick"
 gem "animate-rails"
 gem "font-awesome-rails"
 gem 'jquery-rails'
