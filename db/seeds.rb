@@ -22,20 +22,36 @@
 	 ##Customizer
 	 Permission.create!(:name => "Admin Customize",:description => "Full Access to Customizer",:subject_class => "Admin::Customize", :action => "manage")
 
+
+	 #Tags
+	 Permission.create!(:name => "Admin Tags",:description => "Full Access to Tags",:subject_class => "Admin::Tag", :action => "manage")
+
+	 #Resque
+	 Permission.create!(:name => "Admin Resque",:description => "Full Access to Resque",:subject_class => "Admin::Resque", :action => "manage")
+
 	 #API Permissions TODO(matt) DEPRECATED
 	 Permission.create!(:name => "API Events",:description => "Full Access to Events API",:subject_class => "API::Event", :action => "manage")
 	 Permission.create!(:name => "API Users",:description => "Full Access to Users API",:subject_class => "API::User", :action => "manage")
 	 Permission.create!(:name => "API QRCodes",:description => "Full Access to QRCodes API",:subject_class => "API::Qrcode", :action => "manage")
 
-	 #Event organizer Permissions
+	 #Organization
+	 Permission.create!(:name => "Delete Organization Roles",:description => "Delete organization roles", :subject_class => "Organization", :action => "delete_role")
+	 Permission.create!(:name => "Create Organization Roles",:description => "Create organization roles", :subject_class => "Organization", :action => "new_role")
+	 Permission.create!(:name => "Edit Organization Roles",:description => "Edit organization roles", :subject_class => "Organization", :action => "edit_role")
+	 Permission.create!(:name => "Add role to organization member",:description => "Add role to organization member", :subject_class => "Organization", :action => "member_role")
+	 Permission.create!(:name => "View Organization Member Page",:description => "View Organization Member Page", :subject_class => "Organization", :action => "member_page")
+	 Permission.create!(:name => "Access to create Request for organization",:description => "Access to new Request for organization form", :subject_class => "Organization", :action => "create_organization_request")
+	 Permission.create!(:name => "Access to new Request for organization form",:description => "Access to new Request for organization form", :subject_class => "Organization", :action => "new_organization_request")
+	 Permission.create!(:name => "View All Organizations",:description => "View Organizations", :subject_class => "Organization", :action => "read")
+	 Permission.create!(:name => "Remove member from organization",:description => "Remove Member from organization", :subject_class => "Organization", :action => "remove_member")
+
+	 #Request
+	 Permission.create!(:name => "Decline organization invite",:description => "Decline organization invite", :subject_class => "Request", :action => "org_decline_invite")
+	 Permission.create!(:name => "Accept organization invite",:description => "Accept organization invite", :subject_class => "Request", :action => "org_accept_invite")
+	 Permission.create!(:name => "Request membership to organization",:description => "Request membership to organization", :subject_class => "Request", :action => "create_org_request")
+	 Permission.create!(:name => "Invite member to organization",:description => "Invite member to organization", :subject_class => "Request", :action => "org_invite_member")
 
 	 #Basic User Permissions
-	 #
-	 Request
-	 Organization
-	 new_organization_request
-	 create_organization_request
-	 Permission.create!(:name => "View Organizations",:description => "View Organizations", :subject_class => "Organization", :action => "read")
 	 Permission.create!(:name => "View All Events Page",:description => "View All Events Page", :subject_class => "Event", :action => "all_events")
 	 Permission.create!(:name => "View Events",:description => "View Events", :subject_class => "Event", :action => "read")
 	 Permission.create!(:name => "View Dashboard",:description => "View Dashboard", :subject_class => "Dashboard", :action => "read")
@@ -53,13 +69,48 @@
 	 faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "read")
 	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "all_events")
 
+	 faculty.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
+	 faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "delete_role")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "new_role")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "edit_role")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "member_role")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "member_page")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "create_organization_request")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "new_organization_request")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "read")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "remove_member")
+   faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_decline_invite")
+   faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_accept_invite")
+   faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "create_org_request")
+   faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_invite_member")
+
+
 	 ##Admin Role
 	 admin = Role.create!(:name => "Admin")
 	 admin.permissions << Permission.find_by(:subject_class => 'all', :action => "manage")
 
 	 ##Student Role
 	 student = Role.create!(:name => "Student")
+	 student.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "cal_events")
 	 student.permissions << Permission.find_by(:subject_class => 'Dashboard', :action => "read")
 	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "read")
-	 student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "read")
 	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "all_events")
+	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "my_points")
+
+	 student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "delete_role")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "new_role")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "edit_role")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "member_role")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "member_page")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "create_organization_request")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "new_organization_request")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "read")
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "remove_member")
+   student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_decline_invite")
+   student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_accept_invite")
+   student.permissions << Permission.find_by(:subject_class => 'Request', :action => "create_org_request")
+   student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_invite_member")
+
+   admin.save
+   faculty.save
+   student.save

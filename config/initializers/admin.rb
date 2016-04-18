@@ -25,7 +25,7 @@ class CanAccessResque
         end
       end
     end
-    if ((@current_permissions["resque"].include? "manage") || (@current_permissions["all"].include? "manage"))
+    if ((@current_permissions["Admin::Resque"].include? "manage") || (@current_permissions["all"].include? "manage"))
       return true
     else
       return false
