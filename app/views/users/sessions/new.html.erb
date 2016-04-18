@@ -200,7 +200,7 @@
   <div class="modal-dialog" role="document">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="modal-login">
-              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html=> { :id => "login-form", :class => "smart-form client-form"}) do |f| %>
+              <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html=> { :id => "signup-form", :class => "smart-form client-form"}) do |f| %>
               <header>
                   Sign Up
                   <button type="button" class="close fa fa-times-circle fa-3x" data-dismiss="modal"></button>
@@ -222,7 +222,7 @@
                     </section>
                   </fieldset>
                   <footer>
-                <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
+                <%= button_tag(type: 'button', class: "btn btn-primary", id: "signupBtn") do %>
                   <i class="fa fa-sign-in fa-lg"></i> Sign Up
                 <% end %>
                 </footer>
@@ -281,3 +281,18 @@
   }
 
 </style>
+
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+  pageSetUp();
+
+$( "#signupBtn" ).click(function() {
+  $('#signupBtn').attr("disabled", true);
+  $("#signupBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+  $("#signup-form").submit();
+});
+
+
+</script>
+<% end %>
