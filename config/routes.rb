@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   get 'events/:id/show' => 'events#show', :as => "show_events"
   get 'dashboard/index'
   get 'cal_events' => 'dashboard#cal_events'
-  devise_for :users, :controllers => {:confirmations => 'confirmations'}
+  devise_for :users, :controllers => {:confirmations => 'confirmations', :registrations => "registrations"}
 
   devise_scope :user do
        match '/users/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
