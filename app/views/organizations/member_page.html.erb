@@ -155,7 +155,12 @@
           <div class="form-group">
             <div class="input-group col-md-12">
               <span class="input-group-addon">User</span>
-              <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where(" requests.status != 'open' or requests.status != 'accepted'", @organization.id).references(:organizations_users) %>
+
+
+              <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where(" requests.status = 'open'").references(:organizations_users) %>
+
+
+
               <% users = Array.new %>
               <% @users.each do |user| %>
                 <% if user.requests.where(:organization_id => @organization.id, :status => ["accepted", "open"]).size == 0 %>
