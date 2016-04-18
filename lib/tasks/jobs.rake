@@ -115,7 +115,7 @@ namespace :jobs do
 
   desc "Start Resque Up"
   task :stop => ['resque:pool:stop', 'resque:scheduler:stop', 'resque:wait']
-  task :start => ['resque:redis:start', 'resque:clear', 'resque:pool:start', 'resque:scheduler:start']
+  task :start => ['resque:clear', 'resque:pool:start', 'resque:scheduler:start']
   task :work => ['resque:stop', 'resque:start']
 
 
