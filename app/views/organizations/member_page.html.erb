@@ -157,7 +157,7 @@
               <span class="input-group-addon">User</span>
 
 
-              <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where(" requests.status == 'open'").references(:organizations_users) %>
+              <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where(" requests.status = 'open'").references(:organizations_users) %>
 
 
 
