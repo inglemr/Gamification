@@ -29,7 +29,7 @@
           </li>
           <% end %>
          <!--- Events -->
-         <% if   (can? :manage, :all) || @current_permissions["Admin::Event"].include?("manage")%>
+         <% if   (can? :manage, :all) || @current_permissions["Admin::Event"].include?("manage") %>
           <li>
             <a href="#"><i class="fa fa-lg fa-fw fa-calendar-o"></i> <span class="menu-item-parent">Events</span></a>
             <ul>
@@ -47,7 +47,7 @@
             </ul>
           </li>
           <% end %>
-          <!-- API Call Log -->
+          <!-- API Call Log todo(matt): DEPRECATED
           <% if  (can? :manage, :all) %>
           <li>
           <a href="#"><i class="fa fa-lg fa-fw fa-phone"></i> <span class="menu-item-parent">API</span></a>
@@ -56,6 +56,7 @@
             </ul>
           </li>
           <% end %>
+          DEPRECATED -->
         </ul>
       </nav>
       <span class="minifyme" style=" border-bottom-right-radius: 25px;" data-action="minifyMenu">

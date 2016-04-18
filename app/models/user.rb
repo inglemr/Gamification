@@ -15,7 +15,10 @@ class User < ActiveRecord::Base
 
   #Relationships
   #
-  has_and_belongs_to_many :organizations
+
+  has_many :organizations_users, foreign_key: :user_id
+  has_many :organizations, through: :organizations_users
+
 	has_and_belongs_to_many :roles
   has_many :user_events, foreign_key: :attendee_id
   has_many :created_events, :class_name => "Event", :foreign_key => "created_by"
