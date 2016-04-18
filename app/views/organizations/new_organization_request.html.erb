@@ -25,7 +25,14 @@
               <%= f.text_area :description, autofocus: true ,:value => @organization.description , :class => "form-control"%>
           </div>
         </div>
+        <div class="col-md-12 form-group">
+         <%= f.label "Leader Title" ,:class => "col-md-3 control-label"%>
+          <div class="col-md-7 form-group">
+              <%= f.text_field :org_roles, :class => "form-control" ,:value => ""%>
+          </div>
+        </div>
       </div>
+
 
   </div>
   <div class="form-group col-md-12 col-md-offset-5">

@@ -14,9 +14,11 @@
   <li class="">
     <a href="#events" data-toggle="tab" aria-expanded="true">Events</a>
   </li>
-  <li class="">
-    <a href="#roles" data-toggle="tab" aria-expanded="true">Roles</a>
-  </li>
+  <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-role")%>
+    <li class="">
+      <a href="#roles" data-toggle="tab" aria-expanded="true">Roles</a>
+    </li>
+  <% end %>
 </ul>
 <div id="myTabContent1" class="tab-content padding-10">
   <div class="tab-pane active fade in" id="dashboard">
@@ -36,26 +38,34 @@
     </div>
   </div>
   <div class="tab-pane fade" id="roster">
-    <button class="btn btn-info pull-right" data-toggle="modal" data-target="#inviteModal">Invite Member</button>
+    <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-invites")%>
+      <button class="btn btn-info pull-right" data-toggle="modal" data-target="#inviteModal">Invite Member</button>
+    <% end %>
     <table summary "Roster List" id="roster_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roster",:id => @organization.id ,format: "json") %>"></table>
     <h2 class="row-seperator-header"><i class="fa fa-plus"></i> Pending Membership Request </h2>
     <table summary "Pening List" id="pending_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "pending",:id => @organization.id ,format: "json") %>"></table>
 
   </div>
   <div class="tab-pane fade" id="events">
-    <button class="btn btn-info pull-right">
-      <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
-    </button>
+    <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-events")%>
+      <button class="btn btn-info pull-right">
+        <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+      </button>
+    <% end %>
     <table summary "Event List" id="events_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "event", :id => @organization.id ,format: "json") %>"></table>
   </div>
-  <div class="tab-pane fade" id="roles">
-    <button class="btn btn-info pull-right" data-toggle="modal" data-target="#remoteModal"> New Role</button>
-    <table summary "Roles List" id="roles_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roles",:id => @organization.id ,format: "json") %>"></table>
-  </div>
+  <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-role")%>
+    <div class="tab-pane fade" id="roles">
+      <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-role")%>
+        <button class="btn btn-info pull-right" data-toggle="modal" data-target="#remoteModal"> New Role</button>
+      <% end %>
+      <table summary "Roles List" id="roles_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "roles",:id => @organization.id ,format: "json") %>"></table>
+    </div>
+  <% end %>
 </div>
 
 
-
+ <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-role")%>
 <!-- NEW ROLE MODEL -->
 <div class="modal fade" id="remoteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
   <div class="modal-dialog">
@@ -95,32 +105,20 @@
               <i></i><%= "Everything" %>
             </label>
             <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "create-event" %>
-              <i></i><%= "Create Events" %>
+              <%= check_box_tag 'role[_permisisons][]', "manage-events" %>
+              <i></i><%= "Manage Events" %>
             </label>
             <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "delete-event" %>
-              <i></i><%= "Delete Events" %>
-            </label>
-            <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "host-event" %>
-              <i></i><%= "Host Events" %>
-            </label>
-            <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "accept-member" %>
-              <i></i><%= "Accept Members" %>
+              <%= check_box_tag 'role[_permisisons][]', "manage-invites" %>
+              <i></i><%= "Manage Invitations" %>
             </label>
             <label class="checkbox">
               <%= check_box_tag 'role[_permisisons][]', "delete-member" %>
               <i></i><%= "Delete Members" %>
             </label>
             <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "create-role" %>
-              <i></i><%= "Create Roles" %>
-            </label>
-            <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "assign-roles" %>
-              <i></i><%= "Assign Roles" %>
+              <%= check_box_tag 'role[_permisisons][]', "manage-role" %>
+              <i></i><%= "Manage Roles" %>
             </label>
           </div>
         </div>
@@ -140,7 +138,8 @@
   </div>
 </div>
 <!-- NEW ROLE MODEL -->
-
+<% end %>
+<% if @org_perms.include?("everything") ||  @org_perms.include?("manage-invites")%>
 <!-- USER INVITATION MODEL -->
 <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
   <div class="modal-dialog">
@@ -179,7 +178,7 @@
   </div>
 </div>
 <!-- USER INVITATION MODEL -->
-
+<% end %>
 
 
 <% content_for :scripts do %>
@@ -248,7 +247,7 @@
       });
 
 
-
+     <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-role")%>
     var roles_table = $('#roles_table').dataTable({
         "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
         "sPaginationType": "full_numbers",
@@ -270,6 +269,7 @@
 
 
     });
+    <% end %>
 
 
   </script>

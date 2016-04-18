@@ -18,24 +18,24 @@ class Admin::OrganizationController < ApplicationController
   end
 
   def update
-    current_users = @organization.users
-    params[:organization][:id] ||= []
-    users = params[:organization][:id]
-    params[:organization].delete(:id)
-    remove_host = Array.new
-    current_users.each do |host|
-      if !users.include?(host.id)
-        @organization.remove_member(host)
-      end
-    end
-    if users.size > 0
-      users.each do |host|
-        if host.length > 0
-          user = User.find(host)
-          @organization.add_member(user)
-        end
-      end
-    end
+#   current_users = @organization.users
+#    params[:organization][:id] ||= []
+#    users = params[:organization][:id]
+#    params[:organization].delete(:id)
+#    remove_host = Array.new
+#    current_users.each do |host|
+#      if !users.include?(host.id)
+#        @organization.remove_member(host)
+#      end
+#    end
+#    if users.size > 0
+#      users.each do |host|
+#        if host.length > 0
+#          user = User.find(host)
+#          @organization.add_member(user)
+#        end
+#      end
+#    end
 
 
     @organization = Organization.find(params[:id])
@@ -52,24 +52,24 @@ class Admin::OrganizationController < ApplicationController
 
   def create
 
-    current_users = @organization.users
-    params[:organization][:id] ||= []
-    users = params[:organization][:id]
-    params[:organization].delete(:id)
-    remove_host = Array.new
-    current_users.each do |host|
-      if !users.include?(host.id)
-        @organization.remove_member(host)
-      end
-    end
-    if users.size > 0
-      users.each do |host|
-        if host.length > 0
-          user = User.find(host)
-          @organization.add_member(user)
-        end
-      end
-    end
+#    current_users = @organization.users
+#    params[:organization][:id] ||= []
+#    users = params[:organization][:id]
+#    params[:organization].delete(:id)
+#    remove_host = Array.new
+#    current_users.each do |host|
+#      if !users.include?(host.id)
+#        @organization.remove_member(host)
+#      end
+#    end
+#    if users.size > 0
+#      users.each do |host|
+#        if host.length > 0
+#          user = User.find(host)
+#          @organization.add_member(user)
+#        end
+#      end
+#    end
 
     @organization = Organization.new(organization_params)
     if @organization.save

@@ -23,10 +23,11 @@ class Organization < ActiveRecord::Base
     end
   end
 
-  def add_leader(user)
+  def add_leader(user,role)
     if !user.organizations.all.include?(self)
       self.users << user
       user.save
+      user.org_roles << role
       self.save
       true
     else

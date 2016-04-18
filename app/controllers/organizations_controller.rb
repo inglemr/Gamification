@@ -1,18 +1,19 @@
 class OrganizationsController < ApplicationController
   load_and_authorize_resource
   before_filter :load_permissions
-
-
-
-  def invite_member
-
-  end
+  before_filter :organization_perms, :except => [:index, :new_organization_request,:create_organization_request, ]
 
   def remove_member
-    @organization = Organization.find(params[:id])
-    @user = User.find(params[:member_id])
-    @organization.remove_member(@user)
-    redirect_to :back
+
+    temp = Organization.find(params[:id])
+    if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("delete-member")  )
+      @organization = Organization.find(params[:id])
+      @user = User.find(params[:member_id])
+      @organization.remove_member(@user)
+         redirect_to :back , :flash => { 'success' => 'Member Removed.' }
+    else
+      redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
+    end
   end
 
   def new_organization_request
@@ -20,10 +21,21 @@ class OrganizationsController < ApplicationController
   end
 
   def create_organization_request
+    top_role = params[:organization][:org_roles]
+    @new_role = OrgRole.new()
+    @new_role.name = top_role
+    @new_role.description = "Leader"
+    @new_role.permissions << 'everything'
+
+    params[:organization].delete :org_roles
     @organization = Organization.new(organization_params)
+
     @organization.active = false
-    @organizations.add_leader(current_user)
     @organization.save
+    @new_role.org_id = @organization.id
+
+    @new_role.save
+    @organization.add_leader(current_user,@new_role)
     redirect_to organizations_path
   end
 
@@ -35,57 +47,74 @@ class OrganizationsController < ApplicationController
   end
 
   def member_role
-    @organization = Organization.find(params[:id])
-    @user = User.find(params[:member_id])
-    params['user']['_org_roles'] ||= []
-    params['user']['_org_roles'].each do |id|
-      if(!@user.org_roles.exists?(id))
-        @user.org_roles << OrgRole.find(id)
+    temp = Organization.find(params[:id])
+    if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-role")  )
+      @organization = Organization.find(params[:id])
+      @user = User.find(params[:member_id])
+      params['user']['_org_roles'] ||= []
+      params['user']['_org_roles'].each do |id|
+        if(!@user.org_roles.exists?(id))
+          @user.org_roles << OrgRole.find(id)
+        end
       end
-    end
-    OrgRole.all.each do |role|
-      if !(params['user']['_org_roles'].include?(role.id.to_s)) && @user.org_roles.exists?(role.id)
-        @user.org_roles.delete(role)
+      OrgRole.all.each do |role|
+        if !(params['user']['_org_roles'].include?(role.id.to_s)) && @user.org_roles.exists?(role.id)
+          @user.org_roles.delete(role)
+        end
       end
+      redirect_to :back , :flash => { 'success' => 'Role added to user.' }
+    else
+      redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
     end
-
-
-    redirect_to :back
   end
 
   def edit_role
-    @role = OrgRole.find(params[:role_id])
-    @organization = Organization.find(params[:id])
-    params['role'] ||= Hash.new
-    params['role']['_permisisons'] ||= []
-    @role.permissions = params['role']['_permisisons']
-    @role.save
-
-    redirect_to :back
+    temp = Organization.find(params[:id])
+    if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-role")  )
+      @role = OrgRole.find(params[:role_id])
+      @organization = Organization.find(params[:id])
+      params['role'] ||= Hash.new
+      params['role']['_permisisons'] ||= []
+      @role.permissions = params['role']['_permisisons']
+      @role.save
+      redirect_to :back , :flash => { 'success' => 'Role Updated.' }
+    else
+      redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
+    end
   end
 
 
   def delete_role
-    @role = OrgRole.find(params[:role_id])
-    @role.destroy
-
-    redirect_to :back
+    temp = Organization.find(params[:id])
+    if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-role")  )
+      @role = OrgRole.find(params[:role_id])
+      @role.destroy
+      redirect_to :back , :flash => { 'success' => 'Role Deleted.' }
+    else
+      redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
+    end
   end
 
   def new_role
-    @organization = Organization.find(params[:id])
-    @role = OrgRole.new
-    @role.name = params[:name]
-    @role.org_id = @organization.id
-    @role.description = params[:description]
-    @role.permissions = params['role']['_permisisons']
-    @role.save
-    redirect_to :back
+    temp = Organization.find(params[:id])
+    if (current_user.organizations.include? temp) && (@org_perms.include?("everything")  || @org_perms.include?("manage-role")  )
+      @organization = Organization.find(params[:id])
+      @role = OrgRole.new
+      @role.name = params[:name]
+      @role.org_id = @organization.id
+      @role.description = params[:description]
+      @role.permissions = params['role']['_permisisons']
+      @role.save
+      redirect_to :back , :flash => { 'success' => 'Role Created.' }
+    else
+      redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
+    end
   end
 
   def show
     @organization = Organization.find(params[:id])
   end
+
   def member_page
     temp = Organization.find(params[:id])
     if current_user.organizations.include?(temp)
@@ -117,8 +146,24 @@ class OrganizationsController < ApplicationController
     end
   end
 
+private
   def organization_params
     params.require(:organization).permit(:name,:summary, :description)
+  end
+
+  def load_organization
+    @organization = Organization.find(params[:id])
+  end
+
+  def organization_perms
+    load_organization
+    org_perms = Array.new
+     current_user.org_roles.where(:org_id => @organization.id).each do |role|
+        role.permissions.each do |perm|
+          org_perms << perm.to_s.gsub('"', '')
+        end
+     end
+    @org_perms = org_perms.uniq
   end
 
 end
