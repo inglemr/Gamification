@@ -14,15 +14,10 @@ class RequestController < ApplicationController
     @organization = Organization.find(@request.organization_id)
     @user = User.find(@request.user_id)
     @org_perms = organization_perms(@organization)
-
-    if (current_user.organizations.include? @organization) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-invites")  )
-      @request.status = "accepted"
-      @organization.add_member(@user)
-      @request.save
-      redirect_to :back , :flash => { 'success' => 'Member Accepted' }
-    else
-      redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
-    end
+    @request.status = "accepted"
+    @organization.add_member(@user)
+    @request.save
+    redirect_to :back , :flash => { 'success' => 'Member Accepted' }
   end
 
   def org_decline_member
