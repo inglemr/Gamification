@@ -26,9 +26,20 @@ private
         'DT_RowId' => organization.id.to_s,
         "organizations__id" => organization.id,
         "organizations__name" => organization.name.capitalize,
+        "organizations__active" => getStatus(organization.active),
         organization_actions: actions(organization)
       }
     end
+  end
+
+  def getStatus(active)
+    if active
+      status = "<span class='badge bg-color-greenLight'>ACTIVE</span"
+    else
+      status = "<span class='badge bg-color-red'>Pending Activation</span"
+    end
+
+    return status.html_safe
   end
 
   def actions(organization)

@@ -22,6 +22,17 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def add_leader(user)
+    if !user.organizations.all.include?(self)
+      self.users << user
+      user.save
+      self.save
+      true
+    else
+      false
+    end
+  end
+
   def remove_member(user)
     if user.organizations.all.include?(self)
       self.users.delete(user)

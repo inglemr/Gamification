@@ -1,6 +1,6 @@
-<%= form_for(@organization, :class =>"form-horizontal" , :url => path) do |f| %>
+<%= form_for(@organization, :class =>"form-horizontal" , :url => new_organization_request_organizations_path) do |f| %>
   <div class="page-panel panel col-md-12 ">
-      <div class="row"><h2 class="text-center"><%= page_type %> Organization</h2></div>
+      <div class="row"><h2 class="text-center">New Organization</h2></div>
       <hr>
       <div class="col-md-6 verticalLineRight">
         <h3 class="panel">Basic Data</h3>
@@ -17,28 +17,13 @@
             <%= f.text_area :summary, autofocus: true ,:value => @organization.summary , :class => "form-control"%>
           </div>
         </div>
-        <!--- todo(matt) This needs to be implemented diffrently
-        <div class="col-sm-12">
-          <div class="form-group">
-            <div class="input-group col-md-6">
-              <span class="input-group-addon">Members</span>
-              <%= f.collection_select(:id, User.where.not(:email => "notfound@email.com").where.not(:email => ""), :id, :email, {}, {:multiple => true,:id => "select_host" ,:class => "select2 input-lg"}) %>
-            </div>
-          </div>
-        </div>
-        -->
       </div>
       <div class="col-md-6">
-        <div class="row">
-          <h3 class="panel">Description</h3>
+        <h3 class="panel">Description</h3>
+        <div class="col-md-12 form-group">
           <div class="col-md-12 form-group">
-            <div class="col-md-12 form-group">
               <%= f.text_area :description, autofocus: true ,:value => @organization.description , :class => "form-control"%>
-            </div>
           </div>
-        </div>
-        <div class="checkbox">
-          <label><%= f.check_box :active, :class =>"checkbox style-0" %><span>Active</span></label>
         </div>
       </div>
 
@@ -53,14 +38,7 @@
   <% content_for :inner_scripts do %>
     $(document).ready(function () {
       pageSetUp();
-      <% if page_type == "Edit" %>
-        var selectedUsers = []
-        <% @organization.users.each do |user| %>
-          selectedUsers.push(<%= user.id %>)
-        <% end %>
-        $("#select_host").val(selectedUsers).change();
-        $("#select_host").select2('val', selectedUsers).change();
-      <% end %>
+
     })
   <% end %>
   <%= content_for :inner_scripts %>

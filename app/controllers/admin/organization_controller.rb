@@ -19,6 +19,7 @@ class Admin::OrganizationController < ApplicationController
 
   def update
     current_users = @organization.users
+    params[:organization][:id] ||= []
     users = params[:organization][:id]
     params[:organization].delete(:id)
     remove_host = Array.new
@@ -52,6 +53,7 @@ class Admin::OrganizationController < ApplicationController
   def create
 
     current_users = @organization.users
+    params[:organization][:id] ||= []
     users = params[:organization][:id]
     params[:organization].delete(:id)
     remove_host = Array.new
@@ -85,6 +87,6 @@ end
 
 private
   def organization_params
-    params.require(:organization).permit(:name,:summary, :description)
+    params.require(:organization).permit(:name,:summary, :description,:active)
   end
 end

@@ -70,6 +70,8 @@ Rails.application.routes.draw do
       end
 
       resource :organizations do
+          get 'request' => 'organizations#new_organization_request', :as => "new_organization_request"
+          post 'request' => 'organizations#create_organization_request', :as => "create_organization_request"
           get 'show/:id' => 'organizations#show', :as => "show"
           post 'member_page/:id/new_role' => 'organizations#new_role', :as => "new_role"
           patch 'member_page/:id/member_role/:member_id' => 'organizations#member_role', :as => "member_role"

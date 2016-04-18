@@ -9,6 +9,8 @@ class OrganizationsDatatable
       @organizations = Organization.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%")
     end
 
+    @organizations = @organizations.where(:active => true)
+
     @organizations = @organizations.page(page).per_page(per_page)
 
   end

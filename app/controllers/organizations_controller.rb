@@ -2,6 +2,22 @@ class OrganizationsController < ApplicationController
   load_and_authorize_resource
   before_filter :load_permissions
 
+
+
+
+
+  def new_organization_request
+    @organization = Organization.new
+  end
+
+  def create_organization_request
+    @organization = Organization.new(organization_params)
+    @organization.active = false
+    @organizations.add_leader(current_user)
+    @organization.save
+    redirect_to organizations_path
+  end
+
   def index
     respond_to do |format|
         format.html
@@ -61,7 +77,6 @@ class OrganizationsController < ApplicationController
   def show
     @organization = Organization.find(params[:id])
   end
-
   def member_page
     temp = Organization.find(params[:id])
     if current_user.organizations.include?(temp)
@@ -92,4 +107,9 @@ class OrganizationsController < ApplicationController
       flash[:danger] = "Unauthorized"
     end
   end
+
+  def organization_params
+    params.require(:organization).permit(:name,:summary, :description)
+  end
+
 end
