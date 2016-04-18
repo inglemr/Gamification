@@ -48,14 +48,32 @@
             </div>
           </div>
           <div class="row">
+            <% organizations = current_user.organizations %>
+            <% if current_user.organizations.size > 0 %>
             <div class="col-sm-6">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">Organization</span>
-                  <%= f.collection_select(:organization_id, current_user.organizations, :id, :name, {:include_blank => ''}, {:id => "select_organization" ,:class => "select2 input-lg"}) %>
+                    <% perms = Hash.new %>
+                    <% current_user.org_roles.each do |role| %>
+                    <%  perms[role.org_id] = Array.new %>
+                    <%  role.permissions.each do |perm| %>
+                    <%    perms[role.org_id] << perm.to_s.gsub('"', '') %>
+                    <%  end %>
+                    <% perms[role.org_id] = perms[role.org_id].uniq %>
+                    <% end %>
+                    <% keep_orgs = Array.new %>
+                    <% organizations.each do |org| %>
+                      <% if perms[org.id].include?("everything") || perms[org.id].include?("manage-events") %>
+                        <% keep_orgs << org %>
+                      <% end %>
+                    <% end %>
+                    <%= f.collection_select(:organization_id, keep_orgs, :id, :name, {:include_blank => ''}, {:id => "select_organization" ,:class => "select2 input-lg"}) %>
+
                 </div>
               </div>
             </div>
+            <% end %>
             <div class="col-sm-6">
               <div class="form-group">
                 <div class="input-group">
