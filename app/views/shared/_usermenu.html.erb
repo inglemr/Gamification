@@ -8,7 +8,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to '<i class="fa fa-home fa-lg"></i> Gameification'.html_safe, root_path, :class => "navbar-brand" %>
+      <%= link_to root_path, class: "navbar-brand no-padding" do %>
+      <%= image_tag("https://signup.mypaymentplan.com/InstaFACTS/ecashier/images/gswlogo.gif", height: "50px", alt: "School logo", style: "display: inline;") %> Gameification
+      <% end %>
       <% if can? :view, :sidebar%>
         <button type="button" class="navbar-toggle collapsed pull-left" data-action="toggleMenu" title="Collapse Menu" aria-expanded="false">
           <span class="sr-only">Toggle Admin Menu</span>
@@ -59,11 +61,13 @@
           </li>
           <li class=""> <%= link_to '<i class="fa fa-sign-out fa-lg"></i> Log Out'.html_safe, destroy_user_session_path , :method => :delete%>
           </li>
+          </li>
         <% else %>
           <% if !current_host %>
             <li><%= render "users/shared/links" %></li> <% end %>
         <% end %>
       </ul>
+       <%#= image_tag("https://signup.mypaymentplan.com/InstaFACTS/ecashier/images/gswlogo.gif", height: "50px", alt: "School logo", style: "float: right;") %>
     </div>
   </div>
 </nav>
