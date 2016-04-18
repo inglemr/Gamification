@@ -1,10 +1,5 @@
 <button class="btn form-control btn-sm" data-toggle="modal" data-target="#edituserModal<%= member.id %>"><i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i></button>
 <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Remove Member" class="fa fa-trash fa-lg"></i>'.html_safe,remove_member_organizations_path(:id => organization, :member_id => member.id), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
-<%= javascript_tag do %>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-<% end %>
 
 <!-- NEW ROLE MODEL -->
 <div class="modal fade" id="edituserModal<%= member.id %>" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
@@ -44,3 +39,23 @@ $(function () {
   </div>
 </div>
 <!-- NEW ROLE MODEL -->
+
+<%= javascript_tag do %>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+<% end %>
+<%= javascript_tag do %>
+$(function () {
+  $('[data-toggle="popover"]').popover({ trigger: "hover" });
+})
+<% end %>
+
+<% content_for :scripts do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      pageSetUp();
+
+    });
+  </script>
+<% end %>

@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   #Relationships
   #
-
+  has_many :requests
   has_many :organizations_users, foreign_key: :user_id
   has_many :organizations, through: :organizations_users
 

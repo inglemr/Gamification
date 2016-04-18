@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :organizations_users, foreign_key: :organization_id
   has_many :users, through: :organizations_users
 
+  has_many :events
 
   has_many :org_roles, foreign_key: :org_id,dependent: :destroy
   has_many :request, foreign_key: :organization_id

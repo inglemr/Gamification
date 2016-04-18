@@ -35,7 +35,11 @@ private
 
 
   def actions(member,request)
-    render(:partial=>"organizations/pending_member_actions.html.erb", locals: { member: member, organization: @organization, request: request} , :formats => [:html])
+    if (request.request_type == "org-join")
+      render(:partial=>"organizations/pending_member_actions.html.erb", locals: { member: member, organization: @organization, request: request} , :formats => [:html])
+    else
+      return "<span class='badge'>INVITE PENDING</span>".html_safe
+    end
   end
 
   def page

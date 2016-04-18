@@ -34,9 +34,10 @@ private
   end
 
   def getRoles(member)
+
     test = ""
     member.org_roles.where(:org_id =>  @organization.id).each do |role|
-      test += "<span class='badge'>" +role.name.to_s + "</span> "
+      test += "<span class='badge' data-toggle='popover' rel='popover-hover' data-placement='top' data-original-title=#{role.name.to_s} data-content=#{role.permissions.to_sentence.capitalize.to_s}> #{role.name.to_s} </span>"
     end
 
     return test.html_safe

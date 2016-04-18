@@ -21,7 +21,7 @@
         </div>
         <br>
           <div class="row">
-             <div class="col-sm-12 no-padding">
+            <div class="col-sm-12 no-padding">
              <br>
               <h2 class="row-seperator-header col-centered text-center"><strong>Recent Activity</strong> </h2>
                 <br>
@@ -35,10 +35,29 @@
                   <div class="alert alert-success alert-block col-md-12 animated fadeInLeft">
                     <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Dean's List</h4>
                   </div>
-             </div>
+                </div>
+            </div>
           </div>
-          <!-- end row -->
-       </div>
+          <% @req = current_user.requests.where(:request_type => "org-invite") %>
+          <% if @req.size > 0 %>
+            <div class="row">
+              <div class="col-sm-12 no-padding">
+              <h2 class="row-seperator-header col-centered text-center"><strong>Organization Invites</strong> </h2>
+                <div class="col-md-12 col-centered">
+                  <% @req.each do |r| %>
+                    <div class="col-md-12 padding-10">
+                      <% organization = Organization.find(r.organization_id) %>
+                      <%= organization.name %>
+                      <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Accept" class="fa fa-check fa-lg"></i>'.html_safe,org_accept_member_request_path(:request_id => r.id), method: :post, :class  => "btn btn-sm btn-success") %>
+                       <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Decline" class="fa fa-trash fa-lg"></i>'.html_safe,org_decline_member_request_path(:request_id => r.id), method: :post, :class  => "btn btn-sm btn-danger") %>
+
+                    </div>
+                  <% end %>
+               </div>
+            </div>
+            <!-- end row -->
+            </div>
+          <% end %>
      </div>
 
 
