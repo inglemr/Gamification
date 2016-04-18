@@ -30,6 +30,11 @@
 	 #Event organizer Permissions
 
 	 #Basic User Permissions
+	 #
+	 Request
+	 Organization
+	 new_organization_request
+	 create_organization_request
 	 Permission.create!(:name => "View Organizations",:description => "View Organizations", :subject_class => "Organization", :action => "read")
 	 Permission.create!(:name => "View All Events Page",:description => "View All Events Page", :subject_class => "Event", :action => "all_events")
 	 Permission.create!(:name => "View Events",:description => "View Events", :subject_class => "Event", :action => "read")

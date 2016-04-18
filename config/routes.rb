@@ -78,6 +78,7 @@ Rails.application.routes.draw do
 
         post '/request/organization/:organization_id/org_invite_member' => 'request#org_invite_member', :as => "org_invite_member"
         post '/request/organization/:request_id/org_accept_invite' => 'request#org_accept_invite', :as => "org_accept_invite"
+        post '/request/organization/:request_id/org_decline_invite' => 'request#org_decline_invite', :as => "org_decline_invite"
       end
 
       resource :organizations do
