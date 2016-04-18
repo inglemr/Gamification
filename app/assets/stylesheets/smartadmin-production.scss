@@ -13417,6 +13417,7 @@ img.away {
 }
 .ajax-dropdown:after,
 .ajax-dropdown:before {
+  left: 5px !important;
   bottom: 100%;
   border: solid transparent;
   content: " ";

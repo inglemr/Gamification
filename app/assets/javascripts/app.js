@@ -471,7 +471,7 @@ var calc_navbar_height = function() {
                 a.button("loading"), setTimeout(function() {
                     a.button("reset")
                 }, 3e3)
-            }), $this = $("#activity > .badge"), parseInt($this.text()) > 0 && ($this.addClass("bg-color-red bounceIn animated"), $this = null)
+            }), $this = $("#activity > .badge"), parseInt($this.text()) < 0 && ($this.addClass("bg-color-red bounceIn animated"), $this = null)
         }, a.mobileCheckActivation = function() {
             $(window).width() < 979 ? ($.root_.addClass("mobile-view-activated"), $.root_.removeClass("minified")) : $.root_.hasClass("mobile-view-activated") && $.root_.removeClass("mobile-view-activated"), debugState && console.log("mobileCheckActivation")
         }, a
