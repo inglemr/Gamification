@@ -4,7 +4,16 @@ class OrganizationsController < ApplicationController
 
 
 
+  def invite_member
 
+  end
+
+  def remove_member
+    @organization = Organization.find(params[:id])
+    @user = User.find(params[:member_id])
+    @organization.remove_member(@user)
+    redirect_to :back
+  end
 
   def new_organization_request
     @organization = Organization.new

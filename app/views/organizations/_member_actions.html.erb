@@ -1,6 +1,5 @@
 <button class="btn form-control btn-sm" data-toggle="modal" data-target="#edituserModal<%= member.id %>"><i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i></button>
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe,"#", method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
-
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Remove Member" class="fa fa-trash fa-lg"></i>'.html_safe,remove_member_organizations_path(:id => organization, :member_id => member.id), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 <%= javascript_tag do %>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
