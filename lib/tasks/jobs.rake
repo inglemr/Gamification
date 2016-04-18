@@ -119,6 +119,7 @@ namespace :jobs do
   task :work => ['jobs:stop', 'jobs:start']
 
 
+
   desc "Clear pending tasks"
   task :clear => :environment do
     puts "Clearing queues..."
