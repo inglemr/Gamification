@@ -22,6 +22,13 @@ gem 'tinymce-rails'
 #Pretty URLs
 gem 'friendly_id', '~> 5.1.0'
 
+
+#Background jobs
+gem 'resque', :require => "resque/server"
+gem 'resque-scheduler'
+gem 'resque-pool'
+gem 'resque-history'
+gem 'resque-concurrent-restriction', :git => 'https://github.com/wr0ngway/resque-concurrent-restriction.git', :ref => 'b43082b'
 #Assets
 gem "chartkick"
 gem "animate-rails"

@@ -3,6 +3,7 @@ class DashboardController < ApplicationController
   load_and_authorize_resource :class => false
   before_filter :load_permissions
   def index
+    Resque.enqueue(Test)
     @userLeader = User.where(:class_type => current_user.class_type).order("points DESC").limit(5)
     @freshmen = User.where(:class_type => "Freshmen").order("points DESC").limit(5)
     @sophmore = User.where(:class_type => "Sophmore").order("points DESC").limit(5)

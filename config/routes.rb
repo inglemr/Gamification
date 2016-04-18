@@ -1,3 +1,6 @@
+require 'resque/scheduler/server'
+require 'resque-history/server'
+
 Rails.application.routes.draw do
 
     namespace :kiosk do
@@ -33,6 +36,11 @@ Rails.application.routes.draw do
           post :updatesettings
       end
       namespace :admin do
+        constraints CanAccessResque do
+          mount Resque::Server, :at => "/jobs/resque"
+        end
+        get "/resque", :to => 'resque#index', :as => :resque
+
         resources :organization do
         end
         resources :events do

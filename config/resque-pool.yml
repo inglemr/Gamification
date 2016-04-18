@@ -1,0 +1,9 @@
+production:
+  background_queue: 5
+  mailer: 1
+
+staging:
+  background_queue: 1
+
+development:
+  background_queue: 1
