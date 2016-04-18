@@ -1,0 +1,31 @@
+<% if @form_type == "new_role"%>
+  $("#roles_table").dataTable().api().draw(true);
+  $("#remoteModal").modal('toggle');
+
+  setTimeout(function(){
+    $('#updatemessage').remove();
+  }, 5000);
+
+<% elsif @form_type == "delete_role" %>
+  $("#roles_table").dataTable().api().draw(true);
+<% elsif @form_type == "remove_member" %>
+  $("#roster_table").dataTable().api().draw(true);
+<% elsif @form_type == "edit_member" %>
+  $("#roster_table").dataTable().api().draw(true);
+  $("#edituserModal<%= @member.id %>").modal('toggle');
+<% elsif @form_type == "remove_member" %>
+  $("#roster_table").dataTable().api().draw(true);
+<% else %>
+  $("#updatetheme_btn").html('Update Settings');
+  $('#update_settings_message').remove();
+  <% if(@message == "User was successfully updated.") %>
+    $("#collapseFour").append('<div id="update_settings_message" class="col-md-12 text-center alert alert-success fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-check"></i><strong>Settings Updated</strong><br><i class="fa fa-refresh fa-spin fa-3x fa-fw margin-bottom"></i>Refreshing Page...</div>');
+  <% else %>
+    $("#collapseFour").append('<div id="update_settings_message" class="col-md-12 text-center alert alert-danger fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-exclamation"></i><strong>Error Updating Settings</strong></div>');
+  <% end %>
+
+  setTimeout(function(){
+    $('#update_settings_message').remove();
+  }, 5000);
+  window.location = '<%= settings_path %>';
+<% end %>

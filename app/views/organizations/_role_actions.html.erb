@@ -1,5 +1,5 @@
 <button class="btn form-control btn-sm" data-toggle="modal" data-target="#roleModal<%= role.id %>"><i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i></button>
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, delete_role_organizations_path(:id => @organization.id, :role_id => role.id), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Delete" class="fa fa-trash fa-lg"></i>'.html_safe, delete_role_organizations_path(:id => @organization.id, :role_id => role.id), remote: true, method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 
 <%= javascript_tag do %>
 $(function () {

@@ -10,7 +10,11 @@ class OrganizationsController < ApplicationController
       @organization = Organization.find(params[:id])
       @user = User.find(params[:member_id])
       @organization.remove_member(@user)
-         redirect_to :back , :flash => { 'success' => 'Member Removed.' }
+      @form_type = "remove_member"
+      respond_to do |format|
+        format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Member Removed.' }}
+        format.html {  redirect_to :back , :flash => { 'success' => 'Member Removed.' }}
+      end
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
     end
@@ -51,6 +55,7 @@ class OrganizationsController < ApplicationController
     if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-role")  )
       @organization = Organization.find(params[:id])
       @user = User.find(params[:member_id])
+      params['user'] ||= Hash.new
       params['user']['_org_roles'] ||= []
       params['user']['_org_roles'].each do |id|
         if(!@user.org_roles.exists?(id))
@@ -62,7 +67,12 @@ class OrganizationsController < ApplicationController
           @user.org_roles.delete(role)
         end
       end
-      redirect_to :back , :flash => { 'success' => 'Role added to user.' }
+      @form_type = "edit_member"
+      @member = @user
+      respond_to do |format|
+        format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Member roles updated.' }}
+        format.html {  redirect_to :back , :flash => { 'success' => 'Member roles update.' }}
+      end
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
     end
@@ -77,7 +87,12 @@ class OrganizationsController < ApplicationController
       params['role']['_permisisons'] ||= []
       @role.permissions = params['role']['_permisisons']
       @role.save
-      redirect_to :back , :flash => { 'success' => 'Role Updated.' }
+      @form_Type = "new_role"
+      respond_to do |format|
+        format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Role Updated.' }}
+        format.html {  redirect_to :back , :flash => { 'success' => 'Role Updated.' }}
+      end
+
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
     end
@@ -89,7 +104,12 @@ class OrganizationsController < ApplicationController
     if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-role")  )
       @role = OrgRole.find(params[:role_id])
       @role.destroy
-      redirect_to :back , :flash => { 'success' => 'Role Deleted.' }
+      @form_type = "delete_role"
+      respond_to do |format|
+        format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Role Deleted.' }}
+        format.html { redirect_to :back , :flash => { 'success' => 'Role Deleted.' }}
+      end
+
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
     end
@@ -105,7 +125,11 @@ class OrganizationsController < ApplicationController
       @role.description = params[:description]
       @role.permissions = params['role']['_permisisons']
       @role.save
-      redirect_to :back , :flash => { 'success' => 'Role Created.' }
+      @form_type = "new_role"
+      respond_to do |format|
+        format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Role Created.' }}
+        format.html { redirect_to :back , :flash => { 'success' => 'Role Created.' }}
+      end
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
     end
@@ -122,21 +146,25 @@ class OrganizationsController < ApplicationController
       if params[:type] == "roster"
         respond_to do |format|
           format.html
+          format.js   { render 'member_page.js.erb'}
           format.json { render json: Organizations::RosterDatatable.new(view_context,@organization) }
         end
       elsif params[:type] == "roles"
         respond_to do |format|
           format.html
+          format.js   { render 'member_page.js.erb'}
           format.json { render json: Organizations::RolesDatatable.new(view_context,@organization) }
         end
       elsif params[:type] == "pending"
         respond_to do |format|
           format.html
+          format.js   { render 'member_page.js.erb'}
           format.json { render json: Organizations::PendingDatatable.new(view_context,@organization) }
         end
       else
         respond_to do |format|
           format.html
+          format.js   { render 'member_page.js.erb'}
           format.json { render json: Organizations::EventsDatatable.new(view_context,@organization) }
         end
       end

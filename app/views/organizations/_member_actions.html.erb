@@ -1,5 +1,5 @@
 <button class="btn form-control btn-sm" data-toggle="modal" data-target="#edituserModal<%= member.id %>"><i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i></button>
-<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Remove Member" class="fa fa-trash fa-lg"></i>'.html_safe,remove_member_organizations_path(:id => organization, :member_id => member.id), method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
+<%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Remove Member" class="fa fa-trash fa-lg"></i>'.html_safe,remove_member_organizations_path(:id => organization, :member_id => member.id), :remote => true, method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 
 <!-- NEW ROLE MODEL -->
 <div class="modal fade" id="edituserModal<%= member.id %>" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
@@ -9,7 +9,7 @@
     <h4 class="modal-title"><%= member.username %></h4>
   </div>
 <div class="modal-body no-padding">
-  <%= form_for(member, :html => {:id =>"role-form" ,:class =>"" }, :url => member_role_organizations_path(:id => @organization, :member_id => member)) do |f| %>
+  <%= form_for(member, :html => {:id =>"role-form" ,:class =>"" }, :url => member_role_organizations_path(:id => @organization, :member_id => member), :remote => true) do |f| %>
     <fieldset>
       <section>
         <div class="row">
