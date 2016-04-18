@@ -156,8 +156,6 @@
             <div class="input-group col-md-12">
               <span class="input-group-addon">User</span>
               <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where("(requests.organization_id <> ? OR requests.status != 'open') or requests.organization_id is null", @organization.id).references(:organizations_users) %>
-
-
               <%= select_tag("users", options_from_collection_for_select(@users, "id", "username"), {:multiple => true,:id => "select_users" ,:class => "select2"}) %>
             </div>
           </div>

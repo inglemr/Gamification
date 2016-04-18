@@ -43,35 +43,23 @@ $(function () {
           <div class="col col-10">
             <label class="checkbox">
               <%= check_box_tag 'role[_permisisons][]', "everything" , role.permissions.include?("everything")%>
-              <i></i><%= "Everything" %>
+              <i></i>&nbsp<%= "Everything" %>
             </label>
             <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "create-event", role.permissions.include?("create-event") %>
-              <i></i><%= "Create Events" %>
+              <%= check_box_tag 'role[_permisisons][]', "create-event", role.permissions.include?("manage-events") %>
+              <i></i>&nbsp<%= "Manage Events" %>
             </label>
             <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "delete-event", role.permissions.include?("delete-event") %>
-              <i></i><%= "Delete Events" %>
-            </label>
-            <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "host-event", role.permissions.include?("host-event") %>
-              <i></i><%= "Host Events" %>
-            </label>
-            <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "accept-member", role.permissions.include?("accept-member") %>
-              <i></i><%= "Accept Members" %>
+              <%= check_box_tag 'role[_permisisons][]', "accept-member", role.permissions.include?("manage-invites") %>
+              <i></i>&nbsp<%= "Manage Invitations" %>
             </label>
             <label class="checkbox">
               <%= check_box_tag 'role[_permisisons][]', "delete-member", role.permissions.include?("delete-member") %>
-              <i></i><%= "Delete Members" %>
+              <i></i>&nbsp<%= "Delete Members" %>
             </label>
             <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "create-role", role.permissions.include?("create-role") %>
-              <i></i><%= "Create Roles" %>
-            </label>
-            <label class="checkbox">
-              <%= check_box_tag 'role[_permisisons][]', "assign-roles", role.permissions.include?("assign-roles") %>
-              <i></i><%= "Assign Roles" %>
+              <%= check_box_tag 'role[_permisisons][]', "create-role", role.permissions.include?("manage-role") %>
+              <i></i>&nbsp<%= "Manage Roles" %>
             </label>
           </div>
         </div>
