@@ -6,7 +6,7 @@ class RequestController < ApplicationController
     organization = Organization.find(params[:organization_id])
     @request = Request.new(:user_id => current_user.id, :organization_id => organization.id, :status => "open",:request_type => "org-join")
     @request.save
-    redirect_to :back
+    redirect_to :back, :flash => { 'success' => 'Organization Created. Pending Approval.' }
   end
 
   def org_accept_member
