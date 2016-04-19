@@ -20,6 +20,7 @@
         </div>
         </div>
         <br>
+         <% if @activities.size > 0 %>
           <div class="row">
             <div class="col-sm-12 no-padding">
              <br>
@@ -41,6 +42,7 @@
                 </div>
             </div>
           </div>
+          <% end %>
           <% @req = current_user.requests.where(:request_type => "org-invite", :status => "open") %>
           <% if @req.size > 0 %>
             <div class="row">
