@@ -49,7 +49,7 @@
   <div class="tab-pane fade" id="events">
     <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-events")%>
       <button class="btn btn-info pull-right">
-        <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+        <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new', :org_id => @organization.id}) %>
       </button>
     <% end %>
     <table summary "Event List" id="events_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "event", :id => @organization.id ,format: "json") %>"></table>
