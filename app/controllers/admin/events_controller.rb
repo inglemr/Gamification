@@ -1,5 +1,5 @@
 class Admin::EventsController < ApplicationController
-	load_and_authorize_resource :context => :admin, :except => [:edit,:update,:new,:create,:destroy]
+	load_and_authorize_resource :context => :admin, :except => [:edit,:update,:new,:create,:destroy, :show]
 	before_filter :load_permissions
   before_filter :organization_perms
 
