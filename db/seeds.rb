@@ -84,7 +84,6 @@
    faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "create_org_request")
    faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_invite_member")
 
-
 	 ##Admin Role
 	 admin = Role.create!(:name => "Admin")
 	 admin.permissions << Permission.find_by(:subject_class => 'all', :action => "manage")

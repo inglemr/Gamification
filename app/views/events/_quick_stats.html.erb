@@ -1,33 +1,37 @@
 
     <div class="well padding-gutter" id="quick_stats">
-      <p class="text-center">Quick Stats</p>
-      <table class="table">
-        <tr>
-          <th>Event Name:</th>
-          <td><%= event.event_name %></td>
-        </tr>
-        <tr>
-          <th>Attendance:</th>
-          <td><%= event.attendees.size %></td>
-        </tr>
-        <tr>
-          <th>Export Attendance List:</th>
-          <td>
-          <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-download"></i> Export'.html_safe, {:controller => "events", :action => 'csv', :id => event.id},:remote => true ,:class => 'btn btn-danger btn-sm')%>
-          </td>
-        </tr>
-        <tr>
-          <th>Event Hosts:</th>
-          <td>
-            |<%= User.find(event.created_by).email %><% User.find(event.created_by).id %>|
-            <br>
-            <% event.hosts.each do |host| %>
-              |<%= host.email %><% host.id%>|
+      <% if current_user.created_events.size > 0 %>
+        <p class="text-center">Quick Stats</p>
+        <table class="table">
+          <tr>
+            <th>Event Name:</th>
+            <td><%= event.event_name %></td>
+          </tr>
+          <tr>
+            <th>Attendance:</th>
+            <td><%= event.attendees.size %></td>
+          </tr>
+          <tr>
+            <th>Export Attendance List:</th>
+            <td>
+            <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-download"></i> Export'.html_safe, {:controller => "events", :action => 'csv', :id => event.id},:remote => true ,:class => 'btn btn-danger btn-sm')%>
+            </td>
+          </tr>
+          <tr>
+            <th>Event Hosts:</th>
+            <td>
+              |<%= User.find(event.created_by).email %><% User.find(event.created_by).id %>|
               <br>
-            <% end %>
-          </td>
-        </tr>
-      </table>
+              <% event.hosts.each do |host| %>
+                |<%= host.email %><% host.id%>|
+                <br>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      <% else %>
+       No Created Events
+      <% end %>
     </div>
 <script>
 console.log("worked");
