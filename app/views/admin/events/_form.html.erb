@@ -77,7 +77,7 @@
             <% elsif @organization %>
               <div class="col-sm-6">
                 <div class="form-group">
-                <%= f.select_tag :organization_id, "<option value='#{@organization.id}'>#{@organization.name}</option>".html_safe, :class => "form-control input-lg" %>
+                <%= f.select_tag :organization_id, "<option value='#{@organization.id}'>#{@organization.name}</option>".html_safe, :class => "form-control input-lg" , :name =>"event[organization_id]"%>
                </div>
               </div>
             <% end %>
