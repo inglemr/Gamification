@@ -205,7 +205,7 @@ private
 
   def organization_perms
     org_perms = Array.new
-    params[:org_id] ||= params[:organization_id]
+    params[:org_id] ||= params[:events][:organization_id]
     if params[:org_id]
       @organization = Organization.find(params[:org_id])
       if current_user.organizations.include? @organization
