@@ -82,20 +82,29 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse">
                   <div class="panel-body no-padding">
-                      <div class="col-centered">
-                        <div class="alert alert-success alert-block">
-                          <h4 class="alert-heading"><i class="fa fa-star"></i>10 points - Spring 2016</h4>
-                          GPA Increase
-                        </div>
-                        <div class="alert alert-success alert-block">
-                          <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
-                          Academic Standing
-                        </div>
-                        <div class="alert alert-success alert-block">
-                          <h4 class="alert-heading"><i class="fa fa-star"></i>5 points - Spring 2016</h4>
-                          Some Other Award
-                        </div>
+                   <% if @activities.size > 0 %>
+                    <div class="row">
+                      <div class="col-sm-12 no-padding">
+                       <br>
+                        <h2 class="row-seperator-header col-centered text-center"><strong>Recent Activity</strong> </h2>
+                          <br>
+                          <div class="col-md-12 col-centered">
+                            <% @activities.each do |activity| %>
+                              <% if activity.trackable_type == "Organization" && activity.parameters[:action] == "org_accept_invite" %>
+                                <div class="alert alert-success alert-block col-md-12">
+                                  <h4 class="alert-heading"><i class="fa fa-users"></i>Joined <%= Organization.find(activity.trackable_id).name %></h4>
+                                </div>
+                              <% elsif activity.trackable_type == "Event" && activity.parameters[:action] == "new_swipe" %>
+                                <% event = Event.find(activity.trackable_id) %>
+                                <div class="alert alert-success alert-block col-md-12">
+                                  <h4 class="alert-heading"><i class="fa fa-futbol"></i>Attended Event <%= event.event_name %>- <%= event.point_val %> Points</h4>
+                                </div>
+                              <% end %>
+                            <% end %>
+                          </div>
                       </div>
+                    </div>
+                    <% end %>
                   </div>
                 </div>
               </div>
