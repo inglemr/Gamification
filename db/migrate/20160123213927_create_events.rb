@@ -12,5 +12,6 @@ class CreateEvents < ActiveRecord::Migration
       t.text :description
       t.string :image
     end
+    add_index :events, :location_id
   end
 end
