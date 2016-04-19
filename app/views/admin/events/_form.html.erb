@@ -48,8 +48,8 @@
             </div>
           </div>
           <div class="row">
-            <% organizations = current_user.organizations %>
             <% if current_user.organizations.size > 0 %>
+            <% organizations = current_user.organizations %>
             <div class="col-sm-6">
               <div class="form-group">
                 <div class="input-group">
@@ -64,8 +64,10 @@
                     <% end %>
                     <% keep_orgs = Array.new %>
                     <% organizations.each do |org| %>
-                      <% if perms[org.id].include?("everything") || perms[org.id].include?("manage-events") %>
-                        <% keep_orgs << org %>
+                      <% if perms[org.id] %>
+                        <% if perms[org.id].include?("everything") || perms[org.id].include?("manage-events") %>
+                          <% keep_orgs << org %>
+                       <% end %>
                       <% end %>
                     <% end %>
                     <%= f.collection_select(:organization_id, keep_orgs, :id, :name, {:include_blank => ''}, {:id => "select_organization" ,:class => "select2 input-lg"}) %>
