@@ -36,6 +36,34 @@
         </div>
       </div>
     </div>
+    <div class=row>
+      <div class="col-md-12">
+       <div class="col-md-6">
+        <div class="smart-timeline">
+          <ul class="smart-timeline-list">
+            <% @joinactivities.each do |activity| %>
+              <li>
+                <div class="smart-timeline-icon">
+                  <i class="fa fa-user"></i>
+                </div>
+                <div class="smart-timeline-time">
+                  <small><%= time_ago_in_words(activity.created_at) %> Ago</small>
+                </div>
+                <div class="smart-timeline-content">
+                  <p>
+                    <a href="javascript:void(0);"><strong>New Member!</strong></a>
+                  </p>
+                  <p>
+                    <%= activity.owner.email %>
+                  </p>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
   <div class="tab-pane fade" id="roster">
     <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-invites")%>
@@ -163,7 +191,7 @@
 
               <% users = Array.new %>
               <% @users.each do |user| %>
-                <% if user.requests.where(:organization_id => @organization.id, :status => ["accepted", "open"]).size == 0 %>
+                <% if user.requests.where(:organization_id => @organization.id, :status => ["open"]).size == 0 %>
                   <% users << user %>
                 <% end %>
               <% end %>

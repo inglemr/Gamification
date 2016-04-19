@@ -1,5 +1,12 @@
 class Event < ActiveRecord::Base
   extend FriendlyId
+  include PublicActivity::Model
+  tracked :owner => proc { |controller, model| controller.current_user ? controller.current_user :  model.attendees.last}
+  tracked :params => {
+          :action =>  proc {|controller, model_instance|controller.action_name}
+      }
+
+
   friendly_id :event_name, use: [:slugged, :history,:finders]
 
   acts_as_taggable

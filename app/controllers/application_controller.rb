@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include PublicActivity::StoreController
   protect_from_forgery with: :exception
   helper_method :current_kiosk
   before_filter :load_permissions
