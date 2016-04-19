@@ -35,6 +35,8 @@
 	 Permission.create!(:name => "API QRCodes",:description => "Full Access to QRCodes API",:subject_class => "API::Qrcode", :action => "manage")
 
 	 #Organization
+
+
 	 Permission.create!(:name => "Delete Organization Roles",:description => "Delete organization roles", :subject_class => "Organization", :action => "delete_role")
 	 Permission.create!(:name => "Create Organization Roles",:description => "Create organization roles", :subject_class => "Organization", :action => "new_role")
 	 Permission.create!(:name => "Edit Organization Roles",:description => "Edit organization roles", :subject_class => "Organization", :action => "edit_role")
@@ -46,6 +48,8 @@
 	 Permission.create!(:name => "Remove member from organization",:description => "Remove Member from organization", :subject_class => "Organization", :action => "remove_member")
 
 	 #Request
+   Permission.create!(:name => "Decline Member Request",:description => "Decline member request ", :subject_class => "Request", :action => "org_decline_member")#
+   Permission.create!(:name => "Accept Member Request",:description => "Accept member request ", :subject_class => "Request", :action => "org_accept_member")#
 	 Permission.create!(:name => "Decline organization invite",:description => "Decline organization invite", :subject_class => "Request", :action => "org_decline_invite")
 	 Permission.create!(:name => "Accept organization invite",:description => "Accept organization invite", :subject_class => "Request", :action => "org_accept_invite")
 	 Permission.create!(:name => "Request membership to organization",:description => "Request membership to organization", :subject_class => "Request", :action => "create_org_request")
@@ -83,7 +87,8 @@
    faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_accept_invite")
    faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "create_org_request")
    faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_invite_member")
-
+   faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_accept_member")
+   faculty.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_decline_member")
 
 	 ##Admin Role
 	 admin = Role.create!(:name => "Admin")
@@ -110,7 +115,5 @@
    student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_accept_invite")
    student.permissions << Permission.find_by(:subject_class => 'Request', :action => "create_org_request")
    student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_invite_member")
-
-   admin.save
-   faculty.save
-   student.save
+   student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_accept_member")
+   student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_decline_member")
