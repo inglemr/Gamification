@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419230755) do
+ActiveRecord::Schema.define(version: 20160419235710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20160419230755) do
     t.string  "slug"
     t.boolean "active"
     t.string  "image"
+    t.integer "created_by"
   end
 
   add_index "organizations", ["slug"], name: "index_organizations_on_slug", using: :btree

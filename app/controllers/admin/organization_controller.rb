@@ -72,6 +72,7 @@ class Admin::OrganizationController < ApplicationController
 #    end
 
     @organization = Organization.new(organization_params)
+    @organization.created_by = current_user
     if @organization.save
       redirect_to admin_organization_index_path
     else

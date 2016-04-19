@@ -34,11 +34,11 @@ private
   end
 
   def getCreator(organization)
-    request = PublicActivity::Activity.where(:trackable_id => organization.id).where("parameters LIKE ?", ['% create_organization_request%'])
-    if request.size > 0
-      user = User.find(request.first.owner_id).email
+
+    if organization.created_by
+      user = User.find(organization.created_by).email
     else
-      user = "Created By Admin"
+      user = "Error"
     end
   end
 

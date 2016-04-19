@@ -35,8 +35,10 @@ class OrganizationsController < ApplicationController
     @organization = Organization.new(organization_params)
     if (Organization.where(:name => @organization.name).where(:active => true).size == 0)
       @organization.active = false
+      @organization.created_by = current_user
       @organization.save
       @new_role.org_id = @organization.id
+
 
       @new_role.save
       @organization.add_leader(current_user,@new_role)
