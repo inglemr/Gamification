@@ -87,6 +87,6 @@ end
 
 private
   def organization_params
-    params.require(:organization).permit(:name,:summary, :description,:active)
+    params.require(:organization).permit(:name,:summary, :description,:active,:image,)
   end
 end

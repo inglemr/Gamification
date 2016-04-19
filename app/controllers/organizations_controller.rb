@@ -177,7 +177,7 @@ class OrganizationsController < ApplicationController
 
 private
   def organization_params
-    params.require(:organization).permit(:name,:summary, :description)
+    params.require(:organization).permit(:name,:summary, :description,:image)
   end
 
   def load_organization
