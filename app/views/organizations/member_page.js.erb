@@ -1,4 +1,5 @@
 <% if @form_type == "new_role"%>
+  $("#roster_table").dataTable().api().draw(true);
   $("#roles_table").dataTable().api().draw(true);
   $("#remoteModal").modal('toggle');
 
@@ -7,6 +8,7 @@
   }, 5000);
 
 <% elsif @form_type == "delete_role" %>
+  $("#roster_table").dataTable().api().draw(true);
   $("#roles_table").dataTable().api().draw(true);
 <% elsif @form_type == "remove_member" %>
   $("#roster_table").dataTable().api().draw(true);
