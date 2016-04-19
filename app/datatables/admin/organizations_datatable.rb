@@ -25,11 +25,20 @@ private
       {
         'DT_RowId' => organization.id.to_s,
         "organizations__id" => organization.id,
-        "organizations__author" => User.find(Request.where(:trackable_id => organization.id).where("parameters LIKE ?", ['% create_organization_request%']).first.owner_id).email
+        "organizations__author" => getCreator(organization),
         "organizations__name" => organization.name.capitalize,
         "organizations__active" => getStatus(organization.active),
         organization_actions: actions(organization)
       }
+    end
+  end
+
+  def getCreator(organization)
+    request = PublicActivity::Activity.where(:trackable_id => organization.id).where("parameters LIKE ?", ['% create_organization_request%'])
+    if request.size > 0
+      user = User.find(request.first.owner_id).email
+    else
+      user = "Created By Admin"
     end
   end
 
