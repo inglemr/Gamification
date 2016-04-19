@@ -25,6 +25,7 @@ private
       {
         'DT_RowId' => organization.id.to_s,
         "organizations__id" => organization.id,
+        "organizations__author" => User.find(Request.where(:trackable_id => organization.id).where("parameters LIKE ?", ['% create_organization_request%']).first.owner_id).email
         "organizations__name" => organization.name.capitalize,
         "organizations__active" => getStatus(organization.active),
         organization_actions: actions(organization)

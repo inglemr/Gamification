@@ -33,14 +33,17 @@ class OrganizationsController < ApplicationController
 
     params[:organization].delete :org_roles
     @organization = Organization.new(organization_params)
+    if (Organization.where(:name => @organization.name).where(:active => true).size == 0)
+      @organization.active = false
+      @organization.save
+      @new_role.org_id = @organization.id
 
-    @organization.active = false
-    @organization.save
-    @new_role.org_id = @organization.id
-
-    @new_role.save
-    @organization.add_leader(current_user,@new_role)
-    redirect_to organizations_path
+      @new_role.save
+      @organization.add_leader(current_user,@new_role)
+      redirect_to organizations_path, :flash => { 'success' => 'Request Accepted. Pending Approval.' }
+    else
+      redirect_to organizations_path, :flash => { 'error' => 'Organization Already Exists' }
+    end
   end
 
   def index
