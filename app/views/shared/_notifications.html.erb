@@ -9,15 +9,21 @@
                 <i class="fa fa-users fa-fw fa-2x"></i>
               </em>
               <% if activity.key == "organization.new_org_request" %>
+                <% org = Organization.find(activity.trackable_id) %>
+                <% if org %>
+                  <% name = org.name %>
+                <% else %>
+                  <%= name = "(Deleted)" %>
+                <% end %>
                 <span>
-                   </i>You requested to create <%= Organization.find(activity.trackable_id).name %>
+                   </i>You requested to create <%= name %>
                    <br>
                    <br>
                    <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
                 </span>
               <% else %>
                 <span>
-                   </i>Joined <%= Organization.find(activity.trackable_id).name %>
+                   </i>Joined <%= name %>
                    <br>
                    <br>
                    <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
@@ -56,12 +62,14 @@
             </li>
         <% elsif activity.trackable_type == "User" && activity.key == "user.role_added" %>
           <li>
+            <% role_name = Role.find(activity.parameters[:role])%>
+            <% role_name ||= "(deleted" %>
           <span class="padding-10">
             <em class="badge padding-5 no-border-radius bg-color-greenLight pull-left margin-right-5">
               <i class="fa fa-key fa-fw fa-2x"></i>
             </em>
             <span>
-               </i>You now have access to the <%= Role.find(activity.parameters[:role]).name %> role!
+               </i>You now have access to the <%=role_name %> role!
                <br>
                <br>
                <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
