@@ -303,6 +303,12 @@ $("#passwordLogin").keyup(function (e) {
     }
 });
 
+$( "#loginBtn" ).click(function() {
+  $('#loginBtn').attr("disabled", true);
+  $("#loginBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+  $("#login-form").submit();
+});
+
 $( "#openLogin" ).click(function() {
   $('#sampleModal').modal('hide');
    $('.navbar-toggle').click();
