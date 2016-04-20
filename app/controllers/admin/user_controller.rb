@@ -23,7 +23,7 @@ class Admin::UserController  < ApplicationController
 			if(!@user.roles.exists?(id))
 				role = Role.find(id)
   			@user.add_role role.name
-  			 UserMailer.given_role(self,role).deliver_now
+  			 UserMailer.given_role(@user,role).deliver_now
   		end
   	end
 	  Role.all.each do |role|
