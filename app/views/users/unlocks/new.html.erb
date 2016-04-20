@@ -3,7 +3,7 @@
     <h1 class="login_header text-center login_text_header">Resend unlock instructions</h1>
   </div>
   <hr/>
-	<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+	<%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, id: => "submitFrm" }) do |f| %>
   <%= devise_error_messages! %>
     <div class="row form-group">
       <div class="col-md-12">
@@ -11,7 +11,7 @@
       </div>
     </div>
       <div class="row form-group col-md-12 col-centered">
-        <%= button_tag(type: 'submit', class: "btn btn-primary form-control") do %>
+        <%= button_tag(type: 'submit', class: "btn btn-primary form-control", :id: "submitBtn") do %>
           <i class="fa fa-envelope fa-lg"></i> Resend Unlock Instructions
         <% end %>
       </div>
@@ -19,3 +19,12 @@
 </div>
 
 
+<script>
+
+$( "#submitBtn" ).click(function() {
+  $('#submitBtn').attr("disabled", true);
+  $("#submitBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+  $("#submitFrm").submit();
+});
+
+</script>
