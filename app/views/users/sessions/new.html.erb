@@ -264,7 +264,7 @@
   p, h1, h2, h3 {
     color: white;
     text-shadow:
-     -1px -1px 0 #000,  
+     -1px -1px 0 #000,
       1px -1px 0 #000,
      -1px 1px 0 #000,
       1px 1px 0 #000;
@@ -324,14 +324,16 @@ $("#passwordLogin").keyup(function (e) {
 $('#myCarousel').carousel({
   interval: 10000
 
+
+});
+
 $("#signupPin").keyup(function (e) {
     if (e.keyCode == 13) {
       $('#signupBtn').attr("disabled", true);
       $("#signupBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
       $("#signup-form").submit();
     }
-});
-
+  });
 
 $( "#loginBtn" ).click(function() {
   $('#loginBtn').attr("disabled", true);
