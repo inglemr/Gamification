@@ -57,7 +57,6 @@ gem 'carrierwave'
 gem "mini_magick"
 
 group :production do
-  gem 'postmark-rails'
 	#Web Server
 	gem "passenger"
 	#Used by heroku

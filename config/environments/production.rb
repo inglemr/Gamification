@@ -1,8 +1,16 @@
 Rails.application.configure do
 
 config.action_mailer.default_url_options = { :host => 'gsw-capstone.heroku.com' }
-config.action_mailer.delivery_method = :postmark
-config.action_mailer.postmark_settings = { :api_key => "fc4c8658-82c7-4c36-8430-310d9217638e" }
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+      :user_name => 'gamification',
+      :password => '$uperuser12',
+      :domain => 'gsw-capstone.heroku.com',
+      :address => 'smtp.sendgrid.net',
+      :port => 587,
+      :authentication => :plain,
+      :enable_starttls_auto => true
+}
 
   # Settings specified here will take precedence over those in config/application.rb.
 
