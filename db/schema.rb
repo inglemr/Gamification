@@ -40,12 +40,12 @@ ActiveRecord::Schema.define(version: 20160420000649) do
     t.datetime "updated_at",      null: false
     t.string   "event_name"
     t.datetime "day_time"
+    t.string   "location_id"
     t.integer  "point_val"
     t.integer  "created_by"
     t.text     "description"
     t.string   "image"
     t.integer  "updated_by"
-    t.integer  "location_id"
     t.datetime "end_time"
     t.integer  "recurring_id"
     t.integer  "organization_id"
