@@ -230,12 +230,16 @@ class Event < ActiveRecord::Base
     elsif (id == ";E?")
       message[:danger] = "Error Swiping Card"
     else
-      if(SavedSwipe.where(:gsw_id => id, :event_id => event.id).size > 0)
-        message[:danger] = "GSW ID already linked to event please register at {URL} to claim your points"
+      if id.length > 8
+        if(SavedSwipe.where(:gsw_id => id, :event_id => event.id).size > 0)
+          message[:danger] = "GSW ID already linked to event please register at {URL} to claim your points"
+        else
+          swipe = SavedSwipe.new(:gsw_id => id, :event_id => event.id)
+          swipe.save
+          message[:success] = "GSW ID linked to event. Please register at {URL} to claim your points"
+        end
       else
-        swipe = SavedSwipe.new(:gsw_id => id, :event_id => event.id)
-        swipe.save
-        message[:success] = "GSW ID linked to event. Please register at {URL} to claim your points"
+        message[:danger] = "GSW ID Empty"
       end
 
     end

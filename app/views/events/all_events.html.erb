@@ -74,6 +74,7 @@
              <div class="btn-group">
                 <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-prev"><i class="fa fa-chevron-left"></i></a>
                 <a href="javascript:void(0)" class="btn btn-default btn-xs" id="btn-next"><i class="fa fa-chevron-right"></i></a>
+                <!--
                 <div class="btn-group">
                   <button class="calmenu btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">Showing <i class="fa fa-caret-down"></i>
                   </button>
@@ -89,6 +90,7 @@
                      </li>
                   </ul>
                 </div>
+                -->
               </div>
             </div>
           </div>
@@ -178,6 +180,12 @@
                right: 'prev,today,next'
          };
          $('#calendar').fullCalendar({
+            eventLimit: true, // for all non-agenda views
+              views: {
+                  month: {
+                      eventLimit: 2 // adjust to 6 only for agendaWeek/agendaDay
+                  }
+              },
              header: hdr,
              buttonIcons: {
                  prev: 'left-single-arrow',
@@ -204,23 +212,22 @@
        }
    }
          });
-
-         /* hide default buttons */
-         $('.fc-header-right, .fc-header-center').hide();
+        /* hide default buttons */
+         $('.fc-button-group, .fc-header-center').hide();
 
 
        $('#calendar-buttons #btn-prev').click(function () {
-           $('.fc-button-prev').click();
+           $('.fc-prev-button').click();
            return false;
        });
 
        $('#calendar-buttons #btn-next').click(function () {
-           $('.fc-button-next').click();
+           $('.fc-next-button').click();
            return false;
        });
 
        $('#calendar-buttons #btn-today').click(function () {
-           $('.fc-button-today').click();
+           $('.fc-today-button').click();
            return false;
        });
 
@@ -235,6 +242,7 @@
        $('#td').click(function () {
            $('#calendar').fullCalendar('changeView', 'agendaDay');
        });
+
       $('#events_table_processing').addClass('affix')
    })
        setTimeout(function(){

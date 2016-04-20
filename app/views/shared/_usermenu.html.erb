@@ -45,7 +45,7 @@
                              </i>Joined <%= Organization.find(activity.trackable_id).name %>
                              <br>
                              <br>
-                             <span class="pull-right font-xs text-muted"><i>Yesterday</i></span>
+                             <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
                           </span>
                         </span>
                       </li>
@@ -60,7 +60,7 @@
                              </i>Attended Event <%= event.event_name %>- <%= event.point_val %> Points
                              <br>
                              <br>
-                             <span class="pull-right font-xs text-muted"><i>Yesterday</i></span>
+                             <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
                           </span>
                           </span>
                           </li>
