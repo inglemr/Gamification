@@ -1,6 +1,6 @@
 
 # Version Data
-  * Ruby: 2.2.3
+  * Ruby: 2.3.0
   * Rails: 4.2.4
   * Database: postgresql
 
@@ -30,4 +30,3 @@
 * User roles can be added through the rails console by navigating to the root directory of the app and using the command <tt>rails console</tt>
 * Once the console has started run the follow command to find your user in the database <tt>user = User.find_by(:email => "your_email")</tt>
 * To add a role to this user simply use <tt>user.add_role :Admin</tt>(Case is important) to add the admin role
-* To finish just do <tt>user.save</tt> to save this record to the database
