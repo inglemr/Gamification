@@ -28,10 +28,10 @@
         $(document).ready(function () {
           <% flash.each do |msg_type, message| %>
           console.log("<%= msg_type %>");
-            $.bigBox({
+            $.smallBox({
 
               title: "<%= message %>",
-              content: "",
+              content: "<br>",
               <% if msg_type == "success" %>
                 sound_file: "bigbox",
                 src: "<%= asset_path('bigbox.ogg') %>",

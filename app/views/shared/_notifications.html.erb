@@ -10,7 +10,7 @@
           <%= name = "(Deleted)" %>
         <% end %>
         <% if activity.key == "organization.new_org_request" %>
-          <% @icon = "fa-envelope-o" %>
+          <% @icon = "fa-users" %>
           <% @color = "bg-color-blue" %>
           <% @message = "You requested to create #{name}" %>
           <%= render "shared/notification.html.erb" %>

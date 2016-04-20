@@ -1686,8 +1686,10 @@ body.smart-style-4 {
   color: #fff;
 }
 .smart-style-5 .ajax-dropdown {
-  background: rgba(0, 0, 0, 0.43);
-  background-image:url("modal.png");
+  background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('campus.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 .smart-style-5 .ajax-dropdown:after,
 .smart-style-5 .ajax-dropdown:before {

@@ -4,10 +4,10 @@
   <% else %>
     <% read = @color %>
   <% end %>
-  <span class="#{read}  <%= @color %> padding-10">
-      <em class="badge padding-5 no-border-radius <%= @color ||= 'bg-color-greenLight' %> pull-left margin-right-5">
-        <i class="fa <%= @icon ||= 'fa-message'  %> fa-fw fa-2x"></i>
-      </em>
+  <span class=" <%= read %> padding-10">
+    <em class="badge padding-5 no-border-radius <%= @color ||= 'bg-color-greenLight' %> txt-color-white pull-left margin-right-5">
+      <i class="fa <%= @icon ||= 'fa-message'  %> fa-fw fa-2x"></i>
+    </em>
     <span>
       <%= @message %>
       <br>
