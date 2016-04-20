@@ -18,8 +18,8 @@
           <ul class="list-group">
             <li class="list-group-item list-group-item-top text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Points</strong></span><%= current_user.points %></li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Organizations</strong></span><%= current_user.attended_events.size %></li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Events</strong></span><%= current_user.organizations.size %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Organizations</strong></span><%= current_user.organizations.where(:active => true).size %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Events</strong></span><%= current_user.attended_events.size %></li>
           </ul>
 
            <div class="list-group " id="collapseFive">
