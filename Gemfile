@@ -16,6 +16,7 @@ gem 'symmetric-encryption'
 #Used to create QR Codes
 gem 'rqrcode'
 
+
 #Used to create menu for user html editing
 gem 'tinymce-rails'
 
@@ -56,6 +57,7 @@ gem 'carrierwave'
 gem "mini_magick"
 
 group :production do
+  gem 'postmark-rails'
 	#Web Server
 	gem "passenger"
 	#Used by heroku
