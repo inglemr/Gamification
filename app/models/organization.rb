@@ -2,7 +2,6 @@ class Organization < ActiveRecord::Base
   extend FriendlyId
   include PublicActivity::Model
   mount_uploader :image, ImageUploader
-
   friendly_id :name, use: [:slugged, :history,:finders]
 
 
@@ -10,7 +9,7 @@ class Organization < ActiveRecord::Base
   has_many :users, through: :organizations_users
 
   has_many :events
-
+  has_many :articles
   has_many :org_roles, foreign_key: :org_id,dependent: :destroy
   has_many :request, foreign_key: :organization_id
 

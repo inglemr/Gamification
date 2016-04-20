@@ -86,6 +86,7 @@ Rails.application.routes.draw do
           post 'request' => 'organizations#create_organization_request', :as => "create_organization_request"
           get 'show/:id' => 'organizations#show', :as => "show"
           post 'member_page/:id/new_role' => 'organizations#new_role', :as => "new_role"
+          post 'member_page/:id/create_article' => 'organizations#create_article', :as => "create_article"
           patch 'member_page/:id/member_role/:member_id' => 'organizations#member_role', :as => "member_role"
           delete 'member_page/:id/remove_member/:member_id' => 'organizations#remove_member', :as => "remove_member"
           post 'member_page/:id/invite_member' => 'organizations#invite_member', :as => "invite_member"

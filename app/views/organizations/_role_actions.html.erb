@@ -58,6 +58,10 @@ $(function () {
               <i></i>&nbsp<%= "Delete Members" %>
             </label>
             <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "manage-news" %>
+              <i></i><%= "Manage News" %>
+            </label>
+            <label class="checkbox">
               <%= check_box_tag 'role[_permisisons][]', "create-role", role.permissions.include?("manage-role") %>
               <i></i>&nbsp<%= "Manage Roles" %>
             </label>

@@ -1,7 +1,6 @@
 <% if @form_type == "new_role"%>
   $("#roster_table").dataTable().api().draw(true);
   $("#roles_table").dataTable().api().draw(true);
-  $("#remoteModal").modal('toggle');
   $('#new_roleBtn').attr("disabled", false);
   $("#new_roleBtn").html('Create');
   setTimeout(function(){
@@ -18,4 +17,9 @@
   $("#edituserModal<%= @member.id %>").modal('toggle');
 <% elsif @form_type == "remove_member" %>
   $("#roster_table").dataTable().api().draw(true);
+<% elsif @form_type == "new_post" %>
+    $("#newArticle").modal('toggle');
+    $("#new_ArticleBtn").html('Create');
+    $('#new_ArticleBtn').attr("disabled", false);
+    $("#roster_table").dataTable().api().draw(true);
 <% end %>

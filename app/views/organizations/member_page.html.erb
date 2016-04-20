@@ -1,4 +1,11 @@
-<h1 class=" jumbotron text-center"><%= @organization.name %></h1>
+<div class="jumbotron">
+  <h1 class="text-center"><%= @organization.name %></h1>
+  <div class="row">
+  <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-news")%>
+    <button data-toggle="modal" data-target="#newArticle" class="btn btn-primary pull-right">New Post</button>
+  <% end %>
+  </div>
+</div>
 <ul id="myTab1" class="nav nav-tabs bordered nav-justified">
   <li class="active">
     <a href="#dashboard" data-toggle="tab" aria-expanded="false">Dashboard</a>
@@ -24,21 +31,21 @@
   <div class="tab-pane active fade in" id="dashboard">
     <div class="row">
       <div class="col-md-12">
-        <div class="col-md-6">
-          <div class="well">
-            <%= @organization.description %>
-          </div>
+        <div class="well">
+          <%= @organization.summary %>
         </div>
-        <div class="col-md-6">
-          <div class="well">
-            <%= @organization.summary %>
-          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well">
+          <%= @organization.description %>
         </div>
       </div>
     </div>
     <div class=row>
       <div class="col-md-12">
-       <div class="col-md-6">
+       <div class="col-md-3">
         <div class="smart-timeline">
           <ul class="smart-timeline-list">
             <% @joinactivities.each do |activity| %>
@@ -53,6 +60,23 @@
                   <div class="smart-timeline-content">
                     <p>
                       <a href="javascript:void(0);"><strong>Organization Created</strong></a>
+                    </p>
+                  </div>
+                </li>
+              <% elsif activity.key == "organization.create_article" %>
+                <li>
+                  <div class="smart-timeline-icon">
+                    <i class="fa fa-file-text"></i>
+                  </div>
+                  <div class="smart-timeline-time">
+                    <small><%= time_ago_in_words(activity.created_at) %> Ago</small>
+                  </div>
+                  <div class="smart-timeline-content">
+                    <p>
+                      <a href="javascript:void(0);"><strong>New Post!</strong></a>
+                    </p>
+                    <p>
+                      By: <%= activity.owner.email %>
                     </p>
                   </div>
                 </li>
@@ -77,6 +101,23 @@
             <% end %>
           </ul>
         </div>
+      </div>
+      <div class="col-md-9">
+        <% @articles = Article.order(created_at: :desc).where(:organization_id => @organization.id).limit(5) %>
+        <% @articles.each do |article| %>
+          <div class="jarviswidget jarviswidget-sortable" id="wid-id-0" style="" role="widget">
+            <header role="heading">
+              <h2><%= article.title %></h2>
+            </header>
+            <div role="content">
+              <div class="widget-body">
+                <% if article.body %>
+                  <%=  article.body.html_safe %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
     </div>
@@ -107,6 +148,58 @@
     </div>
   <% end %>
 </div>
+
+
+
+
+
+
+ <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-news")%>
+<!-- NEW Article MODEL -->
+<div class="modal fade" id="newArticle" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content"><div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">New Role</h4>
+  </div>
+<div class="modal-body no-padding">
+  <%= form_for(Article.new, :html => {:id =>"newArticleForm" ,:class =>"smart-form" }, :remote => true , :url => create_article_organizations_path(:id => @organization)) do |f| %>
+    <fieldset>
+      <section>
+        <div class="row">
+          <label class="label col col-2">Title</label>
+          <div class="col col-10">
+            <label class="input">
+              <input type="name" name="title">
+            </label>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="input">
+              <%= f.text_area :body ,:class => "tinymce", :rows => 20 %><%= tinymce %>
+            </label>
+          </div>
+        </div>
+      </section>
+    </fieldset>
+    <footer>
+      <button type="submit" id="new_ArticleBtn" class="btn btn-primary">
+        Create
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">
+        Cancel
+      </button>
+    </footer>
+  <% end %>
+</div>
+</div>
+  </div>
+</div>
+<!-- NEW Article MODEL -->
+<% end %>
 
 
  <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-role")%>
@@ -159,6 +252,10 @@
             <label class="checkbox">
               <%= check_box_tag 'role[_permisisons][]', "delete-member" %>
               <i></i><%= "Delete Members" %>
+            </label>
+            <label class="checkbox">
+              <%= check_box_tag 'role[_permisisons][]', "manage-news" %>
+              <i></i><%= "Manage News" %>
             </label>
             <label class="checkbox">
               <%= check_box_tag 'role[_permisisons][]', "manage-role" %>
@@ -326,6 +423,13 @@ $( "#new_roleBtn" ).click(function() {
   $('#new_roleBtn').attr("disabled", true);
   $("#new_roleBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
   $("#newRoleForm").submit();
+});
+
+$( "#new_ArticleBtn" ).click(function() {
+  tinyMCE.triggerSave();
+  $('#new_ArticleBtn').attr("disabled", true);
+  $("#new_ArticleBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+  $("#newArticleForm").submit();
 });
 
     });

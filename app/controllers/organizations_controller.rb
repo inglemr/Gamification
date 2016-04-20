@@ -189,6 +189,30 @@ class OrganizationsController < ApplicationController
     end
   end
 
+
+  def create_article
+    temp = Organization.find(params[:id])
+    puts "TTT"
+    puts params
+    if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-news")  )
+      @organization = Organization.find(params[:id])
+      @form_type = "new_post"
+      @article = Article.new
+      @article.body = params[:article][:body]
+      @article.title = params[:title]
+      @article.user_id = current_user.id
+      @article.organization_id = @organization.id
+      @article.save
+      @organization.create_activity action: 'create_article',parameters: {article: @article.id} ,  owner: current_user
+      respond_to do |format|
+        format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Article Created' }}
+        format.html {  redirect_to :back , :flash => { 'success' => 'Article Created' }}
+      end
+    else
+      redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
+    end
+  end
+
 private
   def organization_params
     params.require(:organization).permit(:name,:summary, :description,:image)
