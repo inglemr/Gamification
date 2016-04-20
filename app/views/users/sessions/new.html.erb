@@ -210,14 +210,14 @@
                   <section>
                     <label class="label">GSW ID</label>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
-                      <%= f.password_field :gsw_id, autofocus: true ,:placeholder => "GSW ID" , :class => ""%>
+                      <%= f.password_field :gsw_id, autofocus: true ,:placeholder => "GSW ID" , :class => "", :id =>"signupId"%>
                       <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter GSW ID</b></label>
                   </section>
 
                   <section>
                     <label class="label">GSW PIN</label>
                     <label class="input"> <i class="icon-append fa fa-lock"></i>
-                      <%= f.password_field :gsw_pin, autocomplete: "off" ,:placeholder => "GSW PIN"%>
+                      <%= f.password_field :gsw_pin, autocomplete: "off" ,:placeholder => "GSW PIN", :id =>"signupPin"%>
                       <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your GSW PIN</b> </label>
                     </section>
                   </fieldset>
@@ -287,6 +287,14 @@
   <script type="text/javascript">
   pageSetUp();
 
+$("#signupId").keyup(function (e) {
+    if (e.keyCode == 13) {
+        console.log($(this));
+        $('#signupPin').focus();
+        e.preventDefault();
+    }
+});
+
 $("#emailLogin").keyup(function (e) {
     if (e.keyCode == 13) {
         console.log($(this));
@@ -302,6 +310,16 @@ $("#passwordLogin").keyup(function (e) {
       $("#login-form").submit();
     }
 });
+
+
+$("#signupPin").keyup(function (e) {
+    if (e.keyCode == 13) {
+      $('#signupBtn').attr("disabled", true);
+      $("#signupBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+      $("#signup-form").submit();
+    }
+});
+
 
 $( "#loginBtn" ).click(function() {
   $('#loginBtn').attr("disabled", true);
