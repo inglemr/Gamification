@@ -204,6 +204,7 @@ class User < ActiveRecord::Base
         else
           self.create_activity action: 'role_added', parameters: {role: role.id},recipient: self
         end
+        UserMailer.given_role(self,role).deliver_now
       else
         puts "User Already Has Role " + role_name.to_s
       end

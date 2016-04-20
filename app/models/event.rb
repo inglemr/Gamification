@@ -29,6 +29,7 @@ class Event < ActiveRecord::Base
 
   def add_attendee(user)
   	if !user.attended_events.all.include?(self)
+      UserMailer.event_added(@user,self).deliver_now
       self.create_activity action: 'swipe', owner: user
   		self.attendees << user
       user.points = user.points.to_f + self.point_val.to_f
@@ -43,6 +44,7 @@ class Event < ActiveRecord::Base
   def add_host(user)
     if !user.hosted_events.all.include?(self) && User.find(self.created_by) != user
       self.hosts << user
+      UserMailer.host_access_given(@user,self).deliver_now
       self.create_activity action: 'add_host',recipient: user, owner: current_user
       user.save
       self.save
@@ -58,6 +60,7 @@ class Event < ActiveRecord::Base
       self.hosts.delete(user)
       user.save
       self.save
+      UserMailer.host_access_removed(@user,self).deliver_now
       true
     else
       false

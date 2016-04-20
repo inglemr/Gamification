@@ -39,7 +39,15 @@ class Admin::OrganizationController < ApplicationController
 
 
     @organization = Organization.find(params[:id])
+    old_status = @organization.active
     if @organization.update_attributes(organization_params)
+      if old_status != @organization.active
+
+        @organization.users.each do |user|
+          UserMailer.organization_status_change(user,@organization).deliver_now
+          @organization.create_activity action: 'status_change',recipient: user, parameters: {status: @organization.active}, owner: current_user
+        end
+      end
       redirect_to admin_organization_index_path, :flash => { :success => 'organization was successfully updated.' }
     else
       redirect_to admin_organization_index_path, :flash => { :error => 'organization was unsuccesfully updated.' }
