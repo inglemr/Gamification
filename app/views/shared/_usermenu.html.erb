@@ -15,12 +15,28 @@
         <button type="button" class="navbar-toggle collapsed pull-left" data-action="toggleMenu" title="Collapse Menu" aria-expanded="false">
           <span class="sr-only">Toggle Admin Menu</span>
           <i class="fa fa-lock fa-lg"></i>
-      </button>
+        </button>
+      <% end %>
+      <% if mobile_device? %>
+        <%  @activities = PublicActivity::Activity.order("created_at desc").where("owner_id = ? or recipient_id = ?", current_user.id, current_user.id).where.not(:key => "organization.first_member").limit(6) %>
+
+         <button id="activity" class="activity-dropdown navbar-toggle pull-left"> <i class="fa fa-user fa-lg"></i>
+           <% if @activities.where(:read => false).size != 0 %>
+             <b class="badge  bounceIn animated"><%= @activities.where(:read => false).size %></b>
+            <% end %>
+          </button>
+          <div class="ajax-dropdown active" style="z-index: 99999;border:none;">
+            <div class="ajax-notifications custom-scroll" style="opacity: 1;">
+               <%= render "shared/notifications.html.erb" %>
+               <% @activities.update_all(:read => true) %>
+            </div>
+          </div>
       <% end %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <% if current_user %>
+          <% if !mobile_device? %>
           <li>
           <%  @activities = PublicActivity::Activity.order("created_at desc").where("owner_id = ? or recipient_id = ?", current_user.id, current_user.id).where.not(:key => "organization.first_member").limit(6) %>
 
@@ -36,6 +52,7 @@
               </div>
             </div>
            <li>
+           <%end %>
           <% if (can? :manage, :all) || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") %>
             <li class="<%= current_class?(events_path) %>"><%= link_to '<i class="fa fa-calendar fa-lg"></i> My Created Events'.html_safe, events_path %></li>
           <% end %>
