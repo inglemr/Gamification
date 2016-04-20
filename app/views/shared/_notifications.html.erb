@@ -3,9 +3,9 @@
     <% @activities.each do |activity| %>
       <% @activity = activity %>
       <% if activity.trackable_type == "Organization" && activity.key != "organization.first_member"%>
-        <% org = Organization.find(activity.trackable_id) %>
-        <% if org %>
-          <% name = org.name %>
+        <% org = Organization.where(:id => activity.trackable_id) %>
+        <% if org.size == 1 %>
+          <% name = org.first.name %>
         <% else %>
           <%= name = "(Deleted)" %>
         <% end %>
@@ -27,24 +27,39 @@
             <%= render "shared/notification.html.erb" %>
           <% end %>
         <% end %>
-      <% elsif activity.trackable_type == "Event" && activity.parameters[:action] == "new_swipe" %>
-        <% event = Event.find(activity.trackable_id) %>
-        <% @icon = "fa-check" %>
-        <% @color = "bg-color-greenLight" %>
-        <% @message = "Attended Event #{event.event_name} - #{ event.point_val}  Points" %>
-        <%= render "shared/notification.html.erb" %>
-      <% elsif activity.trackable_type == "User" && activity.key == "user.new_sign_up" %>
-         <% @icon = "fa-envelope-o" %>
-         <% @color = "bg-color-blue" %>
-         <% @message = "You signed up for Gamification!" %>
-         <%= render "shared/notification.html.erb" %>
-      <% elsif activity.trackable_type == "User" && activity.key == "user.role_added" %>
-        <% role_name = Role.find(activity.parameters[:role]).name%>
-        <% role_name ||= "(deleted" %>
-        <% @icon = "fa-key" %>
-        <% @color = "bg-color-greenLight" %>
-        <% @message = "You now have access to the #{role_name} role!" %>
-        <%= render "shared/notification.html.erb" %>
+      <% elsif activity.trackable_type == "Event" %>
+        <% event = Event.where(:id => activity.trackable_id) %>
+        <% if event.size == 1 %>
+          <% name = event.first.event_name %>
+          <% points = event.first.point_val %>
+        <% else %>
+          <% name = "(Deleted)" %>
+          <% points = "(Deleted)" %>
+        <% end %>
+        <% if activity.key == "event.swipe" %>
+          <% @icon = "fa-check" %>
+          <% @color = "bg-color-greenLight" %>
+          <% @message = "Attended Event #{name} - #{points}  Points" %>
+          <%= render "shared/notification.html.erb" %>
+        <% end %>
+      <% elsif activity.trackable_type == "User" %>
+         <% if activity.key == "user.new_sign_up" %>
+           <% @icon = "fa-certificate" %>
+           <% @color = "bg-color-blue" %>
+           <% @message = "You signed up for Gamification!" %>
+           <%= render "shared/notification.html.erb" %>
+          <% elsif  activity.key == "user.role_added"  %>
+            <% role = Role.where(:id => activity.parameters[:role]) %>
+            <% if role.size == 1 %>
+              <% name = role.first.name %>
+            <% else %>
+              <% name = "(Deleted)" %>
+            <% end %>
+            <% @icon = "fa-key" %>
+            <% @color = "bg-color-greenLight" %>
+            <% @message = "You now have access to the #{name} role!" %>
+            <%= render "shared/notification.html.erb" %>
+          <% end %>
       <% end %>
     <% end %>
   <% else %>
