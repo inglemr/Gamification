@@ -1,6 +1,13 @@
 <button class="btn form-control btn-sm" data-toggle="modal" data-target="#edituserModal<%= member.id %>"><i data-toggle="tooltip" data-placement="bottom" title="Manage" class="fa fa-search-plus fa-lg"></i></button>
 <%= link_to('<i data-toggle="tooltip" data-placement="bottom" title="Remove Member" class="fa fa-trash fa-lg"></i>'.html_safe,remove_member_organizations_path(:id => organization, :member_id => member.id), :remote => true, method: :delete, data: { confirm: 'Are you sure?' }, :class  => "btn form-control btn-sm") %>
 
+
+
+
+
+
+
+
 <!-- NEW ROLE MODEL -->
 <div class="modal fade" id="edituserModal<%= member.id %>" tabindex="-1" role="dialog" aria-labelledby="remoteModalLabel" aria-hidden="true" style="margin-top:100px;display: none;">
   <div class="modal-dialog">
@@ -8,19 +15,18 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title"><%= member.username %></h4>
   </div>
-
 <div class="modal-body no-padding">
-  <%= form_for(member, :html => {:id =>"role-form" ,:class =>"smart-form" }, :url => member_role_organizations_path(:id => @organization, :member_id => member), :remote => true) do |f| %>
+   <%= form_for(member, :html => {:id =>"memberform" ,:class =>"smart-form" }, :url => member_role_organizations_path(:id => @organization, :member_id => member), :remote => true) do |f| %>
     <fieldset>
       <section>
         <div class="row">
           <label class="label col col-2">Roles</label>
           <div class="col col-10">
             <% organization.org_roles.each do |role|%>
-              <%= f.label :role , :class => "checkbox" do %>
+              <label class="checkbox">
                 <%= check_box_tag 'user[_org_roles][]', role.id, member.org_roles.where(:org_id => organization.id).where(:id => role.id).any? %>
                 <i></i>&nbsp<%= role.name.capitalize %>
-              <% end %>
+              </label>
             <% end %>
           </div>
         </div>
@@ -41,6 +47,7 @@
 </div>
 <!-- NEW ROLE MODEL -->
 
+
 <%= javascript_tag do %>
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
@@ -50,8 +57,4 @@ $(function () {
 $(function () {
   $('[data-toggle="popover"]').popover({ trigger: "hover" });
 })
-<% end %>
-
-<% content_for :scripts do %>
-  
 <% end %>

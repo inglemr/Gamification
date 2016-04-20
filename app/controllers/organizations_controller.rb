@@ -33,14 +33,19 @@ class OrganizationsController < ApplicationController
 
     params[:organization].delete :org_roles
     @organization = Organization.new(organization_params)
+    if (Organization.where(:name => @organization.name).where(:active => true).size == 0)
+      @organization.active = false
+      @organization.created_by = current_user.id
+      @organization.save
+      @new_role.org_id = @organization.id
 
-    @organization.active = false
-    @organization.save
-    @new_role.org_id = @organization.id
 
-    @new_role.save
-    @organization.add_leader(current_user,@new_role)
-    redirect_to organizations_path
+      @new_role.save
+      @organization.add_leader(current_user,@new_role)
+      redirect_to organizations_path, :flash => { 'success' => 'Request Accepted. Pending Approval.' }
+    else
+      redirect_to organizations_path, :flash => { 'error' => 'Organization Already Exists' }
+    end
   end
 
   def index
@@ -143,6 +148,7 @@ class OrganizationsController < ApplicationController
     temp = Organization.find(params[:id])
     if current_user.organizations.include?(temp)
       @organization = Organization.find(params[:id])
+      @joinactivities = PublicActivity::Activity.order("created_at desc").where(trackable_id: @organization.id).where("parameters LIKE ?", ['% org_accept_invite%']).limit(10)
       if params[:type] == "roster"
         respond_to do |format|
           format.html
@@ -176,7 +182,7 @@ class OrganizationsController < ApplicationController
 
 private
   def organization_params
-    params.require(:organization).permit(:name,:summary, :description)
+    params.require(:organization).permit(:name,:summary, :description,:image)
   end
 
   def load_organization

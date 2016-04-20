@@ -25,10 +25,20 @@ private
       {
         'DT_RowId' => organization.id.to_s,
         "organizations__id" => organization.id,
+        "organizations__author" => getCreator(organization),
         "organizations__name" => organization.name.capitalize,
         "organizations__active" => getStatus(organization.active),
         organization_actions: actions(organization)
       }
+    end
+  end
+
+  def getCreator(organization)
+
+    if organization.created_by
+      user = User.find(organization.created_by).email
+    else
+      user = "Error"
     end
   end
 

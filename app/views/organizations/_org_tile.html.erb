@@ -3,8 +3,12 @@
 
 <div class="<%= style %>">
       <div class="cuadro_intro_hover " style="background-color:#cccccc;">
-      <p style="text-align:center; margin-top:20px;">
-        <img class="event_tile_img" src="http://placehold.it/610x200">
+      <p style="text-align:center">
+          <% if organization.image_url.to_s == "" %>
+              <img class="event_tile_img" src="https://placeimg.com/380/200/arch">
+          <% else %>
+              <%= image_tag organization.image_url(:kiosk_page_mobile).to_s ,:class => "event_tile_img" %>
+          <% end %>
       </p>
       <div class="caption">
         <div class="blur"></div>

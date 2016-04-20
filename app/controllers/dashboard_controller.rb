@@ -3,6 +3,7 @@ class DashboardController < ApplicationController
   load_and_authorize_resource :class => false
   before_filter :load_permissions
   def index
+    @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: current_user.id).where.not(trackable_type: "User").limit(3)#.where("parameters LIKE ?", ['% org_accept_invite%'])
     @userLeader = User.where(:class_type => current_user.class_type).order("points DESC").limit(5)
     @freshmen = User.where(:class_type => "Freshmen").order("points DESC").limit(5)
     @sophmore = User.where(:class_type => "Sophmore").order("points DESC").limit(5)

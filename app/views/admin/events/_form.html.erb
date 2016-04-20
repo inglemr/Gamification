@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="row">
-            <% if current_user.organizations.size > 0 %>
+            <% if current_user.organizations.size > 0 && !@organization %>
             <% organizations = current_user.organizations %>
             <div class="col-sm-6">
               <div class="form-group">
@@ -56,7 +56,7 @@
                   <span class="input-group-addon">Organization</span>
                     <% perms = Hash.new %>
                     <% current_user.org_roles.each do |role| %>
-                    <%  perms[role.org_id] = Array.new %>
+                    <%  perms[role.org_id] ||= Array.new %>
                     <%  role.permissions.each do |perm| %>
                     <%    perms[role.org_id] << perm.to_s.gsub('"', '') %>
                     <%  end %>
@@ -74,6 +74,12 @@
                 </div>
               </div>
             </div>
+            <% elsif @organization %>
+              <div class="col-sm-6">
+                <div class="form-group">
+                <%= f.select_tag :organization_id, "<option value='#{@organization.id}'>#{@organization.name}</option>".html_safe, :class => "form-control input-lg" , :name =>"event[organization_id]"%>
+               </div>
+              </div>
             <% end %>
             <div class="col-sm-6">
               <div class="form-group">

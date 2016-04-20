@@ -1,6 +1,12 @@
 #<%= SymmetricEncryption.decrypt (current_user.current_semester["GPA"]) %>
 class User < ActiveRecord::Base
   extend FriendlyId
+  include PublicActivity::Model
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
+  tracked :params => {
+        :action =>  proc {|controller, model_instance|controller.action_name}
+    }
+
   friendly_id :username, use: [:slugged, :history,:finders]
 
   #Validations

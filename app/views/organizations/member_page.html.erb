@@ -36,6 +36,34 @@
         </div>
       </div>
     </div>
+    <div class=row>
+      <div class="col-md-12">
+       <div class="col-md-6">
+        <div class="smart-timeline">
+          <ul class="smart-timeline-list">
+            <% @joinactivities.each do |activity| %>
+              <li>
+                <div class="smart-timeline-icon">
+                  <i class="fa fa-user"></i>
+                </div>
+                <div class="smart-timeline-time">
+                  <small><%= time_ago_in_words(activity.created_at) %> Ago</small>
+                </div>
+                <div class="smart-timeline-content">
+                  <p>
+                    <a href="javascript:void(0);"><strong>New Member!</strong></a>
+                  </p>
+                  <p>
+                    <%= activity.owner.email %>
+                  </p>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
   </div>
   <div class="tab-pane fade" id="roster">
     <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-invites")%>
@@ -49,7 +77,7 @@
   <div class="tab-pane fade" id="events">
     <% if @org_perms.include?("everything") ||  @org_perms.include?("manage-events")%>
       <button class="btn btn-info pull-right">
-        <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new'}) %>
+        <%= link_to('New Event'.html_safe, {:controller => 'Admin::Events' ,:action => 'new', :org_id => @organization.id}) %>
       </button>
     <% end %>
     <table summary "Event List" id="events_table" class="table table-hover"  data-source="<%= member_page_organizations_path(:type => "event", :id => @organization.id ,format: "json") %>"></table>
@@ -157,13 +185,13 @@
               <span class="input-group-addon">User</span>
 
 
-              <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where(" requests.status = 'open'").references(:organizations_users) %>
+              <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where(" requests.status <> 'open' or requests.organization_id is null").references(:organizations_users) %>
 
 
 
               <% users = Array.new %>
               <% @users.each do |user| %>
-                <% if user.requests.where(:organization_id => @organization.id, :status => ["accepted", "open"]).size == 0 %>
+                <% if user.requests.where(:organization_id => @organization.id, :status => ["open"]).size == 0 %>
                   <% users << user %>
                 <% end %>
               <% end %>

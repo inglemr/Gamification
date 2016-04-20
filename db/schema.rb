@@ -11,11 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418035309) do
+ActiveRecord::Schema.define(version: 20160420000649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "activities", force: :cascade do |t|
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "key"
+    t.text     "parameters"
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "read",           default: false
+  end
+
+  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at",      null: false
@@ -98,6 +116,8 @@ ActiveRecord::Schema.define(version: 20160418035309) do
     t.text    "description"
     t.string  "slug"
     t.boolean "active"
+    t.string  "image"
+    t.integer "created_by"
   end
 
   add_index "organizations", ["slug"], name: "index_organizations_on_slug", using: :btree
@@ -210,12 +230,12 @@ ActiveRecord::Schema.define(version: 20160418035309) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",              null: false
-    t.string   "encrypted_password",     default: "",              null: false
+    t.string   "email",                         default: "",              null: false
+    t.string   "encrypted_password",            default: "",              null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,               null: false
+    t.integer  "sign_in_count",                 default: 0,               null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
@@ -230,7 +250,7 @@ ActiveRecord::Schema.define(version: 20160418035309) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        default: 0,               null: false
+    t.integer  "failed_attempts",               default: 0,               null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "user_type"
@@ -238,7 +258,9 @@ ActiveRecord::Schema.define(version: 20160418035309) do
     t.hstore   "current_semester"
     t.string   "class_type"
     t.string   "name"
-    t.string   "theme",                  default: "smart-style-5"
+    t.string   "encrypted_current_semester_iv"
+    t.string   "encrypted_last_semester_iv"
+    t.string   "theme",                         default: "smart-style-5"
     t.string   "slug"
   end
 

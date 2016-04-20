@@ -21,7 +21,7 @@ gem 'tinymce-rails'
 
 #Pretty URLs
 gem 'friendly_id', '~> 5.1.0'
-
+gem 'public_activity'
 
 #Background jobs
 gem 'resque', :require => "resque/server"

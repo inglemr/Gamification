@@ -43,7 +43,7 @@ private
     if (params[:myOrgs] == "1")
       render(:partial=>"organizations/org_tile.html.erb", locals: {type: "Member Page",url: member_page_organizations_path(organization)  , organization: organization, style: "col-md-2 padding-bottom-10"},:formats => [:html])
     else
-      render(:partial=>"organizations/org_tile.html.erb", locals: {type: "More Info",url: show_organizations_path(organization), organization: organization, style: "col-md-6 padding-bottom-10"},:formats => [:html])
+      render(:partial=>"organizations/org_tile.html.erb", locals: {type: "More Info",url: show_organizations_path(organization), organization: organization, style: "col-md-3 no-padding"},:formats => [:html])
     end
   end
 
@@ -52,7 +52,7 @@ private
   end
 
   def per_page
-    params[:iDisplayLength].to_i > 0? params[:iDisplayLength].to_i : 4
+    params[:iDisplayLength].to_i > 0 ? 20 : 20
   end
 
   def sort_direction
