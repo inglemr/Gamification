@@ -23,11 +23,11 @@ class Admin::RoomsController < ApplicationController
 	      	@location.save
 	        format.html { redirect_to @event.timeline, notice: 'Room Number was successfully created.' }
 	        format.json { render json: @room, status: :created, location: @room }
-	        format.js
+	        format.js{}
 	      else
 	        format.html { render action: "new" }
 	        format.json { render json: @room.errors, status: :unprocessable_entity }
-	        format.js
+	        format.js {}
 	      end
 	    end
 	end

@@ -27,7 +27,7 @@
       <div class="actions">
         <button class="btn btn-sm btn-primary btn-prev" type="button"><i class=
         "fa fa-arrow-left"></i>Prev</button> <button class=
-        "btn btn-sm btn-success btn-next" data-last="Finish" type="button">Next
+        "btn btn-sm btn-success btn-next" id="finishBtn" data-last="Finish" type="button">Next
         <i class="fa fa-arrow-right"></i></button>
       </div>
     </div>
@@ -274,7 +274,9 @@
         var wizard = $('.wizard').wizard();
 
         wizard.on('finished', function (e, data) {
+
           $("#submitForm").click();
+
           /*$.smallBox({
             title: "Congratulations! Your form was submitted",
             content: "<i class='fa fa-clock-o'><\/i> <i>1 seconds ago...<\/i>",
@@ -394,6 +396,11 @@
   })
 
   $("#new_event").validate({
+    submitHandler: function(form) {
+    $('#finishBtn').attr("disabled", true);
+    $("#finishBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+    form.submit();
+  },
   rules : {
     "event[event_name]" : {
       required: true
