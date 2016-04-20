@@ -1,3 +1,117 @@
+<% if !mobile_device? %>
+<hr>
+<div class="container">
+  <div class="row">
+      <div class="col-sm-10"><h1><%= current_user.username.capitalize %></h1></div>
+      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.clipartbest.com/cliparts/ncB/XBX/ncBXBXgBi.png"></a></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-3"><!--left col-->
+
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-top text-muted">Profile</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Real name</strong></span><%= current_user.name %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Class</strong></span><%= current_user.class_type %>, <%= current_user.user_type %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span><%= current_user.email %></li>
+          </ul>
+
+
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-top text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Points</strong></span><%= current_user.points %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Organizations</strong></span><%= current_user.attended_events.size %></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Events</strong></span><%= current_user.organizations.size %></li>
+          </ul>
+
+           <div class="list-group " id="collapseFive">
+                 <li  class="list-group-item list-group-item-top text-muted">
+                  <%= form_for(@user, url: {action: "updaterecords"}, :remote => true , :method => :POST, :html =>{ :id => "update_records_form" })  do |f| %>
+                   <div class="input-group" style="margin: 10px 0;">
+                     <%= f.password_field :gsw_pin, :class => "form-control text-center" , :placeholder => "GSW PIN"%>
+                     <span class="input-group-btn">
+                      <button class="btn btn-default" id="updaterecords_btn">Update Records</button>
+                      <%= f.submit "Update Records", :id => "updaterecords_submit" ,:class => "hidden" %>
+                     </span>
+                   </div>
+                 <% end%>
+                 </li>
+              </div>
+
+        </div><!--/col-3-->
+      <div class="col-sm-9">
+
+          <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+            <li><a href="#organizations" data-toggle="tab">My Organizations</a></li>
+            <li><a href="#settings" data-toggle="tab">Settings</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane active" id="home">
+              <table summary "Events List" id="events_table" class="table table-hover"  data-source="<%= settings_path(format: "json") %>"></table>
+
+              <hr>
+              <% if @activities.size > 0 %>
+              <h4>Recent Activity</h4>
+
+                <div class="col-md-12 col-centered">
+                  <% @activities.each do |activity| %>
+                    <% if activity.trackable_type == "Organization" && activity.parameters[:action] == "org_accept_invite" %>
+                      <div class="alert alert-success alert-block col-md-12">
+                        <h4 class="alert-heading"><i class="fa fa-users"></i>Joined <%= Organization.find(activity.trackable_id).name %></h4>
+                      </div>
+                    <% elsif activity.trackable_type == "Event" && activity.parameters[:action] == "new_swipe" %>
+                      <% event = Event.find(activity.trackable_id) %>
+                      <div class="alert alert-success alert-block col-md-12">
+                        <h4 class="alert-heading"><i class="fa fa-futbol"></i>Attended Event <%= event.event_name %>- <%= event.point_val %> Points</h4>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+
+             </div><!--/tab-pane-->
+             <div class="tab-pane" id="organizations">
+                <div class="col-md-12">
+                <br>
+                  <% if current_user.organizations.size > 0 %>
+                    <% current_user.organizations.where(:active => true).each do |organization| %>
+                      <%= render(:partial=>"organizations/org_tile.html.erb", locals: {type: "Member Page", url:member_page_organizations_path(organization), organization: organization, style: "col-md-4 padding-bottom-10"},:formats => [:html]) %>
+                    <% end %>
+                    <% else %>
+                    <div class="col-lg-12 col-centered text-center">
+                          <br />
+                          <strong>No Organizations Joined</strong><br /><br />
+                        </div>
+                    <% end %>
+                </div>
+             </div><!--/tab-pane-->
+             <div class="tab-pane" id="settings">
+                <%= form_for(@user, url: {action: "updatesettings"}, :remote => true , :method => :POST, :html =>{ :id => "update_theme_form" }) do |f| %>
+                  <div class="col-md-12 form-group" id="collapseFour">
+                    <div class="col-md-4 col-sm-4 col-lg-4 col-centered" style="margin: 10px 0;">
+                      <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
+                    </div>
+                  </div>
+                  <div class="col-centered text-center" style="margin: 10px 0;">
+                    <button class="btn btn-default" id="updatetheme_btn">Update Settings</button>
+                  <%= f.submit "Update Records", :id => "updatetheme_submit" ,:class => "hidden" %>
+                  </div>
+                <% end %>
+              </div>
+
+              </div><!--/tab-pane-->
+          </div><!--/tab-content-->
+
+        </div><!--/col-9-->
+    </div><!--/row-->
+
+
+
+
+
+
+<% else %>
 <div class="well no-padding">
   <div class="row">
     <div class="col-sm-4 col-centered text-center">
@@ -175,6 +289,7 @@
           </div>
         </div>
     </div>
+<% end %>
 
 
 
@@ -187,6 +302,14 @@
 }
 .minified #main {
   margin-left: 0;
+}
+
+.list-group-item {
+  background-color: inherit;
+}
+
+.list-group-item-top{
+  background-color: rgba(255, 255, 225, 0.07) !important;
 }
 </style>
 
@@ -206,6 +329,37 @@ $( "#updatetheme_btn" ).click(function() {
   $("#updatetheme_btn").html('<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
   $("#update_theme_form").submit();
 });
+
+
+ var events_table = $('#events_table').dataTable({
+        "sDom": "<'row'<'col-lg-12'r>>t<'row'<'col-lg-12 col-md-12'i><'col-lg-7 col-md-7 center'p>>",
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": $('#events_table').data('source'),
+        "aaSorting": [[ 0, "desc" ]],
+         "columns": [
+          { "title": "Name", "data": "events__event_name" },
+          { "title": "Location", "data": "events__location_id" },
+          { "title": "Point Value", "data": "events__point_val" }
+        ],
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { "name": "sSearch", "value": $("#events_table_search").val() },
+            { "name": "iDisplayLength", "value": $("#events_table_length").val() }
+          );
+        },
+      });
+      $("#events_table_length").on("change", function() {
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_refresh').click(function(e){
+        events_table.dataTable().api().draw(false);
+      });
+      $('#events_table_search').keyup(function(){
+        events_table.dataTable().api().draw(false);
+      });
+
 
 
 </script>

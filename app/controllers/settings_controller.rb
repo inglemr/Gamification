@@ -2,6 +2,11 @@ class SettingsController < ApplicationController
 	def settings
 			@user = current_user
 			@activities = PublicActivity::Activity.order("created_at desc").where(owner_id: current_user.id).where(trackable_type: "Event").limit(3)
+
+			respond_to do |format|
+				format.html {}
+				format.json {render json: ProfileDatatable.new(view_context)}
+			end
 	end
 
 	def updatesettings
