@@ -1,0 +1,75 @@
+                <ul class="notification-body">
+                  <% if @activities.size > 0 %>
+                    <% @activities.each do |activity| %>
+                      <% if activity.trackable_type == "Organization" && activity.key != "organization.first_member"%>
+
+                          <li>
+                            <span class="padding-10">
+                              <em class="badge padding-5 no-border-radius bg-color-greenLight pull-left margin-right-5">
+                                <i class="fa fa-users fa-fw fa-2x"></i>
+                              </em>
+                              <% if activity.key == "organization.new_org_request" %>
+                                <span>
+                                   </i>You requested to create <%= Organization.find(activity.trackable_id).name %>
+                                   <br>
+                                   <br>
+                                   <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
+                                </span>
+                              <% else %>
+                                <span>
+                                   </i>Joined <%= Organization.find(activity.trackable_id).name %>
+                                   <br>
+                                   <br>
+                                   <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
+                                </span>
+                              <% end %>
+                            </span>
+                          </li>
+                      <% elsif activity.trackable_type == "Event" && activity.parameters[:action] == "new_swipe" %>
+                        <% event = Event.find(activity.trackable_id) %>
+                        <li>
+                        <span class="padding-10">
+                          <em class="badge padding-5 no-border-radius bg-color-greenLight pull-left margin-right-5">
+                            <i class="fa fa-envelope-o fa-fw fa-2x"></i>
+                          </em>
+                          <span>
+                             </i>Attended Event <%= event.event_name %>- <%= event.point_val %> Points
+                             <br>
+                             <br>
+                             <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
+                          </span>
+                          </span>
+                          </li>
+                        <% elsif activity.trackable_type == "User" && activity.key == "user.new_sign_up" %>
+                          <li>
+                          <span class="padding-10">
+                            <em class="badge padding-5 no-border-radius bg-color-greenLight pull-left margin-right-5">
+                              <i class="fa fa-key fa-fw fa-2x"></i>
+                            </em>
+                            <span>
+                               </i>You signed up for Gamification!
+                               <br>
+                               <br>
+                               <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
+                            </span>
+                            </span>
+                            </li>
+                        <% elsif activity.trackable_type == "User" && activity.key == "user.role_added" %>
+                          <li>
+                          <span class="padding-10">
+                            <em class="badge padding-5 no-border-radius bg-color-greenLight pull-left margin-right-5">
+                              <i class="fa fa-key fa-fw fa-2x"></i>
+                            </em>
+                            <span>
+                               </i>You now have access to the <%= Role.find(activity.parameters[:role]).name %> role!
+                               <br>
+                               <br>
+                               <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(activity.created_at) %> Ago</i></span>
+                            </span>
+                            </span>
+                            </li>
+                        <% end %>
+                    </li>
+                    <% end %>
+                  <% end %>
+                </ul>

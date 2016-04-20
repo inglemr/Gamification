@@ -3,12 +3,6 @@ class Organization < ActiveRecord::Base
   include PublicActivity::Model
   mount_uploader :image, ImageUploader
 
-  tracked trackable_id: Proc.new{ |controller, model| model.id }
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
-  tracked :params => {
-          :action =>  proc {|controller, model_instance|controller.action_name}
-      }
-
   friendly_id :name, use: [:slugged, :history,:finders]
 
 
@@ -34,6 +28,7 @@ class Organization < ActiveRecord::Base
 
   def add_leader(user,role)
     if !user.organizations.all.include?(self)
+      self.create_activity action: 'first_member', owner: user
       self.users << user
       user.save
       user.org_roles << role

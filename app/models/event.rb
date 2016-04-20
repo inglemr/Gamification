@@ -1,10 +1,6 @@
 class Event < ActiveRecord::Base
   extend FriendlyId
   include PublicActivity::Model
-  tracked :owner => proc { |controller, model| controller.current_user ? controller.current_user :  model.attendees.last}
-  tracked :params => {
-          :action =>  proc {|controller, model_instance|controller.action_name}
-      }
 
 
   friendly_id :event_name, use: [:slugged, :history,:finders]
@@ -33,6 +29,7 @@ class Event < ActiveRecord::Base
 
   def add_attendee(user)
   	if !user.attended_events.all.include?(self)
+      self.create_activity action: 'swipe', owner: user
   		self.attendees << user
       user.points = user.points.to_f + self.point_val.to_f
       user.save
@@ -46,6 +43,7 @@ class Event < ActiveRecord::Base
   def add_host(user)
     if !user.hosted_events.all.include?(self) && User.find(self.created_by) != user
       self.hosts << user
+      self.create_activity action: 'add_host',recipient: user, owner: current_user
       user.save
       self.save
       true
@@ -56,6 +54,7 @@ class Event < ActiveRecord::Base
 
   def remove_host(user)
     if user.hosted_events.all.include?(self)
+      @organization.create_activity action: 'remove_host',recipient: user, owner: current_user
       self.hosts.delete(user)
       user.save
       self.save

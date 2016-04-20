@@ -71,6 +71,7 @@ class ConfirmationsController < Devise::ConfirmationsController
         savedSwipes.destroy_all
       end
     end
+    @confirmable.create_activity action: 'new_sign_up',owner: @confirmable
     @confirmable.confirm
     set_flash_message :notice, :confirmed
     sign_in_and_redirect(resource_name, @confirmable)

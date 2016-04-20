@@ -2,10 +2,7 @@
 class User < ActiveRecord::Base
   extend FriendlyId
   include PublicActivity::Model
-  tracked owner: Proc.new{ |controller, model| controller.current_user }
-  tracked :params => {
-        :action =>  proc {|controller, model_instance|controller.action_name}
-    }
+
 
   friendly_id :username, use: [:slugged, :history,:finders]
 
@@ -43,7 +40,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   scope :sorted, lambda { order("users.id ASC")}
-
   def update_records(pin)
  require 'net/http'
       params = Hash.new
@@ -97,6 +93,7 @@ class User < ActiveRecord::Base
       end
       self.name = res["name"]
       self.save
+      self.create_activity action: 'update_records',owner: self
       return "Success"
   end
 
@@ -198,11 +195,17 @@ class User < ActiveRecord::Base
 
   def add_role(role_name)
     role = Role.find_by(:name => role_name.to_s)
+    current_user ||= false
     if role
       if !(self.roles.exists?(role.id))
         self.roles << role
+        if current_user
+          self.create_activity action: 'role_added', parameters: {role: role.id},recipient: self, owner: current_user
+        else
+          self.create_activity action: 'role_added', parameters: {role: role.id},recipient: self
+        end
       else
-        puts "User Already Has Role " + role_name
+        puts "User Already Has Role " + role_name.to_s
       end
     else
       puts "Role Does Not Exist"

@@ -11,6 +11,7 @@ class OrganizationsController < ApplicationController
       @user = User.find(params[:member_id])
       @organization.remove_member(@user)
       @form_type = "remove_member"
+      @organization.create_activity action: 'remove_member', owner: @user
       respond_to do |format|
         format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Member Removed.' }}
         format.html {  redirect_to :back , :flash => { 'success' => 'Member Removed.' }}
@@ -41,6 +42,7 @@ class OrganizationsController < ApplicationController
 
 
       @new_role.save
+      @organization.create_activity action: 'new_org_request', owner: current_user
       @organization.add_leader(current_user,@new_role)
       redirect_to organizations_path, :flash => { 'success' => 'Request Accepted. Pending Approval.' }
     else
@@ -60,11 +62,14 @@ class OrganizationsController < ApplicationController
     if (current_user.organizations.include? temp) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-role")  )
       @organization = Organization.find(params[:id])
       @user = User.find(params[:member_id])
+      new_roles = Array.new
       params['user'] ||= Hash.new
       params['user']['_org_roles'] ||= []
       params['user']['_org_roles'].each do |id|
         if(!@user.org_roles.exists?(id))
-          @user.org_roles << OrgRole.find(id)
+          role_new = OrgRole.find(id)
+          @user.org_roles << role_new
+          new_roles << role_new
         end
       end
       OrgRole.all.each do |role|
@@ -74,6 +79,7 @@ class OrganizationsController < ApplicationController
       end
       @form_type = "edit_member"
       @member = @user
+      @organization.create_activity action: 'add_role_member', parameters: {roles: new_roles}, owner: @user
       respond_to do |format|
         format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Member roles updated.' }}
         format.html {  redirect_to :back , :flash => { 'success' => 'Member roles update.' }}
@@ -93,6 +99,7 @@ class OrganizationsController < ApplicationController
       @role.permissions = params['role']['_permisisons']
       @role.save
       @form_Type = "new_role"
+      @organization.create_activity action: 'role_updated', parameters: {roles: @role.id}, owner: current_user
       respond_to do |format|
         format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Role Updated.' }}
         format.html {  redirect_to :back , :flash => { 'success' => 'Role Updated.' }}
@@ -110,6 +117,7 @@ class OrganizationsController < ApplicationController
       @role = OrgRole.find(params[:role_id])
       @role.destroy
       @form_type = "delete_role"
+      @organization.create_activity action: 'delete_role', parameters: {roles: params[:role_id]}, owner: current_user
       respond_to do |format|
         format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Role Deleted.' }}
         format.html { redirect_to :back , :flash => { 'success' => 'Role Deleted.' }}
@@ -131,6 +139,7 @@ class OrganizationsController < ApplicationController
       @role.permissions = params['role']['_permisisons']
       @role.save
       @form_type = "new_role"
+      @organization.create_activity action: 'create_role', parameters: {roles: @role.id}, owner: current_user
       respond_to do |format|
         format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Role Created.' }}
         format.html { redirect_to :back , :flash => { 'success' => 'Role Created.' }}
@@ -148,7 +157,7 @@ class OrganizationsController < ApplicationController
     temp = Organization.find(params[:id])
     if current_user.organizations.include?(temp)
       @organization = Organization.find(params[:id])
-      @joinactivities = PublicActivity::Activity.order("created_at desc").where(trackable_id: @organization.id).where("parameters LIKE ?", ['% org_accept_invite%']).limit(10)
+      @joinactivities = PublicActivity::Activity.order("created_at desc").where(trackable_id: @organization.id).limit(10)
       if params[:type] == "roster"
         respond_to do |format|
           format.html

@@ -6,7 +6,8 @@ class RequestController < ApplicationController
     organization = Organization.find(params[:organization_id])
     @request = Request.new(:user_id => current_user.id, :organization_id => organization.id, :status => "open",:request_type => "org-join")
     @request.save
-    redirect_to :back, :flash => { 'success' => 'Organization Created. Pending Approval.' }
+    @organization.create_activity action: 'join_request', owner: current_user
+    redirect_to :back, :flash => { 'success' => 'Request To Join Made. Pending Approval.' }
   end
 
   def org_accept_member
@@ -17,6 +18,7 @@ class RequestController < ApplicationController
     @request.status = "accepted"
     @organization.add_member(@user)
     @request.save
+    @organization.create_activity action: 'accept_member',recipient: @user, owner: current_user
     redirect_to :back , :flash => { 'success' => 'Member Accepted' }
   end
 
@@ -28,6 +30,7 @@ class RequestController < ApplicationController
     if (current_user.organizations.include? @organization) && ( @org_perms.include?("everything")  || @org_perms.include?("manage-invites")  )
       @request.status = "declined"
       @request.save
+      @organization.create_activity action: 'decline_member', recipient: @user, owner: current_user
       redirect_to :back , :flash => { 'success' => 'Member Declined' }
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
@@ -43,6 +46,7 @@ class RequestController < ApplicationController
       @users.each do |id|
         @request = Request.new(:user_id => id, :organization_id => @organization.id, :status => "open",:request_type => "org-invite")
         @request.save
+        @organization.create_activity action: 'invite_member',recipient: User.find(id), owner: current_user
       end
       redirect_to :back , :flash => { 'success' => 'Members Invited' }
     else
@@ -58,6 +62,7 @@ class RequestController < ApplicationController
       @organization.add_member(@user)
       @request.status = "accepted"
       @request.save
+      @organization.create_activity action: 'accept_invite', owner: current_user
       redirect_to :back , :flash => { 'success' => 'Invitation Accepted' }
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
@@ -71,6 +76,7 @@ class RequestController < ApplicationController
     if @user.id == current_user.id
       @request.status = "declined"
       @request.save
+      @organization.create_activity action: 'decline_invite', owner: current_user
       redirect_to :back , :flash => { 'success' => 'Invitation Declined' }
     else
       redirect_to :back , :flash => { 'error' => 'Unauthorized.' }
