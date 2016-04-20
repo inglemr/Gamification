@@ -26,6 +26,12 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: "[Gamification] #{role.name} Access Given")
   end
 
+  def removed_role(user, role)
+    @user = user
+    @role = role
+    mail(to: @user.email, subject: "[Gamification] #{role.name} Access Removed")
+  end
+
   def invited_to_organization(user, organization)
     @user = user
     @organization = organization

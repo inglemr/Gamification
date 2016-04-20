@@ -193,6 +193,26 @@ class User < ActiveRecord::Base
   end
 
 
+  def remove_role(role_name)
+  role = Role.find_by(:name => role_name.to_s)
+  current_user ||= false
+  if role
+    if (self.roles.exists?(role.id))
+      self.roles.delete(role.id)
+      if current_user
+        self.create_activity action: 'role_removed', parameters: {role: role.id},recipient: self, owner: current_user
+      else
+        self.create_activity action: 'role_removed', parameters: {role: role.id},recipient: self
+      end
+      UserMailer.removed_role(self,role).deliver_now
+    else
+      puts "User Already Has Role " + role_name.to_s
+    end
+  else
+    puts "Role Does Not Exist"
+  end
+  end
+
   def add_role(role_name)
     role = Role.find_by(:name => role_name.to_s)
     current_user ||= false

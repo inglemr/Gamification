@@ -1,0 +1,14 @@
+<p><%= @user.name %>,</p>
+
+<p>The role <%= @role.name %> has been removed from your account.</p>
+
+<p>Abilities for this role include:</p>
+
+<% @role.permissions.pluck(:name, :description).each do |perm| %>
+
+<p><strong><%= perm[0]  %></strong>: <%= perm[1] %> </p>
+
+<% end %>
+
+<p> Thank you,</p>
+<p> Gamifcation Team </p>

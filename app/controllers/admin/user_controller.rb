@@ -23,12 +23,11 @@ class Admin::UserController  < ApplicationController
 			if(!@user.roles.exists?(id))
 				role = Role.find(id)
   			@user.add_role role.name
-  			 UserMailer.given_role(@user,role).deliver_now
   		end
   	end
 	  Role.all.each do |role|
 	  	if !(params['user']['_roles'].include?(role.id.to_s)) && @user.roles.exists?(role.id)
-	  		@user.roles.delete(role.id)
+	  		@user.remove_role(role.name)
 	  	end
 		end
 
