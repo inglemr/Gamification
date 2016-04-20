@@ -1,17 +1,17 @@
 <div class="login_panel col-md-12 col-centered">
-
+  <h1 class="text-center" style="padding-top: 20px; font-size: 40px;">Gamification Kiosk Log In</h1>
     <%=  form_tag kiosk_sessions_path do%>
-    <div class="row form-group">
-            <div class="col-md-12 ">
-        <%= password_field_tag :password,nil, :placeholder => "GSW ID", :class => "form-control text-center"%>
+    <div class="row form-group" style="padding-top: 35px;">
+            <div class="col-md-12">
+        <%= password_field_tag :password,nil, :placeholder => "GSW ID", :class => "form-control text-center", style: "height: 100px;"%>
         </div>
     </div>
       <div class="row">
-        <div class="col-xs-6 text-left no-padding">
-          <%= submit_tag "Log In", class: "btn btn-block btn-success" %>
+        <div class="col-xs-6 no-padding">
+          <%= submit_tag "Log In", class: "btn btn-block btn-success", style: "height: 100px;" %>
         </div>
-        <div class="col-xs-6 text-right no-padding">
-          <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">How To Log In</button>
+        <div class="col-xs-6 no-padding">
+          <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="height: 100px;">How To Log In</button>
         </div>
       </div>
     <%end%>
@@ -49,3 +49,11 @@
 
   </script>
 <% end %>
+
+<style>
+  .form-control {
+    font-size: 35px;
+  }
+  .btn {
+    font-size: 25px;
+  }

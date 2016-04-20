@@ -1415,9 +1415,10 @@ body.smart-style-4 {
 */
 .smart-style-5 {
 
-  background-image: url("https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?crop=entropy&fit=crop&fm=jpg&h=775&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1450");
+  background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('campus.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 
   color: #fff;
 }

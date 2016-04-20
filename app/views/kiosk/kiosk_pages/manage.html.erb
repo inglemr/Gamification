@@ -1,5 +1,5 @@
 <div class="col-md-12 text-center">
-  <div class="tile">
+  <div class="tile" style="transform: translateY(25%);">
     <%= link_to '<i class="fa fa-list fa-lg"></i><br/> List Events'.html_safe, kiosk_list_path, :class => "btn btn-warning bg-color-blue btn-lg"%>
     <%= link_to '<i class="fa fa-credit-card-alt fa-lg"></i><br/> Start Swipe'.html_safe, {:controller => 'kiosk_pages',:action => 'swipe', :event_id => @event.id}, :class => "btn btn-primary bg-color-green btn-lg"%>
     <%#= link_to '<i class="fa fa-times-circle fa-lg"></i><br/> End Event'.html_safe, "#" , :class => "btn btn-danger bg-color-orange btn-lg"%>
