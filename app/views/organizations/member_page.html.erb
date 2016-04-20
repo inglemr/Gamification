@@ -102,7 +102,7 @@
     <h4 class="modal-title">New Role</h4>
   </div>
 <div class="modal-body no-padding">
-  <%= form_for(OrgRole.new, :html => {:id =>"role-form" ,:class =>"smart-form" }, :remote => true , :url => new_role_organizations_path(:id => @organization)) do |f| %>
+  <%= form_for(OrgRole.new, :html => {:id =>"newRoleForm" ,:class =>"smart-form" }, :remote => true , :url => new_role_organizations_path(:id => @organization)) do |f| %>
     <fieldset>
       <section>
         <div class="row">
@@ -304,6 +304,13 @@
         },
       });
     <% end %>
+
+
+$( "#new_roleBtn" ).click(function() {
+  $('#new_roleBtn').attr("disabled", true);
+  $("#new_roleBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
+  $("#newRoleForm").submit();
+});
 
     });
 

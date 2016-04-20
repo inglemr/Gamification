@@ -205,6 +205,9 @@ private
 
   def organization_perms
     org_perms = Array.new
+    if params[:org_id]
+      @org_mode = params[:org_id]
+    end
     params[:events] ||= Hash.new
     params[:org_id] ||= params[:events][:organization_id]
     if params[:org_id]

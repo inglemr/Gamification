@@ -48,8 +48,8 @@
             </div>
           </div>
           <div class="row">
-            <% if current_user.organizations.size > 0 && !@organization %>
-            <% organizations = current_user.organizations %>
+            <% if current_user.organizations.where(:active => true).size > 0 && !@org_mode %>
+            <% organizations = current_user.organizations.where(:active => true) %>
             <div class="col-sm-6">
               <div class="form-group">
                 <div class="input-group">
