@@ -9,8 +9,7 @@
       <i class="fa <%= @icon ||= 'fa-message'  %> fa-fw fa-2x"></i>
     </em>
     <span>
-      <%= @message %>
-      <br>
+      <p style="line-height: 15px;" class="notiText"><%= @message %></p>
       <br>
       <span class="pull-right font-xs text-muted"><i><%= time_ago_in_words(@activity.created_at) %> Ago</i></span>
     </span>
