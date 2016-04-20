@@ -17,7 +17,7 @@
           <i class="fa fa-lock fa-lg"></i>
         </button>
       <% end %>
-      <% if mobile_device? %>
+      <% if current_user && mobile_device? %>
         <%  @activities = PublicActivity::Activity.order("created_at desc").where("owner_id = ? or recipient_id = ?", current_user.id, current_user.id).where.not(:key => "organization.first_member").limit(6) %>
 
          <button id="activity" class="activity-dropdown navbar-toggle pull-left"> <i class="fa fa-user fa-lg"></i>
