@@ -59,6 +59,17 @@
             <% @color = "bg-color-greenLight" %>
             <% @message = "You now have access to the #{name} role!" %>
             <%= render "shared/notification.html.erb" %>
+          <% elsif  activity.key == "user.role_removed"  %>
+            <% role = Role.where(:id => activity.parameters[:role]) %>
+            <% if role.size == 1 %>
+              <% name = role.first.name %>
+            <% else %>
+              <% name = "(Deleted)" %>
+            <% end %>
+            <% @icon = "fa-ban" %>
+            <% @color = "bg-color-red" %>
+            <% @message = "#{name} role removed from account!" %>
+            <%= render "shared/notification.html.erb" %>
           <% end %>
       <% end %>
     <% end %>
