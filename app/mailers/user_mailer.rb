@@ -68,12 +68,12 @@ class UserMailer < ActionMailer::Base
     @organization = organization
 
     if(@organization.active)
-      status = "Deactivated"
+      @status = "Activated"
     else
-      status = "Activated"
+      @status = "Deactivated"
     end
 
-    mail(to: @user.email, subject: "[Gamification] Organization #{@organization.name} has been #{status}")
+    mail(to: @user.email, subject: "[Gamification] Organization #{@organization.name} has been #{@status}")
   end
 
 end

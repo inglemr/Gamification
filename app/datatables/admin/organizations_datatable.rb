@@ -36,7 +36,13 @@ private
   def getCreator(organization)
 
     if organization.created_by
-      user = User.find(organization.created_by).email
+      usr = User.where(:id => organization.created_by)
+      if usr.size == 1
+        user = usr.first.email
+      else
+        user = "User Deleted ID was: #{organization.created_by}"
+      end
+
     else
       user = "Error"
     end
