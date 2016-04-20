@@ -21,7 +21,9 @@ class Admin::UserController  < ApplicationController
 		params['user']['_roles'] ||= []
 		params['user']['_roles'].each do |id|
 			if(!@user.roles.exists?(id))
-  			@user.roles << Role.find(id)
+				role = Role.find(id)
+  			@user.add_role role.name
+  			 UserMailer.given_role(self,role).deliver_now
   		end
   	end
 	  Role.all.each do |role|
