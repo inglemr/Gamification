@@ -27,8 +27,11 @@
       <script type="text/javascript">
         $(document).ready(function () {
           <% flash.each do |msg_type, message| %>
-          console.log("<%= msg_type %>");
-            $.smallBox({
+            <% if mobile_device? %>
+              $.bigBox({
+            <% else %>
+              $.smallBox({
+            <% end %>
 
               title: "<%= message %>",
               content: "<br>",
