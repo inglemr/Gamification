@@ -157,7 +157,7 @@ class OrganizationsController < ApplicationController
     temp = Organization.find(params[:id])
     if current_user.organizations.include?(temp)
       @organization = Organization.find(params[:id])
-      @joinactivities = PublicActivity::Activity.order("created_at desc").where(trackable_id: @organization.id).limit(10)
+      @joinactivities = PublicActivity::Activity.order("created_at desc").where(trackable_id: @organization.id, trackable_type: "Organization").limit(10)
       if params[:type] == "roster"
         respond_to do |format|
           format.html

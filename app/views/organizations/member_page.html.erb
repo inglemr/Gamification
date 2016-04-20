@@ -45,7 +45,7 @@
               <% if activity.key == "organization.new_org_request" %>
                 <li>
                   <div class="smart-timeline-icon">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-sitemap"></i>
                   </div>
                   <div class="smart-timeline-time">
                     <small><%= time_ago_in_words(activity.created_at) %> Ago</small>
@@ -56,7 +56,7 @@
                     </p>
                   </div>
                 </li>
-              <% else %>
+              <% elsif activity.key != "organization.status_change" %>
                 <li>
                   <div class="smart-timeline-icon">
                     <i class="fa fa-user"></i>
