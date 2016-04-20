@@ -15,7 +15,7 @@
       <div class="item active">
         <div class="container">
           <div class="carousel-caption">
-            <h1>Gameification</h1>
+            <h1>Gamification</h1>
             <p>Go to sporting events. Excel in the classroom. Enjoy campus life. Win prizes. Yeah, it's that easy.</p>
             <p><a href="#" role="button"><%= link_to 'Sign up today!'.html_safe, '#', data: {toggle: "modal", target: "#sampleModal"}, :class => "btn btn-lg btn-primary" %></a></p>
           </div>
@@ -89,7 +89,7 @@
     <div class="row featurette">
       <div class="col-md-7">
         <h2 class="featurette-heading">Earn Points Any Way You Want</h2>
-        <p class="lead">Georgia Southwestern State University's Gameification competition doesn't force you to do things you wouldn't want to. Whichever event peaks your interest, simply attend it! If you love sports, attend one of GSW's many sporting events. If you're passionate about Windows to the World, attend any of its seminars. The possibility of earning points are endless. You can even earn points by simply increasing your GPA!</p>
+        <p class="lead">Georgia Southwestern State University's Gamification competition doesn't force you to do things you wouldn't want to. Whichever event peaks your interest, simply attend it! If you love sports, attend one of GSW's many sporting events. If you're passionate about Windows to the World, attend any of its seminars. The possibility of earning points are endless. You can even earn points by simply increasing your GPA!</p>
       </div>
       <div class="col-md-5">
         <img class="featurette-image img-responsive center-block img-circle" src="http://www.usnews.com/img/college-photo_24638..jpg" alt="basketball">
@@ -129,7 +129,7 @@
     <!-- FOOTER -->
     <footer>
       <p class="pull-right"><a href="#">Back to top</a></p>
-      <p>&copy; 2016 Gameification &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      <p>&copy; 2016 Gamification &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
     </footer>
 
   </div><!-- /.container -->
@@ -301,6 +301,10 @@ $("#passwordLogin").keyup(function (e) {
       $("#loginBtn").html('Please Wait..<i class="fa fa-refresh fa-spin fa-lg fa-fw margin-bottom"></i>');
       $("#login-form").submit();
     }
+});
+
+$('#myCarousel').carousel({
+  interval: 10000
 });
 
 $( "#openLogin" ).click(function() {
