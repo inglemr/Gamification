@@ -23,7 +23,7 @@
                 <% @message = "Organization #{name} is active" %>
                 <%= render "shared/notification.html.erb" %>
               <% else  %>
-                <% @icon = "fa-ban" %>
+                <% @icon = "fa-key" %>
                 <% @color = "bg-color-red" %>
                 <% @message = "Organization #{name} is now deactivated" %>
                 <%= render "shared/notification.html.erb" %>
@@ -31,12 +31,12 @@
             <% elsif activity.key == "organization.add_role_member"  %>
               <% @role = OrgRole.where(:id => activity.parameters[:roles]) %>
                 <% if @role.size == 1 %>
-                  <% role_name = @role.name %>
+                  <% role_name = @role.first.name %>
                 <% else %>
                   <% role_name = "(Deleted)" %>
                 <% end %>
-              <% @icon = "fa-ban" %>
-              <% @color = "bg-color-red" %>
+              <% @icon = "fa-check" %>
+              <% @color = "bg-color-greenLight" %>
               <% @message = "You were given the role #{role_name} in #{name}" %>
               <%= render "shared/notification.html.erb" %>
            <% elsif activity.key == "organization.accept_invite"  %>
