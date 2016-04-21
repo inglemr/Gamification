@@ -2,6 +2,7 @@ Rails.application.configure do
 
 config.action_mailer.default_url_options = { :host => 'gsw-capstone.heroku.com' }
 config.action_mailer.delivery_method = :smtp
+config.action_mailer.asset_host = 'http://gsw-capstone.heroku.com'
 config.action_mailer.smtp_settings = {
     :address   => "smtp.sendgrid.net",
     :port      => 587, # ports 587 and 2525 are also supported with STARTTLS

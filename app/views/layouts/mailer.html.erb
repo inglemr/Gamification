@@ -5,7 +5,12 @@
     <title>Gamification</title>
 
     <style type="text/css">
-
+    #outer{
+      background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url("http://gsw-capstone.heroku.com<%= image_url('campus.jpg')%>");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
         /* Resets: see reset.css for details */
         .ReadMsgBody { width: 100%; background-color: #ebebeb;}
         .ExternalClass {width: 100%; background-color: #ebebeb;}
@@ -61,7 +66,7 @@
 <body style="margin:0;" rightmargin="0" leftmargin="0" topmargin="0" bottommargin="0" bgcolor="#ebebeb">
 
 <!-- 100% wrapper (grey background) -->
-<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#ebebeb">
+<table id="outer" border="0" width="100%" height="100%" cellpadding="0" cellspacing="0">
 	<tbody>
         <tr>
             <td>
@@ -82,7 +87,7 @@
 
 
                             </td>
-                        </tr>                        
+                        </tr>
 
                     </tbody>
                     <tfoot>
