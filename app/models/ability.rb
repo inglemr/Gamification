@@ -1,11 +1,19 @@
+# This class is used to load all the permissions that a user has based on the
+# the roles that are assigned to them.
+#
 class Ability
   include CanCanNamespace::Ability
+
+  # Returns the permissions that a user has access to based on the roles
+  # assigned to them this file is used by the gem CanCan for authorization
+  #
+
   def initialize(user)
     if user
       if user.roles
         user.roles.each do |role|
           role.permissions.each do |permission|
-            if permission.subject_class == "all" || permission.subject_class == "sidebar" 
+            if permission.subject_class == "all" || permission.subject_class == "sidebar"
               can permission.action.to_sym, permission.subject_class.to_sym, :context => :admin
             end
             if !permission.subject_class.include?("::")

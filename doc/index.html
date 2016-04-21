@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!file.README.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'>
+<h1 id="label-Version+Data">Version Data</h1>
+<ul><li>
+<p>Ruby: 2.3.0</p>
+</li><li>
+<p>Rails: 4.2.4</p>
+</li><li>
+<p>Database: postgresql</p>
+</li></ul>
+
+<h1 id="label-Application+Test+Environments">Application Test Environments</h1>
+<ul><li>
+<p>Staging Endpoint: <a href="https://gsw-capstone.herokuapp.com/">Staging</a></p>
+</li></ul>
+
+<h1 id="label-Setup+Locally">Setup Locally</h1>
+<ul><li>
+<p>Install <a
+href="https://wiki.postgresql.org/wiki/Detailed_installation_guides">Postgres</a></p>
+</li><li>
+<p>Install <a href="http://www.pgadmin.org/">PgAdmin</a> (Optional) - Helpful
+with Database manipulation</p>
+</li><li>
+<p>Install <a
+href="https://www.ruby-lang.org/en/documentation/installation/">Ruby</a></p>
+</li><li>
+<p>Install <a href="http://guides.railsgirls.com/install">Rails</a></p>
+</li><li>
+<p>Install <a
+href="http://www.imagemagick.org/script/binary-releases.php">ImageMagick</a>
+for images</p>
+</li><li>
+<p>Clone this repository locally using <code>git clone
+git@github.com:inglemr/capstone.git</code></p>
+<ul><li>
+<p>Navigate inside the capstone directory <code>cd capstone</code></p>
+</li><li>
+<p>Install all the gems from the gemfile using <code>bundle install</code></p>
+</li><li>
+<p>Run database migrations <code>rake db:migrate</code></p>
+</li><li>
+<p>Run database seed <code>rake db:seed</code> (This will add all permissions
+into the database and the admin role)</p>
+</li><li>
+<p>Run the local development server using <code>rails server</code></p>
+</li><li>
+<p>Navigate to the app at <code>localhost:3000</code></p>
+</li><li>
+<p>The app has been succesffuly installed</p>
+</li></ul>
+</li></ul>
+
+<h1 id="label-Manage+User+Accounts">Manage User Accounts</h1>
+
+<h2 id="label-Adding+admin+to+a+user">Adding admin to a user</h2>
+<ul><li>
+<p>User roles can be added through the rails console by navigating to the root
+directory of the app and using the command <code>rails console</code></p>
+</li><li>
+<p>Once the console has started run the follow command to find your user in
+the database <code>user = User.find_by(:email =&gt;
+&quot;your_email&quot;)</code></p>
+</li><li>
+<p>To add a role to this user simply use <code>user.add_role
+:Admin</code>(Case is important) to add the admin role</p>
+</li></ul>
+</div></div>
+
+    <div id="footer">
+  Generated on Thu Apr 21 16:49:52 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.3.0).
+</div>
+
+  </body>
+</html>

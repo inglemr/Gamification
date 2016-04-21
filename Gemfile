@@ -16,7 +16,6 @@ gem 'symmetric-encryption'
 #Used to create QR Codes
 gem 'rqrcode'
 
-
 #Used to create menu for user html editing
 gem 'tinymce-rails'
 
@@ -63,7 +62,11 @@ group :production do
 	gem 'rails_12factor'
 end
 group :development do
+  gem 'yard-activerecord'
+  gem 'annotate'
+  gem 'rdoc'
   gem "letter_opener"
+  gem "yard"
   #deployment scripts
   gem "capistrano"
   gem 'capistrano-rails'
