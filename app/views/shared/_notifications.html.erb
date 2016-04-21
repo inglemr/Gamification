@@ -28,7 +28,18 @@
                 <% @message = "Organization #{name} is now deactivated" %>
                 <%= render "shared/notification.html.erb" %>
               <% end %>
-            <% elsif activity.key == "organization.accept_invite"  %>
+            <% elsif activity.key == "organization.add_role_member"  %>
+              <% @role = OrgRole.find(activity.parameters[:roles]) %>
+                <% if @role %>
+                  <% role_name = @role.name %>
+                <% else %>
+                  <% role_name = "(Deleted)" %>
+                <% end %>
+              <% @icon = "fa-ban" %>
+              <% @color = "bg-color-red" %>
+              <% @message = "You were given the role #{role_name} in #{name}" %>
+              <%= render "shared/notification.html.erb" %>
+           <% elsif activity.key == "organization.accept_invite"  %>
               <% @icon = "fa-ban" %>
               <% @color = "bg-color-red" %>
               <% @message = "You declined #{name}'s invitation to join" %>

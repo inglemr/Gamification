@@ -82,6 +82,12 @@
                 </li>
               <% elsif activity.key = "organization.add_role_member" %>
                 <% @member = User.find(activity.owner_id) %>
+                <% @role = OrgRole.find(activity.parameters[:roles]) %>
+                <% if @role %>
+                  <% role_name = @role.name %>
+                <% else %>
+                  <% role_name = "(Deleted)" %>
+                <% end %>
                 <li>
                   <div class="smart-timeline-icon">
                     <i class="fa fa-user"></i>
