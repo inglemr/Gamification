@@ -29,8 +29,8 @@
                 <%= render "shared/notification.html.erb" %>
               <% end %>
             <% elsif activity.key == "organization.add_role_member"  %>
-              <% @role = OrgRole.find(activity.parameters[:roles]) %>
-                <% if @role %>
+              <% @role = OrgRole.where(:id => activity.parameters[:roles]) %>
+                <% if @role.size == 1 %>
                   <% role_name = @role.name %>
                 <% else %>
                   <% role_name = "(Deleted)" %>
