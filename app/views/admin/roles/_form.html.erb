@@ -5,39 +5,64 @@
       <li class="active" ><%= page_type %> Role</li>
     </ol>
 </div>
-<%= form_for(@role, :class =>"form-horizontal" , :url => path) do |f| %>
-<div class="page-panel panel col-md-12 ">
-    <div class="row"><h2 class="text-center">Edit Role</h2></div>
-    <hr>
-    <div class="col-md-6 verticalLineRight">
-      <h3 class="panel">Basic Data</h3>
-      <div class="col-md-12 form-group">
-        <%= f.label :name ,:class => "col-md-3 control-label"%>
-        <div class="col-md-7">
-          <%= f.text_field :name, autofocus: true ,:value => @role.name , :class => "form-control"%>
-        </div>
-      </div>
-      <h3 class="panel">Description</h3>
-      <div class="col-md-12 form-group">
-        <div class="col-md-12 form-group">
-            <%= f.text_area :description, autofocus: true ,:value => @role.description , :class => "form-control"%>
-        </div>
-      </div>
-    </div>
+<%= form_for(@role , :url => path, :html => {:class =>"smart-form" }) do |f| %>
+<div class="col-md-12 ">
+  <div class="row">
+    <h2 class="text-center">Edit Role</h2>
+  </div>
+  <hr>
+  <br>
+  <div class="row">
+    <section class="col col-6">
+      <label class="input">Name
+         <%= f.text_field :name, autofocus: true ,:value => @role.name%>
+      </label>
+    </section>
+    <section class="col col-6">
+        <label class="input">Description
+           <%= f.text_field :description, autofocus: true ,:value => @role.description%>
+        </label>
+    </section>
+  </div>
+</div>
 
-    <div class="col-md-6">
+<br>
+<br>
+
+<div class=row>
+    <div class="col-md-12">
       <h3 class="panel">Permissions</h3>
-      <div class="col-md-12 checkbox_container">
-        <%= f.collection_check_boxes :permission_ids, Permission.all.sort_by {|obj| obj.name}, :id, :name do |b| %>
-          <%=b.label(:"data-value" => b.value) { b.check_box + b.text } %>
+      <div class="col-md-12">
+        <% @perms = Permission.all.sort_by {|obj| obj.scope} %>
+        <% last_sub = "" %>
+        <fieldset>
+        <section>
+          <% @perms.each do |perm|%>
+            <% if perm.scope != last_sub %>
+              <% if last_sub != ""  %>
+                </div>
+                </div>
+              <% end %>
+                <h2 class="row-seperator-header"><%= perm.scope %></h2>
+                <hr>
+              <div class="col-md-12 row" style="margin-bottom:10px;">
+              <div class="inline-group well">
+            <% end %>
+              <label class="checkbox">
+                <%= check_box_tag 'role[permission_ids][]', perm.id, @role.permissions.where(:id => perm.id).any? %>
+                <i></i><%= perm.name.capitalize %>
+              </label>
+            <% last_sub = perm.scope %>
           <% end %>
+        </section>
+        </fieldset>
       </div>
     </div>
 
 
 </div>
-<div class="form-group col-md-12 col-md-offset-5">
-  <%= f.submit "Save" , :class => "col-md-2 btn btn-primary"%>
+<div class="col-md-12 col-centered text-center">
+  <%= f.submit "Save" , :class => "col-md-2 col-centered text-center btn btn-primary"%>
 </div>
 
 <% end %>

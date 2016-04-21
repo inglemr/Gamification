@@ -29,7 +29,12 @@
           <%= f.text_field :action, autofocus: true ,:value => @permission.action , :class => "form-control"%>
         </div>
       </div>
-
+      <div class="col-md-12 form-group">
+        <%= f.label :scope ,:class => "col-md-3 control-label"%>
+        <div class="col-md-7">
+          <%= f.text_field :scope, autofocus: true ,:value => @permission.scope , :class => "form-control"%>
+        </div>
+      </div>
     </div>
 
     <div class="col-md-6">

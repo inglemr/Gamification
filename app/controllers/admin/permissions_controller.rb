@@ -1,6 +1,6 @@
 class Admin::PermissionsController < ApplicationController
 	load_and_authorize_resource :context => :admin
-	before_filter :load_permissions 
+	before_filter :load_permissions
 	def index
 		respond_to do |format|
     		format.html
@@ -46,6 +46,6 @@ end
 
 private
   def permission_params
-    params.require(:permission).permit(:name, :subject_class, :description, :action)
+    params.require(:permission).permit(:name, :subject_class, :description, :action, :scope)
   end
 end

@@ -14,7 +14,7 @@
           <!-- widget content -->
           <div class="widget-body">
             <div class="panel-group smart-accordion-default" id="accordion">
-              <div class="panel panel-default">     
+              <div class="panel panel-default">
                 <div class="panel-body no-padding">
                   <div class="page-panel panel col-md-12 ">
                     <h2 class="row-seperator-header"><i class="fa fa-th-list"></i> User Data </h2>
@@ -42,7 +42,7 @@
                     <div class="col-md-12 form-group">
                       <div class="col-md-7">
                         <div class="inline-group">
-                          <% Role.all.each do |role|%>  
+                          <% Role.all.each do |role|%>
                             <%= f.label :role , :class => "checkbox" do %>
                               <%= check_box_tag 'user[_roles][]', role.id, @user.roles.where(:id => role.id).any? %>
                               <%= role.name.capitalize %>
