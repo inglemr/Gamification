@@ -218,7 +218,7 @@ class User < ActiveRecord::Base
       else
         self.create_activity action: 'role_removed', parameters: {role: role.id},recipient: self
       end
-      if user.notification_settings[:account] == "true"
+      if self.notification_settings[:account] == "true"
         UserMailer.removed_role(self,role).deliver_now
       end
     else
@@ -240,7 +240,7 @@ class User < ActiveRecord::Base
         else
           self.create_activity action: 'role_added', parameters: {role: role.id},recipient: self
         end
-        if user.notification_settings[:account] == "true"
+        if self.notification_settings[:account] == "true"
           UserMailer.given_role(self,role).deliver_now
         end
       else
