@@ -174,6 +174,7 @@ class User < ActiveRecord::Base
           self.last_semester =  last_semester_enc
         end
       else
+        self.gsw_id = "00"
         self.email = "notfound@email.com"
       end
       self.name = res["name"]

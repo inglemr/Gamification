@@ -80,7 +80,7 @@
                     </p>
                   </div>
                 </li>
-              <% elsif activity.key = "organization.add_role_member" %>
+              <% elsif activity.key == "organization.add_role_member" %>
                 <% @member = User.find(activity.owner_id) %>
                 <% @role = OrgRole.where(:id => activity.parameters[:roles]) %>
                 <% if @role.size == 1 %>
@@ -104,7 +104,7 @@
                     </p>
                   </div>
                 </li>
-            <% elsif activity.key != "organization.status_change" || activity.key != "organization_invite_member" %>
+            <% elsif activity.key == "organization.first_member" || activity.key == "organization.accept_invite" || activity.key == "organization.accept_member" %>
                 <li>
                   <div class="smart-timeline-icon">
                     <i class="fa fa-user"></i>
@@ -320,19 +320,11 @@
           <div class="form-group">
             <div class="input-group col-md-12">
               <span class="input-group-addon">User</span>
+                <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "") %>
 
+              <% @users.where('organizations_users.organization_id <> ?', @organization.id).where("requests.status = 'open' and requests.request_type = 'org-invite'").references(:organizations_users) %>
 
-              <% @users = User.includes(:organizations_users, :requests).where.not(:id => current_user.id ).where.not(:email => "notfound@email.com").where.not(:email => "").where('organizations_users.organization_id <> ? or organizations_users.organization_id is null', @organization.id).where(" requests.status <> 'open' or requests.organization_id is null").references(:organizations_users) %>
-
-
-
-              <% users = Array.new %>
-              <% @users.each do |user| %>
-                <% if user.requests.where(:organization_id => @organization.id, :status => ["open"]).size == 0 %>
-                  <% users << user %>
-                <% end %>
-              <% end %>
-              <%= select_tag("users", options_from_collection_for_select(users, "id", "username"), {:multiple => true,:id => "select_users" ,:class => "select2"}) %>
+              <%= select_tag("users", options_from_collection_for_select(@users, "id", "username"), {:multiple => true,:id => "select_users" ,:class => "select2"}) %>
             </div>
           </div>
         </div>

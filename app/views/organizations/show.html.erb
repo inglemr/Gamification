@@ -1,4 +1,4 @@
-<% if (Request.where(:user_id => current_user.id, :organization_id => @organization.id).size > 0) %>
+<% if (Request.where(:user_id => current_user.id, :organization_id => @organization.id, :status => "open", :request_type => "org-join")).size > 0 %>
 <div class="alert alert-block alert-success">
   <a class="close" data-dismiss="alert" href="#">×</a>
   <h4 class="alert-heading">Membership Request Pending</h4>
@@ -8,7 +8,7 @@
 <div class="col-md-12">
   <div class="jumbotron">
     <h2 class="text-center"><%= @organization.name %></h2>
-    <% if !current_user.organizations.include?(@organization) && !(Request.where(:user_id => current_user.id, :organization_id => @organization.id).size > 0) %>
+    <% if !current_user.organizations.include?(@organization) && (Request.where(:user_id => current_user.id, :organization_id => @organization.id, :status => "open", :request_type => "org-join").size == 0) %>
     <%= link_to("Request Membership",create_org_request_path(:organization_id => @organization), method: :post, :class  => "btn btn-info pull-right") %>
     <% end %>
   </div>

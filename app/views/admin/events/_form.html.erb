@@ -235,6 +235,9 @@
             </div>
           </div>
         </div><%= hidden_field_tag :created_by, :value => @event.created_by %><%= hidden_field_tag :updated_by, :value => current_user.id %><%= f.submit "Save" , :id => "submitForm", :class => "hidden col-md-2 btn btn-primary btn-lg"%>
+        <% if params[:org_id] %>
+          <%= hidden_field_tag :org_id, params[:org_id] %>
+        <% end %>
       </div>
     </div>
   </div><%end %>

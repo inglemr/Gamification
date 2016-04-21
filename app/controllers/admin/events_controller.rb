@@ -82,8 +82,11 @@ class Admin::EventsController < ApplicationController
       @event.tag_list = params[:event][:tag_list]
 
   		if @event.update_attributes(event_params)
-
-    		redirect_to admin_events_path, :flash => { :success => 'Event was successfully updated.' }
+        if params[:org_id]
+          redirect_to member_page_organizations_path(params[:org_id]), :flash => { :success => 'Event was successfully updated.' }
+        else
+    		  redirect_to admin_events_path, :flash => { :success => 'Event was successfully updated.' }
+        end
   		else
     		render :edit , :flash => { :error => 'Event was unsuccesfully updated.' }
   		end
@@ -93,14 +96,14 @@ class Admin::EventsController < ApplicationController
 	end
 
 	def new
-    if ((can? :manage, :all) || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
+    if (@current_permissions["all"].include?("manage") || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
 		  @event = Event.new
 		  @locations = Location.all.pluck(:building_name)
     end
 	end
 
 	def create
-    if ((can? :manage, :all) || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
+    if (@current_permissions["all"].include?("manage")|| @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
   		#Recurring Events
   		recureInterval = params[:event_recure_intervals]
   		recureDays = params[:event_days]
@@ -209,7 +212,9 @@ private
       @org_mode = params[:org_id]
     end
     params[:events] ||= Hash.new
-    params[:org_id] ||= params[:events][:organization_id]
+    if !@org_mode
+      params[:org_id] ||= params[:events][:organization_id]
+    end
     if params[:org_id]
       @organization = Organization.find(params[:org_id])
       if current_user.organizations.include? @organization
