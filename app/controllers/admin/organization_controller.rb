@@ -44,7 +44,7 @@ class Admin::OrganizationController < ApplicationController
       if old_status != @organization.active
 
         @organization.users.each do |user|
-          if user.notification_settings[:organizations] == true
+          if user.notification_settings[:organizations] == "true"
             UserMailer.organization_status_change(user,@organization).deliver_now
           end
           @organization.create_activity action: 'status_change',recipient: user, parameters: {status: @organization.active}, owner: current_user
