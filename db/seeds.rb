@@ -36,7 +36,7 @@
 
 	 #Organization
 
-
+   Permission.create!(:name => "Create Organization Articles",:description => "Create Organization Articles", :subject_class => "Organization", :action => "create_article", :scope => "Organization")
 	 Permission.create!(:name => "Delete Organization Roles",:description => "Delete organization roles", :subject_class => "Organization", :action => "delete_role", :scope => "Organization")
 	 Permission.create!(:name => "Create Organization Roles",:description => "Create organization roles", :subject_class => "Organization", :action => "new_role", :scope => "Organization")
 	 Permission.create!(:name => "Edit Organization Roles",:description => "Edit organization roles", :subject_class => "Organization", :action => "edit_role", :scope => "Organization")
@@ -77,6 +77,7 @@
 	 faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "delete_role")
    faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "new_role")
    faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "edit_role")
+   faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "create_article")
    faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "member_role")
    faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "member_page")
    faculty.permissions << Permission.find_by(:subject_class => 'Organization', :action => "create_organization_request")
@@ -102,6 +103,7 @@
 	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "all_events")
 	 student.permissions << Permission.find_by(:subject_class => 'Event', :action => "my_points")
 
+   student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "create_article")
 	 student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "delete_role")
    student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "new_role")
    student.permissions << Permission.find_by(:subject_class => 'Organization', :action => "edit_role")
@@ -162,10 +164,10 @@
 
 ##TAGS##
 	tag_list = [
-		"Sports", "Baseball", "Men's Basketball", "Women's Basketball", "Cross Country", "Golf", "Men's Soccer", 
-		"Women's Soccer", "Softball", "Men's Tennis", "Women's Tennis", "CAB", "Movies", "W2W", "Health", "Convocation", 
-		"ELI Film Series", "Music", "Chamber Concert", "Worship", "Board Games", "Intramural", "Taste Of The World", "Food", 
-		"Red Cross", "Blood Drive", "Clothes", "Fashion", "Lecture", "Workshop", "Fair", "Career Fair", "Majors Fair", 
+		"Sports", "Baseball", "Men's Basketball", "Women's Basketball", "Cross Country", "Golf", "Men's Soccer",
+		"Women's Soccer", "Softball", "Men's Tennis", "Women's Tennis", "CAB", "Movies", "W2W", "Health", "Convocation",
+		"ELI Film Series", "Music", "Chamber Concert", "Worship", "Board Games", "Intramural", "Taste Of The World", "Food",
+		"Red Cross", "Blood Drive", "Clothes", "Fashion", "Lecture", "Workshop", "Fair", "Career Fair", "Majors Fair",
 		"Band", "Jazz", "Concert", "POWMIA", "Grand Opening", "Lunch", "Dinner", "Breakfast", "Fraternity", "Sorority",
 		"Club", "Party", "Seminar", "Class", "Homecoming", "Panorama" ]
 

@@ -209,7 +209,9 @@ private
       @org_mode = params[:org_id]
     end
     params[:events] ||= Hash.new
-    params[:org_id] ||= params[:events][:organization_id]
+    if !@org_mode
+      params[:org_id] ||= params[:events][:organization_id]
+    end
     if params[:org_id]
       @organization = Organization.find(params[:org_id])
       if current_user.organizations.include? @organization
