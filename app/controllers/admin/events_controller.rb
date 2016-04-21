@@ -82,8 +82,11 @@ class Admin::EventsController < ApplicationController
       @event.tag_list = params[:event][:tag_list]
 
   		if @event.update_attributes(event_params)
-
-    		redirect_to admin_events_path, :flash => { :success => 'Event was successfully updated.' }
+        if params[:org_id]
+          redirect_to member_page_organizations_path(params[:org_id]), :flash => { :success => 'Event was successfully updated.' }
+        else
+    		  redirect_to admin_events_path, :flash => { :success => 'Event was successfully updated.' }
+        end
   		else
     		render :edit , :flash => { :error => 'Event was unsuccesfully updated.' }
   		end

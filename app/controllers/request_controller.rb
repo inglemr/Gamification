@@ -6,7 +6,7 @@ class RequestController < ApplicationController
     organization = Organization.find(params[:organization_id])
     @request = Request.new(:user_id => current_user.id, :organization_id => organization.id, :status => "open",:request_type => "org-join")
     @request.save
-    @organization.create_activity action: 'join_request', owner: current_user
+    organization.create_activity action: 'join_request', owner: current_user
 
     #UserMailer.new_member_request(User.find(@organization.created_by),current_user,@organization).deliver_now
     redirect_to :back, :flash => { 'success' => 'Request To Join Made. Pending Approval.' }
@@ -81,6 +81,7 @@ class RequestController < ApplicationController
 
   def org_decline_invite
     @request = Request.find(params[:request_id])
+    @organization = Organization.find(@request.organization_id)
     @user = User.find(@request.user_id)
     if @user.id == current_user.id
       @request.status = "declined"

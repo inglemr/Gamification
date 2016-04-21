@@ -5,6 +5,7 @@ class Organizations::EventsDatatable
     @view = view
     @events = organization.events#Event.where(search_string, search: "%#{params[:sSearch] == nil ? params[:sSearch] : params[:sSearch].downcase}%").upcoming_first.current_event#.past_events
     @events = @events.page(page).per_page(per_page)
+    @organization = organization
 
   end
 
@@ -35,7 +36,7 @@ private
   end
 
   def actions(event)
-    render(:partial=>"organizations/event_actions.html.erb", locals: { event: event} , :formats => [:html])
+    render(:partial=>"organizations/event_actions.html.erb", locals: { event: event, organization: @organization} , :formats => [:html])
   end
 
   def page
