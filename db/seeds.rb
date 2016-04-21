@@ -117,3 +117,72 @@
    student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_invite_member")
    student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_accept_member")
    student.permissions << Permission.find_by(:subject_class => 'Request', :action => "org_decline_member")
+
+##SCHOOL LOCATIONS##
+	location_list = [
+		"Wheatley Administration Building",
+		"Crawford Wheatley Hall",
+		"Newman Alumni Center",
+		"Former President's Home",
+		"Collum Hall",
+		"Storm Dome/Athletic Center",
+		"Florrie Chappell Gymnasium",
+		"Science Building",
+		"Joseph C. Roney Building",
+		"Jackson Hall",
+		"Academic Center for Excellence",
+		"English Building",
+		"Business/History & Political Science Building",
+		"Maintenence/Warehouse",
+		"James Earl Carter Library",
+		"Marshall Student Center",
+		"Mary Lou Jordan Hall",
+		"Sanford Hall",
+		"Morgan Hall",
+		"Herschel Smith: Public Safety",
+		"Beth King Duncan Hall",
+		"Lake House",
+		"Fine Arts Building",
+		"Education Center",
+		"Deriso Swimming Pool",
+		"Student Success Center",
+		"Southwestern Oaks I",
+		"Southwestern Oaks II",
+		"Southwestern Pines",
+		"Magnolia I",
+		"Magnolia II",
+		"Carter 1 (Nursing/Health Center)",
+		"Carter 2 (Psy/Soc/RCI)",
+		"Off Campus"
+	]
+
+	location_list.each do |name|
+		Location.create(building_name: name)
+	end
+
+##TAGS##
+	tag_list = [
+		"Sports", "Baseball", "Men's Basketball", "Women's Basketball", "Cross Country", "Golf", "Men's Soccer", 
+		"Women's Soccer", "Softball", "Men's Tennis", "Women's Tennis", "CAB", "Movies", "W2W", "Health", "Convocation", 
+		"ELI Film Series", "Music", "Chamber Concert", "Worship", "Board Games", "Intramural", "Taste Of The World", "Food", 
+		"Red Cross", "Blood Drive", "Clothes", "Fashion", "Lecture", "Workshop", "Fair", "Career Fair", "Majors Fair", 
+		"Band", "Jazz", "Concert", "POWMIA", "Grand Opening", "Lunch", "Dinner", "Breakfast", "Fraternity", "Sorority",
+		"Club", "Party", "Seminar", "Class", "Homecoming", "Panorama" ]
+
+	tag_list.each do |name|
+		Tag.create(name: name)
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
