@@ -25,12 +25,7 @@
              <b class="badge  bounceIn animated"><%= @activities.where(:read => false).size %></b>
             <% end %>
           </button>
-          <div class="ajax-dropdown active" style="z-index: 99999;border:none;">
-            <div class="ajax-notifications custom-scroll" style="opacity: 1;">
-               <%= render "shared/notifications.html.erb" %>
-               <% @activities.update_all(:read => true) %>
-            </div>
-          </div>
+          <%= render "shared/notifications.html.erb" %>
       <% end %>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -45,12 +40,7 @@
                <b class="badge  bounceIn animated"><%= @activities.where(:read => false).size %></b>
               <% end %>
             </a>
-            <div class="ajax-dropdown active" style="z-index: 99999;border:none;">
-              <div class="ajax-notifications custom-scroll" style="opacity: 1;">
-                 <%= render "shared/notifications.html.erb" %>
-                 <% @activities.update_all(:read => true) %>
-              </div>
-            </div>
+            <%= render "shared/notifications.html.erb" %>
            <li>
            <%end %>
           <% if (can? :manage, :all) || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") %>
@@ -77,10 +67,18 @@
     </div>
   </div>
 </nav>
+
+<script>
+pageSetUp();
+
+</script>
+
+
 <style>
 /*
   ALL THEMES
 */
+
 .container>.navbar-header, .container-fluid>.navbar-header, .container>.navbar-collapse, .container-fluid>.navbar-collapse{
   margin: 0;
 }
