@@ -40,9 +40,9 @@
               <% @message = "You were given the role #{role_name} in #{name}" %>
               <%= render "shared/notification.html.erb" %>
            <% elsif activity.key == "organization.accept_invite"  %>
-              <% @icon = "fa-ban" %>
-              <% @color = "bg-color-red" %>
-              <% @message = "You declined #{name}'s invitation to join" %>
+              <% @icon = "fa-check" %>
+              <% @color = "bg-color-greenLight" %>
+              <% @message = "You Accepted #{name}'s invitation to join" %>
               <%= render "shared/notification.html.erb" %>
             <% end %>
           <% elsif activity.trackable_type == "Event" %>

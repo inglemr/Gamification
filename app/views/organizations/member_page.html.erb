@@ -80,7 +80,7 @@
                     </p>
                   </div>
                 </li>
-              <% elsif activity.key = "organization.add_role_member" %>
+              <% elsif activity.key == "organization.add_role_member" %>
                 <% @member = User.find(activity.owner_id) %>
                 <% @role = OrgRole.where(:id => activity.parameters[:roles]) %>
                 <% if @role.size == 1 %>

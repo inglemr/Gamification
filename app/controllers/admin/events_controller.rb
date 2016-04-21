@@ -93,14 +93,14 @@ class Admin::EventsController < ApplicationController
 	end
 
 	def new
-    if ((can? :manage, :all) || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
+    if (@current_permissions["all"].include?("manage") || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
 		  @event = Event.new
 		  @locations = Location.all.pluck(:building_name)
     end
 	end
 
 	def create
-    if ((can? :manage, :all) || @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
+    if (@current_permissions["all"].include?("manage")|| @current_permissions["Admin::Event"].include?("create") || @current_permissions["Admin::Event"].include?("manage") ||  @org_perms.include?("everything")  || @org_perms.include?("manage-events"))
   		#Recurring Events
   		recureInterval = params[:event_recure_intervals]
   		recureDays = params[:event_days]
