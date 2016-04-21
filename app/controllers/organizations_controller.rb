@@ -68,6 +68,7 @@ class OrganizationsController < ApplicationController
       params['user']['_org_roles'].each do |id|
         if(!@user.org_roles.exists?(id))
           role_new = OrgRole.find(id)
+          @organization.create_activity action: 'add_role_member', parameters: {roles: id}, owner: @user
           @user.org_roles << role_new
           new_roles << role_new
         end
@@ -79,7 +80,6 @@ class OrganizationsController < ApplicationController
       end
       @form_type = "edit_member"
       @member = @user
-      @organization.create_activity action: 'add_role_member', parameters: {roles: new_roles}, owner: @user
       respond_to do |format|
         format.js   { render 'member_page.js.erb', :flash => { 'success' => 'Member roles updated.' }}
         format.html {  redirect_to :back , :flash => { 'success' => 'Member roles update.' }}

@@ -80,7 +80,25 @@
                     </p>
                   </div>
                 </li>
-              <% elsif activity.key != "organization.status_change" %>
+              <% elsif activity.key = "organization.add_role_member" %>
+                <% @member = User.find(activity.owner_id) %>
+                <li>
+                  <div class="smart-timeline-icon">
+                    <i class="fa fa-user"></i>
+                  </div>
+                  <div class="smart-timeline-time">
+                    <small><%= time_ago_in_words(activity.created_at) %> Ago</small>
+                  </div>
+                  <div class="smart-timeline-content">
+                    <p>
+                      <a href="javascript:void(0);"><strong><%= activity.owner.email %> given #{role} </strong></a>
+                    </p>
+                    <p>
+                      <%= activity.owner.email %>
+                    </p>
+                  </div>
+                </li>
+            <% elsif activity.key != "organization.status_change" || activity.key != "organization_invite_member" %>
                 <li>
                   <div class="smart-timeline-icon">
                     <i class="fa fa-user"></i>

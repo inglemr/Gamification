@@ -27,7 +27,11 @@
                 <% @color = "bg-color-red" %>
                 <% @message = "Organization #{name} is now deactivated" %>
                 <%= render "shared/notification.html.erb" %>
-              <% end %>
+            <% elsif activity.key == "organization.accept_invite"  %>
+              <% @icon = "fa-ban" %>
+              <% @color = "bg-color-red" %>
+              <% @message = "You declined #{name}'s invitation to join" %>
+              <%= render "shared/notification.html.erb" %>
             <% end %>
           <% elsif activity.trackable_type == "Event" %>
             <% event = Event.where(:id => activity.trackable_id) %>
