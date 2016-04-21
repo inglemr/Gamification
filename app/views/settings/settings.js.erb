@@ -11,6 +11,19 @@
   setTimeout(function(){
     $('#updatemessage').remove();
   }, 5000);
+<% elsif @theme_change == false%>
+
+  $("#updatetheme_btn").html('Update Settings');
+  $('#updatemessage').remove();
+
+  <% if(@message == "User was successfully updated.") %>
+    $("#collapseFour").append('<div id="updatemessage" class="col-md-12 text-center alert alert-success fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-check"></i><strong>Settings Updated</strong></div>');
+  <% else %>
+    $("#collapseFour").append('<div id="updatemessage" class="col-md-12 text-center alert alert-danger fade in"><button class="close" data-dismiss="alert">×</button><i class="fa-fw fa fa-exclamation"></i><strong>Error Updating Settings</strong></div>');
+  <% end %>
+  setTimeout(function(){
+    $('#update_settings_message').remove();
+  }, 5000);
 
 <% else %>
 

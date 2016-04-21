@@ -2,8 +2,7 @@
 class User < ActiveRecord::Base
   extend FriendlyId
   include PublicActivity::Model
-   serialize :notification_settings
-
+   store :notification_settings, accessors: [ :event_notify, :acount_notify,:organizations_notify ], coder: JSON
 
 
   friendly_id :username, use: [:slugged, :history,:finders]
@@ -44,6 +43,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   scope :sorted, lambda { order("users.id ASC")}
+
+
+
+
+
+
   def update_records(pin)
  require 'net/http'
       params = Hash.new
@@ -213,7 +218,7 @@ class User < ActiveRecord::Base
       else
         self.create_activity action: 'role_removed', parameters: {role: role.id},recipient: self
       end
-      if user.notification_settings[:account] == true
+      if user.notification_settings[:account] == "true"
         UserMailer.removed_role(self,role).deliver_now
       end
     else
@@ -235,7 +240,7 @@ class User < ActiveRecord::Base
         else
           self.create_activity action: 'role_added', parameters: {role: role.id},recipient: self
         end
-        if user.notification_settings[:account] == true
+        if user.notification_settings[:account] == "true"
           UserMailer.given_role(self,role).deliver_now
         end
       else

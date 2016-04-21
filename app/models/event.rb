@@ -29,7 +29,7 @@ class Event < ActiveRecord::Base
 
   def add_attendee(user)
   	if !user.attended_events.all.include?(self)
-      if user.notification_settings[:events]  == true
+      if user.notification_settings[:events]  == "true"
         UserMailer.event_added(user,self).deliver_now
       end
       self.create_activity action: 'swipe', owner: user
@@ -46,7 +46,7 @@ class Event < ActiveRecord::Base
   def add_host(user)
     if !user.hosted_events.all.include?(self) && User.find(self.created_by) != user
       self.hosts << user
-      if user.notification_settings[:events]  == true
+      if user.notification_settings[:events]  == "true"
         UserMailer.host_access_given(user,self).deliver_now
       end
       self.create_activity action: 'add_host',recipient: user, owner: current_user
@@ -64,7 +64,7 @@ class Event < ActiveRecord::Base
       self.hosts.delete(user)
       user.save
       self.save
-      if user.notification_settings[:events] == true
+      if user.notification_settings[:events] == "true"
         UserMailer.host_access_removed(user,self).deliver_now
       end
       true

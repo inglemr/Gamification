@@ -11,9 +11,14 @@ class SettingsController < ApplicationController
 
 	def updatesettings
 		@user = current_user
-		if params[:theme]
-			@user.update_attributes(:theme => params[:theme])
+		prev_theme = @user.theme
+
+		@user.update_attributes(:theme => params[:theme])
+		if prev_theme == @user.theme
+			@theme_change = false
 		end
+		not_setings = params[:user][:notification_settings]
+		@user.notification_settings = not_setings
 		if @user.save
   		@message = 'User was successfully updated.'
 		else
@@ -27,6 +32,7 @@ class SettingsController < ApplicationController
 
 	def updaterecords
 		@user = current_user
+
 		@message = @user.update_records(params[:user][:gsw_pin])
 		@form_type = "records"
 		@user.save
