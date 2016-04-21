@@ -27,6 +27,7 @@
                 <% @color = "bg-color-red" %>
                 <% @message = "Organization #{name} is now deactivated" %>
                 <%= render "shared/notification.html.erb" %>
+              <% end %>
             <% elsif activity.key == "organization.accept_invite"  %>
               <% @icon = "fa-ban" %>
               <% @color = "bg-color-red" %>
