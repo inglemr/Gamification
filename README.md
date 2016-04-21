@@ -30,3 +30,12 @@
 * User roles can be added through the rails console by navigating to the root directory of the app and using the command <tt>rails console</tt>
 * Once the console has started run the follow command to find your user in the database <tt>user = User.find_by(:email => "your_email")</tt>
 * To add a role to this user simply use <tt>user.add_role :Admin</tt>(Case is important) to add the admin role
+
+# App Documentation
+
+### Documentation was generated using [YARD](https://gist.github.com/chetan/1827484)
+  
+* Generate Documentation and Viewing it
+ 	* Documentation can be generated in a development environment by running <tt>yard doc </tt> this only needs to be done as code changes are made
+	* The documentation can then be viewed by running <tt>yard server</tt> which runs a local server that host the HTML documenation and can be viewed by going to <tt>localhost:8808</tt>(Default port)
+	* This server can run alongside the application server since they utilize different ports
