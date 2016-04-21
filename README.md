@@ -34,7 +34,7 @@
 # App Documentation
 
 ### Documentation was generated using [YARD](https://gist.github.com/chetan/1827484)
-  
+  The application source code also includes 2 ERD documents to help visulize the relationships in the database
 * Generate Documentation and Viewing it
  	* Documentation can be generated in a development environment by running <tt>yard doc </tt> this only needs to be done as code changes are made
 	* The documentation can then be viewed by running <tt>yard server</tt> which runs a local server that host the HTML documenation and can be viewed by going to <tt>localhost:8808</tt>(Default port)
