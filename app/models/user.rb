@@ -2,6 +2,8 @@
 class User < ActiveRecord::Base
   extend FriendlyId
   include PublicActivity::Model
+   serialize :notification_settings
+
 
 
   friendly_id :username, use: [:slugged, :history,:finders]
@@ -141,6 +143,11 @@ class User < ActiveRecord::Base
           self.current_semester =  current_semester_enc
 
           self.class_type = set_user_class(hours.to_f)
+          notification_settings = Hash.new
+          notification_settings[:events] = true
+          notification_settings[:organizations] = true
+          notification_settings[:account] = true
+          self.notification_settings = notification_settings
         end
         if !transcripts["last_semester"].nil?
           # "last_semester": {
@@ -206,7 +213,9 @@ class User < ActiveRecord::Base
       else
         self.create_activity action: 'role_removed', parameters: {role: role.id},recipient: self
       end
-      UserMailer.removed_role(self,role).deliver_now
+      if user.notification_settings[:account] == true
+        UserMailer.removed_role(self,role).deliver_now
+      end
     else
       puts "User Already Has Role " + role_name.to_s
     end
@@ -226,7 +235,9 @@ class User < ActiveRecord::Base
         else
           self.create_activity action: 'role_added', parameters: {role: role.id},recipient: self
         end
-        UserMailer.given_role(self,role).deliver_now
+        if user.notification_settings[:account] == true
+          UserMailer.given_role(self,role).deliver_now
+        end
       else
         puts "User Already Has Role " + role_name.to_s
       end

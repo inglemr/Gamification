@@ -7,7 +7,8 @@ class RequestController < ApplicationController
     @request = Request.new(:user_id => current_user.id, :organization_id => organization.id, :status => "open",:request_type => "org-join")
     @request.save
     @organization.create_activity action: 'join_request', owner: current_user
-    UserMailer.new_member_request(User.find(@organization.created_by),current_user,@organization).deliver_now
+
+    #UserMailer.new_member_request(User.find(@organization.created_by),current_user,@organization).deliver_now
     redirect_to :back, :flash => { 'success' => 'Request To Join Made. Pending Approval.' }
   end
 
@@ -20,7 +21,9 @@ class RequestController < ApplicationController
     @organization.add_member(@user)
     @request.save
     @organization.create_activity action: 'accept_member',recipient: @user, owner: current_user
-    UserMailer.organization_accepted_you(@user,@organization).deliver_now
+    if @user.notification_settings[:organizations] == true
+      UserMailer.organization_accepted_you(@user,@organization).deliver_now
+    end
     redirect_to :back , :flash => { 'success' => 'Member Accepted' }
   end
 
@@ -48,7 +51,10 @@ class RequestController < ApplicationController
       @users.each do |id|
         @request = Request.new(:user_id => id, :organization_id => @organization.id, :status => "open",:request_type => "org-invite")
         @request.save
-        UserMailer.invited_to_organization(User.find(id),@organization).deliver_now
+        user = User.find(id)
+        if user.notification_settings[:organizations] == true
+          UserMailer.invited_to_organization(user,@organization).deliver_now
+        end
         @organization.create_activity action: 'invite_member',recipient: User.find(id), owner: current_user
       end
       redirect_to :back , :flash => { 'success' => 'Members Invited' }

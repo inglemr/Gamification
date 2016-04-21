@@ -86,12 +86,55 @@
                 </div>
              </div><!--/tab-pane-->
              <div class="tab-pane" id="settings">
-                <%= form_for(@user, url: {action: "updatesettings"}, :remote => true , :method => :POST, :html =>{ :id => "update_theme_form" }) do |f| %>
+                <%= form_for(@user, url: {action: "updatesettings"}, :remote => true , :method => :POST, :html =>{ :class =>"smart-form", :id => "update_theme_form" }) do |f| %>
                   <div class="col-md-12 form-group" id="collapseFour">
+                  <h2 class="row-seperator-header">Theme</h2>
+                  <hr>
                     <div class="col-md-4 col-sm-4 col-lg-4 col-centered" style="margin: 10px 0;">
                       <%= select_tag "theme", "<option value='smart-style-1'>Light</option><option value='smart-style-2'>Light-2</option><option value='smart-style-3'>Google</option><option value='smart-style-4'>Pixel</option><option value='smart-style-5'>Glass(Default)</option><option value='smart-style-6'>Material</option>".html_safe, :value => current_user.theme, :class=> "form-control" %>
                     </div>
                   </div>
+                  <h2 class="row-seperator-header">Notifications</h2>
+                    <hr>
+                    <fieldset>
+                      <section>
+                        <div class="row">
+                          <label class="label col col-2">Organizations</label>
+                          <div class="col col-10">
+                              <label class="checkbox">
+                                <%= check_box_tag 'user[notification_settings][organizations]', true, current_user.notification_settings[:organizations] %>
+                                <i></i>
+                              </label>
+                          </div>
+                        </div>
+                      </section>
+                    </fieldset>
+                    <fieldset>
+                      <section>
+                        <div class="row">
+                          <label class="label col col-2">Events</label>
+                          <div class="col col-10">
+                              <label class="checkbox">
+                                <%= check_box_tag 'user[notification_settings][events]', true, current_user.notification_settings[:events] %>
+                                <i></i>
+                              </label>
+                          </div>
+                        </div>
+                      </section>
+                    </fieldset>
+                   <fieldset>
+                      <section>
+                        <div class="row">
+                          <label class="label col col-2">Account Changes</label>
+                          <div class="col col-10">
+                              <label class="checkbox">
+                                <%= check_box_tag 'user[notification_settings][account]', true, current_user.notification_settings[:account] %>
+                                <i></i>
+                              </label>
+                          </div>
+                        </div>
+                      </section>
+                    </fieldset>
                   <div class="col-centered text-center" style="margin: 10px 0;">
                     <button class="btn btn-default" id="updatetheme_btn">Update Settings</button>
                   <%= f.submit "Update Records", :id => "updatetheme_submit" ,:class => "hidden" %>
