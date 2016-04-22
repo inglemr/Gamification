@@ -4,10 +4,18 @@
 <div class="<%= style %>">
       <div class="cuadro_intro_hover " style="background-color:#cccccc;">
       <p style="text-align:center">
-          <% if organization.image_url.to_s == "" %>
-              <img class="event_tile_img" src="https://placeimg.com/380/200/arch">
-          <% else %>
-              <%= image_tag organization.image_url(:kiosk_page_mobile).to_s ,:class => "event_tile_img" %>
+          <% if type == "Member Page"%>
+            <% if  organization.image_url.to_s == ""  %>
+              <img class="event_tile_img" src="https://placeimg.com/200/200/arch">
+            <% else %>
+             <%= image_tag organization.image_url(:my_org_tile).to_s ,:class => "event_tile_img" %>
+            <% end %>
+          <% elsif type == "More Info" %>
+            <% if organization.image_url.to_s == "" %>
+              <img class="event_tile_img" src="https://placeimg.com/350/200/arch">
+            <% else %>
+              <%= image_tag organization.image_url(:org_tile).to_s ,:class => "event_tile_img" %>
+            <% end %>
           <% end %>
       </p>
       <div class="caption">

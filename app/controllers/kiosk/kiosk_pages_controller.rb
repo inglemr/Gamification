@@ -45,10 +45,11 @@ class Kiosk::KioskPagesController < ApplicationController
     end
   end
 
+
   def new_swipe
     @event = Event.find(params[:event_id])
     id = params[:id]
-    if(id.length == 16)
+    if(id.length > 15)
       id = id[4,9]
     end
     if current_host.created_events.where(:id => @event.id).in_range.first || current_host.hosted_events.where(:id => @event.id).in_range.first

@@ -3,7 +3,7 @@
     <%=  form_tag kiosk_sessions_path do%>
     <div class="row form-group" style="padding-top: 35px;">
             <div class="col-md-12">
-        <%= password_field_tag :password,nil, :placeholder => "GSW ID", :class => "form-control text-center", style: "height: 100px;"%>
+        <%= password_field_tag :password,nil,autofocus: true, :placeholder => "GSW ID", :class => "form-control text-center", style: "height: 100px;"%>
         </div>
     </div>
       <div class="row">

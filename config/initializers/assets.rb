@@ -4,7 +4,7 @@
 Rails.application.config.assets.version = '1.3'
 Rails.application.config.assets.precompile += %w( logo.gif )
 Rails.application.config.assets.precompile += %w( GSW Full Logo.jpg )
-
+Rails.application.config.assets.precompile += %w( casual.png )
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
 

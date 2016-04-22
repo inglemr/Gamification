@@ -32,7 +32,7 @@
                       <div class="alert alert-success alert-block col-md-12 animated fadeInLeft">
                         <h4 class="alert-heading"><i class="fa fa-users"></i>Joined <%= Organization.find(activity.trackable_id).name %></h4>
                       </div>
-                    <% elsif activity.trackable_type == "Event" && activity.parameters[:action] == "new_swipe" %>
+                    <% elsif activity.trackable_type == "Event" && activity.key == "event.swipe" %>
                       <% event = Event.find(activity.trackable_id) %>
                       <div class="alert alert-success alert-block col-md-12 animated fadeInLeft">
                         <h4 class="alert-heading"><i class="fa fa-futbol"></i>Attended Event <%= event.event_name %>- <%= event.point_val %> Points</h4>
