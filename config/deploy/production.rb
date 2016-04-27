@@ -26,45 +26,23 @@
 #
 
 
-role :app, %w{deploy@example.com}
-role :web, %w{user1@primary.com user2@additional.com}
-role :db,  %w{deploy@example.com}
+role :app, %w{gswcm@gamification.gswcm.net}
+role :web, %w{gswcm@gamification.gswcm.net}
+role :db,  %w{gswcm@gamification.gswcm.net}
 
+server 'gamification.gswcm.net',
+  user: 'gswcm',
+  roles: %w{web app db},
+  ssh_options: {
+    user: 'gswcm', # overrides user setting above
+    forward_agent: true,
+    port: 22,
+   }
 
+set :deploy_to, '/var/www/gamification/production'
+set :rails_env, "production"
+set :branch, "master"
+set :deployment_server, :passenger
 
-# Configuration
-# =============
-# You can set any configuration variable like in config/deploy.rb
-# These variables are then only loaded and set in this stage.
-# For available Capistrano configuration variables see the documentation page.
-# http://capistranorb.com/documentation/getting-started/configuration/
-# Feel free to add new variables to customise your setup.
-
-
-
-# Custom SSH Options
-# ==================
-# You may pass any option but keep in mind that net/ssh understands a
-# limited set of options, consult the Net::SSH documentation.
-# http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start
-#
-# Global options
-# --------------
-#  set :ssh_options, {
-#    keys: %w(/home/rlisowski/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
-#
-# The server-based syntax can be used to override options:
-# ------------------------------------
-# server 'example.com',
-#   user: 'user_name',
-#   roles: %w{web app db},
-#   ssh_options: {
-#     user: 'user_name', # overrides user setting above
-#     keys: %w(/home/user_name/.ssh/id_rsa),
-#     forward_agent: false,
-#     auth_methods: %w(publickey password)
-#     # password: 'please use keys'
-#   }
+set :rvm_type, :user
+set :rvm_ruby_version, '2.3.0'

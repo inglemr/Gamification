@@ -1,9 +1,17 @@
+SSHKit.config.command_map[:rake] = "bundle exec rake"
+
 set :application, 'gamification'
 set :repo_url, 'git@github.com:inglemr/capstone.git'
 set :deploy_to, '/var/www/gameification'
 set :scm, :git
 set :rvm_ruby_version, '2.3.0'
 
+set :stages, ["production","staging"]
+set :use_sudo, false
+set :deploy_user, 'gswcm'
+
+
+set :deploy_via, :remote_cache
 
 #Passenger
 #set :passenger_environment_variables, { :path => '/path-to-passenger/bin:$PATH' }
@@ -32,3 +40,6 @@ namespace :deploy do
     end
   end
 end
+
+
+
