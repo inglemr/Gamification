@@ -39,6 +39,10 @@ server 'gamification.gswcm.net',
     port: 22,
    }
 
+set :passenger_environment_variables, { :path => '/home/gswcm/.rvm/gems/ruby-2.3.0/gems/passenger-5.0.27/bin:$PATH' }
+set :passenger_restart_command, '/home/gswcm/.rvm/gems/ruby-2.3.0/gems/passenger-5.0.27/bin/passenger-config restart-app'
+
+
 set :deploy_to, '/var/www/gamification/production'
 set :rails_env, "production"
 set :branch, "master"
